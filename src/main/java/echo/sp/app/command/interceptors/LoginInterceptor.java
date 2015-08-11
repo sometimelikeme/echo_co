@@ -11,7 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @date 2015Äê8ÔÂ10ÈÕ 
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter{
-	private static final String[] IGNORE_URI = {"/index.do","/search.do","paginator.do"};
+	private static final String[] IGNORE_URI = {"/index.do","/search.do","paginator.do","paginatorParm.do"};
 	 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
