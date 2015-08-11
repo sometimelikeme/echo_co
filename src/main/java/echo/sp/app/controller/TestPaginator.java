@@ -58,7 +58,7 @@ public class TestPaginator{
         try{
             session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("code","");
+            params.put("id","1");
             return session.selectList("echo.sp.app.dao.UserDAO.showUser", params, pageBounds);
         }finally {
             session.close();
