@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="echo.sp.app.dao.UserDAO">
+            
+         <insert id="insertUser" parameterType="User" keyProperty="id">
+             insert into users( 
+         state,
+         nickname)
+         values
+         (       
+         #{state},
+         #{nickname})
+         </insert>
+         
+         <select id="getData" parameterType="map" resultType="map">
+             select * from users limit ${page},${limit}
+         </select>
+          
+</mapper>
