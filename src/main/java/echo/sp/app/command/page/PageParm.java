@@ -1,4 +1,4 @@
-package echo.sp.app.command.Page;
+package echo.sp.app.command.page;
 
 /**   
  * @author Ethan   

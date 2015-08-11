@@ -15,8 +15,8 @@ import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
-import echo.sp.app.command.Page.PageParm;
-import echo.sp.app.command.Page.PubTool;
+import echo.sp.app.command.page.PageParm;
+import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.core.CoreController;
 
 import org.apache.ibatis.session.SqlSessionFactory;

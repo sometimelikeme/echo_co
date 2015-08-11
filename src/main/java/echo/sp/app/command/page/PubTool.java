@@ -1,4 +1,4 @@
-package echo.sp.app.command.Page;
+package echo.sp.app.command.page;
 
 import java.util.List;
 import java.util.Map;
