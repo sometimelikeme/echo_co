@@ -18,6 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
         boolean flag = false;
         String url = request.getRequestURL().toString();
         System.out.println(">>>: " + url);
+        System.out.println(">>>: " + url);
         for (String s : IGNORE_URI) {
             if (url.contains(s)) {
                 flag = true;
