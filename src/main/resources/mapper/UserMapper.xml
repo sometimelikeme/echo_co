@@ -22,4 +22,7 @@
         	 select * from users where id = ${id};
     	 </select>
           
+         <select id="byState" resultType="map">
+        	 select * from users where state = ${state};
+    	 </select>
 </mapper>
