@@ -21,6 +21,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import echo.sp.app.command.Page.PageParm;
+import echo.sp.app.command.Page.PubTool;
 import echo.sp.app.command.core.CoreController;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -32,8 +33,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 @Controller
 public class TestPaginator extends CoreController implements PageParm{
 	
-//	@Autowired
-//	private SqlSessionFactory sqlSessionFactory;
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestPaginator.class);
 	
@@ -61,7 +62,7 @@ public class TestPaginator extends CoreController implements PageParm{
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("state",state);
         
-        List list = new PubTool().getResultList("UserDAO.byState", params, pageBounds);
+        List list = PubTool.getResultList("UserDAO.byState", params, pageBounds, sqlSessionFactory);
         
         // List list = findByState(state, pageBounds);
         

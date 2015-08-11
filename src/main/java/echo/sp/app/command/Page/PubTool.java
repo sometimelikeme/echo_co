@@ -1,4 +1,4 @@
-package echo.sp.app.controller;
+package echo.sp.app.command.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -18,9 +17,6 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 @Controller
 public class PubTool {
 
-	@Autowired
-	private SqlSessionFactory sqlSessionFactory;
-	
 	/**
 	 * Get List result
 	 * @param mapper
@@ -28,7 +24,8 @@ public class PubTool {
 	 * @param pageBounds
 	 * @return
 	 */
-	public List getResultList(String mapper, Map map, PageBounds pageBounds) {
+	public static List getResultList(String mapper, Map map, PageBounds pageBounds,
+			SqlSessionFactory sqlSessionFactory) {
 		String prefix = "echo.sp.app.dao.";  
 		SqlSession sqlSession = null;
 		List list = null;
