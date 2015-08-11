@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -32,6 +33,30 @@ public class TestPaginator{
 	private SqlSessionFactory sqlSessionFactory;
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestPaginator.class);
+	
+	@RequestMapping("paginatorParm")
+    public List paginatorParm(@RequestParam String state,
+            @RequestParam(required = false,defaultValue = "1") int page,
+            @RequestParam(required = false,defaultValue = "6") int limit,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String dir){
+//		int page = 1;
+//      int pageSize = 20;
+//      String sortString = "id.desc";
+        PageBounds pageBounds = new PageBounds(page, limit , Order.formString(sort));
+        
+        logger.debug("paginatorParm -- " + pageBounds.toString());
+        
+        List list = findByState(state, pageBounds);
+        
+        logger.debug("paginatorParm result: " + list);
+        
+        //Get totalCount
+        PageList pageList = (PageList)list;
+        System.out.println("paginatorParm totalCount: " + pageList.getPaginator().getTotalCount());
+
+        return null;
+    }
 	
 	@RequestMapping("paginator")
     public List paginator(HttpServletRequest req,HttpServletResponse response){
@@ -60,6 +85,18 @@ public class TestPaginator{
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("id","1");
             return session.selectList("echo.sp.app.dao.UserDAO.showUser", params, pageBounds);
+        }finally {
+            session.close();
+        }
+    }
+	
+	public List findByState(String state, PageBounds pageBounds){
+        SqlSession session = null;
+        try{
+            session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("state",state);
+            return session.selectList("echo.sp.app.dao.UserDAO.byState", params, pageBounds);
         }finally {
             session.close();
         }
