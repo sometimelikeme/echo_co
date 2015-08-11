@@ -32,8 +32,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 @Controller
 public class TestPaginator extends CoreController implements PageParm{
 	
-	@Autowired
-	private SqlSessionFactory sqlSessionFactory;
+//	@Autowired
+//	private SqlSessionFactory sqlSessionFactory;
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestPaginator.class);
 	
@@ -58,7 +58,12 @@ public class TestPaginator extends CoreController implements PageParm{
         
         logger.debug("paginatorParm -- " + pageBounds.toString());
         
-        List list = findByState(state, pageBounds);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("state",state);
+        
+        List list = new PubTool().getResultList("UserDAO.byState", params, pageBounds);
+        
+        // List list = findByState(state, pageBounds);
         
         logger.debug("paginatorParm result: " + list);
         
@@ -69,47 +74,47 @@ public class TestPaginator extends CoreController implements PageParm{
         return null;
     }
 	
-	@RequestMapping("paginator")
-    public List paginator(HttpServletRequest req,HttpServletResponse response){
-		int page = 1;
-        int pageSize = 20;
-        String sortString = "id.desc";
-        PageBounds pageBounds = new PageBounds(page, pageSize , Order.formString(sortString));
-        
-        logger.debug("paginator -- " + pageBounds.toString());
-        
-        List list = findByCity("370100", pageBounds);
-        
-        logger.debug("result: " + list);
-        
-        //Get totalCount
-        PageList pageList = (PageList)list;
-        System.out.println("totalCount: " + pageList.getPaginator().getTotalCount());
-
-        return null;
-    }
+//	@RequestMapping("paginator")
+//    public List paginator(HttpServletRequest req,HttpServletResponse response){
+//		int page = 1;
+//        int pageSize = 20;
+//        String sortString = "id.desc";
+//        PageBounds pageBounds = new PageBounds(page, pageSize , Order.formString(sortString));
+//        
+//        logger.debug("paginator -- " + pageBounds.toString());
+//        
+//        List list = findByCity("370100", pageBounds);
+//        
+//        logger.debug("result: " + list);
+//        
+//        //Get totalCount
+//        PageList pageList = (PageList)list;
+//        System.out.println("totalCount: " + pageList.getPaginator().getTotalCount());
+//
+//        return null;
+//    }
 	
-	public List findByCity(String code, PageBounds pageBounds){
-        SqlSession session = null;
-        try{
-            session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("id","1");
-            return session.selectList("echo.sp.app.dao.UserDAO.showUser", params, pageBounds);
-        }finally {
-            session.close();
-        }
-    }
+//	public List findByCity(String code, PageBounds pageBounds){
+//        SqlSession session = null;
+//        try{
+//            session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
+//            Map<String, Object> params = new HashMap<String, Object>();
+//            params.put("id","1");
+//            return session.selectList("echo.sp.app.dao.UserDAO.showUser", params, pageBounds);
+//        }finally {
+//            session.close();
+//        }
+//    }
 	
-	public List findByState(String state, PageBounds pageBounds){
-        SqlSession session = null;
-        try{
-            session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("state",state);
-            return session.selectList("echo.sp.app.dao.UserDAO.byState", params, pageBounds);
-        }finally {
-            session.close();
-        }
-    }
+//	public List findByState(String state, PageBounds pageBounds){
+//        SqlSession session = null;
+//        try{
+//            session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
+//            Map<String, Object> params = new HashMap<String, Object>();
+//            params.put("state",state);
+//            return session.selectList("echo.sp.app.dao.UserDAO.byState", params, pageBounds);
+//        }finally {
+//            session.close();
+//        }
+//    }
 }
