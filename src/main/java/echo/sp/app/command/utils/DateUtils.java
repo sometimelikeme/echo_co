@@ -24,7 +24,8 @@ public class DateUtils extends DateFormatUtils {
 		// System.out.print("ddddddddd: " + getNextDay(getToday(),3));
 		 // System.out.println(getCurMonth());
 		 // System.out.println(getNextMonth(getCurMonth(),1));
-		
+		System.out.println(getWeek(getToday()));
+		System.out.println(getCurrentTimeMillis());
 	}
 	
 	/**
@@ -134,6 +135,16 @@ public class DateUtils extends DateFormatUtils {
 	}
 	
 	/**
+	 * 获取输入 月份的下1月份 返回 6位 like 200501
+	 * @param month like 200404
+	 * @param n
+	 * @return
+	 */
+	public static String getNextMonth(String month) {
+		return getNextMonth(month, 1);
+	}
+	
+	/**
 	 * 获取输入 月份的前 n 月份 返回 6位 like 200501
 	 * @param month
 	 * @param n
@@ -141,6 +152,16 @@ public class DateUtils extends DateFormatUtils {
 	 */
 	public static String getPreviousMonth(String month, int n) {
 		return getNextMonth(month, -n);
+	}
+	
+	/**
+	 * 获取输入 月份的前 1 月份 返回 6位 like 200501
+	 * @param month
+	 * @param n
+	 * @return
+	 */
+	public static String getPreviousMonth(String month) {
+		return getNextMonth(month, -1);
 	}
 	
 	/**
@@ -208,6 +229,14 @@ public class DateUtils extends DateFormatUtils {
 	}
 
 	/**
+	 * 获取当前系统时间 返回 12:12:12
+	 * @return
+	 */
+	public static long getCurrentTimeMillis() {
+		return System.currentTimeMillis();
+	}
+	
+	/**
 	 * 得到当前年份字符串 格式（yyyy）
 	 */
 	public static String getYear() {
@@ -234,7 +263,28 @@ public class DateUtils extends DateFormatUtils {
 	public static String getWeek() {
 		return formatDate(new Date(), "E");
 	}
-
+	
+	/**
+	 * 返回星期 0 星期天 6 星期陆
+	 * @param date 20040101
+	 * @return
+	 */
+	public static int getWeek(String date) {
+		if (date == null || date.length() != 8) {
+			throw new RuntimeException("由于缺少必要的参数，系统无法进行制定的月份换算.");
+		}
+		String sYear = date.substring(0, 4);
+		int year = Integer.parseInt(sYear);
+		String sMonth = date.substring(4, 6);
+		int mon = Integer.parseInt(sMonth);
+		String sDay = date.substring(6, 8);
+		int dday = Integer.parseInt(sDay);
+		Calendar cal = Calendar.getInstance();
+		cal.set(year, mon - 1, dday);
+		int weekday = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		return weekday;
+	}
+	
 	/**
 	 * 获取过去的天数
 	 * 
