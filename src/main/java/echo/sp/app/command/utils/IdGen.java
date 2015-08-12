@@ -43,13 +43,13 @@ public class IdGen {
 		return Encodes.encodeBase62(randomBytes);
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(IdGen.uuid());
-		System.out.println(IdGen.uuid().length());
-
-		/*for (int i=0; i<1000; i++){
-			System.out.println(IdGen.randomLong() + "  " + IdGen.randomBase62(5));
-		}*/
-	}
+//	public static void main(String[] args) {
+//		System.out.println(IdGen.uuid());
+//		System.out.println(IdGen.uuid().length());
+//
+//		/*for (int i=0; i<1000; i++){
+//			System.out.println(IdGen.randomLong() + "  " + IdGen.randomBase62(5));
+//		}*/
+//	}
 
 }
