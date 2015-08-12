@@ -120,8 +120,8 @@ public class MD5Util {
             stringbuffer.append(c1);
         }
 
-        public static void main(String[] args) throws IOException {
-            System.out.println("md5:" + getMD5String("3333333333331").length());
-        }
+//        public static void main(String[] args) throws IOException {
+//            System.out.println("md5:" + getMD5String("3333333333331").length());
+//        }
 
 }
