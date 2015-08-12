@@ -75,12 +75,11 @@
             <version>${spring.version}</version>
         </dependency>
  
-        <!-- <dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
-        </dependency> -->
-        <!-- springframe end -->
+        </dependency>
  
  		<!-- Servlet -->
 		<dependency>
@@ -174,40 +173,15 @@
 		<!-- SECURITY end -->
         
         <!--commons以及log相关配置-->
-		<!-- <dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>${commons-log.version}</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>${commons-fileupload.version}</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>${commons-dbcp.version}</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>${commons-collections.version}</version>
-		</dependency>  -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
+			<version>1.10</version>
 		</dependency>
 		<!--commons以及log相关配置-->
         
@@ -224,6 +198,13 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
+ 
+ 		<!-- User Agent -->
+		<dependency>
+			<groupId>nl.bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+			<version>1.2.4</version>
+		</dependency>
  
         <!-- 日志文件管理包 -->
         <dependency>
