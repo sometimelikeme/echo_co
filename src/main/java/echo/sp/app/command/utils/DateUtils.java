@@ -1,5 +1,7 @@
 package echo.sp.app.command.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -16,7 +18,81 @@ public class DateUtils extends DateFormatUtils {
 			"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM", "yyyy/MM/dd",
 			"yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd",
 			"yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM" };
+	
+	// test
+	public static void main(String args[]) {
+		// System.out.print("ddddddddd: " + getNextDay(getToday(),3));
+		 // System.out.println(getCurMonth());
+		 // System.out.println(getNextMonth(getCurMonth(),1));
+		
+	}
+	
+	/**
+	 * 获取当前系统日期 返回 8位 like 20050101
+	 * @return
+	 */
+	public static String getToday() {
+		String dateStr = getDate();
+		return dateStr.substring(0, 4) + dateStr.substring(5, 7) + dateStr.substring(8, 10);
+	}
+	
+	/**
+	 * 获取输入日期的下一天 返回 8位 like 20050101
+	 * @param today
+	 * @return
+	 */
+	public static String getNextDay(String day) {
+		return getNextDay(day, 1);
+	}
+	
+	/**
+	 * 获取输入日期的下 n天 返回 8位 like 20050101
+	 * @param day
+	 * @param n
+	 * @return
+	 */
+	public static String getNextDay(String day, int n) {
+		if (day == null || "".equals(day) || day.length() != 8) {
+			throw new RuntimeException("由于缺少必要的参数，系统无法进行制定的日期换算.");
+		}
+		try {
+			String sYear = day.substring(0, 4);
+			int year = Integer.parseInt(sYear);
+			String sMonth = day.substring(4, 6);
+			int month = Integer.parseInt(sMonth);
+			String sDay = day.substring(6, 8);
+			int dday = Integer.parseInt(sDay);
+			Calendar cal = Calendar.getInstance();
+			cal.set(year, month - 1, dday);
+			cal.add(Calendar.DATE, n);
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+			return df.format(cal.getTime());
+		} catch (Exception e) {
+			throw new RuntimeException("进行日期运算时输入得参数不符合系统规格." + e);
 
+		}
+	}
+	
+	/**
+	 * 获取输入日期的前天 返回 8位 like 20050101
+	 * @param day
+	 * @param n
+	 * @return
+	 */
+	public static String getPreviousDay(String day) {
+		return getNextDay(day, -1);
+	}
+	
+	/**
+	 * 获取输入日期的前 n 天 返回 8位 like 20050101
+	 * @param day
+	 * @param n
+	 * @return
+	 */
+	public static String getPreviousDay(String day, int n) {
+		return getNextDay(day, -n);
+	}
+	
 	/**
 	 * 得到当前日期字符串 格式（yyyy-MM-dd）
 	 */
@@ -24,6 +100,72 @@ public class DateUtils extends DateFormatUtils {
 		return getDate("yyyy-MM-dd");
 	}
 
+	/**
+	 * 获取当前系统月份 返回 6位 like 201501
+	 */
+	public static String getCurMonth() {
+		String dateStr = getDate("yyyy-MM");
+		return dateStr.substring(0, 4) + dateStr.substring(5, 7);
+	}
+	
+	/**
+	 * 获取输入 月份的下 n 月份 返回 6位 like 200501
+	 * @param month like 200404
+	 * @param n
+	 * @return
+	 */
+	public static String getNextMonth(String month, int n) {
+		if (month == null || "".equals(month) || month.length() != 6) {
+			throw new RuntimeException("由于缺少必要的参数，系统无法进行制定的月份换算.");
+		}
+		try {
+			String sYear = month.substring(0, 4);
+			int year = Integer.parseInt(sYear);
+			String sMonth = month.substring(4, 6);
+			int mon = Integer.parseInt(sMonth);
+			Calendar cal = Calendar.getInstance();
+			cal.set(year, mon - 1, 1);
+			cal.add(Calendar.MARCH, n);
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+			return df.format(cal.getTime());
+		} catch (Exception e) {
+			throw new RuntimeException("进行月份运算时输入得参数不符合系统规格." + e);
+		}
+	}
+	
+	/**
+	 * 获取输入 月份的前 n 月份 返回 6位 like 200501
+	 * @param month
+	 * @param n
+	 * @return
+	 */
+	public static String getPreviousMonth(String month, int n) {
+		return getNextMonth(month, -n);
+	}
+	
+	/**
+	 * 获取输入 日期的前n年同期，如去年同期，如：2009-->2008，200904-->200804,20090410-->20080410
+	 * @param month like 201304
+	 * @param n
+	 * @return
+	 */
+	public static String getPreSamePeriod(String date, int n) {
+		String datenow = "";
+		if (date.length() == 6 || date.length() == 8) {
+			String dateyear = date.substring(0, 4);
+			int year = Integer.parseInt(dateyear);
+			int yeartemp = year - n;
+			datenow = String.valueOf(yeartemp) + date.substring(4);
+		} else if (date.length() == 4) {
+			int year = Integer.parseInt(date);
+			int yeartemp = year - n;
+			datenow = String.valueOf(yeartemp);
+		} else {
+			throw new RuntimeException("由于缺少必要的参数，系统无法进行制定的换算.");
+		}
+		return datenow;
+	}
+	
 	/**
 	 * 得到当前日期字符串 格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
 	 */
