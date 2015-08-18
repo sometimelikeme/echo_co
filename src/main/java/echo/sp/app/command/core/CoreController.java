@@ -30,8 +30,7 @@ public abstract class CoreController {
 		String jsonData = req.getParameter("data");
 		if (!"".equals(jsonData)) {
 			Gson gson = new Gson();
-			Type type = new TypeToken<JsonBean>() {
-			}.getType();
+			Type type = new TypeToken<JsonBean>(){}.getType();
 			data = gson.fromJson(jsonData, type);
 		}
 	}
