@@ -52,16 +52,22 @@ public abstract class CoreController {
 
 		Gson gson = new Gson();
 		String jsonParm = gson.toJson(data);  
-
+		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        
+		PrintWriter writer = null;
+		
 		try {
-			PrintWriter writer = response.getWriter();
-			response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
+			writer = response.getWriter();
 			writer.write(jsonParm);
 			response.getWriter().flush();
-			writer.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		} finally {
+			if (null != writer) {
+				writer.close();
+			}
 		}
 	}
 }
