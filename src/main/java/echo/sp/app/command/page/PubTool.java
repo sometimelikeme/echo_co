@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
-import org.springframework.stereotype.Controller;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
@@ -14,7 +13,6 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
  * @author Ethan   
  * @date 2015Äê8ÔÂ11ÈÕ 
  */
-@Controller
 public class PubTool {
 
 	/**
