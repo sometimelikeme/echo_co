@@ -15,7 +15,7 @@
     <!-- 设计路径变量值 -->
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>springmvc.root</param-value>
+        <param-value>echo.root</param-value>
     </context-param>
  
  
@@ -56,7 +56,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
  	
-    <!-- springMVC核心配置 -->
+    <!-- echo核心配置 -->
     <servlet>
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
