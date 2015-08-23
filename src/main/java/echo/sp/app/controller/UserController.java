@@ -95,20 +95,25 @@ public class UserController extends CoreController{
 	 */
 	@RequestMapping("login")
 	public void login(HttpServletRequest req, HttpServletResponse response,
-			@RequestParam String acc, @RequestParam String pwd) {
+			@RequestParam String tel, @RequestParam String pwd) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserController---login---acc: " + acc + "; pwd: " + pwd);
+			logger.debug("UserController---login---tel: " + tel + "; pwd: " + pwd);
 		}
 		try {
 			
 			pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
 			
 			Map parmMap = new HashMap();
-			parmMap.put("ACC", acc);
+			parmMap.put("TEL", tel);
 			parmMap.put("PWD", pwd);
-			int res = userService.login(parmMap);
+			String user_id = userService.login(parmMap);
 			
-			processCommonLogin(req, response, acc, res);
+			int res = 0;
+			if (user_id != null && !"".equals(user_id)) {
+				res = 1;
+			}
+			
+			processCommonLogin(req, response, user_id, res);
 		} catch (Exception e) {
 			logger.error("UserController---login---interface error: ", e);
 		}

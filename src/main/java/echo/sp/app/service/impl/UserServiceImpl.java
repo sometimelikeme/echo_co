@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
     
     // LOGIN
     @Override
-	public int login(Map parmMap) {
+	public String login(Map parmMap) {
 		return userDAO.login(parmMap);
 	}
 }

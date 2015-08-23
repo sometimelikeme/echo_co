@@ -16,6 +16,6 @@ public interface UserService {
 	public int registAlg(Map parmMap);
 	
 	// LOGIN
-	public int login(Map parmMap);
+	public String login(Map parmMap);
 	
 }
