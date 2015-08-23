@@ -23,7 +23,7 @@ import echo.sp.app.command.page.PubTool;
  */ 
 public abstract class CoreController {
 	protected JsonBean data;
-	protected HttpSession session;
+	protected HttpSession session; 
 	
 	/**
 	 * @description 将传入参数转化为JSONDataBean对象,后台解析
