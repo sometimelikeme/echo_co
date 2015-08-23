@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.model.SecCode;
 import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
@@ -61,12 +62,15 @@ public class UserController extends CoreController{
 	public void registAlg(HttpServletRequest req, HttpServletResponse response,
 			@RequestParam String tel, @RequestParam String pwd) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserController---registAlg---login---tel: " + tel + "; pwd: " + pwd);
+			logger.debug("UserController---registAlg---tel: " + tel + "; pwd: " + pwd);
 		}
 		try {
+			
 			pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
-			Map parmMap = new HashMap();
+			
 			String user_id = IdGen.uuid();
+			
+			Map parmMap = new HashMap();
 			parmMap.put("USER_ID", user_id);
 			parmMap.put("USER_PWD", pwd);
 			parmMap.put("USER_TYPE", "10");
@@ -74,22 +78,9 @@ public class UserController extends CoreController{
 			parmMap.put("IN_VALID", "1");
 			int res = userService.registAlg(parmMap);
 			
-			parmMap = new HashMap();
-			String VERFIY = "0",
-				   CODE = Code.FAIL,
-				   MSG = Code.FAIL_MSG;
-			if (res == 1) {
-				sessionInit(req, user_id);
-				VERFIY = "1";
-				CODE = Code.SUCCESS;
-			    MSG = Code.SUCCESS_MSG;
-			} 
-			parmMap.put("VERFIY", VERFIY);
-			
-			super.writeJson(response, CODE, MSG, parmMap, null);
-			
+			processCommonLogin(req, response, user_id, res);
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error("UserController---registAlg---interface error: ", e);
 		}
 			
 			
@@ -106,7 +97,7 @@ public class UserController extends CoreController{
 	public void login(HttpServletRequest req, HttpServletResponse response,
 			@RequestParam String acc, @RequestParam String pwd) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserController---checkReg---login---acc: " + acc + "; pwd: " + pwd);
+			logger.debug("UserController---login---acc: " + acc + "; pwd: " + pwd);
 		}
 		try {
 			
@@ -117,23 +108,37 @@ public class UserController extends CoreController{
 			parmMap.put("PWD", pwd);
 			int res = userService.login(parmMap);
 			
-			parmMap = new HashMap();
-			String VERFIY = "0",
-				   CODE = Code.FAIL,
-				   MSG = Code.FAIL_MSG;
-			if (res == 1) {
-				sessionInit(req, acc);
-				VERFIY = "1";
-				CODE = Code.SUCCESS;
-			    MSG = Code.SUCCESS_MSG;
-			} 
-			parmMap.put("VERFIY", VERFIY);
-			
-			super.writeJson(response, CODE, MSG, parmMap, null);
-			
+			processCommonLogin(req, response, acc, res);
 		} catch (Exception e) {
-			logger.error("UserController---checkReg---login---acc: ", e);
+			logger.error("UserController---login---interface error: ", e);
 		}
+	}
+	
+	/**
+	 * PUBLIC PROCESS THE LOGIN ACTIONS
+	 * @param req
+	 * @param response
+	 * @param acc
+	 * @param res
+	 */
+	private void processCommonLogin(HttpServletRequest req, HttpServletResponse response,String acc, int res) {
+		Map parmMap = new HashMap();
+		String VERFIY = "0",
+			   SEC_CODE = "",
+			   CODE = Code.FAIL,
+			   MSG = Code.FAIL_MSG;
+		if (res == 1) {
+			sessionInit(req, acc);
+			SEC_CODE = IdGen.uuid();
+			SecCode.setKey(acc, SEC_CODE);
+			VERFIY = "1";
+			CODE = Code.SUCCESS;
+		    MSG = Code.SUCCESS_MSG;
+		} 
+		parmMap.put("VERFIY", VERFIY);
+		parmMap.put("SEC_CODE", SEC_CODE);
+		
+		super.writeJson(response, CODE, MSG, parmMap, null);
 	}
 	
 	/**
