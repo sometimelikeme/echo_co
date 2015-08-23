@@ -20,7 +20,18 @@ public class UserServiceImpl implements UserService{
     
 	// CHECK IF THE USER EXISTS 
     @Override
-	public int getCheckReg(Map<String, Object> parmMap) {
+	public int getCheckReg(Map parmMap) {
 		return userDAO.getCheckReg(parmMap);
+	}
+    
+    // REGIST USER AND LOGIN IN 
+	public int registAlg(Map parmMap) {
+		return userDAO.registAlg(parmMap);
+	}
+    
+    // LOGIN
+    @Override
+	public int login(Map parmMap) {
+		return userDAO.login(parmMap);
 	}
 }
