@@ -20,10 +20,10 @@ import echo.sp.app.command.page.PubTool;
  * 所有Controller的基类
  * @author Ethan
  * @date 2015年8月10日
- */
+ */ 
 public abstract class CoreController {
 	protected JsonBean data;
-	protected HttpSession session;
+	protected HttpSession session; 
 	/**
 	 * @description 将传入参数转化为JSONDataBean对象,后台解析
 	 * @version 1.0
