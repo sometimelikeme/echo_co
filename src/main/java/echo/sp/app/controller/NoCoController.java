@@ -37,7 +37,7 @@ public class NoCoController extends CoreController{
 		if (SecCode.getKey("NO_CO_ORI").equals(no_co)) {
 			String NO_CO = Encodes.encodeBase64(no_co);
 			SecCode.setKey("NO_CO", NO_CO);
-			Map resMap = new HashMap();
+			Map resMap = new HashMap(); 
 			resMap.put("no_co", NO_CO);
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, null);
 		} else {
