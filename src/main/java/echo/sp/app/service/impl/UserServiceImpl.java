@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService{
 	}
     
     // REGIST USER AND LOGIN IN 
+    @Override
 	public int registAlg(Map parmMap) {
 		return userDAO.registAlg(parmMap);
 	}

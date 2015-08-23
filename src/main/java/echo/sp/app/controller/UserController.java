@@ -3,7 +3,6 @@ package echo.sp.app.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,7 +29,11 @@ public class UserController extends CoreController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	// CHECK IF THE USER EXISTS 
+	/**
+	 * CHECK IF THE USER EXISTS 
+	 * @param response
+	 * @param tel
+	 */
 	@RequestMapping("checkReg")
 	public void checkReg(HttpServletResponse response, @RequestParam String tel) {
 		if (logger.isDebugEnabled()) {
@@ -46,7 +49,14 @@ public class UserController extends CoreController{
 		}
 	}
 	
-	// REGIST USER AND LOGIN IN 
+	
+	/**
+	 * REGIST USER AND LOGIN IN 
+	 * @param req
+	 * @param response
+	 * @param tel
+	 * @param pwd
+	 */
 	@RequestMapping("registAlg")
 	public void registAlg(HttpServletRequest req, HttpServletResponse response,
 			@RequestParam String tel, @RequestParam String pwd) {
