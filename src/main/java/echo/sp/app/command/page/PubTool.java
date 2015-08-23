@@ -14,6 +14,16 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
  * @date 2015Äê8ÔÂ11ÈÕ 
  */
 public class PubTool {
+	
+	/**
+	 * PROCESS THE PARM. 
+	 * IF NULL, RETURN EMPTY
+	 * @param s
+	 * @return
+	 */
+	public static String processParm(String s) {
+		return s == null ? "" : s;
+	}
 
 	/**
 	 * Get List result
