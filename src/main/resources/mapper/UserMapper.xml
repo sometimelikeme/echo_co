@@ -14,6 +14,18 @@
          #{nickname})
          </insert>
          
+         <insert id="insertUser1" parameterType="User" keyProperty="id">
+             insert into users( 
+         id,
+         state,
+         nickname)
+         values
+         (   
+         #{id},    
+         #{state},
+         #{nickname})
+         </insert>
+         
          <select id="getData" parameterType="map" resultType="map">
              select * from users limit ${page},${limit}
          </select>
