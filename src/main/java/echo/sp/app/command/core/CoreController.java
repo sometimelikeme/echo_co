@@ -23,7 +23,8 @@ import echo.sp.app.command.page.PubTool;
  */ 
 public abstract class CoreController {
 	protected JsonBean data;
-	protected HttpSession session; 
+	protected HttpSession session;
+	
 	/**
 	 * @description 将传入参数转化为JSONDataBean对象,后台解析
 	 * @version 1.0
@@ -43,8 +44,8 @@ public abstract class CoreController {
 	 * @version 1.0
 	 */
 	protected void writeJson(HttpServletResponse response, String status,
-			String msg, Map<String, Object> dataset,
-			List<Map<String, Object>> dataset_line) {
+			String msg, Map dataset,
+			List dataset_line) {
 
 		data = new JsonBean();
 		data.setMsg(msg);
