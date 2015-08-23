@@ -46,7 +46,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			}
 			// GET USER FROM SESSION, COMPARE THE SECRET CODE.
 			String user_id = (String) request.getSession().getAttribute("user_id");
-			if (find && SecCode.getKey(user_id).equals(sc_co)) {
+			String user_code = SecCode.getKey(user_id);
+			if (find && user_code != null && user_code.equals(sc_co)) {
 				flag = true;
 			}
 		}  else if (!"".equals(no_co)) {  // COMPARE THE NORMAL CODE.
@@ -56,7 +57,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 					break;
 				}
 			}
-			if (find && SecCode.getKey("NO_CO").equals(no_co)) {
+			String no_co_co = SecCode.getKey("NO_CO");
+			if (find && no_co_co != null && no_co_co.equals(no_co)) {
 				flag = true;
 			}
 		}
