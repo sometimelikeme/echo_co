@@ -137,6 +137,7 @@ public class UserController extends CoreController{
 		} 
 		parmMap.put("VERFIY", VERFIY);
 		parmMap.put("SEC_CODE", SEC_CODE);
+		parmMap.put("ACCOUNT", acc);
 		
 		super.writeJson(response, CODE, MSG, parmMap, null);
 	}
