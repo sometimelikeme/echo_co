@@ -1,11 +1,14 @@
 package echo.sp.app.service;
 
-import java.util.List;
 import java.util.Map;
 
-import echo.sp.app.model.User;
-
+/**
+ * USER REGISTER,LOGIN 
+ * @author Ethan
+ *
+ */
 public interface UserService {
-	public int insertUser(User user);
-	public List getData(Map<String, Object> parmMap);
+	
+	// CHECK IF THE USER EXISTS 
+	public int getCheckReg(Map<String, Object> parmMap);
 }
