@@ -31,6 +31,9 @@ public class NoCoController extends CoreController{
 		if (logger.isDebugEnabled()) {
 			logger.debug("NoCoController---getCode---no_co: " + no_co);
 		}
+		if (SecCode.getKey("NO_CO_ORI") == null) {
+			SecCode.setKey("NO_CO_ORI", SecCode.no_co_org);
+		}
 		if (SecCode.getKey("NO_CO_ORI").equals(no_co)) {
 			String NO_CO = Encodes.encodeBase64(no_co);
 			SecCode.setKey("NO_CO", NO_CO);
