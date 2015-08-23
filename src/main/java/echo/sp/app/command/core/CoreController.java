@@ -22,7 +22,7 @@ import echo.sp.app.command.page.PubTool;
  * @date 2015Äê8ÔÂ10ÈÕ
  */ 
 public abstract class CoreController {
-	protected JsonBean data;
+	protected JsonBean data; 
 	protected HttpSession session; 
 	
 	/**
