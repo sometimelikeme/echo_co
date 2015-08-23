@@ -12,6 +12,10 @@ public class SecCode {
 	
 	private static Map<String, String> secMap = new HashMap<String, String>();
 	
+	public SecCode() {
+		secMap.put("NO_CO_ORI", "ABCDEFG");// ORGINAL NORMAL CODE
+	}
+	
 	// –¥»Îª∫¥Ê
 	public static void setKey(String key, String val) { 
 		secMap.put(key, val);
