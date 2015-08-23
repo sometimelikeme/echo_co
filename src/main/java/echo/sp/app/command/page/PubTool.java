@@ -21,7 +21,7 @@ public class PubTool {
 	 * @param s
 	 * @return
 	 */
-	public static String processParm(String s) {
+	public static String processParm(String s) { 
 		return s == null ? "" : s;
 	}
 
