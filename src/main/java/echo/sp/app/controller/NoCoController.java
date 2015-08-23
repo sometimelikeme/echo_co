@@ -42,6 +42,7 @@ public class NoCoController extends CoreController{
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, null);
 		} else {
 			logger.error("NoCoController---getCode---bad no_co: " + no_co);
+			response.setStatus(401);
 		}
 	}
 }
