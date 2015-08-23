@@ -10,11 +10,9 @@ import java.util.Map;
  */
 public class SecCode {
 	
-	private static Map<String, String> secMap = new HashMap<String, String>();
+	public static String no_co_org = "ABCDEFG";// ORGINAL NORMAL CODE
 	
-	public SecCode() {
-		secMap.put("NO_CO_ORI", "ABCDEFG");// ORGINAL NORMAL CODE
-	}
+	private static Map<String, String> secMap = new HashMap<String, String>();
 	
 	// –¥»Îª∫¥Ê
 	public static void setKey(String key, String val) { 
