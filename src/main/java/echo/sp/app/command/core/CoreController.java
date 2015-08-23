@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import echo.sp.app.command.model.JsonBean;
+import echo.sp.app.command.page.PubTool;
 
 /**
  * 所有Controller的基类
@@ -21,13 +23,14 @@ import echo.sp.app.command.model.JsonBean;
  */
 public abstract class CoreController {
 	protected JsonBean data;
-	
+	protected HttpSession session;
 	/**
 	 * @description 将传入参数转化为JSONDataBean对象,后台解析
 	 * @version 1.0
 	 */
 	protected void getParm(HttpServletRequest req) {
-		String jsonData = req.getParameter("data");
+		session = req.getSession();
+		String jsonData = PubTool.processParm(req.getParameter("data"));
 		if (!"".equals(jsonData)) {
 			Gson gson = new Gson();
 			Type type = new TypeToken<JsonBean>(){}.getType();
