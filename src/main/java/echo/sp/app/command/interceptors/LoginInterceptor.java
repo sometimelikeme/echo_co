@@ -63,7 +63,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 		// IF NONE OF ABOVE EXISTS, PROCESS THIS ASK!
         if (!flag) {
-        	response.setStatus(401);
+        	// DEFAULT RESPONSE 404
         }
         
         return flag;
