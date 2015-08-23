@@ -63,8 +63,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 		// IF NONE OF ABOVE EXISTS, PROCESS THIS ASK!
         if (!flag) {
-            // T_supplier_user user = LoginController.getLoginUser(request);
-            // if (user != null) flag = true;
+        	response.setStatus(401);
         }
         
         return flag;
