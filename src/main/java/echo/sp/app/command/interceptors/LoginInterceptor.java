@@ -20,7 +20,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	private static String NORMAL_URI = "/getCode.do";
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
-	private static final String[] IGNORE_URI = {"/checkreg.do","/registalg.do","login.do"};
+	private static final String[] IGNORE_URI = {"/checkReg.do","/registAlg.do","login.do"};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
 	private static final String[] SECRET_URI = {};
