@@ -29,13 +29,15 @@ public abstract class CoreController {
 	 * @description 将传入参数转化为JSONDataBean对象,后台解析
 	 * @version 1.0
 	 */
-	protected void getParm(HttpServletRequest req) {
+	protected void getParm(HttpServletRequest req, HttpServletResponse response) {
 		session = req.getSession();
 		String jsonData = PubTool.processParm(req.getParameter("data"));
 		if (!"".equals(jsonData)) {
 			Gson gson = new Gson();
 			Type type = new TypeToken<JsonBean>(){}.getType();
 			data = gson.fromJson(jsonData, type);
+		} else {
+			response.setStatus(404);
 		}
 	}
 
