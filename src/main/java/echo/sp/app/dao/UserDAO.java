@@ -8,7 +8,7 @@ public interface UserDAO {
     public int getCheckReg(Map parmMap);
     
     // REGIST USER AND LOGIN IN 
- 	public int registAlg(Map parmMap);
+ 	public int addRegistAlg(Map parmMap);
  	
     // LOGIN
   	public String login(Map parmMap);

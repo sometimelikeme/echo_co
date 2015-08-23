@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.UserDAO">
 
-      <insert id="registAlg" parameterType="map">
+      <insert id="addRegistAlg" parameterType="map">
           INSERT INTO T_USERS(USER_ID,USER_PWD,USER_TYPE,TEL_NUMBER,IN_VALID)
           VALUES(#{USER_ID},#{USER_PWD},#{USER_TYPE},#{TEL_NUMBER},#{IN_VALID})
       </insert>

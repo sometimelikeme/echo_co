@@ -64,25 +64,32 @@ public class UserController extends CoreController{
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---registAlg---tel: " + tel + "; pwd: " + pwd);
 		}
-		try {
-			
-			pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
-			
-			String user_id = IdGen.uuid();
-			
-			Map parmMap = new HashMap();
-			parmMap.put("USER_ID", user_id);
-			parmMap.put("USER_PWD", pwd);
-			parmMap.put("USER_TYPE", "10");
-			parmMap.put("TEL_NUMBER", tel);
-			parmMap.put("IN_VALID", "1");
-			int res = userService.registAlg(parmMap);
-			
-			processCommonLogin(req, response, user_id, res);
-		} catch (Exception e) {
-			logger.error("UserController---registAlg---interface error: ", e);
+		
+		Map parmMap = new HashMap();
+		parmMap.put("TEL", tel);
+		
+		if (userService.getCheckReg(parmMap) == 1) {
+			super.writeJson(response, "0001", "该用户已注册", null, null);
+		} else {
+			try {
+				
+				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
+				
+				String user_id = IdGen.uuid();
+				
+				parmMap = new HashMap();
+				parmMap.put("USER_ID", user_id);
+				parmMap.put("USER_PWD", pwd);
+				parmMap.put("USER_TYPE", "10");
+				parmMap.put("TEL_NUMBER", tel);
+				parmMap.put("IN_VALID", "1");
+				int res = userService.addRegistAlg(parmMap);
+				
+				processCommonLogin(req, response, user_id, res);
+			} catch (Exception e) {
+				logger.error("UserController---registAlg---interface error: ", e);
+			}
 		}
-			
 	}
 	
 	/**
