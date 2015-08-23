@@ -83,7 +83,6 @@ public class UserController extends CoreController{
 			logger.error("UserController---registAlg---interface error: ", e);
 		}
 			
-			
 	}
 	
 	/**
