@@ -17,7 +17,7 @@ import echo.sp.app.command.page.PubTool;
 public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
 	// GET NORML CODE URI.
-	private static String NORMAL_URI = "/getCode.do";
+	private static String NORMAL_URI = "/getCode.do"; 
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
 	private static final String[] IGNORE_URI = {"/checkReg.do","/registAlg.do","login.do"};
