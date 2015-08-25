@@ -1,10 +1,2 @@
 eclipse.preferences.version=1
-encoding//src/main/java/echo/sp/app/command/model/Code.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/DateUtils.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/Encodes.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/Exceptions.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/IdGen.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/IdcardUtils.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/MD5Util.java=UTF-8
-encoding//src/main/java/echo/sp/app/command/utils/UserAgentUtils.java=UTF-8
 encoding//src/main/resources/db.sql=UTF-8
