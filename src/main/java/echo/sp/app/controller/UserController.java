@@ -69,7 +69,7 @@ public class UserController extends CoreController{
 		parmMap.put("TEL", tel);
 		
 		if (userService.getCheckReg(parmMap) == 1) {
-			super.writeJson(response, "0001", "¸ÃÓÃ»§ÒÑ×¢²á", null, null);
+			super.writeJson(response, "0001", "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½×¢ï¿½ï¿½", null, null);
 		} else {
 			try {
 				
@@ -148,7 +148,7 @@ public class UserController extends CoreController{
 		} 
 		parmMap.put("VERFIY", VERFIY);
 		parmMap.put("SEC_CODE", SEC_CODE);
-		parmMap.put("ACCOUNT", acc);
+		parmMap.put("USER_ID", acc);
 		
 		super.writeJson(response, CODE, MSG, parmMap, null);
 	}
