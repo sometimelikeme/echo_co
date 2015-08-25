@@ -69,7 +69,7 @@ public class UserController extends CoreController{
 		parmMap.put("TEL", tel);
 		
 		if (userService.getCheckReg(parmMap) == 1) {
-			super.writeJson(response, "0001", "���û���ע��", null, null);
+			super.writeJson(response, "0001", "该用户已注册", null, null);
 		} else {
 			try {
 				
