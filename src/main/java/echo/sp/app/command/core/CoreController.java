@@ -58,7 +58,7 @@ public abstract class CoreController {
 		Gson gson = new Gson();
 		String jsonParm = gson.toJson(data);  
 		
-		response.setContentType("application/json");
+		response.setContentType("text/html");
         response.setCharacterEncoding("utf-8");
         
 		PrintWriter writer = null;
