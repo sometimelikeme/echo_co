@@ -35,7 +35,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		String no_co = PubTool.processParm(request.getParameter("no_co"));
 		String sc_co = PubTool.processParm(request.getParameter("sc_co"));
 		
-		if (url.indexOf(NORMAL_URI) > 0) { // FIRST GET THE NORMAL CODE.
+		if (url.contains(NORMAL_URI)) { // FIRST GET THE NORMAL CODE.
 			flag = true;
 		} else if (!"".equals(no_co) && !"".equals(sc_co)) { // SECRET ACCESS.
 			for (String s : SECRET_URI) {

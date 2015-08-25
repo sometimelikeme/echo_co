@@ -35,7 +35,7 @@ public class UserController extends CoreController{
 	 * @param response
 	 * @param tel
 	 */
-	@RequestMapping("checkReg")
+	@RequestMapping("login/checkReg")
 	public void checkReg(HttpServletResponse response, @RequestParam String tel) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---checkReg---begin: " + tel);
@@ -58,7 +58,7 @@ public class UserController extends CoreController{
 	 * @param tel
 	 * @param pwd
 	 */
-	@RequestMapping("registAlg")
+	@RequestMapping("login/registAlg")
 	public void registAlg(HttpServletRequest req, HttpServletResponse response,
 			@RequestParam String tel, @RequestParam String pwd) {
 		if (logger.isDebugEnabled()) {
@@ -99,7 +99,7 @@ public class UserController extends CoreController{
 	 * @param acc
 	 * @param pwd
 	 */
-	@RequestMapping("login")
+	@RequestMapping("login/login")
 	public void login(HttpServletRequest req, HttpServletResponse response,
 			@RequestParam String tel, @RequestParam String pwd) {
 		if (logger.isDebugEnabled()) {

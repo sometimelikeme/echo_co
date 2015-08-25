@@ -26,7 +26,7 @@ public class NoCoController extends CoreController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoCoController.class);
 	
-	@RequestMapping("getCode")
+	@RequestMapping("login/getCode")
 	public void getCode(HttpServletResponse response, @RequestParam String no_co) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("NoCoController---getCode---no_co: " + no_co);
