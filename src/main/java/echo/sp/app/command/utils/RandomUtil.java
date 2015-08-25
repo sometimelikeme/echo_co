@@ -9,9 +9,9 @@ public class RandomUtil {
 	public static final String NUMBERCHAR = "0123456789";
 
 	/**
-	 * ·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸¡¢Êı×Ö)
-	 * @param length Ëæ»ú×Ö·û´®³¤¶È
-	 * @return Ëæ»ú×Ö·û´®
+	 * è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºå­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯ã€æ•°å­—)
+	 * @param length éšæœºå­—ç¬¦ä¸²é•¿åº¦
+	 * @return éšæœºå­—ç¬¦ä¸²
 	 */
 	public static String generateString(int length) {
 		StringBuffer sb = new StringBuffer();
@@ -23,9 +23,9 @@ public class RandomUtil {
 	}
 
 	/**
-	 * ·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú´¿×ÖÄ¸×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸)
-	 * @param length Ëæ»ú×Ö·û´®³¤¶È
-	 * @return Ëæ»ú×Ö·û´®
+	 * è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºçº¯å­—æ¯å­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯)
+	 * @param length éšæœºå­—ç¬¦ä¸²é•¿åº¦
+	 * @return éšæœºå­—ç¬¦ä¸²
 	 */
 	public static String generateMixString(int length) {
 		StringBuffer sb = new StringBuffer();
@@ -37,27 +37,27 @@ public class RandomUtil {
 	}
 
 	/**
-	 * ·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú´¿´óĞ´×ÖÄ¸×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸)
-	 * @param length Ëæ»ú×Ö·û´®³¤¶È
-	 * @return Ëæ»ú×Ö·û´®
+	 * è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºçº¯å¤§å†™å­—æ¯å­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯)
+	 * @param length éšæœºå­—ç¬¦ä¸²é•¿åº¦
+	 * @return éšæœºå­—ç¬¦ä¸²
 	 */
 	public static String generateLowerString(int length) {
 		return generateMixString(length).toLowerCase();
 	}
 
 	/**
-	 * ·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú´¿Ğ¡Ğ´×ÖÄ¸×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸)
-	 * @param length Ëæ»ú×Ö·û´®³¤¶È
-	 * @return Ëæ»ú×Ö·û´®
+	 * è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºçº¯å°å†™å­—æ¯å­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯)
+	 * @param length éšæœºå­—ç¬¦ä¸²é•¿åº¦
+	 * @return éšæœºå­—ç¬¦ä¸²
 	 */
 	public static String generateUpperString(int length) {
 		return generateMixString(length).toUpperCase();
 	}
 
 	/**
-	 * Éú³ÉÒ»¸ö¶¨³¤µÄ´¿0×Ö·û´®
-	 * @param length ×Ö·û´®³¤¶È
-	 * @return ´¿0×Ö·û´®
+	 * ç”Ÿæˆä¸€ä¸ªå®šé•¿çš„çº¯0å­—ç¬¦ä¸²
+	 * @param length å­—ç¬¦ä¸²é•¿åº¦
+	 * @return çº¯0å­—ç¬¦ä¸²
 	 */
 	public static String generateZeroString(int length) {
 		StringBuffer sb = new StringBuffer();
@@ -68,10 +68,10 @@ public class RandomUtil {
 	}
 
 	/**
-	 * ¸ù¾İÊı×ÖÉú³ÉÒ»¸ö¶¨³¤µÄ×Ö·û´®£¬³¤¶È²»¹»Ç°Ãæ²¹0
-	 * @param num Êı×Ö
-	 * @param fixdlenth ×Ö·û´®³¤¶È
-	 * @return ¶¨³¤µÄ×Ö·û´®
+	 * æ ¹æ®æ•°å­—ç”Ÿæˆä¸€ä¸ªå®šé•¿çš„å­—ç¬¦ä¸²ï¼Œé•¿åº¦ä¸å¤Ÿå‰é¢è¡¥0
+	 * @param num æ•°å­—
+	 * @param fixdlenth å­—ç¬¦ä¸²é•¿åº¦
+	 * @return å®šé•¿çš„å­—ç¬¦ä¸²
 	 */
 	public static String toFixdLengthString(long num, int fixdlenth) {
 		StringBuffer sb = new StringBuffer();
@@ -79,17 +79,17 @@ public class RandomUtil {
 		if (fixdlenth - strNum.length() >= 0) {
 			sb.append(generateZeroString(fixdlenth - strNum.length()));
 		} else {
-			throw new RuntimeException("½«Êı×Ö" + num + "×ª»¯Îª³¤¶ÈÎª" + fixdlenth
-					+ "µÄ×Ö·û´®·¢ÉúÒì³££¡");
+			throw new RuntimeException("å°†æ•°å­—" + num + "è½¬åŒ–ä¸ºé•¿åº¦ä¸º" + fixdlenth
+					+ "çš„å­—ç¬¦ä¸²å‘ç”Ÿå¼‚å¸¸ï¼");
 		}
 		sb.append(strNum);
 		return sb.toString();
 	}
 
 	/**
-	 * Ã¿´ÎÉú³ÉµÄlenÎ»Êı¶¼²»ÏàÍ¬
+	 * æ¯æ¬¡ç”Ÿæˆçš„lenä½æ•°éƒ½ä¸ç›¸åŒ
 	 * @param param
-	 * @return ¶¨³¤µÄÊı×Ö
+	 * @return å®šé•¿çš„æ•°å­—
 	 */
 	public static int getNotSimple(int[] param, int len) {
 		Random rand = new Random();
@@ -107,16 +107,16 @@ public class RandomUtil {
 	}
 
 //	public static void main(String[] args) {
-//		System.out.println("·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸¡¢Êı×Ö):" + generateString(10));
-//		System.out.println("·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú´¿×ÖÄ¸×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸):" + generateMixString(10));
-//		System.out.println("·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú´¿´óĞ´×ÖÄ¸×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸):"
+//		System.out.println("è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºå­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯ã€æ•°å­—):" + generateString(10));
+//		System.out.println("è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºçº¯å­—æ¯å­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯):" + generateMixString(10));
+//		System.out.println("è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºçº¯å¤§å†™å­—æ¯å­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯):"
 //				+ generateLowerString(10));
-//		System.out.println("·µ»ØÒ»¸ö¶¨³¤µÄËæ»ú´¿Ğ¡Ğ´×ÖÄ¸×Ö·û´®(Ö»°üº¬´óĞ¡Ğ´×ÖÄ¸):"
+//		System.out.println("è¿”å›ä¸€ä¸ªå®šé•¿çš„éšæœºçº¯å°å†™å­—æ¯å­—ç¬¦ä¸²(åªåŒ…å«å¤§å°å†™å­—æ¯):"
 //				+ generateUpperString(10));
-//		System.out.println("Éú³ÉÒ»¸ö¶¨³¤µÄ´¿0×Ö·û´®:" + generateZeroString(10));
-//		System.out.println("¸ù¾İÊı×ÖÉú³ÉÒ»¸ö¶¨³¤µÄ×Ö·û´®£¬³¤¶È²»¹»Ç°Ãæ²¹0:"
+//		System.out.println("ç”Ÿæˆä¸€ä¸ªå®šé•¿çš„çº¯0å­—ç¬¦ä¸²:" + generateZeroString(10));
+//		System.out.println("æ ¹æ®æ•°å­—ç”Ÿæˆä¸€ä¸ªå®šé•¿çš„å­—ç¬¦ä¸²ï¼Œé•¿åº¦ä¸å¤Ÿå‰é¢è¡¥0:"
 //				+ toFixdLengthString(123, 10));
 //		int[] in = { 1, 2, 3, 4, 5, 6, 7 };
-//		System.out.println("Ã¿´ÎÉú³ÉµÄlenÎ»Êı¶¼²»ÏàÍ¬:" + getNotSimple(in, 3));
+//		System.out.println("æ¯æ¬¡ç”Ÿæˆçš„lenä½æ•°éƒ½ä¸ç›¸åŒ:" + getNotSimple(in, 3));
 //	}
 }

@@ -19,7 +19,7 @@ import echo.sp.app.command.utils.Encodes;
 /**   
  * GET THE NORMAL CODE FOR CLIENT
  * @author Ethan   
- * @date 2015Äê8ÔÂ23ÈÕ 
+ * @date 2015å¹´8æœˆ23æ—¥ 
  */
 @Controller
 public class NoCoController extends CoreController{

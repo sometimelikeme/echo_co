@@ -11,7 +11,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 /**   
  * @author Ethan   
- * @date 2015Äê8ÔÂ11ÈÕ 
+ * @date 2015å¹´8æœˆ11æ—¥ 
  */
 public class PubTool {
 	

@@ -17,16 +17,16 @@ import echo.sp.app.command.model.JsonBean;
 import echo.sp.app.command.page.PubTool;
 
 /**
- * ËùÓĞControllerµÄ»ùÀà
+ * æ‰€æœ‰Controllerçš„åŸºç±»
  * @author Ethan
- * @date 2015Äê8ÔÂ10ÈÕ
+ * @date 2015å¹´8æœˆ10æ—¥
  */ 
 public abstract class CoreController {
 	protected JsonBean data; 
 	protected HttpSession session; 
 	
 	/**
-	 * @description ½«´«Èë²ÎÊı×ª»¯ÎªJSONDataBean¶ÔÏó,ºóÌ¨½âÎö
+	 * @description å°†ä¼ å…¥å‚æ•°è½¬åŒ–ä¸ºJSONDataBeanå¯¹è±¡,åå°è§£æ
 	 * @version 1.0
 	 */
 	protected void getParm(HttpServletRequest req, HttpServletResponse response) {
@@ -42,7 +42,7 @@ public abstract class CoreController {
 	}
 
 	/**
-	 * @description ½«²ÎÊı·â×°³ÉJSON,ºóÌ¨·â×°;Êä³öjsonParm
+	 * @description å°†å‚æ•°å°è£…æˆJSON,åå°å°è£…;è¾“å‡ºjsonParm
 	 * @version 1.0
 	 */
 	protected void writeJson(HttpServletResponse response, String status,

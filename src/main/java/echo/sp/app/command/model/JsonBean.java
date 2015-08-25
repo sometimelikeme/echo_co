@@ -5,14 +5,14 @@ import java.util.List;
 
 /**
  * 
- * ±¾ÀàÎªAJAXÇëÇóºóÌ¨½âÎöJSON Bean
+ * æœ¬ç±»ä¸ºAJAXè¯·æ±‚åå°è§£æJSON Bean
  * @author Ethan   
  * @version 1.0
  */
 public class JsonBean {
 
-	String status;// ×´Ì¬Âë
-	String msg;// ×´Ì¬ËµÃ÷
+	String status;// çŠ¶æ€ç 
+	String msg;// çŠ¶æ€è¯´æ˜
 
 	List<Map<String, Object>> dataset_line;
 

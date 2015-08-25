@@ -6,7 +6,7 @@ import java.util.Map;
 /**   
  * STORE SECRET KEY AND NORMAL KEY
  * @author Ethan   
- * @date 2015Äê8ÔÂ23ÈÕ 
+ * @date 2015å¹´8æœˆ23æ—¥ 
  */
 public class SecCode {
 	
@@ -14,12 +14,12 @@ public class SecCode {
 	
 	private static Map<String, String> secMap = new HashMap<String, String>();
 	
-	// Ð´Èë»º´æ
+	// å†™å…¥ç¼“å­˜
 	public static void setKey(String key, String val) { 
 		secMap.put(key, val);
 	}
 	
-	// Ð´Èë»º´æ
+	// å†™å…¥ç¼“å­˜
 	public static String getKey(String key) {
 		return secMap.get(key);
 	}

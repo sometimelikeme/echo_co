@@ -23,7 +23,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 /**   
  * @author Ethan   
- * @date 2015Äê8ÔÂ11ÈÕ 
+ * @date 2015å¹´8æœˆ11æ—¥ 
  */
 @Controller
 public class TestPaginator extends CoreController implements PageParm{
@@ -40,15 +40,15 @@ public class TestPaginator extends CoreController implements PageParm{
             @RequestParam(required = false) String sort,
             @RequestParam(required = false) String dir){
 		
-//		PageListÀàÊÇ¼Ì³ĞÓÚArrayListµÄ£¬ÕâÑùDaoÖĞ¾Í²»ÓÃÎªÁË×¨ÃÅ·ÖÒ³ÔÙ¶àĞ´Ò»¸ö·½·¨
-//		Ê¹ÓÃPageBoundsÕâ¸ö¶ÔÏóÀ´¿ØÖÆ½á¹ûµÄÊä³ö£¬³£ÓÃµÄÊ¹ÓÃ·½Ê½Ò»°ã¶¼¿ÉÒÔÍ¨¹ı¹¹Ôìº¯ÊıÀ´ÅäÖÃ¡£
-//		new PageBounds();//Ä¬ÈÏ¹¹Ôìº¯Êı²»Ìá¹©·ÖÒ³£¬·µ»ØArrayList
-//		new PageBounds(int limit);//È¡TOPN²Ù×÷£¬·µ»ØArrayList
-//		new PageBounds(Order... order);//Ö»ÅÅĞò²»·ÖÒ³£¬·µ»ØArrayList
+//		PageListç±»æ˜¯ç»§æ‰¿äºArrayListçš„ï¼Œè¿™æ ·Daoä¸­å°±ä¸ç”¨ä¸ºäº†ä¸“é—¨åˆ†é¡µå†å¤šå†™ä¸€ä¸ªæ–¹æ³•
+//		ä½¿ç”¨PageBoundsè¿™ä¸ªå¯¹è±¡æ¥æ§åˆ¶ç»“æœçš„è¾“å‡ºï¼Œå¸¸ç”¨çš„ä½¿ç”¨æ–¹å¼ä¸€èˆ¬éƒ½å¯ä»¥é€šè¿‡æ„é€ å‡½æ•°æ¥é…ç½®ã€‚
+//		new PageBounds();//é»˜è®¤æ„é€ å‡½æ•°ä¸æä¾›åˆ†é¡µï¼Œè¿”å›ArrayList
+//		new PageBounds(int limit);//å–TOPNæ“ä½œï¼Œè¿”å›ArrayList
+//		new PageBounds(Order... order);//åªæ’åºä¸åˆ†é¡µï¼Œè¿”å›ArrayList
 //		 
-//		new PageBounds(int page, int limit);//Ä¬ÈÏ·ÖÒ³£¬·µ»ØPageList
-//		new PageBounds(int page, int limit, Order... order);//·ÖÒ³¼ÓÅÅĞò£¬·µ»ØPageList
-//		new PageBounds(int page, int limit, List<Order> orders, boolean containsTotalCount);//Ê¹ÓÃcontainsTotalCountÀ´¾ö¶¨²é²»²éÑ¯totalCount£¬¼´·µ»ØArrayList»¹ÊÇPageList
+//		new PageBounds(int page, int limit);//é»˜è®¤åˆ†é¡µï¼Œè¿”å›PageList
+//		new PageBounds(int page, int limit, Order... order);//åˆ†é¡µåŠ æ’åºï¼Œè¿”å›PageList
+//		new PageBounds(int page, int limit, List<Order> orders, boolean containsTotalCount);//ä½¿ç”¨containsTotalCountæ¥å†³å®šæŸ¥ä¸æŸ¥è¯¢totalCountï¼Œå³è¿”å›ArrayListè¿˜æ˜¯PageList
 
         PageBounds pageBounds = new PageBounds(page, limit , Order.formString(sort));
         

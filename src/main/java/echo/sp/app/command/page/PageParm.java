@@ -2,7 +2,7 @@ package echo.sp.app.command.page;
 
 /**   
  * @author Ethan   
- * @date 2015Äê8ÔÂ11ÈÕ 
+ * @date 2015å¹´8æœˆ11æ—¥ 
  */
 public interface PageParm {
 	String page = "1";

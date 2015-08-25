@@ -19,14 +19,13 @@ public class DateUtils extends DateFormatUtils {
 			"yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd",
 			"yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM" };
 	
-	// test
-	public static void main(String args[]) {
-		// System.out.print("ddddddddd: " + getNextDay(getToday(),3));
-		 // System.out.println(getCurMonth());
-		 // System.out.println(getNextMonth(getCurMonth(),1));
-		System.out.println(getWeek(getToday()));
-		System.out.println(getCurrentTimeMillis());
-	}
+//	public static void main(String args[]) {
+//		System.out.print("ddddddddd: " + getNextDay(getToday(),3));
+//		System.out.println(getCurMonth());
+//		System.out.println(getNextMonth(getCurMonth(),1));
+//		System.out.println(getWeek(getToday()));
+//		System.out.println(getCurrentTimeMillis());
+//	}
 	
 	/**
 	 * 获取当前系统日期 返回 8位 like 20050101

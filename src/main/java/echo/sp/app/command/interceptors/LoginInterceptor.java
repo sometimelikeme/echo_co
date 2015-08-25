@@ -12,7 +12,7 @@ import echo.sp.app.command.page.PubTool;
 /**    
  * INTERCEPTOR
  * @author Ethan   
- * @date 2015Äê8ÔÂ10ÈÕ 
+ * @date 2015å¹´8æœˆ10æ—¥ 
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
