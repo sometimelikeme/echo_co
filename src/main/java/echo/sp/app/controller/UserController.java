@@ -161,7 +161,7 @@ public class UserController extends CoreController{
 			} else { // VERFITY IF THE PASSWORD IS INVALID THROUGH CHECK IF THE USER EXIST
 				Map pMap = new HashMap();
 				pMap.put("TEL", tel);
-				if (userService.getCheckReg(parmMap) > 0) {
+				if (userService.getCheckReg(pMap) > 0) {
 					CODE = "9998";
 					MSG = "密码错误";
 				}
