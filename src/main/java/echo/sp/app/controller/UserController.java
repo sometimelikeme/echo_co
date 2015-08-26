@@ -20,6 +20,7 @@ import echo.sp.app.command.model.SecCode;
 import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
+import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.UserService;
 
 /**
@@ -68,10 +69,16 @@ public class UserController extends CoreController{
 	 */
 	@RequestMapping("login/registAlg")
 	public void registAlg(HttpServletRequest req, HttpServletResponse response,
-			@RequestParam String tel, @RequestParam String pwd) {
+			@RequestParam String tel, @RequestParam String pwd, @RequestParam String ut) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---registAlg---tel: " + tel + "; pwd: " + pwd);
 		}
+		
+		// 限制用户必须在移动设备上注册
+		if ("10".equals(ut) && !UserAgentUtils.isMobileOrTablet(req)) {
+			super.writeJson(response, Code.FAIL, Code.FAIL_MSG, null, null);
+			return;
+		} 
 		
 		Map parmMap = new HashMap();
 		parmMap.put("TEL", tel);
@@ -128,10 +135,17 @@ public class UserController extends CoreController{
 	 */
 	@RequestMapping("login/login")
 	public void login(HttpServletRequest req, HttpServletResponse response,
-			@RequestParam String tel, @RequestParam String pwd) {
+			@RequestParam String tel, @RequestParam String pwd, @RequestParam String ut) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---login---tel: " + tel + "; pwd: " + pwd);
 		}
+		
+		// 限制用户必须在移动设备上登陆
+		if ("10".equals(ut) && !UserAgentUtils.isMobileOrTablet(req)) {
+			super.writeJson(response, Code.FAIL, Code.FAIL_MSG, null, null);
+			return;
+		} 
+		
 		try {
 			
 			pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
@@ -150,7 +164,7 @@ public class UserController extends CoreController{
 			String VERFIY = "0",
 				   SEC_CODE = "",
 				   CODE = Code.FAIL,// DEAULT LOGIN FAILS
-				   MSG = Code.FAIL_MSG;
+				   MSG = "账号不存在";
 			if (res == 1) { // LOGIN PARAMETERS MATCHES
 				sessionInit(req, user_id);
 				SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
