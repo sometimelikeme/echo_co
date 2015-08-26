@@ -22,6 +22,14 @@ import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
 import echo.sp.app.service.UserService;
 
+/**
+ * USER LOGIN CONTROLLER
+ * 1.CHECK IF REGISTER EXISTS
+ * 2.REGIST USER AND LOGIN
+ * 3.LOGIN
+ * @author Ethan
+ * 2015-8-26
+ */
 @Controller
 public class UserController extends CoreController{
 	
@@ -75,17 +83,36 @@ public class UserController extends CoreController{
 				
 				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
 				
+				// GENERATE UNIQUE USER ID
 				String user_id = IdGen.uuid();
 				
 				parmMap = new HashMap();
 				parmMap.put("USER_ID", user_id);
 				parmMap.put("USER_PWD", pwd);
-				parmMap.put("USER_TYPE", "10");
+				parmMap.put("USER_TYPE", "10");// DEFAULT USER TYPE
 				parmMap.put("TEL_NUMBER", tel);
-				parmMap.put("IN_VALID", "1");
+				parmMap.put("IN_VALID", "1");// DEFAULT VALID
 				int res = userService.addRegistAlg(parmMap);
 				
-				processCommonLogin(req, response, user_id, res);
+				parmMap = new HashMap();
+				String VERFIY = "0", 
+					   SEC_CODE = "", 
+					   CODE = Code.FAIL,// DEAULT REGISTRATION FAILS
+					   MSG = Code.FAIL_MSG;
+				if (res == 1) {
+					sessionInit(req, user_id);
+					SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
+					SecCode.setKey(user_id, SEC_CODE);
+					VERFIY = "1";
+					CODE = Code.SUCCESS;
+					MSG = Code.SUCCESS_MSG;
+				}
+				parmMap.put("VERFIY", VERFIY);
+				parmMap.put("SEC_CODE", SEC_CODE);
+				parmMap.put("USER_ID", user_id);
+				
+				super.writeJson(response, CODE, MSG, parmMap, null);
+				
 			} catch (Exception e) {
 				logger.error("UserController---registAlg---interface error: ", e);
 			}
@@ -119,38 +146,35 @@ public class UserController extends CoreController{
 				res = 1;
 			}
 			
-			processCommonLogin(req, response, user_id, res);
+			parmMap = new HashMap();
+			String VERFIY = "0",
+				   SEC_CODE = "",
+				   CODE = Code.FAIL,// DEAULT LOGIN FAILS
+				   MSG = Code.FAIL_MSG;
+			if (res == 1) { // LOGIN PARAMETERS MATCHES
+				sessionInit(req, user_id);
+				SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
+				SecCode.setKey(user_id, SEC_CODE);
+				VERFIY = "1";
+				CODE = Code.SUCCESS;
+			    MSG = Code.SUCCESS_MSG;
+			} else { // VERFITY IF THE PASSWORD IS INVALID THROUGH CHECK IF THE USER EXIST
+				Map pMap = new HashMap();
+				pMap.put("TEL", tel);
+				if (userService.getCheckReg(parmMap) > 0) {
+					CODE = "9998";
+					MSG = "密码错误";
+				}
+			}
+			parmMap.put("VERFIY", VERFIY);
+			parmMap.put("SEC_CODE", SEC_CODE);
+			parmMap.put("USER_ID", user_id);
+			
+			super.writeJson(response, CODE, MSG, parmMap, null);
+			
 		} catch (Exception e) {
 			logger.error("UserController---login---interface error: ", e);
 		}
-	}
-	
-	/**
-	 * PUBLIC PROCESS THE LOGIN ACTIONS
-	 * @param req
-	 * @param response
-	 * @param acc
-	 * @param res
-	 */
-	private void processCommonLogin(HttpServletRequest req, HttpServletResponse response,String acc, int res) {
-		Map parmMap = new HashMap();
-		String VERFIY = "0",
-			   SEC_CODE = "",
-			   CODE = Code.FAIL,
-			   MSG = Code.FAIL_MSG;
-		if (res == 1) {
-			sessionInit(req, acc);
-			SEC_CODE = IdGen.uuid();
-			SecCode.setKey(acc, SEC_CODE);
-			VERFIY = "1";
-			CODE = Code.SUCCESS;
-		    MSG = Code.SUCCESS_MSG;
-		} 
-		parmMap.put("VERFIY", VERFIY);
-		parmMap.put("SEC_CODE", SEC_CODE);
-		parmMap.put("USER_ID", acc);
-		
-		super.writeJson(response, CODE, MSG, parmMap, null);
 	}
 	
 	/**
