@@ -107,7 +107,8 @@ public class UserController extends CoreController{
 					   CODE = Code.FAIL,// DEAULT REGISTRATION FAILS
 					   MSG = Code.FAIL_MSG;
 				if (res == 1) {
-					sessionInit(req, user_id);
+					// SESSION INITIALIZATON
+					parmMap.putAll(sessionInit(req, user_id, ut));
 					SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
 					SecCode.setKey(user_id, SEC_CODE);
 					VERFIY = "1";
@@ -166,7 +167,8 @@ public class UserController extends CoreController{
 				   CODE = Code.FAIL,// DEAULT LOGIN FAILS
 				   MSG = "账号不存在";
 			if (res == 1) { // LOGIN PARAMETERS MATCHES
-				sessionInit(req, user_id);
+				// SESSION INITIALIZATON
+				parmMap.putAll(sessionInit(req, user_id, ut));
 				SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
 				SecCode.setKey(user_id, SEC_CODE);
 				VERFIY = "1";
@@ -196,9 +198,18 @@ public class UserController extends CoreController{
 	 * @param req
 	 * @param user_id
 	 */
-	private void sessionInit(HttpServletRequest req, String user_id){
+	private Map sessionInit(HttpServletRequest req, String user_id, String ut){
 		HttpSession session = req.getSession();
 		session.setAttribute("user_id", user_id);
+		Map resMap = new HashMap();
+		if (!"10".equals(ut)) { // 获取店铺信息
+			Map parmMap = new HashMap();
+			parmMap.put("USER_ID", user_id);
+			resMap = userService.getMerchantInfo(parmMap);
+			// 用户对应的店铺ID
+			session.setAttribute("merchant_id", (String)resMap.get("MERCHANT_ID"));
+		}
+		return resMap;
 	}
 	
 }

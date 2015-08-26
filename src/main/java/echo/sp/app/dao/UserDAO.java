@@ -12,4 +12,7 @@ public interface UserDAO {
  	
     // LOGIN
   	public String login(Map parmMap);
+  	
+  	// GET MERCHANTS INFO
+ 	public Map getMerchantInfo(Map parmMap);
 }

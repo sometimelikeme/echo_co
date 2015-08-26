@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService{
 	public String login(Map parmMap) {
 		return userDAO.login(parmMap);
 	}
+
+	@Override
+	public Map getMerchantInfo(Map parmMap) {
+		return userDAO.getMerchantInfo(parmMap);
+	}
 }

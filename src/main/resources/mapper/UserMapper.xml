@@ -16,4 +16,8 @@
       <select id="login" parameterType="map" resultType="String">
           SELECT USER_ID FROM T_USERS WHERE TEL_NUMBER = #{TEL} AND USER_PWD = #{PWD}
       </select>
+      
+      <select id="getMerchantInfo" parameterType="map" resultType="Map">
+          SELECT MERCHANT_ID FROM T_MERCHANTS WHERE USER_ID = #{USER_ID}
+      </select>
 </mapper>
