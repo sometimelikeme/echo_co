@@ -21,6 +21,7 @@ import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
 import echo.sp.app.command.utils.UserAgentUtils;
+import echo.sp.app.command.utils.ValidUtils;
 import echo.sp.app.service.UserService;
 
 /**
@@ -49,13 +50,15 @@ public class UserController extends CoreController{
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---checkReg---begin: " + tel);
 		}
-		if (!"".equals(tel)) {
+		if (!"".equals(tel) && ValidUtils.isMobileNO(tel)) {
 			Map parmMap = new HashMap();
 			parmMap.put("TEL", tel);
 			int res = userService.getCheckReg(parmMap);
 			parmMap = new HashMap();
 			parmMap.put("IS_EXIST", res > 0 ? "1" : "0");
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
+		} else {
+			super.writeJson(response, "9998", "无效手机号码", null, null);
 		}
 	}
 	
@@ -76,55 +79,58 @@ public class UserController extends CoreController{
 		
 		// 限制用户必须在移动设备上注册
 		if ("10".equals(ut) && !UserAgentUtils.isMobileOrTablet(req)) {
-			super.writeJson(response, Code.FAIL, Code.FAIL_MSG, null, null);
-			return;
-		} 
-		
-		Map parmMap = new HashMap();
-		parmMap.put("TEL", tel);
-		
-		if (userService.getCheckReg(parmMap) == 1) {
-			super.writeJson(response, "0001", "该用户已注册", null, null);
+			super.writeJson(response, "9998", "无效注册设备", null, null);
+		} else if (!ValidUtils.isMobileNO(tel)) {
+			super.writeJson(response, "9997", "无效手机号码", null, null);
 		} else {
-			try {
-				
-				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
-				
-				// GENERATE UNIQUE USER ID
-				String user_id = IdGen.uuid();
-				
-				parmMap = new HashMap();
-				parmMap.put("USER_ID", user_id);
-				parmMap.put("USER_PWD", pwd);
-				parmMap.put("USER_TYPE", "10");// DEFAULT USER TYPE
-				parmMap.put("TEL_NUMBER", tel);
-				parmMap.put("IN_VALID", "1");// DEFAULT VALID
-				int res = userService.addRegistAlg(parmMap);
-				
-				parmMap = new HashMap();
-				String VERFIY = "0", 
-					   SEC_CODE = "", 
-					   CODE = Code.FAIL,// DEAULT REGISTRATION FAILS
-					   MSG = Code.FAIL_MSG;
-				if (res == 1) {
-					// SESSION INITIALIZATON
-					parmMap.putAll(sessionInit(req, user_id, ut));
-					SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
-					SecCode.setKey(user_id, SEC_CODE);
-					VERFIY = "1";
-					CODE = Code.SUCCESS;
-					MSG = Code.SUCCESS_MSG;
+			
+			Map parmMap = new HashMap();
+			parmMap.put("TEL", tel);
+			
+			if (userService.getCheckReg(parmMap) == 1) {
+				super.writeJson(response, "9996", "该用户已注册", null, null);
+			} else {
+				try {
+					
+					pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
+					
+					// GENERATE UNIQUE USER ID
+					String user_id = IdGen.uuid();
+					
+					parmMap = new HashMap();
+					parmMap.put("USER_ID", user_id);
+					parmMap.put("USER_PWD", pwd);
+					parmMap.put("USER_TYPE", "10");// DEFAULT USER TYPE
+					parmMap.put("TEL_NUMBER", tel);
+					parmMap.put("IN_VALID", "1");// DEFAULT VALID
+					int res = userService.addRegistAlg(parmMap);
+					
+					parmMap = new HashMap();
+					String VERFIY = "0", 
+						   SEC_CODE = "", 
+						   CODE = Code.FAIL,// DEAULT REGISTRATION FAILS
+						   MSG = "注册失败";
+					if (res == 1) {
+						// SESSION INITIALIZATON
+						parmMap.putAll(sessionInit(req, user_id, ut));
+						SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
+						SecCode.setKey(user_id, SEC_CODE);
+						VERFIY = "1";
+						CODE = Code.SUCCESS;
+						MSG = Code.SUCCESS_MSG;
+					}
+					parmMap.put("VERFIY", VERFIY);
+					parmMap.put("SEC_CODE", SEC_CODE);
+					parmMap.put("USER_ID", user_id);
+					
+					super.writeJson(response, CODE, MSG, parmMap, null);
+					
+				} catch (Exception e) {
+					logger.error("UserController---registAlg---interface error: ", e);
 				}
-				parmMap.put("VERFIY", VERFIY);
-				parmMap.put("SEC_CODE", SEC_CODE);
-				parmMap.put("USER_ID", user_id);
-				
-				super.writeJson(response, CODE, MSG, parmMap, null);
-				
-			} catch (Exception e) {
-				logger.error("UserController---registAlg---interface error: ", e);
 			}
 		}
+		
 	}
 	
 	/**
