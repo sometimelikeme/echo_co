@@ -98,7 +98,6 @@ public class UserController extends CoreController{
 				super.writeJson(response, "9995", "该用户已注册", null, null);
 			} else {
 				try {
-					
 					pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
 					
 					// GENERATE UNIQUE USER ID
@@ -156,54 +155,56 @@ public class UserController extends CoreController{
 		
 		// 限制用户必须在移动设备上登陆
 		if ("10".equals(ut) && !UserAgentUtils.isMobileOrTablet(req)) {
-			super.writeJson(response, Code.FAIL, Code.FAIL_MSG, null, null);
-			return;
-		} 
-		
-		try {
-			
-			pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
-			
-			Map parmMap = new HashMap();
-			parmMap.put("TEL", tel);
-			parmMap.put("PWD", pwd);
-			String user_id = userService.login(parmMap);
-			
-			int res = 0;
-			if (user_id != null && !"".equals(user_id)) {
-				res = 1;
-			}
-			
-			parmMap = new HashMap();
-			String VERFIY = "0",
-				   SEC_CODE = "",
-				   CODE = Code.FAIL,// DEAULT LOGIN FAILS
-				   MSG = "账号不存在";
-			if (res == 1) { // LOGIN PARAMETERS MATCHES
-				// SESSION INITIALIZATON
-				parmMap.putAll(sessionInit(req, user_id, ut));
-				SEC_CODE = IdGen.uuid();// GENERATE USER SECRATE CODE
-				SecCode.setKey(user_id, SEC_CODE);
-				VERFIY = "1";
-				CODE = Code.SUCCESS;
-			    MSG = Code.SUCCESS_MSG;
-			} else { // VERFITY IF THE PASSWORD IS INVALID THROUGH CHECK IF THE USER EXIST
-				Map pMap = new HashMap();
-				pMap.put("TEL", tel);
-				if (userService.getCheckReg(pMap) > 0) {
-					CODE = "9998";
-					MSG = "密码错误";
+			super.writeJson(response, "9998", "无效登陆设备", null, null);
+		} else if (!ValidUtils.isMobileNO(tel)) {
+			super.writeJson(response, "9997", "无效手机号码", null, null);
+		} else {
+			try {
+				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
+				
+				Map parmMap = new HashMap();
+				parmMap.put("TEL", tel);
+				parmMap.put("PWD", pwd);
+				String user_id = userService.login(parmMap);
+				
+				int res = 0;
+				if (user_id != null && !"".equals(user_id)) {
+					res = 1;
 				}
+				
+				parmMap = new HashMap();
+				String VERFIY = "0",
+					   SEC_CODE = "",
+					   CODE = "9996",// DEAULT LOGIN FAILS
+					   MSG = "账号不存在";
+				if (res == 1) { // LOGIN PARAMETERS MATCHES
+					// SESSION INITIALIZATON
+					parmMap.putAll(sessionInit(req, user_id, ut));
+					// GENERATE USER SECRATE CODE
+					SEC_CODE = IdGen.uuid();
+					SecCode.setKey(user_id, SEC_CODE);
+					VERFIY = "1";
+					CODE = Code.SUCCESS;
+				    MSG = Code.SUCCESS_MSG;
+				} else { // VERFITY IF THE PASSWORD IS INVALID THROUGH CHECK IF THE USER EXIST
+					Map pMap = new HashMap();
+					pMap.put("TEL", tel);
+					if (userService.getCheckReg(pMap) > 0) {
+						CODE = "9995";
+						MSG = "密码错误";
+					}
+				}
+				parmMap.put("VERFIY", VERFIY);
+				parmMap.put("SEC_CODE", SEC_CODE);
+				parmMap.put("USER_ID", user_id);
+				
+				super.writeJson(response, CODE, MSG, parmMap, null);
+				
+			} catch (Exception e) {
+				logger.error("UserController---login---interface error: ", e);
 			}
-			parmMap.put("VERFIY", VERFIY);
-			parmMap.put("SEC_CODE", SEC_CODE);
-			parmMap.put("USER_ID", user_id);
-			
-			super.writeJson(response, CODE, MSG, parmMap, null);
-			
-		} catch (Exception e) {
-			logger.error("UserController---login---interface error: ", e);
 		}
+		
 	}
 	
 	/**
