@@ -77,18 +77,25 @@ public class UserController extends CoreController{
 			logger.debug("UserController---registAlg---tel: " + tel + "; pwd: " + pwd);
 		}
 		
+		// 限制只有用户端可以注册
 		// 限制用户必须在移动设备上注册
-		if ("10".equals(ut) && !UserAgentUtils.isMobileOrTablet(req)) {
+		// 检测手机号
+		// 检测密码长度
+		if (!"10".equals(ut)) {
+			super.writeJson(response, Code.FAIL, "无效客户端注册", null, null);
+		} else if ("10".equals(ut) && !UserAgentUtils.isMobileOrTablet(req)) {
 			super.writeJson(response, "9998", "无效注册设备", null, null);
 		} else if (!ValidUtils.isMobileNO(tel)) {
 			super.writeJson(response, "9997", "无效手机号码", null, null);
+		} else if ("".equals(pwd) || pwd.length() == 0) {
+			super.writeJson(response, "9996", "无效密码", null, null);
 		} else {
 			
 			Map parmMap = new HashMap();
 			parmMap.put("TEL", tel);
 			
 			if (userService.getCheckReg(parmMap) == 1) {
-				super.writeJson(response, "9996", "该用户已注册", null, null);
+				super.writeJson(response, "9995", "该用户已注册", null, null);
 			} else {
 				try {
 					
@@ -108,7 +115,7 @@ public class UserController extends CoreController{
 					parmMap = new HashMap();
 					String VERFIY = "0", 
 						   SEC_CODE = "", 
-						   CODE = Code.FAIL,// DEAULT REGISTRATION FAILS
+						   CODE = "9994",// DEAULT REGISTRATION FAILS
 						   MSG = "注册失败";
 					if (res == 1) {
 						// SESSION INITIALIZATON
