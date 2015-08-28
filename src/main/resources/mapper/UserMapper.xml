@@ -22,6 +22,6 @@
       </select>
       
       <update id="updatePwd" parameterType="map">  
-          UPDATE USER_ID SET USER_PWD = #{PWD} WHERE TEL_NUMBER = #{TEL}
+          UPDATE T_USERS SET USER_PWD = #{PWD} WHERE TEL_NUMBER = #{TEL}
       </update> 
 </mapper>
