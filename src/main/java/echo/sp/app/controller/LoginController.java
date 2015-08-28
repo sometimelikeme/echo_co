@@ -87,7 +87,7 @@ public class LoginController extends CoreController{
 			super.writeJson(response, "9998", "无效注册设备", null, null);
 		} else if (!ValidUtils.isMobileNO(tel)) {
 			super.writeJson(response, "9997", "无效手机号码", null, null);
-		} else if ("".equals(pwd) || pwd.length() == 0) {
+		} else if ("".equals(pwd) || pwd.length() < 6) {
 			super.writeJson(response, "9996", "无效密码", null, null);
 		} else {
 			
