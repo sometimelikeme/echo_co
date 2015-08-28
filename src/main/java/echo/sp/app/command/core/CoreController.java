@@ -31,7 +31,7 @@ public abstract class CoreController {
 	 */
 	protected void getParm(HttpServletRequest req, HttpServletResponse response) {
 		session = req.getSession();
-		String jsonData = PubTool.processParm(req.getParameter("data"));
+		String jsonData = PubTool.processParm(req.getParameter("dataParm"));
 		if (!"".equals(jsonData)) {
 			Gson gson = new Gson();
 			Type type = new TypeToken<JsonBean>(){}.getType();
