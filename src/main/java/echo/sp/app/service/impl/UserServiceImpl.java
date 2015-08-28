@@ -47,9 +47,23 @@ public class UserServiceImpl implements UserService{
 	public int updatePwd(Map parmMap) {
 		return userDAO.updatePwd(parmMap);
 	}
+	
+	// CHECK IF MERCHANT
+	@Override
+	public int checkMerchant(Map parmMap) {
+		return userDAO.checkMerchant(parmMap);
+	}
 
+	// UPGRADE TO MERCHANT
 	@Override
 	public int insertToMerchant(Map parmMap) {
 		return userDAO.insertToMerchant(parmMap);
 	}
+
+	@Override
+	public int updateToMerchant(Map parmMap) {
+		return userDAO.updateToMerchant(parmMap);
+	}
+
+	
 }
