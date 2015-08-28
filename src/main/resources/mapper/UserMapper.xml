@@ -30,8 +30,8 @@
       </select>
       
       <insert id="insertToMerchant" parameterType="map">
-          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,STATUS)
-          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{STATUS})
+          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,STATUS,REG_TIME)
+          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{STATUS},#{REG_TIME})
       </insert>
       
       <update id="updateToMerchant" parameterType="map">  
