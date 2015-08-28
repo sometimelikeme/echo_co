@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.RandomUtil;
 import echo.sp.app.command.utils.UserAgentUtils;
@@ -61,6 +62,7 @@ public class UpdateMerchant extends CoreController{
 				parmMap.put("MERCHANT_NAME", RandomUtil.generateUpperString(6));
 				parmMap.put("MERCHANT_TYPE", "10");
 				parmMap.put("STATUS", "10");
+				parmMap.put("REG_TIME", DateUtils.getDateTime());
 				
 				res = userService.insertToMerchant(parmMap);
 				
