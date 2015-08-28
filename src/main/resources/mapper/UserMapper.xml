@@ -25,8 +25,31 @@
           UPDATE T_USERS SET USER_PWD = #{PWD} WHERE TEL_NUMBER = #{TEL}
       </update> 
       
+      <select id="checkMerchant" parameterType="map" resultType="int">
+          SELECT COUNT(*) FROM T_MERCHANTS WHERE USER_ID = #{USER_ID}
+      </select>
+      
       <insert id="insertToMerchant" parameterType="map">
-          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,LONGITUDE,LATITUDE,STATUS)
-          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{LONGITUDE,jdbcType=NUMERIC},#{LATITUDE,jdbcType=NUMERIC},#{STATUS})
+          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,STATUS)
+          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{STATUS})
       </insert>
+      
+      <update id="updateToMerchant" parameterType="map">  
+          UPDATE T_MERCHANTS SET 
+          	MERCHANT_NAME = #{MERCHANT_NAME},
+          	MERCHANT_TYPE = #{MERCHANT_TYPE},
+          	MERCHANT_OWNER = #{MERCHANT_OWNER},
+          	HEAD_ICON = #{HEAD_ICON},
+          	MAIN_ICON = #{MAIN_ICON},
+          	CANT_CODE = #{CANT_CODE},
+          	LONGITUDE = #{LONGITUDE,jdbcType=NUMERIC},
+          	LATITUDE = #{LATITUDE,jdbcType=NUMERIC},
+          	MERCHANT_ADDR = #{MERCHANT_ADDR},
+          	ABILITY = #{ABILITY},
+          	BUSI_DESC = #{BUSI_DESC},
+          	OPEN_HOURS = #{OPEN_HOURS},
+          	STATUS = #{STATUS},
+          	BUSI_TYPE = #{BUSI_TYPE}
+          	WHERE MERCHANT_ID = #{MERCHANT_ID}
+      </update> 
 </mapper>
