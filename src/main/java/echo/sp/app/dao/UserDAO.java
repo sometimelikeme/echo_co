@@ -18,4 +18,7 @@ public interface UserDAO {
  	
  	// CHANGE PASSWORD
  	public int updatePwd(Map parmMap);
+ 	
+ 	// UPGRADE TO MERCHANT
+  	public int insertToMerchant(Map parmMap);
 }

@@ -23,4 +23,7 @@ public interface UserService {
 	
 	// CHANGE PASSWORD
  	public int updatePwd(Map parmMap);
+ 	
+ 	// CHANGE PASSWORD
+   	public int insertToMerchant(Map parmMap);
 }

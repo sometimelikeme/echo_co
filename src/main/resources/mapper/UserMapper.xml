@@ -24,4 +24,9 @@
       <update id="updatePwd" parameterType="map">  
           UPDATE T_USERS SET USER_PWD = #{PWD} WHERE TEL_NUMBER = #{TEL}
       </update> 
+      
+      <insert id="insertToMerchant" parameterType="map">
+          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,LONGITUDE,LATITUDE,STATUS)
+          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{LONGITUDE,jdbcType=NUMERIC},#{LATITUDE,jdbcType=NUMERIC},#{STATUS})
+      </insert>
 </mapper>

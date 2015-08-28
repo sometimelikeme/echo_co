@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService{
 	public int updatePwd(Map parmMap) {
 		return userDAO.updatePwd(parmMap);
 	}
+
+	@Override
+	public int insertToMerchant(Map parmMap) {
+		return userDAO.insertToMerchant(parmMap);
+	}
 }
