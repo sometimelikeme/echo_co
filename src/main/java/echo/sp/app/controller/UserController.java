@@ -158,6 +158,8 @@ public class UserController extends CoreController{
 			super.writeJson(response, "9998", "无效登陆设备", null, null);
 		} else if (!ValidUtils.isMobileNO(tel)) {
 			super.writeJson(response, "9997", "无效手机号码", null, null);
+		} else if ("".equals(pwd) || pwd.length() == 0) {
+			super.writeJson(response, "9996", "无效密码", null, null);
 		} else {
 			try {
 				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
@@ -175,7 +177,7 @@ public class UserController extends CoreController{
 				parmMap = new HashMap();
 				String VERFIY = "0",
 					   SEC_CODE = "",
-					   CODE = "9996",// DEAULT LOGIN FAILS
+					   CODE = "9995",// DEAULT LOGIN FAILS
 					   MSG = "账号不存在";
 				if (res == 1) { // LOGIN PARAMETERS MATCHES
 					// SESSION INITIALIZATON
@@ -190,9 +192,68 @@ public class UserController extends CoreController{
 					Map pMap = new HashMap();
 					pMap.put("TEL", tel);
 					if (userService.getCheckReg(pMap) > 0) {
-						CODE = "9995";
+						CODE = "9994";
 						MSG = "密码错误";
 					}
+				}
+				parmMap.put("VERFIY", VERFIY);
+				parmMap.put("SEC_CODE", SEC_CODE);
+				parmMap.put("USER_ID", user_id);
+				
+				super.writeJson(response, CODE, MSG, parmMap, null);
+				
+			} catch (Exception e) {
+				logger.error("UserController---login---interface error: ", e);
+			}
+		}
+		
+	}
+	
+	/**
+	 * REGIST USER AND LOGIN IN 
+	 * @param req
+	 * @param response
+	 * @param acc
+	 * @param pwd
+	 */
+	@RequestMapping("login/changePwd")
+	public void changePwd(HttpServletRequest req, HttpServletResponse response,
+			@RequestParam String tel, @RequestParam String pwd, @RequestParam String ut) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserController---login---tel: " + tel + "; pwd: " + pwd);
+		}
+		
+		// 限制用户必须在移动设备上登陆
+		if (!ValidUtils.isMobileNO(tel)) {
+			super.writeJson(response, "9997", "无效手机号码", null, null);
+		} else if ("".equals(pwd) || pwd.length() == 0) {
+			super.writeJson(response, "9996", "无效密码", null, null);
+		} else {
+			try {
+				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
+				
+				Map parmMap = new HashMap();
+				parmMap.put("TEL", tel);
+				parmMap.put("PWD", pwd);
+				
+				int res = userService.updatePwd(parmMap);
+				
+				parmMap = new HashMap();
+				String VERFIY = "0", 
+					   SEC_CODE = "", 
+					   CODE = "9995",
+					   MSG = "密码修改失败",
+					   user_id = "";
+				if (res == 1) {
+					user_id = userService.login(parmMap);
+					// SESSION INITIALIZATON
+					parmMap.putAll(sessionInit(req, user_id, ut));
+					// GENERATE USER SECRATE CODE
+					SEC_CODE = IdGen.uuid();
+					SecCode.setKey(user_id, SEC_CODE);
+					VERFIY = "1";
+					CODE = Code.SUCCESS;
+					MSG = Code.SUCCESS_MSG;
 				}
 				parmMap.put("VERFIY", VERFIY);
 				parmMap.put("SEC_CODE", SEC_CODE);

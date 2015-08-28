@@ -15,4 +15,7 @@ public interface UserDAO {
   	
   	// GET MERCHANTS INFO
  	public Map getMerchantInfo(Map parmMap);
+ 	
+ 	// CHANGE PASSWORD
+ 	public int updatePwd(Map parmMap);
 }
