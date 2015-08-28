@@ -136,7 +136,7 @@ public class UpdateMerchant extends CoreController{
 			paramMap.put("STATUS", status);
 			paramMap.put("BUSI_TYPE", busi_type);
 			
-			int res = userService.updateToMerchant(paramMap);
+			int res = userService.updateToMerchant(paramMap); 
 			
 			if (logger.isDebugEnabled()) {
 				logger.debug("UpdateMerchant---UpdateMerchant---res: " + res);
