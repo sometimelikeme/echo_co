@@ -85,7 +85,7 @@ public class UpdateMerchant extends CoreController{
 	 * @param response
 	 * @param tel
 	 */
-	@RequestMapping("user/toMerchant")
+	@RequestMapping("mer/toMerchant")
 	public void toMerchant(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("UpdateMerchant---UpdateMerchant---begin: " + dataParm);
