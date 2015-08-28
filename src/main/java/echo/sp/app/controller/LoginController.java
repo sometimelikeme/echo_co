@@ -277,7 +277,7 @@ public class LoginController extends CoreController{
 		HttpSession session = req.getSession();
 		session.setAttribute("user_id", user_id);
 		Map resMap = new HashMap();
-		if (!"10".equals(ut)) { // 获取店铺信息
+		if ("20".equals(ut)) { // 获取店铺信息
 			Map parmMap = new HashMap();
 			parmMap.put("USER_ID", user_id);
 			resMap = userService.getMerchantInfo(parmMap);
