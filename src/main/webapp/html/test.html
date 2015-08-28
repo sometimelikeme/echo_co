@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="TTT">
 <head lang="en">
     <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
     <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET',
+                url: "http://localhost:8080/echo/" + "user/toMerchant.do",
+                params: {
+                	dataParm:{
+                		dataset:{
+                			mer_id: 'ee8347b7aed944ae94955c07a70b89c5',
+                        	ut: '20',
+                        	mer_name: 'MY STORE',
+                        	mer_type: '10',
+                        	mer_ower: 'ethan',
+                        	head_icon: '',
+                        	main_icon: '',
+                        	cant_code:'',
+                        	longtitude:'123.11',
+                        	lantitude:'123.11',
+                        	addr:'test add',
+                        	ability:'coding',
+                        	desc:'i am a coder',
+                        	open_hour:'1-24',
+                        	busi_type:'code'
+                		}
+                	},
+                	sc_co: '030a92cc2d784e9cab20ed2e33c3c4cc',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
 </head>
 <body>
-123
+
 </body>
 </html>
