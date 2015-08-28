@@ -72,7 +72,7 @@ public class LoginController extends CoreController{
 	 */
 	@RequestMapping("login/registAlg")
 	public void registAlg(HttpServletRequest req, HttpServletResponse response,
-			@RequestParam String tel, @RequestParam String pwd, @RequestParam String ut) {
+			@RequestParam String tel, @RequestParam String pwd, @RequestParam String ut, @RequestParam String ct_code) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---registAlg---tel: " + tel + "; pwd: " + pwd);
 		}
@@ -109,6 +109,7 @@ public class LoginController extends CoreController{
 					parmMap.put("USER_TYPE", "10");// DEFAULT USER TYPE
 					parmMap.put("TEL_NUMBER", tel);
 					parmMap.put("IN_VALID", "1");// DEFAULT VALID
+					parmMap.put("CANT_CODE", ct_code);// DISTRICT CODE
 					int res = userService.addRegistAlg(parmMap);
 					
 					parmMap = new HashMap();
