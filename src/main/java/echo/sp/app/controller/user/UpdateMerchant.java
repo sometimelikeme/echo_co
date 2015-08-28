@@ -36,8 +36,7 @@ public class UpdateMerchant extends CoreController{
 	 * @param tel
 	 */
 	@RequestMapping("user/toMerchant")
-	public void toMerchant(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm,
-			@RequestParam String ut) {
+	public void toMerchant(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("UpdateMerchant---UpdateMerchant---begin: " + data);
 		}
@@ -46,7 +45,8 @@ public class UpdateMerchant extends CoreController{
 		
 		Map paramMap = data.getDataset();
 		
-		String user_id = (String)paramMap.get("user_id");
+		String user_id = (String)paramMap.get("user_id"),
+			   ut = (String)paramMap.get("ut");
 		
 		if (!"10".equals(ut)) {
 			super.writeJson(response, Code.FAIL, "无效客户端", null, null);
