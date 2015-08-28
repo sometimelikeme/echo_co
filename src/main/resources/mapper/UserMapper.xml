@@ -5,8 +5,8 @@
 <mapper namespace="echo.sp.app.dao.UserDAO">
 
       <insert id="addRegistAlg" parameterType="map">
-          INSERT INTO T_USERS(USER_ID,USER_PWD,USER_TYPE,TEL_NUMBER,IN_VALID)
-          VALUES(#{USER_ID},#{USER_PWD},#{USER_TYPE},#{TEL_NUMBER},#{IN_VALID})
+          INSERT INTO T_USERS(USER_ID,USER_PWD,USER_TYPE,TEL_NUMBER,IN_VALID,CANT_CODE)
+          VALUES(#{USER_ID},#{USER_PWD},#{USER_TYPE},#{TEL_NUMBER},#{IN_VALID},#{CANT_CODE})
       </insert>
       
       <select id="getCheckReg" parameterType="map" resultType="int">
