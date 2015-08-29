@@ -22,16 +22,17 @@ import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.UserService;
 
 /**   
+ * 用户升级为店铺
  * @author Ethan   
  * @date 2015年8月28日 
  */
 @Controller
-public class UpdateMerchant extends CoreController{
+public class UpdateMerchantController extends CoreController{
+	
+	private static final Logger logger = LoggerFactory.getLogger(UpdateMerchantController.class);
 	
 	@Autowired
 	private UserService userService;
-	
-	private static final Logger logger = LoggerFactory.getLogger(UpdateMerchant.class);
 	
 	@RequestMapping("user/merApply")
 	public void merApply(HttpServletRequest req, HttpServletResponse response, 
