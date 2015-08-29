@@ -173,6 +173,15 @@ public class LoginController extends CoreController{
 				int res = 0;
 				if (user_id != null && !"".equals(user_id)) {
 					res = 1;
+					// 店铺登陆情况下,检查当前用户是否已经是店铺账号
+					if ("20".equals(ut)) {
+						parmMap = new HashMap();
+						parmMap.put("USER_ID", user_id);
+						if (userService.checkMerchant(parmMap) == 0) {
+							super.writeJson(response, "9993", "您还未申请店铺", null, null);
+							return;
+						}
+					}
 				}
 				
 				parmMap = new HashMap();
