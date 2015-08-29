@@ -117,7 +117,7 @@ public class UpdateMerchant extends CoreController{
 				   ability = (String)paramMap.get("ability"),
 				   desc = (String)paramMap.get("desc"),
 				   open_hour = (String)paramMap.get("open_hour"),
-				   status = "10",
+				   status = "20",// 审核状态
 				   busi_type = (String)paramMap.get("busi_type");
 			
 			paramMap = new HashMap();
