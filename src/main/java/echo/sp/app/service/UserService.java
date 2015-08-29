@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * USER REGISTER,LOGIN 
  * @author Ethan
- *
+ * @date 2015年8月29日 
  */
 public interface UserService {
 	

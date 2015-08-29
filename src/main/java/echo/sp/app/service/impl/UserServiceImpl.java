@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import echo.sp.app.dao.UserDAO;
 import echo.sp.app.service.UserService;
 
+/**
+ * 用户登录
+ * @author Ethan
+ * @date 2015年8月29日 
+ */
 @Service
 public class UserServiceImpl implements UserService{
 	

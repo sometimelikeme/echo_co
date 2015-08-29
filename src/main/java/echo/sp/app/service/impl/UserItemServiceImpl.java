@@ -9,7 +9,7 @@ import echo.sp.app.dao.UserItemDAO;
 import echo.sp.app.service.UserItemService;
 
 /**   
- * 用户商品实现类
+ * 用户商品
  * @author Ethan   
  * @date 2015年8月29日 
  */
