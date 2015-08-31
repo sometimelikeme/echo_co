@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.MerItemDAO">
-	<insert id="addMerItem" parameterType="map">
+	<insert id="addMerItem" useGeneratedKeys="true" keyProperty="ITEM_ID" parameterType="Item">
 	    INSERT INTO T_ITEMS(
 	    	ITEM_NAME,ITEM_SHORT_NAME,MERCHANT_ID,CATEGORY_ID,
 	    	IS_PREF,IS_SKILL,IS_POINT,CURR_PRICE,ORI_PRICE,
@@ -11,9 +11,9 @@
 	    	POINT_NUM,CREATE_TIME,STATUS)
 	    VALUES(
 	    	#{ITEM_NAME},#{ITEM_SHORT_NAME},#{MERCHANT_ID},#{CATEGORY_ID},
-	    	#{IS_PREF},#{IS_SKILL},#{IS_POINT},#{CURR_PRICE},#{ORI_PRICE},
-	    	#{HEAD_ICON},#{MAIN_ICON},#{INVENTORY},#{QTY_SOLD},#{ITEM_POINT},
-	    	#{POINT_NUM},#{CREATE_TIME},#{STATUS})
+	    	#{IS_PREF},#{IS_SKILL},#{IS_POINT},#{CURR_PRICE,jdbcType=NUMERIC},#{ORI_PRICE,jdbcType=NUMERIC},
+	    	#{HEAD_ICON},#{MAIN_ICON},#{INVENTORY,jdbcType=NUMERIC},#{QTY_SOLD,jdbcType=NUMERIC},#{ITEM_POINT,jdbcType=NUMERIC},
+	    	#{POINT_NUM,jdbcType=NUMERIC},#{CREATE_TIME},#{STATUS})
     </insert>
     
     <update id="updateMerItem" parameterType="map">  
