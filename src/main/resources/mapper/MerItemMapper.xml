@@ -24,10 +24,10 @@
           	IS_PREF = #{IS_PREF},
           	IS_SKILL = #{IS_SKILL},
           	IS_POINT = #{IS_POINT},
-          	CURR_PRICE = #{CURR_PRICE},
+          	CURR_PRICE = #{CURR_PRICE,jdbcType=NUMERIC},
           	HEAD_ICON = #{HEAD_ICON},
           	MAIN_ICON = #{MAIN_ICON},
-          	INVENTORY = #{INVENTORY}
+          	INVENTORY = #{INVENTORY,jdbcType=NUMERIC}
           WHERE ITEM_ID = #{ITEM_ID}
  	</update> 
  	
