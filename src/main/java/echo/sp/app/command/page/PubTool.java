@@ -70,6 +70,7 @@ public class PubTool {
 		String resStr = "";
 		
 		try {
+			parmMap.put("IN_USE", "1");
 			resStr = pubToolService.getOrgParm(parmMap);
 			resStr = resStr == null ? "" : resStr;
 		} catch (Exception e) {
