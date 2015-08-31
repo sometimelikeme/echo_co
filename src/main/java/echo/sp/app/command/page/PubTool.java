@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
-import echo.sp.app.controller.user.UpdateMerchantController;
 import echo.sp.app.service.PubToolService;
 
 /**   
