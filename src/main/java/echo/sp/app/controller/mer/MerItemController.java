@@ -19,6 +19,7 @@ import echo.sp.app.command.model.Code;
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.service.MerItemService;
+import echo.sp.app.service.UserService;
 
 /**   
  * 商铺商品
@@ -32,6 +33,9 @@ public class MerItemController extends CoreController{
 	
 	@Autowired
 	private MerItemService merItemService;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 增加商品
@@ -53,7 +57,6 @@ public class MerItemController extends CoreController{
 		String mer_id = (String) paramMap.get("MERCHANT_ID"),
 			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
 			   ut = (String)paramMap.get("ut");
-			  
 		
 		if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
 			super.writeJson(response, Code.FAIL, "无效店铺", null, null);
@@ -61,6 +64,18 @@ public class MerItemController extends CoreController{
 			super.writeJson(response, "9998", "无效客户端", null, null);
 		} else {
 			Map parmMap = new HashMap();
+			
+			parmMap.put("USER_ID", session.getAttribute("user_id"));
+			parmMap.put("STATUS", "30");
+			// 查询当前店铺是否为30状态，即审核通过状态
+			Map merMap = userService.getMerchantInfo(parmMap);
+			
+			if (merMap == null || (merMap != null && merMap.get("MERCHANT_ID") == null)) {
+				super.writeJson(response, "9997", "店铺未审核，不能发布商品!", null, null);
+				return;
+			}
+			
+			parmMap = new HashMap();
 			
 			// 店铺上传商品是否需要管理员审核：1-是，0-否（默认）
 			paramMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
