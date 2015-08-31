@@ -8,11 +8,11 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET',
-                url: "http://localhost:8080/echo/" + "user/toMerchant.do",
+                url: "http://localhost:8080/echo/" + "mer/toMerchant.do",
                 params: {
                 	dataParm:{
                 		dataset:{
-                			mer_id: 'ee8347b7aed944ae94955c07a70b89c5',
+                			mer_id: 'a70f119a890f467b8d7a632c2fabd873',
                         	ut: '20',
                         	mer_name: 'MY STORE',
                         	mer_type: '10',
@@ -29,7 +29,7 @@
                         	busi_type:'code'
                 		}
                 	},
-                	sc_co: '030a92cc2d784e9cab20ed2e33c3c4cc',
+                	sc_co: '9cbda2fb9609446398aeac39588dbd7a',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {
