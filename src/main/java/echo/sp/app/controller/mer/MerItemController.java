@@ -21,6 +21,7 @@ import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.model.Item;
 import echo.sp.app.service.MerItemService;
+import echo.sp.app.service.PubToolService;
 import echo.sp.app.service.UserService;
 
 /**   
@@ -38,6 +39,10 @@ public class MerItemController extends CoreController{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PubToolService pubToolService;
+
 	
 	/**
 	 * 增加商品
@@ -83,7 +88,7 @@ public class MerItemController extends CoreController{
 			parmMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
 			parmMap.put("PARM_NAME", "MER_ITEM_CHECK");
 			// 商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过;默认不审核
-			String item_status = "1".equals(PubTool.getOrgParm(parmMap)) ? "10" : "30";
+			String item_status = "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "10" : "30";
 			
 			if (logger.isDebugEnabled()) {
 				logger.debug("MerItemController---addMerItem---item_status: " + item_status);
