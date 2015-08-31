@@ -1,5 +1,6 @@
 package echo.sp.app.controller.mer;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
+import echo.sp.app.model.Item;
 import echo.sp.app.service.MerItemService;
 import echo.sp.app.service.UserService;
 
@@ -84,23 +86,43 @@ public class MerItemController extends CoreController{
 			String item_status = "1".equals(PubTool.getOrgParm(parmMap)) ? "10" : "30";
 			
 			paramMap.put("USER_ID", user_id);// 用户ID
-			paramMap.put("QTY_SOLD", 0);// 销量
-			paramMap.put("ITEM_POINT", 0);// 总和评分
-			paramMap.put("POINT_NUM", 0);// 评论次数
-			paramMap.put("CREATE_TIME", DateUtils.getDateTime());
-			paramMap.put("STATUS", item_status);
+			paramMap.put("QTY_SOLD", "0");// 销量
+			paramMap.put("ITEM_POINT", "0");// 总和评分
+			paramMap.put("POINT_NUM", "0");// 评论次数
+			paramMap.put("CREATE_TIME", DateUtils.getDateTime());// 增加时间
+			paramMap.put("STATUS", item_status);// 状态
 			
-			int res = merItemService.addMerItem(paramMap);
+			Item item = new Item();
+			item.setITEM_NAME((String)paramMap.get("ITEM_NAME"));
+			item.setITEM_SHORT_NAME((String)paramMap.get("ITEM_SHORT_NAME"));
+			item.setMERCHANT_ID(mer_id);
+			item.setCATEGORY_ID((String)paramMap.get("CATEGORY_ID"));
+			item.setIS_PREF((String)paramMap.get("IS_PREF"));
+			item.setIS_SKILL((String)paramMap.get("IS_SKILL"));
+			item.setIS_POINT((String)paramMap.get("IS_POINT"));
+			item.setCURR_PRICE(new BigDecimal((String)paramMap.get("CURR_PRICE")));
+			item.setORI_PRICE(new BigDecimal((String)paramMap.get("ORI_PRICE")));
+			item.setHEAD_ICON((String)paramMap.get("HEAD_ICON"));
+			item.setMAIN_ICON((String)paramMap.get("MAIN_ICON"));
+			item.setINVENTORY(new BigDecimal((String)paramMap.get("INVENTORY")));
+			item.setQTY_SOLD(new BigDecimal((String)paramMap.get("QTY_SOLD")));
+			item.setITEM_POINT(new BigDecimal((String)paramMap.get("ITEM_POINT")));
+			item.setPOINT_NUM(new BigDecimal((String)paramMap.get("POINT_NUM")));
+			item.setCREATE_TIME((String)paramMap.get("CREATE_TIME"));
+			item.setSTATUS((String)paramMap.get("STATUS"));
+			
+			int res = merItemService.addMerItem(item);
 			
 			parmMap = new HashMap();
 			String CODE = "9997",
 				   MSG = "提交失败";
 			if (res == 1) {
+				paramMap.put("ITEM_ID", item.getITEM_ID());
 				CODE = Code.SUCCESS;
 				MSG = Code.SUCCESS_MSG;
 			}
 			
-			super.writeJson(response, CODE, MSG, paramMap, null);
+			super.writeJson(response, CODE, MSG, null, null);
 		}
 	}
 	
