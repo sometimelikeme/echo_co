@@ -156,25 +156,23 @@ public class MerItemController extends CoreController{
 		String mer_id = (String) paramMap.get("MERCHANT_ID"),
 			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
 			   ut = (String)paramMap.get("ut");
-			  
 		
 		if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
 			super.writeJson(response, Code.FAIL, "无效店铺", null, null);
 		} else if (!"20".equals(ut)) {
 			super.writeJson(response, "9998", "无效客户端", null, null);
 		} else {
-			
+
 			int res = merItemService.updateMerItem(paramMap);
-			
+
 			Map parmMap = new HashMap();
-			String CODE = "9997",
-				   MSG = "提交失败";
+			String CODE = "9997", MSG = "提交失败";
 			if (res == 1) {
 				CODE = Code.SUCCESS;
 				MSG = Code.SUCCESS_MSG;
 			}
-			
-			super.writeJson(response, CODE, MSG, paramMap, null);
+
+			super.writeJson(response, CODE, MSG, null, null);
 		}
 	}
 	
