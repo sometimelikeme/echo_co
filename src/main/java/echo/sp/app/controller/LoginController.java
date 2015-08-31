@@ -296,7 +296,7 @@ public class LoginController extends CoreController{
 		// 获取用户基础信息
 		resMap = userService.getUserInfo(parmMap);
 		
-		session.setAttribute("cant_code", resMap.get("CANT_CODE"));// 地区号
+		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// 地区号
 		
 		if ("20".equals(ut)) { // 获取店铺信息
 			
