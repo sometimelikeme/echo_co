@@ -3,6 +3,8 @@ package echo.sp.app.service;
 import java.util.List;
 import java.util.Map;
 
+import echo.sp.app.model.Item;
+
 /**   
  * 商铺商品
  * @author Ethan   
@@ -11,7 +13,7 @@ import java.util.Map;
 public interface MerItemService {
 	
 	// 增加商品
-	public int addMerItem(Map parmMap);
+	public int addMerItem(Item item);
 	
 	// 修改商品
 	public int updateMerItem(Map parmMap);

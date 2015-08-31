@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import echo.sp.app.dao.MerItemDAO;
+import echo.sp.app.model.Item;
 import echo.sp.app.service.MerItemService;
 
 /**   
@@ -26,8 +27,8 @@ public class MerItemServiceImpl implements MerItemService {
 	
 	// 增加商品
 	@Override
-	public int addMerItem(Map parmMap) {
-		return merItemDAO.addMerItem(parmMap);
+	public int addMerItem(Item item) {
+		return merItemDAO.addMerItem(item);
 	}
 
 	// 修改商品
