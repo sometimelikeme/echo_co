@@ -121,12 +121,12 @@ public class MerItemController extends CoreController{
 			String CODE = "9997",
 				   MSG = "提交失败";
 			if (res == 1) {
-				paramMap.put("ITEM_ID", item.getITEM_ID());
+				parmMap.put("ITEM_ID", item.getITEM_ID());
 				CODE = Code.SUCCESS;
 				MSG = Code.SUCCESS_MSG;
 			}
 			
-			super.writeJson(response, CODE, MSG, paramMap, null);
+			super.writeJson(response, CODE, MSG, parmMap, null);
 		}
 	}
 	
