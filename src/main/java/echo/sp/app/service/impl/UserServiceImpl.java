@@ -64,10 +64,17 @@ public class UserServiceImpl implements UserService{
 	public int insertToMerchant(Map parmMap) {
 		return userDAO.insertToMerchant(parmMap);
 	}
-
+	
+	// FULFILL MERCHANT INFORMATION
 	@Override
 	public int updateToMerchant(Map parmMap) {
 		return userDAO.updateToMerchant(parmMap);
+	}
+	
+	// 登陆后获取用户基本信息
+	@Override
+	public int getUserInfo(Map parmMap) {
+		return userDAO.getUserInfo(parmMap);
 	}
 
 	
