@@ -56,7 +56,8 @@ public class MerItemController extends CoreController{
 		// 获取session中店铺ID和传输的店铺ID做比对
 		String mer_id = (String) paramMap.get("MERCHANT_ID"),
 			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
-			   ut = (String)paramMap.get("ut");
+			   ut = (String)paramMap.get("ut"),
+			   user_id = (String)session.getAttribute("user_id");
 		
 		if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
 			super.writeJson(response, Code.FAIL, "无效店铺", null, null);
@@ -65,12 +66,11 @@ public class MerItemController extends CoreController{
 		} else {
 			Map parmMap = new HashMap();
 			
-			parmMap.put("USER_ID", session.getAttribute("user_id"));
-			parmMap.put("STATUS", "30");
-			// 查询当前店铺是否为30状态，即审核通过状态
+			parmMap.put("USER_ID", user_id);
 			Map merMap = userService.getMerchantInfo(parmMap);
 			
-			if (merMap == null || (merMap != null && merMap.get("MERCHANT_ID") == null)) {
+			// 查询当前店铺是否为30状态，即审核通过状态
+			if (merMap == null || (merMap != null && !"30".equals((String)merMap.get("STATUS")))) {
 				super.writeJson(response, "9997", "店铺未审核，不能发布商品!", null, null);
 				return;
 			}
@@ -78,18 +78,17 @@ public class MerItemController extends CoreController{
 			parmMap = new HashMap();
 			
 			// 店铺上传商品是否需要管理员审核：1-是，0-否（默认）
-			paramMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
-			paramMap.put("PARM_NAME", "MER_ITEM_CHECK");
+			parmMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
+			parmMap.put("PARM_NAME", "MER_ITEM_CHECK");
 			// 商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过;默认不审核
 			String item_status = "1".equals(PubTool.getOrgParm(parmMap)) ? "10" : "30";
 			
-			parmMap.put("QTY_SOLD", 0);// 销量
-			parmMap.put("ITEM_POINT", 0);// 总和评分
-			parmMap.put("POINT_NUM", 0);// 评论次数
-			parmMap.put("CREATE_TIME", DateUtils.getDateTime());
-			parmMap.put("STATUS", item_status);
-			
-			paramMap.putAll(parmMap);
+			paramMap.put("USER_ID", user_id);// 用户ID
+			paramMap.put("QTY_SOLD", 0);// 销量
+			paramMap.put("ITEM_POINT", 0);// 总和评分
+			paramMap.put("POINT_NUM", 0);// 评论次数
+			paramMap.put("CREATE_TIME", DateUtils.getDateTime());
+			paramMap.put("STATUS", item_status);
 			
 			int res = merItemService.addMerItem(paramMap);
 			
