@@ -35,6 +35,16 @@ public class PubTool {
 	public static String processParm(String s) { 
 		return s == null ? "" : s;
 	}
+	
+	/**
+	 * 
+	 * DESC：判断List不为null切含有数据
+	 * By Ethan
+	 * 2015年8月1日
+	 */
+	public static boolean isListHasData(List l) {
+		return l != null && l.size() > 0;
+	} 
 
 	/**
 	 * Get List result
