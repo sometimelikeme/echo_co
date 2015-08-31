@@ -118,7 +118,7 @@ public class MerItemController extends CoreController{
 			int res = merItemService.addMerItem(item);
 			
 			parmMap = new HashMap();
-			String CODE = "9997",
+			String CODE = "9996",
 				   MSG = "提交失败";
 			if (res == 1) {
 				parmMap.put("ITEM_ID", item.getITEM_ID());
