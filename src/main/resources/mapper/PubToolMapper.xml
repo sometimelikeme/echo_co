@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="echo.sp.app.dao.PubToolDAO">
+	<select id="getCheckReg" parameterType="map" resultType="String">
+          SELECT PARM_VALUE FROM T_ORG_PARM WHERE CANT_CODE = #{CANT_CODE} AND PARM_NAME = #{PARM_NAME}
+    </select>
+</mapper>
