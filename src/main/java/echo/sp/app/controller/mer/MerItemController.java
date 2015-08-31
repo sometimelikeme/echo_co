@@ -122,7 +122,7 @@ public class MerItemController extends CoreController{
 				MSG = Code.SUCCESS_MSG;
 			}
 			
-			super.writeJson(response, CODE, MSG, null, null);
+			super.writeJson(response, CODE, MSG, paramMap, null);
 		}
 	}
 	
