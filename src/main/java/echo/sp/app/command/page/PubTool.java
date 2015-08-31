@@ -71,6 +71,7 @@ public class PubTool {
 		
 		try {
 			resStr = pubToolService.getOrgParm(parmMap);
+			resStr = resStr == null ? "" : resStr;
 		} catch (Exception e) {
 			logger.error("PubTool--getOrgParm: ",e);
 		}
