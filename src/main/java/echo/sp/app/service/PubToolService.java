@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface PubToolService {
 	// 获取机构参数值
-	public String getCheckReg(Map parmMap);
+	public String getOrgParm(Map parmMap);
 }

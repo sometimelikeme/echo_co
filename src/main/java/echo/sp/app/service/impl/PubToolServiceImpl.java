@@ -24,8 +24,8 @@ public class PubToolServiceImpl implements PubToolService {
 	private PubToolDAO pubToolDAO;
 	
 	@Override
-	public String getCheckReg(Map parmMap) {
-		return pubToolDAO.getCheckReg(parmMap);
+	public String getOrgParm(Map parmMap) {
+		return pubToolDAO.getOrgParm(parmMap);
 	}
 
 }
