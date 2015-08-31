@@ -28,7 +28,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/toMerchant.do",
 		"mer/addMerItem",
 		"mer/updateMerItem",
-		"mer/searchMerItem"
+		"mer/searchMerItem",
+		"mer/delMerItem"
 	};
 	 
     @Override
