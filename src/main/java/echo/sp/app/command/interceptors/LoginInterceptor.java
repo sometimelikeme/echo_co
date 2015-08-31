@@ -23,7 +23,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	private static final String[] IGNORE_URI = {"login/checkReg.do","login/registAlg.do","login/login.do", "login/changePwd.do"};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
-	private static final String[] SECRET_URI = {"user/merApply.do","mer/toMerchant.do"};
+	private static final String[] SECRET_URI = {
+		"user/merApply.do",
+		"mer/toMerchant.do",
+		"mer/addMerItem",
+		"mer/updateMerItem",
+		"mer/searchMerItem"
+	};
 	 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
