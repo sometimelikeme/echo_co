@@ -302,13 +302,12 @@ public class LoginController extends CoreController{
 			
 			parmMap = new HashMap();
 			parmMap.put("USER_ID", user_id);
-			parmMap.put("STATUS", "30");
 			// 获取用户对应商铺基础信息
 			Map merMap = userService.getMerchantInfo(parmMap);
 			resMap.putAll(merMap);
 			
 			// 用户对应的店铺ID
-			session.setAttribute("merchant_id", (String)resMap.get("MERCHANT_ID"));
+			session.setAttribute("MERCHANT_ID", (String)resMap.get("MERCHANT_ID"));
 		}
 		
 		return resMap;
