@@ -8,23 +8,11 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET',
-                url: "http://localhost:8080/echo/" + "mer/addMerItem.do",
+                url: "http://localhost:8080/echo/" + "mer/searchMerItem.do",
                 params: {
                 	dataParm:{
                 		dataset:{
-                			MERCHANT_ID: 'a70f119a890f467b8d7a632c2fabd873', 
-                        	ut: '20',
-                        	ITEM_NAME: 'iphone6',
-                        	ITEM_SHORT_NAME: 'iphone6',
-                        	CATEGORY_ID: '100',
-                        	IS_PREF: '1',
-                        	IS_SKILL:'0',
-                        	IS_POINT:'0',
-                        	CURR_PRICE:'4566',
-                        	ORI_PRICE:'5200',
-                        	HEAD_ICON:'xxx',
-                        	MAIN_ICON:'xxx',
-                        	INVENTORY:'200'
+                			//ITEM_ID:'10012'
                 		}
                 	},
                 	sc_co: 'f4ee49b376d64612badc91292fc5a3a3',
