@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
@@ -21,9 +20,6 @@ import echo.sp.app.service.PubToolService;
 public class PubTool {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PubTool.class);
-	
-	@Autowired
-	private static PubToolService pubToolService;
 	
 	/**
 	 * PROCESS THE PARM. 
@@ -72,9 +68,10 @@ public class PubTool {
 	/**
 	 * 获取机构参数
 	 * @param parmMap
+	 * @param pubToolService
 	 * @return
 	 */
-	public static String getOrgParm(Map parmMap){
+	public static String getOrgParm(Map parmMap, PubToolService pubToolService){
 		
 		String resStr = "";
 		
