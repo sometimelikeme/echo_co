@@ -61,10 +61,10 @@ public class MerItemController extends CoreController{
 		Map paramMap = data.getDataset();
 		
 		// 获取session中店铺ID和传输的店铺ID做比对
-		String mer_id = (String) paramMap.get("MERCHANT_ID"),
-			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
-			   ut = (String)paramMap.get("ut"),
-			   user_id = (String)session.getAttribute("user_id");
+		String mer_id = (String) paramMap.get("MERCHANT_ID"), 
+			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"), 
+			   ut = (String) paramMap.get("ut"), 
+			   user_id = (String) session.getAttribute("user_id");
 		
 		if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
 			super.writeJson(response, Code.FAIL, "无效店铺", null, null);
@@ -186,7 +186,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/searchMerItem")
 	public void searchMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---updateMerItem---dataParm: " + dataParm);
+			logger.debug("MerItemController---searchMerItem---dataParm: " + dataParm);
 		}
 		
 		super.getParm(req, response);
@@ -203,5 +203,18 @@ public class MerItemController extends CoreController{
 		}
 		
 		super.writeJson(response, CODE, MSG, null, resList);
+	}
+	
+	/**
+	 * 查询商品
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("mer/delMerItem")
+	public void delMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("MerItemController---delMerItem---dataParm: " + dataParm);
+		}
 	}
 }
