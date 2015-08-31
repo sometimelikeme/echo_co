@@ -284,16 +284,33 @@ public class LoginController extends CoreController{
 	 * @param user_id
 	 */
 	private Map sessionInit(HttpServletRequest req, String user_id, String ut){
+		
 		HttpSession session = req.getSession();
 		session.setAttribute("user_id", user_id);
-		Map resMap = new HashMap();
+		
+		Map resMap = new HashMap();// 返回map
+		Map parmMap = new HashMap();// 参数map
+		parmMap.put("USER_ID", user_id);
+		parmMap.put("IN_VALID", "1");
+		
+		// 获取用户基础信息
+		resMap = userService.getUserInfo(parmMap);
+		
+		session.setAttribute("cant_code", resMap.get("CANT_CODE"));// 地区号
+		
 		if ("20".equals(ut)) { // 获取店铺信息
-			Map parmMap = new HashMap();
+			
+			parmMap = new HashMap();
 			parmMap.put("USER_ID", user_id);
-			resMap = userService.getMerchantInfo(parmMap);
+			parmMap.put("STATUS", "30");
+			// 获取用户对应商铺基础信息
+			Map merMap = userService.getMerchantInfo(parmMap);
+			resMap.putAll(merMap);
+			
 			// 用户对应的店铺ID
 			session.setAttribute("merchant_id", (String)resMap.get("MERCHANT_ID"));
 		}
+		
 		return resMap;
 	}
 	
