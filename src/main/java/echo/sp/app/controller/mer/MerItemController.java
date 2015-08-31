@@ -85,6 +85,10 @@ public class MerItemController extends CoreController{
 			// 商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过;默认不审核
 			String item_status = "1".equals(PubTool.getOrgParm(parmMap)) ? "10" : "30";
 			
+			if (logger.isDebugEnabled()) {
+				logger.debug("MerItemController---addMerItem---item_status: " + item_status);
+			}
+			
 			paramMap.put("USER_ID", user_id);// 用户ID
 			paramMap.put("QTY_SOLD", "0");// 销量
 			paramMap.put("ITEM_POINT", "0");// 总和评分
