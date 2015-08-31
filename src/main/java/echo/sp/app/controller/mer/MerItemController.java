@@ -68,7 +68,6 @@ public class MerItemController extends CoreController{
 			// 商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过;默认不审核
 			String item_status = "1".equals(PubTool.getOrgParm(parmMap)) ? "10" : "30";
 			
-			parmMap.put("CURR_PRICE", paramMap.get("ORI_PRICE"));// 商品现价初始化为录入价格
 			parmMap.put("QTY_SOLD", 0);// 销量
 			parmMap.put("ITEM_POINT", 0);// 总和评分
 			parmMap.put("POINT_NUM", 0);// 评论次数
