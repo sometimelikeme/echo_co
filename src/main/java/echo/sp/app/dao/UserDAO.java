@@ -34,5 +34,5 @@ public interface UserDAO {
    	public int updateToMerchant(Map parmMap);
    	
    	// 登陆后获取用户基本信息
-   	public int getUserInfo(Map parmMap);
+   	public Map getUserInfo(Map parmMap);
 }

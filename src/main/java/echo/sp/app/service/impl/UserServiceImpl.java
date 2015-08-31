@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
 	
 	// 登陆后获取用户基本信息
 	@Override
-	public int getUserInfo(Map parmMap) {
+	public Map getUserInfo(Map parmMap) {
 		return userDAO.getUserInfo(parmMap);
 	}
 
