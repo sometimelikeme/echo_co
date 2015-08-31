@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
     <!-- 命名空间 -->
     <typeAliases>
-         <typeAlias alias="User" type="echo.sp.app.model.User"/>
+         <typeAlias alias="Item" type="echo.sp.app.model.Item"/>
     </typeAliases>
  	
  	<!-- 分页拦截器 -->
