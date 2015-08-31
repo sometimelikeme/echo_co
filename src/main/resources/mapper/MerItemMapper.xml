@@ -3,5 +3,16 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.MerItemDAO">
-	
+	<insert id="addMerItem" parameterType="map">
+	    INSERT INTO T_ITEMS(
+	    	ITEM_NAME,ITEM_SHORT_NAME,MERCHANT_ID,CATEGORY_ID,
+	    	IS_PREF,IS_SKILL,IS_POINT,CURR_PRICE,ORI_PRICE,
+	    	HEAD_ICON,MAIN_ICON,INVENTORY,QTY_SOLD,ITEM_POINT,
+	    	POINT_NUM,CREATE_TIME,STATUS)
+	    VALUES(
+	    	#{ITEM_NAME},#{ITEM_SHORT_NAME},#{MERCHANT_ID},#{CATEGORY_ID},
+	    	#{IS_PREF},#{IS_SKILL},#{IS_POINT},#{CURR_PRICE},#{ORI_PRICE},
+	    	#{HEAD_ICON},#{MAIN_ICON},#{INVENTORY},#{QTY_SOLD},#{ITEM_POINT},
+	    	#{POINT_NUM},#{CREATE_TIME},#{STATUS})
+    </insert>
 </mapper>

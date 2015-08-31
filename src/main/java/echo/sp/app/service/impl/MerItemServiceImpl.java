@@ -1,5 +1,7 @@
 package echo.sp.app.service.impl;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +22,10 @@ public class MerItemServiceImpl implements MerItemService {
 	
 	@Autowired
 	private MerItemDAO merItemDAO;
+
+	@Override
+	public int addMerItem(Map parmMap) {
+		return merItemDAO.addMerItem(parmMap);
+	}
 
 }
