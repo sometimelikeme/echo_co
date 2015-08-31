@@ -15,4 +15,48 @@
 	    	#{HEAD_ICON},#{MAIN_ICON},#{INVENTORY},#{QTY_SOLD},#{ITEM_POINT},
 	    	#{POINT_NUM},#{CREATE_TIME},#{STATUS})
     </insert>
+    
+    <update id="updateMerItem" parameterType="map">  
+          UPDATE T_ITEMS SET 
+          	ITEM_NAME = #{ITEM_NAME},
+          	ITEM_SHORT_NAME = #{ITEM_SHORT_NAME},
+          	CATEGORY_ID = #{CATEGORY_ID},
+          	IS_PREF = #{IS_PREF},
+          	IS_SKILL = #{IS_SKILL},
+          	IS_POINT = #{IS_POINT},
+          	CURR_PRICE = #{CURR_PRICE},
+          	HEAD_ICON = #{HEAD_ICON},
+          	MAIN_ICON = #{MAIN_ICON},
+          	INVENTORY = #{INVENTORY}
+          WHERE ITEM_ID = #{ITEM_ID}
+ 	</update> 
+ 	
+ 	<select id="getMerchantInfo" parameterType="map" resultType="List">
+          SELECT * FROM T_ITEMS
+          WHERE 1=1
+          <if test="ITEM_ID != null and ITEM_ID != '' ">  
+          		AND ITEM_ID = #{ITEM_ID, jdbcType=INTEGER}  
+    	  </if> 
+    	  <if test="ITEM_NAME != null and ITEM_NAME != '' ">  
+          		AND ITEM_NAME LIKE CONCAT(CONCAT('%', #{ITEM_NAME, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    	  <if test="ITEM_SHORT_NAME != null and ITEM_SHORT_NAME != '' ">  
+          		AND ITEM_SHORT_NAME LIKE CONCAT(CONCAT('%', #{ITEM_SHORT_NAME}),'%') 
+    	  </if>
+    	  <if test="MERCHANT_ID != null and MERCHANT_ID != '' ">  
+          		AND MERCHANT_ID = #{MERCHANT_ID} 
+    	  </if>
+    	  <if test="CATEGORY_ID != null and CATEGORY_ID != '' ">  
+          		AND CATEGORY_ID = #{CATEGORY_ID} 
+    	  </if>
+    	  <if test="IS_PREF != null and IS_PREF != '' ">  
+          		AND IS_PREF = #{IS_PREF} 
+    	  </if>
+    	  <if test="IS_SKILL != null and IS_SKILL != '' ">  
+          		AND IS_SKILL = #{IS_SKILL} 
+    	  </if>
+    	  <if test="IS_POINT != null and IS_POINT != '' ">  
+          		AND IS_POINT = #{IS_POINT} 
+    	  </if>
+    </select>
 </mapper>

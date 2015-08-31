@@ -1,5 +1,6 @@
 package echo.sp.app.dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**   
@@ -8,6 +9,13 @@ import java.util.Map;
  * @date 2015年8月29日 
  */
 public interface MerItemDAO {
+	
 	// 增加商品
 	public int addMerItem(Map parmMap);
+	
+	// 修改商品
+	public int updateMerItem(Map parmMap);
+	
+	// 查询商品
+	public List searchMerItem(Map parmMap);
 }
