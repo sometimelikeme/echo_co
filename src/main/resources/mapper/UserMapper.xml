@@ -18,8 +18,8 @@
       </select>
       
       <select id="getMerchantInfo" parameterType="map" resultType="Map">
-          SELECT MERCHANT_ID,MERCHANT_TYPE FROM T_MERCHANTS 
-          WHERE USER_ID = #{USER_ID} AND STATUS = #{STATUS}
+          SELECT MERCHANT_ID,MERCHANT_TYPE,STATUS FROM T_MERCHANTS 
+          WHERE USER_ID = #{USER_ID}
       </select>
       
       <update id="updatePwd" parameterType="map">  
