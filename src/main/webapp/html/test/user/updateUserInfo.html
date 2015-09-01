@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET',
+                url: "http://localhost:8080/echo/" + "user/updateUserInfo.do",
+                params: {
+                	dataParm:{
+                		dataset:{
+                			USER_ID: '5e2957a3eab740399e362ff6d2033c09',
+                        	ut: '10',
+                        	USER_NAME: 'Ethan LI',
+                        	USER_ICON: '1.png',
+                        	NICKNAME: 'ethan',
+                        	GENDER: '1',
+                        	TEL_REC: '0531-88888888',
+                        	USER_ADDR:'浪潮路1036号',
+                        	EMAIL:'programccc@163.com',
+                        	ZFB_ACCOUNT:'12345677890',
+                        	WX_ACCOUNT:'PROGRAMCCC',
+                        	YL_ACCOUNT:'123153545345345',
+                        	PAY_PWD:'ssdde23124ggg',
+                        	ABILITY:'转发'
+                		}
+                	},
+                	sc_co: 'a5fedf654acc4cbd9f8cb59cb759fd39',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
