@@ -27,7 +27,8 @@
           	CURR_PRICE = #{CURR_PRICE,jdbcType=NUMERIC},
           	HEAD_ICON = #{HEAD_ICON},
           	MAIN_ICON = #{MAIN_ICON},
-          	INVENTORY = #{INVENTORY,jdbcType=NUMERIC}
+          	INVENTORY = #{INVENTORY,jdbcType=NUMERIC},
+          	ITEM_DESC = #{ITEM_DESC}
           WHERE ITEM_ID = #{ITEM_ID}
  	</update> 
  	
