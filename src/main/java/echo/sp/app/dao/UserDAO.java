@@ -38,4 +38,7 @@ public interface UserDAO {
    	
    	// 完善用户基本信息
  	public int updateUserInfo(Map parmMap);
+ 	
+ 	// 完善用户身份证信息
+ 	public int updateUserIC(Map parmMap);
 }

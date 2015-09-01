@@ -77,9 +77,16 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUserInfo(parmMap);
 	}
 
+	// 完善用户基本信息
 	@Override
 	public int updateUserInfo(Map parmMap) {
 		return userDAO.updateUserInfo(parmMap);
+	}
+	
+	// 完善用户身份证信息
+	@Override
+	public int updateUserIC(Map parmMap) {
+		return userDAO.updateUserIC(parmMap);
 	}
 
 }

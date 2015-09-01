@@ -76,4 +76,11 @@
           	ABILITY = #{ABILITY}
           WHERE USER_ID = #{USER_ID}
       </update> 
+      
+      <update id="updateUserIC" parameterType="map">  
+          UPDATE T_USERS SET 
+          	IDEN_CARD = #{IDEN_CARD},
+          	IDEN_ICON = #{IDEN_ICON}
+          WHERE USER_ID = #{USER_ID}
+      </update> 
 </mapper>
