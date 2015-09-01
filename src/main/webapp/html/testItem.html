@@ -7,7 +7,7 @@
     <script>
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
-                method: 'GET',
+                method: 'GET', 
                 url: "http://localhost:8080/echo/" + "mer/addMerItem.do",
                 params: {
                 	dataParm:{
