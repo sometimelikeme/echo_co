@@ -176,13 +176,9 @@ public class MerItemController extends CoreController{
 			int res = merItemService.updateMerItem(paramMap);
 
 			Map parmMap = new HashMap();
-			String CODE = "9997", MSG = "提交失败";
-			if (res == 1) {
-				CODE = Code.SUCCESS;
-				MSG = Code.SUCCESS_MSG;
-			}
+			parmMap.put("ITEM_ID", paramMap.get("ITEM_ID"));
 
-			super.writeJson(response, CODE, MSG, null, null);
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
 		}
 	}
 	
