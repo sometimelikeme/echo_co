@@ -8,17 +8,17 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET',
-                url: "http://localhost:8080/echo/" + "user/updateUserIC.do",
+                url: "http://123.56.45.223:8080/echo/" + "user/updateUserIC.do", 
                 params: {
                 	dataParm:{
                 		dataset:{
                 			USER_ID: '5e2957a3eab740399e362ff6d2033c09',
                         	ut: '10',
                         	IDEN_CARD: '410521198704173658',
-                        	IDEN_ICON: '1.png'
+                        	IDEN_ICON: '2.png'
                 		}
                 	},
-                	sc_co: 'a5fedf654acc4cbd9f8cb59cb759fd39',
+                	sc_co: 'aebf5e31144d48a7b919fa872713b5c6',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {

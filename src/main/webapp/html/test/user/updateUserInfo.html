@@ -8,7 +8,7 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET',
-                url: "http://localhost:8080/echo/" + "user/updateUserInfo.do",
+                url: "http://123.56.45.223:8080/echo/" + "user/updateUserInfo.do", 
                 params: {
                 	dataParm:{
                 		dataset:{
@@ -25,10 +25,10 @@
                         	WX_ACCOUNT:'PROGRAMCCC',
                         	YL_ACCOUNT:'123153545345345',
                         	PAY_PWD:'ssdde23124ggg',
-                        	ABILITY:encodeURI('转发')
+                        	ABILITY:encodeURI('转发获利')
                 		}
                 	},
-                	sc_co: '28b163ede4af41fc95f3a2012961fd2cs',
+                	sc_co: 'aebf5e31144d48a7b919fa872713b5c6',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {
