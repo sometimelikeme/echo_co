@@ -201,7 +201,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/searchMerItem")
 	public void searchMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---searchMerItem---dataParm: " + dataParm);
+			logger.debug("MerItemController---searchMerItem---begin: " + dataParm);
 		}
 		
 		super.getParm(req, response);
@@ -251,22 +251,23 @@ public class MerItemController extends CoreController{
 			CODE = Code.SUCCESS;
 			MSG = Code.SUCCESS_MSG;
 		}
-
-		// Get totalCount
-		PageList pageList = (PageList) resList;
-		int totalCount = pageList.getPaginator().getTotalCount();
-        
-        if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---searchMerItem---pageList---totalCount: " + totalCount);
-		}
-        
+		
         // 处理策略一：如执行分页查询,则将总页数参数放入MAP对象中
         // 处理策略二: 若传入的是ITEM_ID切当前有数据集，则将当前商品放入MAP中,评论放入LIST
         if (isPage) {
+        	
+        	// Get totalCount
+    		PageList pageList = (PageList) resList;
+    		int totalCount = pageList.getPaginator().getTotalCount();
+            
+            if (logger.isDebugEnabled()) {
+    			logger.debug("MerItemController---searchMerItem---pageList---totalCount: " + totalCount);
+    		}
+            
         	paramMap = new HashMap();
         	paramMap.put("totalCount", totalCount);
 		} else if (item_id != null && !"".equals(item_id.toString())
-				&& PubTool.isListHasData(resList) && totalCount == 1) {// 标志当前执行查询的为具体商品
+				&& PubTool.isListHasData(resList) && resList.size() == 1) {// 标志当前执行查询的为具体商品
 			paramMap = (Map) resList.get(0);
 			sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
 			pageBounds = new PageBounds(Order.formString(sortString));
