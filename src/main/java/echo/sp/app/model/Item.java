@@ -25,6 +25,13 @@ public class Item {
 	private BigDecimal POINT_NUM;// 评次
 	private String CREATE_TIME;
 	private String STATUS;
+	private String ITEM_DESC;
+	public String getITEM_DESC() {
+		return ITEM_DESC;
+	}
+	public void setITEM_DESC(String iTEM_DESC) {
+		ITEM_DESC = iTEM_DESC;
+	}
 	public Integer getITEM_ID() {
 		return ITEM_ID;
 	}

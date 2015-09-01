@@ -127,6 +127,7 @@ public class MerItemController extends CoreController{
 			item.setPOINT_NUM(new BigDecimal((String)paramMap.get("POINT_NUM")));
 			item.setCREATE_TIME((String)paramMap.get("CREATE_TIME"));
 			item.setSTATUS((String)paramMap.get("STATUS"));
+			item.setITEM_DESC((String)paramMap.get("ITEM_DESC"));
 			
 			int res = merItemService.addMerItem(item);
 			
