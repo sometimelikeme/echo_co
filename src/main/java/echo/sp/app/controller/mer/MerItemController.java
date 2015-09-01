@@ -252,6 +252,7 @@ public class MerItemController extends CoreController{
 		
         // 处理策略一：如执行分页查询,则将总页数参数放入MAP对象中
         // 处理策略二: 若传入的是ITEM_ID切当前有数据集，则将当前商品放入MAP中,评论放入LIST
+		// 当非上述两种情况，直接将查询出来的商品列表放入dataset_line中，dataset对象为空，数据格式请参照分页的结果
         if (isPage) {
         	
         	// Get totalCount
@@ -272,6 +273,8 @@ public class MerItemController extends CoreController{
 			Map parmMap = new HashMap();
 			parmMap.put("ITEM_ID", item_id);
 			resList = PubTool.getResultList("MerItemDAO.searchItemComments", parmMap, pageBounds, sqlSessionFactory);
+		} else {
+			paramMap = new HashMap();// 清空
 		}
        
 		super.writeJson(response, CODE, MSG, paramMap, resList);
