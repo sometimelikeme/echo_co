@@ -1,6 +1,5 @@
 package echo.sp.app.service.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -35,12 +34,6 @@ public class MerItemServiceImpl implements MerItemService {
 	@Override
 	public int updateMerItem(Map parmMap) {
 		return merItemDAO.updateMerItem(parmMap);
-	}
-
-	// 查询商品
-	@Override
-	public List searchMerItem(Map parmMap) {
-		return merItemDAO.searchMerItem(parmMap);
 	}
 
 }

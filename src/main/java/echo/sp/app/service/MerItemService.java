@@ -1,6 +1,5 @@
 package echo.sp.app.service;
 
-import java.util.List;
 import java.util.Map;
 
 import echo.sp.app.model.Item;
@@ -18,6 +17,4 @@ public interface MerItemService {
 	// 修改商品
 	public int updateMerItem(Map parmMap);
 	
-	// 查询商品
-	public List searchMerItem(Map parmMap);
 }
