@@ -300,20 +300,20 @@ img {
 参数一： 商品信息参数对象
 <code>dataParm: {</code>
 <code>dataset: {</code>
-	<code>MERCHANT<em>ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID</code>
+	<code>MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID</code>
 	<code>ut: '20',// 登陆客户端</code>
-	<code>ITEM</em>NAME: 'iphone6',// 商品名称</code>
-	<code>ITEM<em>SHORT<em>NAME: 'iphone6',// 商品简称</code>
-	<code>CATEGORY</em>ID: '100',// 商品所述分类ID</code>
-	<code>IS</em>PREF: '0',// 是否为团购商品</code>
-	<code>IS<em>SKILL: '0',// 是否为技能商品</code>
-	<code>IS</em>POINT: '0',// 是否为积分商城商品</code>
+	<code>ITEM_NAME: 'iphone6',// 商品名称</code>
+	<code>ITEM_SHORT_NAME: 'iphone6',// 商品简称</code>
+	<code>CATEGORY_ID: '100',// 商品所述分类ID</code>
+	<code>IS_PREF: '0',// 是否为团购商品</code>
+	<code>IS_SKILL: '0',// 是否为技能商品</code>
+	<code>IS_POINT: '0',// 是否为积分商城商品</code>
 	<code>CURR_PRICE: '123.11',// 当前价格</code>
-	<code>ORI<em>PRICE: '123.11',// 原价</code>
-	<code>HEAD</em>ICON: '',// 商品小图标</code>
-	<code>MAIN<em>ICON: '',// 商品大图标</code>
+	<code>ORI_PRICE: '123.11',// 原价</code>
+	<code>HEAD_ICON: '',// 商品小图标</code>
+	<code>MAIN_ICON: '',// 商品大图标</code>
 	<code>INVENTORY: '100',// 库存量</code>
-	<code>ITEM</em>DESC: 'wonderful phone'// 商品描述</code>
+	<code>ITEM_DESC: 'wonderful phone'// 商品描述</code>
 <code>}</code>
 <code>}</code>
 </li>
@@ -336,19 +336,19 @@ img {
 返回值：
 <ul>
 <li>成功： <code>{&quot;status&quot;:&quot;0000&quot;,&quot;msg&quot;:&quot;成功&quot;,&quot;dataset&quot;:{&quot;ITEM_ID&quot;:10023}}</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9999&quot;,
 msg: &quot;无效店铺&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效客户端&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9997&quot;,
 msg: &quot;店铺未审核，不能发布商品!&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;提交失败&quot;
 }</code></li>
@@ -362,20 +362,20 @@ msg: &quot;提交失败&quot;
 参数一： 商品信息参数对象
 <code>dataParm: {</code>
 <code>dataset: {</code>
-	<code>MERCHANT<em>ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID</code>
+	<code>MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID</code>
 	<code>ut: '20',// 登陆客户端</code>
-	<code>ITEM</em>ID: '10012',// 商品ID</code>
-	<code>ITEM<em>NAME: 'iphone6',// 商品名称</code>
-	<code>ITEM<em>SHORT</em>NAME: 'iphone6',// 商品简称</code>
-	<code>CATEGORY</em>ID: '100',// 商品所述分类ID</code>
-	<code>IS<em>PREF: '1',// 是否为团购商品</code>
-	<code>IS</em>SKILL: '0',// 是否为技能商品</code>
+	<code>ITEM_ID: '10012',// 商品ID</code>
+	<code>ITEM_NAME: 'iphone6',// 商品名称</code>
+	<code>ITEM_SHORT_NAME: 'iphone6',// 商品简称</code>
+	<code>CATEGORY_ID: '100',// 商品所述分类ID</code>
+	<code>IS_PREF: '1',// 是否为团购商品</code>
+	<code>IS_SKILL: '0',// 是否为技能商品</code>
 	<code>IS_POINT: '0',// 是否为积分商城商品</code>
-	<code>CURR<em>PRICE: '123.11',// 当前价格</code>
-	<code>HEAD</em>ICON: '',// 商品小图标</code>
-	<code>MAIN<em>ICON: '',// 商品大图标</code>
+	<code>CURR_PRICE: '123.11',// 当前价格</code>
+	<code>HEAD_ICON: '',// 商品小图标</code>
+	<code>MAIN_ICON: '',// 商品大图标</code>
 	<code>INVENTORY: '100',// 库存量</code>
-	<code>ITEM</em>DESC: 'wonderful phone8'// 商品描述</code>
+	<code>ITEM_DESC: 'wonderful phone8'// 商品描述</code>
 <code>}</code>
 <code>}</code>
 </li>
@@ -394,11 +394,11 @@ msg: &quot;提交失败&quot;
 返回值：
 <ul>
 <li>成功： <code>{&quot;status&quot;:&quot;0000&quot;,&quot;msg&quot;:&quot;成功&quot;,&quot;dataset&quot;:{&quot;ITEM_ID&quot;:&quot;10023&quot;}}</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9999&quot;,
 msg: &quot;无效店铺&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效客户端&quot;
 }</code></li>
@@ -412,17 +412,17 @@ msg: &quot;无效客户端&quot;
 参数一： 商品信息参数对象
 <code>dataParm: {</code>
 <code>dataset: {</code>
-	<code>MERCHANT<em>ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID</code>
-	<code>ITEM</em>ID: '10012',// 商品ID</code>
-	<code>ITEM<em>NAME: 'iphone6',// 商品名称-支持模糊查询</code>
-	<code>ITEM<em>SHORT</em>NAME: 'iphone6',// 商品简称-支持模糊查询</code>
-	<code>CATEGORY</em>ID: '100',// 商品所述分类ID</code>
-	<code>IS<em>PREF: '1',// 是否为团购商品</code>
-	<code>IS</em>SKILL: '0',// 是否为技能商品</code>
-	<code>IS<em>POINT: '0',// 是否为积分商城商品</code>
+	<code>MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID</code>
+	<code>ITEM_ID: '10012',// 商品ID</code>
+	<code>ITEM_NAME: 'iphone6',// 商品名称-支持模糊查询</code>
+	<code>ITEM_SHORT_NAME: 'iphone6',// 商品简称-支持模糊查询</code>
+	<code>CATEGORY_ID: '100',// 商品所述分类ID</code>
+	<code>IS_PREF: '1',// 是否为团购商品</code>
+	<code>IS_SKILL: '0',// 是否为技能商品</code>
+	<code>IS_POINT: '0',// 是否为积分商城商品</code>
 	<code>page: '1'// 分页查询-请求页数</code>
 	<code>pageSize: '10'// 每页的最大数据量</code>
-	<code>sort: 'CREATE</em>TIME.desc'// 按照什么排序，字段名后加.asc升序排序，.desc倒序排序</code>
+	<code>sort: 'CREATE_TIME.desc'// 按照什么排序，字段名后加.asc升序排序，.desc倒序排序</code>
 <code>}</code>
 <code>}</code>
 </li>
@@ -439,11 +439,11 @@ msg: &quot;无效客户端&quot;
 <ul>
 <li>若传入的参数中含有ITEM<em>ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset</em>line，默认按照评论日期倒序排序，成功返回数据格式如下：
 <code>{&quot;status&quot;:&quot;0000&quot;,&quot;msg&quot;:&quot;成功&quot;,</code>
-<code>&quot;dataset<em>line&quot;:[{&quot;COMENT<em>TITLE&quot;:&quot;挺好&quot;,//评论标题 </code><code>&quot;ORDER</em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,// 订单号 </code><code>&quot;COMMENT</em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,//评论ID </code><code>&quot;USER<em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,</code>
-<code>&quot;COMMENT</em>DESC&quot;:&quot;真不错&quot;,</code><code>&quot;ITEM<em>ID&quot;:10012,// 商品ID &quot;ITEM<em>POINT&quot;:3.5,// 评分 &quot;COMMENT</em>TIME&quot;:&quot;2015-08-31 16:06:23&quot;// 时间戳}],</code><code>&quot;dataset&quot;:{&quot;MAIN<em>ICON&quot;:&quot;xxx&quot;,&quot;POINT<em>NUM&quot;:0.00,&quot;HEAD</em>ICON&quot;:&quot;xxx&quot;,&quot;CREATE</em>TIME&quot;:&quot;2015-08-31 16:06:23&quot;,&quot;ITEM<em>ID&quot;:10012,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS</em>PREF&quot;:&quot;1&quot;,&quot;IS</em>SKILL&quot;:&quot;0&quot;,&quot;QTY<em>SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI</em>PRICE&quot;:5200.00,&quot;ITEM<em>NAME&quot;:&quot;iphone6S&quot;,&quot;ITEM<em>SHORT</em>NAME&quot;:&quot;iphone6S&quot;,&quot;IS</em>POINT&quot;:&quot;0&quot;,&quot;CATEGORY<em>ID&quot;:&quot;100&quot;,&quot;ITEM</em>POINT&quot;:0.00,&quot;MERCHANT<em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR</em>PRICE&quot;:5266.00}}</code></li>
-<li>当带有page和pageSize参数的时候，接口认为是执行分页查询，则将总页数参数放入dataset对象中，查询出来的商品列表放入dataset<em>line：
+<code>&quot;dataset_line&quot;:[{&quot;COMENT_TITLE&quot;:&quot;挺好&quot;,//评论标题</code><code>&quot;ORDER_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,// 订单号</code><code>&quot;COMMENT_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,//评论ID</code><code>&quot;USER_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,</code>
+<code>&quot;COMMENT_DESC&quot;:&quot;真不错&quot;,</code><code>&quot;ITEM_ID&quot;:10012,// 商品ID &quot;ITEM_POINT&quot;:3.5,// 评分 &quot;COMMENT_TIME&quot;:&quot;2015-08-31 16:06:23&quot;// 时间戳}],</code><code>&quot;dataset&quot;:{&quot;MAIN_ICON&quot;:&quot;xxx&quot;,&quot;POINT_NUM&quot;:0.00,&quot;HEAD_ICON&quot;:&quot;xxx&quot;,&quot;CREATE_TIME&quot;:&quot;2015-08-31 16:06:23&quot;,&quot;ITEM_ID&quot;:10012,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS_PREF&quot;:&quot;1&quot;,&quot;IS_SKILL&quot;:&quot;0&quot;,&quot;QTY_SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI_PRICE&quot;:5200.00,&quot;ITEM_NAME&quot;:&quot;iphone6S&quot;,&quot;ITEM_SHORT_NAME&quot;:&quot;iphone6S&quot;,&quot;IS_POINT&quot;:&quot;0&quot;,&quot;CATEGORY_ID&quot;:&quot;100&quot;,&quot;ITEM_POINT&quot;:0.00,&quot;MERCHANT_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR_PRICE&quot;:5266.00}}</code></li>
+<li>当带有page和pageSize参数的时候，接口认为是执行分页查询，则将总页数参数放入dataset对象中，查询出来的商品列表放入dataset_line：
 <code>{&quot;status&quot;:&quot;0000&quot;,&quot;msg&quot;:&quot;成功&quot;,</code>
-<code>&quot;dataset</em>line&quot;:</code>[{&quot;ITEM<em>DESC&quot;:&quot;www&quot;,&quot;MAIN<em>ICON&quot;:&quot;xxx&quot;,&quot;POINT</em>NUM&quot;:0.00,&quot;HEAD</em>ICON&quot;:&quot;xxx&quot;,&quot;CREATE<em>TIME&quot;:&quot;2015-09-01 10:16:19&quot;,&quot;ITEM</em>ID&quot;:10023,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS<em>PREF&quot;:&quot;1&quot;,&quot;IS<em>SKILL&quot;:&quot;0&quot;,&quot;QTY</em>SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI<em>PRICE&quot;:5200.00,&quot;ITEM<em>NAME&quot;:&quot;iphone6S&quot;,&quot;ITEM</em>SHORT</em>NAME&quot;:&quot;iphone6S&quot;,&quot;IS<em>POINT&quot;:&quot;0&quot;,&quot;CATEGORY</em>ID&quot;:&quot;100&quot;,&quot;ITEM</em>POINT&quot;:0.00,&quot;MERCHANT<em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR</em>PRICE&quot;:5266.00},{&quot;MAIN<em>ICON&quot;:&quot;xxx&quot;,&quot;POINT<em>NUM&quot;:0.00,&quot;HEAD</em>ICON&quot;:&quot;xxx&quot;,&quot;CREATE</em>TIME&quot;:&quot;2015-09-01 08:35:28&quot;,&quot;ITEM<em>ID&quot;:10022,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS</em>PREF&quot;:&quot;1&quot;,&quot;IS<em>SKILL&quot;:&quot;0&quot;,&quot;QTY<em>SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI</em>PRICE&quot;:5200.00,&quot;ITEM<em>NAME&quot;:&quot;iphone6&quot;,&quot;ITEM<em>SHORT</em>NAME&quot;:&quot;iphone6&quot;,&quot;IS</em>POINT&quot;:&quot;0&quot;,&quot;CATEGORY<em>ID&quot;:&quot;100&quot;,&quot;ITEM</em>POINT&quot;:0.00,&quot;MERCHANT<em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR<em>PRICE&quot;:4566.00},{&quot;MAIN</em>ICON&quot;:&quot;xxx&quot;,&quot;POINT<em>NUM&quot;:0.00,&quot;HEAD<em>ICON&quot;:&quot;xxx&quot;,&quot;CREATE</em>TIME&quot;:&quot;2015-09-01 08:35:27&quot;,&quot;ITEM</em>ID&quot;:10021,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS<em>PREF&quot;:&quot;1&quot;,&quot;IS</em>SKILL&quot;:&quot;0&quot;,&quot;QTY</em>SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI<em>PRICE&quot;:5200.00,&quot;ITEM</em>NAME&quot;:&quot;iphone6&quot;,&quot;ITEM<em>SHORT<em>NAME&quot;:&quot;iphone6&quot;,&quot;IS</em>POINT&quot;:&quot;0&quot;,&quot;CATEGORY</em>ID&quot;:&quot;100&quot;,&quot;ITEM<em>POINT&quot;:0.00,&quot;MERCHANT</em>ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR</em>PRICE&quot;:4566.00}],</code>
+<code>&quot;dataset_line&quot;:[{&quot;ITEM_DESC&quot;:&quot;www&quot;,&quot;MAIN_ICON&quot;:&quot;xxx&quot;,&quot;POINT_NUM&quot;:0.00,&quot;HEAD_ICON&quot;:&quot;xxx&quot;,&quot;CREATE_TIME&quot;:&quot;2015-09-01 10:16:19&quot;,&quot;ITEM_ID&quot;:10023,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS_PREF&quot;:&quot;1&quot;,&quot;IS_SKILL&quot;:&quot;0&quot;,&quot;QTY_SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI_PRICE&quot;:5200.00,&quot;ITEM_NAME&quot;:&quot;iphone6S&quot;,&quot;ITEM_SHORT_NAME&quot;:&quot;iphone6S&quot;,&quot;IS_POINT&quot;:&quot;0&quot;,&quot;CATEGORY_ID&quot;:&quot;100&quot;,&quot;ITEM_POINT&quot;:0.00,&quot;MERCHANT_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR_PRICE&quot;:5266.00},{&quot;MAIN_ICON&quot;:&quot;xxx&quot;,&quot;POINT_NUM&quot;:0.00,&quot;HEAD_ICON&quot;:&quot;xxx&quot;,&quot;CREATE_TIME&quot;:&quot;2015-09-01 08:35:28&quot;,&quot;ITEM_ID&quot;:10022,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS_PREF&quot;:&quot;1&quot;,&quot;IS_SKILL&quot;:&quot;0&quot;,&quot;QTY_SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI_PRICE&quot;:5200.00,&quot;ITEM_NAME&quot;:&quot;iphone6&quot;,&quot;ITEM_SHORT_NAME&quot;:&quot;iphone6&quot;,&quot;IS_POINT&quot;:&quot;0&quot;,&quot;CATEGORY_ID&quot;:&quot;100&quot;,&quot;ITEM_POINT&quot;:0.00,&quot;MERCHANT_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR_PRICE&quot;:4566.00},{&quot;MAIN_ICON&quot;:&quot;xxx&quot;,&quot;POINT_NUM&quot;:0.00,&quot;HEAD_ICON&quot;:&quot;xxx&quot;,&quot;CREATE_TIME&quot;:&quot;2015-09-01 08:35:27&quot;,&quot;ITEM_ID&quot;:10021,&quot;STATUS&quot;:&quot;30&quot;,&quot;IS_PREF&quot;:&quot;1&quot;,&quot;IS_SKILL&quot;:&quot;0&quot;,&quot;QTY_SOLD&quot;:0.00,&quot;INVENTORY&quot;:200.00,&quot;ORI_PRICE&quot;:5200.00,&quot;ITEM_NAME&quot;:&quot;iphone6&quot;,&quot;ITEM_SHORT_NAME&quot;:&quot;iphone6&quot;,&quot;IS_POINT&quot;:&quot;0&quot;,&quot;CATEGORY_ID&quot;:&quot;100&quot;,&quot;ITEM_POINT&quot;:0.00,&quot;MERCHANT_ID&quot;:&quot;a70f119a890f467b8d7a632c2fabd873&quot;,&quot;CURR_PRICE&quot;:4566.00}],</code>
 <code>&quot;dataset&quot;:{&quot;totalCount&quot;:12}}</code></li>
 <li>当非上述两种情况，直接将查询出来的商品列表放入dataset_line中，dataset对象为空，数据格式请参照分页的结果。</li>
 </ul>
@@ -454,7 +454,7 @@ msg: &quot;无效客户端&quot;
 <p>返回值：</p>
 <ul>
 <li>成功：请参照注意三种成功返回的数据格式 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9999&quot;,
 msg: &quot;无匹配商品&quot;
 }</code></li>
