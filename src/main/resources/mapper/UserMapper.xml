@@ -59,4 +59,21 @@
           TEL_REC,CANT_CODE,USER_ADDR,EMAIL,INVITER,REG_TIME,ABILITY
           FROM T_USERS WHERE USER_ID = #{USER_ID} AND IN_VALID = #{IN_VALID}
       </select>
+      
+      <update id="updateUserInfo" parameterType="map">  
+          UPDATE T_USERS SET 
+          	USER_NAME = #{USER_NAME},
+          	USER_ICON = #{USER_ICON},
+          	NICKNAME = #{NICKNAME},
+          	GENDER = #{GENDER},
+          	TEL_REC = #{TEL_REC},
+          	USER_ADDR = #{USER_ADDR},
+          	EMAIL = #{EMAIL},
+          	ZFB_ACCOUNT = #{ZFB_ACCOUNT},
+          	WX_ACCOUNT = #{WX_ACCOUNT},
+          	YL_ACCOUNT = #{YL_ACCOUNT},
+          	PAY_PWD = #{PAY_PWD},
+          	ABILITY = #{ABILITY}
+          WHERE USER_ID = #{USER_ID}
+      </update> 
 </mapper>

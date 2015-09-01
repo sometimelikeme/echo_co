@@ -35,4 +35,7 @@ public interface UserService {
    	
    	// 登陆后获取用户基本信息
    	public Map getUserInfo(Map parmMap);
+   	
+   	// 完善用户基本信息
+	public int updateUserInfo(Map parmMap);
 }

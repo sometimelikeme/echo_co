@@ -77,5 +77,9 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUserInfo(parmMap);
 	}
 
-	
+	@Override
+	public int updateUserInfo(Map parmMap) {
+		return userDAO.updateUserInfo(parmMap);
+	}
+
 }
