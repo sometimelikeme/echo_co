@@ -265,7 +265,8 @@ public class MerItemController extends CoreController{
         if (isPage) {
         	paramMap = new HashMap();
         	paramMap.put("totalCount", totalCount);
-		} else if (item_id != null && !"".equals(item_id.toString()) && PubTool.isListHasData(resList)) {// 标志当前执行查询的为具体商品
+		} else if (item_id != null && !"".equals(item_id.toString())
+				&& PubTool.isListHasData(resList) && totalCount == 1) {// 标志当前执行查询的为具体商品
 			paramMap = (Map) resList.get(0);
 			sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
 			pageBounds = new PageBounds(Order.formString(sortString));
