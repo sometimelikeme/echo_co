@@ -326,7 +326,7 @@ IS_EXIST: &quot;0&quot; // 0表示未注册，1表示已经注册
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效手机号码&quot;,
 }</code></li>
@@ -349,33 +349,33 @@ msg: &quot;无效手机号码&quot;,
 status: &quot;0000&quot;,
 msg: &quot;成功&quot;,
 dataset: {
-SEC<em>CODE: &quot;2c26438d1cf344d7a261db03637f947c&quot;, // 当前登陆账户的秘钥
+SEC_CODE: &quot;2c26438d1cf344d7a261db03637f947c&quot;, // 当前登陆账户的秘钥
 VERFIY: &quot;1&quot;, // 注册并登陆成功
-USER</em>ID: &quot;1b8799e3813f4fa19f24c85e42fd5e3d&quot; // 当前用户ID
+USER_ID: &quot;1b8799e3813f4fa19f24c85e42fd5e3d&quot; // 当前用户ID
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9999&quot;,
 msg: &quot;无效客户端注册&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效注册设备&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9997&quot;,
 msg: &quot;无效手机号码&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;无效密码&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9995&quot;,
 msg: &quot;该用户已注册&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9994&quot;,
 msg: &quot;注册失败&quot;,
 }</code></li>
@@ -393,32 +393,32 @@ msg: &quot;注册失败&quot;,
 返回值： 
 <ul>
 <li>
-成功： <code> {
+成功： <code>{
 status: &quot;0000&quot;,
 msg: &quot;成功&quot;,
 dataset: {
-SEC<em>CODE: &quot;2c26438d1cf344d7a261db03637f947c&quot;, // 当前登陆账户的秘钥
+SEC_CODE: &quot;2c26438d1cf344d7a261db03637f947c&quot;, // 当前登陆账户的秘钥
 VERFIY: &quot;1&quot;, // 登陆成功
-USER</em>ID: &quot;1b8799e3813f4fa19f24c85e42fd5e3d&quot;, // 当前用户ID
-MERCHANT<em>ID： '' // 若为店铺登陆 则增加店铺ID
-MERCHANT</em>TYPE： // 店铺类型：10-普通店铺，20-技能店铺，30-城市店铺，99-积分商城
+USER_ID: &quot;1b8799e3813f4fa19f24c85e42fd5e3d&quot;, // 当前用户ID
+MERCHANT_ID： '' // 若为店铺登陆 则增加店铺ID
+MERCHANT_TYPE： // 店铺类型：10-普通店铺，20-技能店铺，30-城市店铺，99-积分商城
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效注册设备&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9997&quot;,
 msg: &quot;无效手机号码&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;无效密码&quot;
 }</code></li>
 <li>
-失败：<code> {
+失败： <code>{
 status: &quot;9995&quot;,
 msg: &quot;账号不存在&quot;,
 dataset: {
@@ -428,7 +428,7 @@ VERFIY: &quot;0&quot;
 }</code>
 </li>
 <li>
-失败：<code> {
+失败： <code>{
 status: &quot;9994&quot;,
 msg: &quot;密码错误&quot;,
 dataset: {
@@ -437,7 +437,7 @@ VERFIY: &quot;0&quot;
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9993&quot;,
 msg: &quot;您还未申请店铺&quot;
 }</code></li>
@@ -455,7 +455,7 @@ msg: &quot;您还未申请店铺&quot;
 返回值： 
 <ul>
 <li>
-成功： <code> {
+成功： <code>{
 status: &quot;0000&quot;,
 msg: &quot;成功&quot;,
 dataset: {
@@ -464,15 +464,15 @@ VERFIY: &quot;1&quot;
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9997&quot;,
 msg: &quot;无效手机号码&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;无效密码&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9995&quot;,
 msg: &quot;密码修改失败&quot;
 }</code></li>
@@ -491,7 +491,7 @@ msg: &quot;密码修改失败&quot;
 返回值： 
 <ul>
 <li>
-成功： <code> {
+成功： <code>{
 status: &quot;0000&quot;,
 msg: &quot;成功&quot;,
 dataset: {
@@ -499,23 +499,23 @@ MERCHANT_ID: &quot;1cc2d9e2a9cc4e4983b76d03e432d345&quot; // 店铺ID
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9999&quot;,
 msg: &quot;无效客户端&quot; // 只能在用户客户端申请
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效设备&quot; // 只能在移动端
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9997&quot;,
 msg: &quot;无效账号&quot; // 账号参数为空
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;该用户已经是店铺用户&quot;
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9995&quot;,
 msg: &quot;申请失败&quot;
 }</code></li>
@@ -529,20 +529,20 @@ msg: &quot;申请失败&quot;
 参数一： 店铺信息参数对象 
 <code>dataParm: {</code>
 <code>dataset: {</code>
-	<code>mer<em>id: '1cc2d9e2a9cc4e4983b76d03e432d345',</code>
+	<code>mer_id: '1cc2d9e2a9cc4e4983b76d03e432d345',</code>
 	<code>ut: '20',// 登陆客户端</code>
-	<code>mer</em>name: 'MY STORE',// 店铺名称</code>
-	<code>mer<em>type: '10',// 店铺类型</code>
-	<code>mer<em>ower: 'ethan',// 拥有者</code>
-	<code>head</em>icon: '',// 小图标</code>
-	<code>main</em>icon: '',// 背景图</code>
-	<code>cant<em>code: '',// 地区号</code>
+	<code>mer_name: 'MY STORE',// 店铺名称</code>
+	<code>mer_type: '10',// 店铺类型</code>
+	<code>mer_ower: 'ethan',// 拥有者</code>
+	<code>head_icon: '',// 小图标</code>
+	<code>main_icon: '',// 背景图</code>
+	<code>cant_code: '',// 地区号</code>
 	<code>longtitude: '123.11',// 经度</code>
 	<code>lantitude: '123.11',// 维度</code>
 	<code>addr: 'test add',// 地址</code>
 	<code>ability: 'coding',// 技能</code>
 	<code>desc: 'i am a coder',// 描述</code>
-	<code>open</em>hour: '1-24',// 开放时间</code>
+	<code>open_hour: '1-24',// 开放时间</code>
 	<code>busi_type: 'code' // 经营类型</code>
 <code>}</code>
 <code>}</code>
@@ -554,7 +554,7 @@ msg: &quot;申请失败&quot;
 返回值： 
 <ul>
 <li>
-成功： <code>  {
+成功： <code>{
 &quot;status&quot;: &quot;0000&quot;,
 &quot;msg&quot;: &quot;成功&quot;,
 &quot;dataset&quot;: {
@@ -562,21 +562,115 @@ msg: &quot;申请失败&quot;
 }
 }</code>
 </li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9999&quot;,
 msg: &quot;无效客户端&quot; // 只能在用户客户端申请
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9998&quot;,
 msg: &quot;无效设备&quot; // 只能在移动端
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9997&quot;,
 msg: &quot;无效账号&quot; // 账号参数为空
 }</code></li>
-<li>失败：<code> {
+<li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;提交失败&quot;,
+}</code></li>
+</ul>
+</li>
+</ul>
+<h3>接口8： 用户基本信息维护</h3>
+<ul>
+<li>url: user/updateUserInfo.do</li>
+<li>
+参数一： 用户基本信息维护参数对象 
+<code>dataParm: {</code>
+<code>dataset: {</code>
+	<code>USER_ID: '5e2957a3eab740399e362ff6d2033c09',</code>
+	<code>ut: '10',// 登陆客户端</code>
+	<code>USER_NAME: 'Ethan LI',// 名称</code>
+	<code>USER_ICON: '1.png',// 用户头像</code>
+	<code>NICKNAME: 'ethan',// 简称</code>
+	<code>GENDER: '1',// 性别 1男 2女</code>
+	<code>TEL_REC: '0531-88888888',// 备用电话</code>
+	<code>USER_ADDR:encodeURI('浪潮路1036号'),// 地址，中文需要编码传输</code>
+	<code>EMAIL:'programccc@163.com',</code>
+	<code>ZFB_ACCOUNT:'12345677890',// 支付宝账号</code>
+	<code>WX_ACCOUNT:'PROGRAMCCC',// 微信账号</code>
+	<code>YL_ACCOUNT:'123153545345345',// 银联账号</code>
+	<code>PAY_PWD:'ssdde23124ggg',// 平台支付密码，采用base64编码传输</code>
+	<code>ABILITY:encodeURI('转发获利')// 技能描述 中文需要编码传输</code>
+<code>}</code>
+<code>}</code>
+</li>
+<li>参数二： no_co （QUJDREVGRw==）公钥</li>
+<li>参数三： sc_co 用户私钥</li>
+<li>
+返回值： 
+<ul>
+<li>成功： <code>{
+&quot;status&quot;: &quot;0000&quot;,
+&quot;msg&quot;: &quot;成功&quot;,
+}</code></li>
+<li>失败：<code>{
+status: &quot;9999&quot;,
+msg: &quot;无效用户！&quot;
+}</code></li>
+<li>失败：<code>{
+status: &quot;9998&quot;,
+msg: &quot;无效客户端&quot; 
+}</code></li>
+<li>失败：<code>{
+status: &quot;9997&quot;,
+msg: &quot;无效设备&quot; 
+}</code></li>
+<li>失败：<code>{
+status: &quot;9996&quot;,
+msg: &quot;无效邮箱&quot;,
+}</code></li>
+</ul>
+</li>
+</ul>
+<h3>接口9： 用户身份信息维护</h3>
+<ul>
+<li>url: user/updateUserIC.do</li>
+<li>
+参数一： 用户身份信息维护参数对象 
+<code>dataParm: {</code>
+<code>dataset: {</code>
+	<code>USER_ID: '5e2957a3eab740399e362ff6d2033c09',</code>
+	<code>ut: '10',// 登陆客户端</code>
+	<code>IDEN_CARD: '410521112312312358',// 身份证号</code>
+	<code>IDEN_ICON: '1.png'// 身份证扫面件</code>
+<code>}</code>
+<code>}</code>
+</li>
+<li>参数二： no_co （QUJDREVGRw==）公钥</li>
+<li>参数三： sc_co 用户私钥</li>
+<li>
+返回值： 
+<ul>
+<li>成功： <code>{
+&quot;status&quot;: &quot;0000&quot;,
+&quot;msg&quot;: &quot;成功&quot;,
+}</code></li>
+<li>失败：<code>{
+status: &quot;9999&quot;,
+msg: &quot;无效用户！&quot;
+}</code></li>
+<li>失败：<code>{
+status: &quot;9998&quot;,
+msg: &quot;无效客户端&quot; 
+}</code></li>
+<li>失败：<code>{
+status: &quot;9997&quot;,
+msg: &quot;无效设备&quot; 
+}</code></li>
+<li>失败：<code>{
+status: &quot;9996&quot;,
+msg: &quot;身份证不合法&quot;,
 }</code></li>
 </ul>
 </li>
