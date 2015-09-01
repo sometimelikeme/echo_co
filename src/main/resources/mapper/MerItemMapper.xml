@@ -59,4 +59,8 @@
           		AND IS_POINT = #{IS_POINT} 
     	  </if>
     </select>
+    
+    <select id="searchItemComments" parameterType="map" resultType="Map">
+          SELECT * FROM T_ITEM_COMMENTS WHERE ITEM_ID = #{ITEM_ID}
+    </select>
 </mapper>
