@@ -25,12 +25,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
 	private static final String[] SECRET_URI = {
 		"user/updateUserInfo.do",
+		"user/updateUserIC.do",
 		"user/merApply.do",
 		"mer/toMerchant.do",
-		"mer/addMerItem",
-		"mer/updateMerItem",
-		"mer/searchMerItem",
-		"mer/delMerItem"
+		"mer/addMerItem.do",
+		"mer/updateMerItem.do",
+		"mer/searchMerItem.do",
+		"mer/delMerItem.do"
 	};
 	 
     @Override
