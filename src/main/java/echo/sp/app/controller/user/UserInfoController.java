@@ -19,6 +19,7 @@ import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdcardUtils;
 import echo.sp.app.command.utils.MD5Util;
 import echo.sp.app.command.utils.UserAgentUtils;
+import echo.sp.app.command.utils.ValidUtils;
 import echo.sp.app.service.UserService;
 
 /** 
@@ -61,6 +62,8 @@ public class UserInfoController extends CoreController {
 			super.writeJson(response, "9998", "无效客户端", null, null);
 		} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 			super.writeJson(response, "9997", "无效设备", null, null);
+		} else if (!ValidUtils.isEmail((String)paramMap.get("EMAIL"))) {
+			super.writeJson(response, "9996", "无效邮箱", null, null);	
 		} else {
 			
 			paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
