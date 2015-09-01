@@ -67,6 +67,8 @@ public class UserInfoController extends CoreController {
 		} else {
 			
 			paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
+			paramMap.put("USER_ADDR", Encodes.urlDecode(paramMap.get("USER_ADDR").toString()));
+			paramMap.put("ABILITY", Encodes.urlDecode(paramMap.get("ABILITY").toString()));
 			
 			int res = userService.updateUserInfo(paramMap);
 
