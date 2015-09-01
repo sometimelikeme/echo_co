@@ -60,7 +60,7 @@
           		AND IS_POINT = #{IS_POINT} 
     	  </if>
     	  <if test="ITEM_DESC != null and ITEM_DESC != '' ">  
-          		AND ITEM_SHORT_NAME LIKE CONCAT(CONCAT('%', #{ITEM_DESC}),'%') 
+          		AND ITEM_DESC LIKE CONCAT(CONCAT('%', #{ITEM_DESC}),'%') 
     	  </if>
     </select>
     
