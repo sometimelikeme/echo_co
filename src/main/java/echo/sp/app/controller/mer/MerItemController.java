@@ -162,11 +162,11 @@ public class MerItemController extends CoreController{
 		
 		Map paramMap = data.getDataset();
 		
-		// 获取session中店铺ID和传输的店铺ID做比对
 		String mer_id = (String) paramMap.get("MERCHANT_ID"),
 			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
 			   ut = (String)paramMap.get("ut");
 		
+		// 获取session中店铺ID和传输的店铺ID做比对
 		if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
 			super.writeJson(response, Code.FAIL, "无效店铺", null, null);
 		} else if (!"20".equals(ut)) {
