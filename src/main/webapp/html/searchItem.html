@@ -5,7 +5,7 @@
     <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
     <title></title>
     <script>
-    	angular.module('TTT',[]).run(function($log,$http){
+    	angular.module('TTT',[]).run(function($log,$http,$rootScope){
     		$http({
                 method: 'GET',
                 url: "http://localhost:8080/echo/" + "mer/searchMerItem.do",
@@ -13,19 +13,23 @@
                 	dataParm:{
                 		dataset:{
                 			//ITEM_ID:'10012'
+                			ITEM_NAME: 'one'
                 		}
                 	},
-                	sc_co: 'f4ee49b376d64612badc91292fc5a3a3',
+                	sc_co: '973b9321faa74d1284bae04a73250651',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {
             	$log.debug(data);
+            	$rootScope.dd = data;
             }).error(function (data, status, headers, config) {
             });
     	});
     </script>
 </head>
 <body>
-
+	<ul>
+		<li ng-repeat="item in dd">{{item}}</li>
+	</ul> 
 </body>
 </html>
