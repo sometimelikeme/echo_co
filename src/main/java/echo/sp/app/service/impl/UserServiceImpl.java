@@ -89,4 +89,10 @@ public class UserServiceImpl implements UserService{
 		return userDAO.updateUserIC(parmMap);
 	}
 
+	// FULFILL USER BANK ACCOUNT
+	@Override
+	public int updateUserAcc(Map parmMap) {
+		return userDAO.updateUserAcc(parmMap);
+	}
+
 }

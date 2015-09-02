@@ -41,4 +41,7 @@ public interface UserDAO {
  	
  	// 完善用户身份证信息
  	public int updateUserIC(Map parmMap);
+ 	
+ 	// FULFILL USER BANK ACCOUNT
+ 	public int updateUserAcc(Map parmMap);
 }

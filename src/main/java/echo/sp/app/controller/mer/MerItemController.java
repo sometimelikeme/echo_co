@@ -274,7 +274,7 @@ public class MerItemController extends CoreController{
 			parmMap.put("ITEM_ID", item_id);
 			resList = PubTool.getResultList("MerItemDAO.searchItemComments", parmMap, pageBounds, sqlSessionFactory);
 		} else {
-			paramMap = new HashMap();// 清空
+			paramMap = null;// 清空
 		}
        
 		super.writeJson(response, CODE, MSG, paramMap, resList);

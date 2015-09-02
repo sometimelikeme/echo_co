@@ -65,7 +65,7 @@ public class UserInfoController extends CoreController {
 			super.writeJson(response, "9996", "无效邮箱", null, null);	
 		} else {
 			
-			paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
+			// paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
 			paramMap.put("USER_ADDR", Encodes.urlDecode(paramMap.get("USER_ADDR").toString()));
 			paramMap.put("ABILITY", Encodes.urlDecode(paramMap.get("ABILITY").toString()));
 			
@@ -109,6 +109,44 @@ public class UserInfoController extends CoreController {
 		} else {
 			
 			int res = userService.updateUserIC(paramMap);
+
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+		}
+	}
+	
+	
+	/**
+	 * FULFILL USER BANK ACCOUNT
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("user/updateUserAcc")
+	public void updateUserAcc(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserInfoController---updateUserAcc---dataParm: " + dataParm);
+		}
+		
+		super.getParm(req, response);
+		
+		Map paramMap = data.getDataset();
+		
+		String user_id = (String) paramMap.get("USER_ID"), 
+			   ut = (String) paramMap.get("ut"), 
+			   s_user_id = (String) session.getAttribute("user_id");
+		
+		// Get and compare with user id in session
+		if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+			super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+		} else if (!"10".equals(ut)) {// Only user has access
+			super.writeJson(response, "9998", "无效客户端", null, null);
+		} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+			super.writeJson(response, "9997", "无效设备", null, null);
+		} else {
+			
+			paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
+			
+			int res = userService.updateUserAcc(paramMap);
 
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
 		}

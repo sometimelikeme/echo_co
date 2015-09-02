@@ -26,6 +26,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	private static final String[] SECRET_URI = {
 		"user/updateUserInfo.do",
 		"user/updateUserIC.do",
+		"user/updateUserAcc",
 		"user/merApply.do",
 		"mer/toMerchant.do",
 		"mer/addMerItem.do",
