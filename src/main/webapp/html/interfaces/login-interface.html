@@ -595,13 +595,13 @@ msg: &quot;提交失败&quot;,
 	<code>NICKNAME: 'ethan',// 简称</code>
 	<code>GENDER: '1',// 性别 1男 2女</code>
 	<code>TEL_REC: '0531-88888888',// 备用电话</code>
-	<code>USER_ADDR:encodeURI('浪潮路1036号'),// 地址，中文需要编码传输</code>
+	<code>USER_ADDR:encodeURI('浪潮路1036号'),// 地址，</code>
 	<code>EMAIL:'programccc@163.com',</code>
 	<code>ZFB_ACCOUNT:'12345677890',// 支付宝账号</code>
 	<code>WX_ACCOUNT:'PROGRAMCCC',// 微信账号</code>
 	<code>YL_ACCOUNT:'123153545345345',// 银联账号</code>
 	<code>PAY_PWD:'ssdde23124ggg',// 平台支付密码，采用base64编码传输</code>
-	<code>ABILITY:encodeURI('转发获利')// 技能描述 中文需要编码传输</code>
+	<code>ABILITY:encodeURI('转发获利')// 技能描述</code>
 <code>}</code>
 <code>}</code>
 </li>
@@ -671,6 +671,46 @@ msg: &quot;无效设备&quot;
 <li>失败：<code>{
 status: &quot;9996&quot;,
 msg: &quot;身份证不合法&quot;,
+}</code></li>
+</ul>
+</li>
+</ul>
+<h3>接口10： 用户账户信息维护</h3>
+<ul>
+<li>url: user/updateUserAcc.do</li>
+<li>
+参数一： 用户账户信息维护参数对象 
+<code>dataParm: {</code>
+<code>dataset: {</code>
+	<code>USER_ID: '5e2957a3eab740399e362ff6d2033c09',</code>
+	<code>ut: '10',// 登陆客户端</code>
+	<code>ZFB_ACCOUNT:'12345677890',// 支付宝账号</code>
+	<code>WX_ACCOUNT:'PROGRAMCCC',// 微信账号</code>
+	<code>YL_ACCOUNT:'123153545345345',// 银联账号</code>
+	<code>PAY_PWD:'ssdde23124ggg'// 平台支付密码，采用base64编码传输</code>
+<code>}</code>
+<code>}</code>
+</li>
+<li>参数二： no_co （QUJDREVGRw==）公钥</li>
+<li>参数三： sc_co 用户私钥</li>
+<li>
+返回值： 
+<ul>
+<li>成功： <code>{
+&quot;status&quot;: &quot;0000&quot;,
+&quot;msg&quot;: &quot;成功&quot;,
+}</code></li>
+<li>失败：<code>{
+status: &quot;9999&quot;,
+msg: &quot;无效用户！&quot;
+}</code></li>
+<li>失败：<code>{
+status: &quot;9998&quot;,
+msg: &quot;无效客户端&quot; 
+}</code></li>
+<li>失败：<code>{
+status: &quot;9997&quot;,
+msg: &quot;无效设备&quot; 
 }</code></li>
 </ul>
 </li>
