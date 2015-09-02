@@ -10,7 +10,7 @@
                 method: 'GET',
                 url: "http://123.56.45.223:8080/echo/" + "user/updateUserInfo.do", 
                 params: {
-                	dataParm:{
+                	dataParm:encodeURI(JSON.stringify({
                 		dataset:{
                 			USER_ID: '5e2957a3eab740399e362ff6d2033c09',
                         	ut: '10',
@@ -19,16 +19,16 @@
                         	NICKNAME: 'ethan',
                         	GENDER: '1',
                         	TEL_REC: '0531-88888888',
-                        	USER_ADDR:encodeURI('浪潮路1036号'),
+                        	USER_ADDR:'浪潮路103611111号',
                         	EMAIL:'programccc@163.com',
                         	ZFB_ACCOUNT:'12345677890',
                         	WX_ACCOUNT:'PROGRAMCCC',
                         	YL_ACCOUNT:'123153545345345',
                         	PAY_PWD:'ssdde23124ggg',
-                        	ABILITY:encodeURI('转发获利')
+                        	ABILITY:'转发获利'
                 		}
-                	},
-                	sc_co: 'aebf5e31144d48a7b919fa872713b5c6',
+                	})),
+                	sc_co: '3f23e51b35ae4c0c8548a67e94e7cf62',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {
