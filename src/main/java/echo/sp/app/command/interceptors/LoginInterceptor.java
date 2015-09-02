@@ -40,6 +40,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     	
 		boolean flag = false;
 		boolean find = false;
+		boolean sessionInvalid = false;
 		
 		String url = request.getRequestURL().toString();
 		String no_co = PubTool.processParm(request.getParameter("no_co"));
@@ -56,6 +57,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			}
 			// GET USER FROM SESSION, COMPARE THE SECRET CODE.
 			String user_id = (String) request.getSession().getAttribute("user_id");
+			if (user_id == null) {
+				sessionInvalid = true;
+			}
 			String user_code = SecCode.getKey(user_id);
 			if (find && user_code != null && user_code.equals(sc_co)) {
 				flag = true;
@@ -76,7 +80,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		// IF NONE OF ABOVE EXISTS, PROCESS THIS ASK!
         if (!flag) {
         	// DEFAULT RESPONSE 404
-        	response.setStatus(404);
+        	int reStatus = 404;
+        	if (sessionInvalid) {
+        		reStatus = 399;
+			}
+        	response.setStatus(reStatus);
         }
         
         return flag;
