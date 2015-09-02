@@ -79,10 +79,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 		// IF NONE OF ABOVE EXISTS, PROCESS THIS ASK!
         if (!flag) {
-        	// DEFAULT RESPONSE 404
-        	int reStatus = 404;
+        	// DEFAULT RESPONSE 448, INVALID USER SECRET CODE 
+        	int reStatus = 448;
         	if (sessionInvalid) {
-        		reStatus = 399;
+        		reStatus = 449;// SESSION INVALID
 			}
         	response.setStatus(reStatus);
         }
