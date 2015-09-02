@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 
 import echo.sp.app.command.model.JsonBean;
 import echo.sp.app.command.page.PubTool;
+import echo.sp.app.command.utils.Encodes;
 
 /**
  * 所有Controller的基类
@@ -32,6 +33,7 @@ public abstract class CoreController {
 	protected void getParm(HttpServletRequest req, HttpServletResponse response) {
 		session = req.getSession();
 		String jsonData = PubTool.processParm(req.getParameter("dataParm"));
+		jsonData = Encodes.urlDecode(jsonData);
 		if (!"".equals(jsonData)) {
 			Gson gson = new Gson();
 			Type type = new TypeToken<JsonBean>(){}.getType();
