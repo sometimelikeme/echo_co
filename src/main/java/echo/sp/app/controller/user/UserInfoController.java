@@ -65,7 +65,8 @@ public class UserInfoController extends CoreController {
 			super.writeJson(response, "9996", "无效邮箱", null, null);	
 		} else {
 			
-			// paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
+			paramMap.put("USER_NAME", Encodes.urlDecode(paramMap.get("USER_NAME").toString()));
+			paramMap.put("NICKNAME", Encodes.urlDecode(paramMap.get("NICKNAME").toString()));
 			paramMap.put("USER_ADDR", Encodes.urlDecode(paramMap.get("USER_ADDR").toString()));
 			paramMap.put("ABILITY", Encodes.urlDecode(paramMap.get("ABILITY").toString()));
 			
