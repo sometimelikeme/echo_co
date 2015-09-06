@@ -44,20 +44,23 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/delMerItem.do"
 	};
 	 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	
 		boolean flag = false;// FINAL FILTER FLAG
 		boolean find = false;// CHECK IF THE URL APPLYING EXISTS
-		int reStatus = 100;// RESPONSE STATUS
+		int reStatus = 451;// RESPONSE STATUS, UNKNOW ERROR DEFAULT
 		
 		String url = request.getRequestURL().toString();
-		String no_co = PubTool.processParm(request.getParameter("no_co"));
-		String sc_co = PubTool.processParm(request.getParameter("sc_co"));
+		String no_co = request.getParameter("no_co");
+		String sc_co = request.getParameter("sc_co");
 		
 		if (url.contains(NORMAL_URI)) { // FIRST GET THE NORMAL CODE.
 			flag = true;
-		} else if (!"".equals(no_co) && !"".equals(sc_co)) { // SECRET ACCESS.
+		} else if (no_co != null && sc_co != null) { // SECRET ACCESS.
+			no_co = PubTool.processParm(no_co);
+			sc_co = PubTool.processParm(sc_co);
 			for (String s : SECRET_URI) {
 				if (url.contains(s)) {
 					find = true;
@@ -78,7 +81,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 					reStatus = 448;// RESPONSE 448, INVALID USER SECRET CODE 
 				}
 			}
-		}  else if (!"".equals(no_co)) {  // NORMAL APPLY
+		}  else if (no_co != null) {  // NORMAL APPLY
 			for (String s : IGNORE_URI) { 
 				if (url.contains(s)) {
 					find = true;
@@ -90,11 +93,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			if (find && !"".equals(no_co_co) && no_co_co.equals(no_co)) {
 				flag = true;
 			} else {
-				reStatus = 447;// RESPONSE 447, INVALID NORMAL CODE 
+				reStatus = 447;// RESPONSE 447, NORMAL CODE WRONG
 			}
+		} else if (no_co == null) {
+			reStatus = 450;// INVALID NORMAL CODE 
 		} else {
 			logger.error("LoginInterceptor---preHandle---url: " + url + ";no_co: " + no_co + ";sc_co: " + sc_co);
-			reStatus = 450;// UNKNOW ERROR
 		}
 		
 		// IF NONE OF ABOVE EXISTS, PROCESS THIS ASK!
