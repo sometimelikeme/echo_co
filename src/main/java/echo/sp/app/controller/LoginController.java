@@ -248,7 +248,7 @@ public class LoginController extends CoreController{
 				
 				int res = userService.updatePwd(parmMap);
 				
-				parmMap = new HashMap();
+				Map paramMap = new HashMap();
 				String VERFIY = "0", 
 					   SEC_CODE = "", 
 					   CODE = "9995",
@@ -257,7 +257,7 @@ public class LoginController extends CoreController{
 				if (res == 1) {
 					user_id = userService.login(parmMap);
 					// SESSION INITIALIZATON
-					parmMap.putAll(sessionInit(req, user_id, ut));
+					paramMap.putAll(sessionInit(req, user_id, ut));
 					// GENERATE USER SECRATE CODE
 					SEC_CODE = IdGen.uuid();
 					SecCode.setKey(user_id, SEC_CODE);
@@ -265,11 +265,11 @@ public class LoginController extends CoreController{
 					CODE = Code.SUCCESS;
 					MSG = Code.SUCCESS_MSG;
 				}
-				parmMap.put("VERFIY", VERFIY);
-				parmMap.put("SEC_CODE", SEC_CODE);
-				parmMap.put("USER_ID", user_id);
+				paramMap.put("VERFIY", VERFIY);
+				paramMap.put("SEC_CODE", SEC_CODE);
+				paramMap.put("USER_ID", user_id);
 				
-				super.writeJson(response, CODE, MSG, parmMap, null);
+				super.writeJson(response, CODE, MSG, paramMap, null);
 				
 			} catch (Exception e) {
 				logger.error("UserController---login---interface error: ", e);
@@ -296,10 +296,7 @@ public class LoginController extends CoreController{
 		resMap = userService.getUserInfo(parmMap);
 		
 		session.setAttribute("user_id", user_id);
-		Object cant_code = resMap.get("CANT_CODE");
-		if (cant_code != null) {
-			session.setAttribute("CANT_CODE", cant_code.toString());// 地区号
-		}
+		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// 地区号
 		
 		if ("20".equals(ut)) { // 获取店铺信息
 			
