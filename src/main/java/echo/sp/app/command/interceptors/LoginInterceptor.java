@@ -102,6 +102,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		// IF NONE OF ABOVE EXISTS, PROCESS THIS ASK!
+		// 451 UNKONW
+		// 450 INVALID NORMAL CODE 
+		// 449 INVALID SESSION
+		// 448 INVALID USER SECRET CODE
+		// 447 NORMAL CODE WRONG
         if (!flag) {
         	response.setStatus(reStatus);
         }
