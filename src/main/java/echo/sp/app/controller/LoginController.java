@@ -286,7 +286,6 @@ public class LoginController extends CoreController{
 	private Map sessionInit(HttpServletRequest req, String user_id, String ut){
 		
 		HttpSession session = req.getSession();
-		session.setAttribute("user_id", user_id);
 		
 		Map resMap = new HashMap();// 返回map
 		Map parmMap = new HashMap();// 参数map
@@ -296,7 +295,11 @@ public class LoginController extends CoreController{
 		// 获取用户基础信息
 		resMap = userService.getUserInfo(parmMap);
 		
-		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// 地区号
+		session.setAttribute("user_id", user_id);
+		Object cant_code = resMap.get("CANT_CODE");
+		if (cant_code != null) {
+			session.setAttribute("CANT_CODE", cant_code.toString());// 地区号
+		}
 		
 		if ("20".equals(ut)) { // 获取店铺信息
 			
