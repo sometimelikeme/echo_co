@@ -20,7 +20,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	private static String NORMAL_URI = "login/getCode.do"; 
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
-	private static final String[] IGNORE_URI = {"login/checkReg.do","login/registAlg.do","login/login.do", "login/changePwd.do"};
+	private static final String[] IGNORE_URI = {
+		"login/checkReg.do",
+		"login/registAlg.do",
+		"login/login.do", 
+		"login/changePwd.do"
+	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
 	private static final String[] SECRET_URI = {
@@ -54,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 					find = true;
 					break;
 				}
-			}
+			} 
 			// GET USER FROM SESSION, COMPARE THE SECRET CODE.
 			Object user_obj = request.getSession().getAttribute("user_id");
 			if (user_obj == null) {
