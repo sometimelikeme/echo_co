@@ -30,9 +30,18 @@ public class UserServiceImpl implements UserService{
 	}
     
     // REGIST USER AND LOGIN IN 
+    // INIT USER EXPAND INFORMATION
     @Override
 	public int addRegistAlg(Map parmMap) {
-		return userDAO.addRegistAlg(parmMap);
+    	int returnInt = 0;
+		if (userDAO.addRegistAlg(parmMap) > 0) {
+			parmMap.put("TOTAL_POINT", "0");
+			parmMap.put("TOTAL_MONEY", "0");
+			if (userDAO.addUserExpand(parmMap) > 0) {
+				returnInt = 1;
+			};
+		}
+		return returnInt;
 	}
     
     // LOGIN
@@ -60,9 +69,17 @@ public class UserServiceImpl implements UserService{
 	}
 
 	// UPGRADE TO MERCHANT
+	// INIT MERCHANT EXPAND INFORMATION
 	@Override
 	public int insertToMerchant(Map parmMap) {
-		return userDAO.insertToMerchant(parmMap);
+		int returnInt = 0;
+		if (userDAO.insertToMerchant(parmMap) > 0) {
+			parmMap.put("TOTAL_POINT", "0");// 总和评分初始化为0
+			if (userDAO.insertToMerchantExpand(parmMap) > 0) {
+				returnInt = 1;
+			};
+		}
+		return returnInt;
 	}
 	
 	// FULFILL MERCHANT INFORMATION

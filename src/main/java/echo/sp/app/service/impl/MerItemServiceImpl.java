@@ -31,7 +31,7 @@ public class MerItemServiceImpl implements MerItemService {
 	}
 
 	// 修改商品
-	@Override
+	@Override 
 	public int updateMerItem(Map parmMap) {
 		return merItemDAO.updateMerItem(parmMap);
 	}
