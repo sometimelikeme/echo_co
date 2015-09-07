@@ -17,4 +17,6 @@ public interface MerItemService {
 	// 修改商品
 	public int updateMerItem(Map parmMap);
 	
+	// 查询商品接口
+	public Map searchMerItem(Map paramMap);
 }
