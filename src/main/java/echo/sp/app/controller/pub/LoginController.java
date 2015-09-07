@@ -313,7 +313,7 @@ public class LoginController extends CoreController{
 		// Get Merchant Base Information
 		Map merMap = userService.getMerchantInfo(parmMap);
 		
-		resMap.putAll(merMap);  
+		resMap.putAll(merMap);   
 		
 		session.setAttribute("user_id", user_id);
 		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// District Number
