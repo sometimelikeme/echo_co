@@ -16,14 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
-
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
+import echo.sp.app.controller.pub.ItemPub;
 import echo.sp.app.model.Item;
 import echo.sp.app.service.MerItemService;
 import echo.sp.app.service.PubToolService;
@@ -206,78 +203,17 @@ public class MerItemController extends CoreController{
 		
 		Map paramMap = data.getDataset();
 		
-		// PAGE PARAMETERS
-		Object page = paramMap.get("page"),// PAGE NUMBER
-			   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
-			   sort = paramMap.get("sort"),// SORT INFO
-			   item_id = paramMap.get("ITEM_ID");
+		// sqlSessionFactory injection
+		Map resMap = ItemPub.searchMerItem(paramMap, sqlSessionFactory);
 		
-		String sortString = sort == null ? "" : sort.toString();
-		
-		// PageList类是继承于ArrayList的，这样Dao中就不用为了专门分页再多写一个方法
-		// 使用PageBounds这个对象来控制结果的输出，常用的使用方式一般都可以通过构造函数来配置。
-		// new PageBounds();//默认构造函数不提供分页，返回ArrayList
-		// new PageBounds(int limit);//取TOPN操作，返回ArrayList
-		// new PageBounds(Order... order);//只排序不分页，返回ArrayList
-		// new PageBounds(int page, int limit);//默认分页，返回PageList
-		// new PageBounds(int page, int limit, Order... order);//分页加排序，返回PageList
-		// new PageBounds(int page, int limit, List<Order> orders, boolean containsTotalCount);
-		// 使用containsTotalCount来决定查不查询totalCount，即返回ArrayList还是PageList
-		
-		PageBounds pageBounds;
-					
-		List resList = null;
-		Boolean isPage = false;
-		
-		if (page != null && pageSize != null) {// PAGE CONTROL
-			isPage = true;
-			int pageInt = Integer.parseInt(page.toString()),
-				pageSizeInt = Integer.parseInt(pageSize.toString());
-			pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
-			resList = PubTool.getResultList("MerItemDAO.searchMerItem", paramMap, pageBounds, sqlSessionFactory);
-		} else if (!"".equals(sort)) {// SORT WIHIOUT PAGE CONTROL
-			pageBounds = new PageBounds(Order.formString(sortString));
-		} else {// SEARCH ALL
-			pageBounds = new PageBounds();
-		}
-		
-		resList = PubTool.getResultList("MerItemDAO.searchMerItem", paramMap, pageBounds, sqlSessionFactory);
-		
-		String CODE = "9999",
+		String CODE = Code.FAIL,
 			   MSG = "无匹配商品";
-		if (PubTool.isListHasData(resList)) {
+		if ((Boolean) resMap.get("hasData")) {
 			CODE = Code.SUCCESS;
 			MSG = Code.SUCCESS_MSG;
 		}
 		
-        // 处理策略一：如执行分页查询,则将总页数参数放入MAP对象中
-        // 处理策略二: 若传入的是ITEM_ID切当前有数据集，则将当前商品放入MAP中,评论放入LIST
-		// 当非上述两种情况，直接将查询出来的商品列表放入dataset_line中，dataset对象为空，数据格式请参照分页的结果
-        if (isPage) {
-        	
-        	// Get totalCount
-    		PageList pageList = (PageList) resList;
-    		int totalCount = pageList.getPaginator().getTotalCount();
-            
-            if (logger.isDebugEnabled()) {
-    			logger.debug("MerItemController---searchMerItem---pageList---totalCount: " + totalCount);
-    		}
-            
-        	paramMap = new HashMap();
-        	paramMap.put("totalCount", totalCount);
-		} else if (item_id != null && !"".equals(item_id.toString())
-				&& PubTool.isListHasData(resList) && resList.size() == 1) {// 标志当前执行查询的为具体商品
-			paramMap = (Map) resList.get(0);
-			sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
-			pageBounds = new PageBounds(Order.formString(sortString));
-			Map parmMap = new HashMap();
-			parmMap.put("ITEM_ID", item_id);
-			resList = PubTool.getResultList("MerItemDAO.searchItemComments", parmMap, pageBounds, sqlSessionFactory);
-		} else {
-			paramMap = null;// 清空
-		}
-       
-		super.writeJson(response, CODE, MSG, paramMap, resList);
+		super.writeJson(response, CODE, MSG, (Map)resMap.get("paramMap"), (List)resMap.get("resList"));
 	}
 	
 	/**
