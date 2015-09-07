@@ -15,6 +15,9 @@ public interface UserDAO {
     // REGIST USER AND LOGIN IN 
  	public int addRegistAlg(Map parmMap);
  	
+ 	// INIT USER EXPAND INFORMATION
+  	public int addUserExpand(Map parmMap);
+ 	
     // LOGIN
   	public String login(Map parmMap);
   	
@@ -29,6 +32,9 @@ public interface UserDAO {
  	
  	// UPGRADE TO MERCHANT
   	public int insertToMerchant(Map parmMap);
+  	
+  	// INIT MERCHANT EXPAND INFORMATION
+   	public int insertToMerchantExpand(Map parmMap);
   	
 	// FULFILL MERCHANT INFORMATION
    	public int updateToMerchant(Map parmMap);
