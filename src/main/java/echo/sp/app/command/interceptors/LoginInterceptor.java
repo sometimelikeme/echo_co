@@ -45,7 +45,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/addMerItem.do",
 		"mer/updateMerItem.do",
 		"mer/delMerItem.do",
-		"mer/upToPreItem.do"
+		"mer/updateToPreItem.do"
 	};
 	 
     @SuppressWarnings("unused")
