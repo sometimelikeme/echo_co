@@ -10,6 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import echo.sp.app.command.model.SecCode;
 import echo.sp.app.command.page.PubTool;
+import echo.sp.app.command.utils.SessionPro;
 
 /**    
  * INTERCEPTOR
@@ -28,7 +29,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"login/checkReg.do",
 		"login/registAlg.do",
 		"login/login.do", 
-		"login/changePwd.do"
+		"login/changePwd.do",
+		"login/exit.do"
 	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
@@ -78,6 +80,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 				if (find && !"".equals(user_sc_no) && user_sc_no.equals(sc_co)) {
 					flag = true;
 				} else {
+					SessionPro.clearSession(request);
 					reStatus = 448;// RESPONSE 448, INVALID USER SECRET CODE 
 				}
 			}

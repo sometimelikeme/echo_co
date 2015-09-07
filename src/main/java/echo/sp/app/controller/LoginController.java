@@ -20,6 +20,7 @@ import echo.sp.app.command.model.SecCode;
 import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
+import echo.sp.app.command.utils.SessionPro;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.command.utils.ValidUtils;
 import echo.sp.app.service.UserService;
@@ -279,6 +280,18 @@ public class LoginController extends CoreController{
 	}
 	
 	/**
+	 * EXIT WIHT SESSION CLEAR 
+	 * @param response
+	 * @param tel
+	 */
+	@RequestMapping("login/exit")
+	public void exit(HttpServletRequest req, HttpServletResponse response) {
+		SessionPro.clearSession(req);
+		super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+	}
+	
+	
+	/**
 	 * SESSION INITIALIZATION
 	 * @param req
 	 * @param user_id
@@ -312,5 +325,4 @@ public class LoginController extends CoreController{
 		
 		return resMap;
 	}
-	
 }
