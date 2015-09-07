@@ -302,28 +302,22 @@ public class LoginController extends CoreController{
 		
 		HttpSession session = req.getSession();
 		
-		Map resMap = new HashMap();// 返回map
-		Map parmMap = new HashMap();// 参数map
+		Map resMap = new HashMap();
+		
+		Map parmMap = new HashMap();
 		parmMap.put("USER_ID", user_id);
 		parmMap.put("IN_VALID", "1");
 		
-		// 获取用户基础信息
+		// Get User Base Information
 		resMap = userService.getUserInfo(parmMap);
+		// Get Merchant Base Information
+		Map merMap = userService.getMerchantInfo(parmMap);
+		
+		resMap.putAll(merMap);
 		
 		session.setAttribute("user_id", user_id);
-		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// 地区号
-		
-		if ("20".equals(ut)) { // 获取店铺信息
-			
-			parmMap = new HashMap();
-			parmMap.put("USER_ID", user_id);
-			// 获取用户对应商铺基础信息
-			Map merMap = userService.getMerchantInfo(parmMap);
-			resMap.putAll(merMap);
-			
-			// 用户对应的店铺ID
-			session.setAttribute("MERCHANT_ID", (String)resMap.get("MERCHANT_ID"));
-		}
+		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// District Number
+		session.setAttribute("MERCHANT_ID", resMap.get("MERCHANT_ID").toString());
 		
 		return resMap;
 	}
