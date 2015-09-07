@@ -30,7 +30,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"login/registAlg.do",
 		"login/login.do", 
 		"login/changePwd.do",
-		"login/exit.do"
+		"login/exit.do",
+		"mer/searchMerItem.do"
 	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
@@ -42,7 +43,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/toMerchant.do",
 		"mer/addMerItem.do",
 		"mer/updateMerItem.do",
-		"mer/searchMerItem.do",
 		"mer/delMerItem.do"
 	};
 	 
