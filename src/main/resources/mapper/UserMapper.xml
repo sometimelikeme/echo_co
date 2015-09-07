@@ -9,6 +9,11 @@
           VALUES(#{USER_ID},#{USER_PWD},#{USER_TYPE},#{TEL_NUMBER},#{IN_VALID},#{CANT_CODE})
       </insert>
       
+      <insert id="addUserExpand" parameterType="map">
+          INSERT INTO T_USERS_EXPAND(USER_ID,TOTAL_POINT,TOTAL_MONEY)
+          VALUES(#{USER_ID},#{TOTAL_POINT,jdbcType=NUMERIC},#{TOTAL_MONEY,jdbcType=NUMERIC})
+      </insert>
+      
       <select id="getCheckReg" parameterType="map" resultType="int">
           SELECT COUNT(*) FROM T_USERS WHERE TEL_NUMBER = #{TEL}
       </select>
@@ -33,6 +38,11 @@
       <insert id="insertToMerchant" parameterType="map">
           INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,STATUS,REG_TIME)
           VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{STATUS},#{REG_TIME})
+      </insert>
+      
+      <insert id="insertToMerchantExpand" parameterType="map">
+          INSERT INTO T_MERCHANT_EXPAND(MERCHANT_ID,TOTAL_POINT)
+          VALUES(#{MERCHANT_ID},#{TOTAL_POINT,jdbcType=NUMERIC})
       </insert>
       
       <update id="updateToMerchant" parameterType="map">  

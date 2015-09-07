@@ -75,6 +75,6 @@
           AND A.MERCHANT_ID = #{MERCHANT_ID}
           AND B.MERCHANT_ID = #{MERCHANT_ID}
           AND B.USER_ID = #{USER_ID}
-          AND A.STATUS = #{STATUS}
+          AND A.STATUS = #{STATUS} 
     </select>
 </mapper>
