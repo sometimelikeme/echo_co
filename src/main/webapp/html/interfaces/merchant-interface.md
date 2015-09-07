@@ -128,4 +128,51 @@
 	status: "9999",
 	msg: "无匹配商品" 
 }`
-
+###接口4： 更新商品为团购商品
+- url: mer/addMerItem.do
+- 参数一： 更新商品为团购商品参数对象
+	`dataParm: {`
+	`dataset: {`
+		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID`
+		`ut: '20',// 登陆客户端`
+		`ITEM_ID: '100012',// 商品名称`
+		`CURR_PRICE: '123.11'// 团购价格`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递MERCHANT_ID为了与SESSION中的MERCHANT_ID比较，一致的情况下，方可上传商品；防止恶意上传商品到其他店铺。
+	+ 本接口只允许店铺端调用，即ut参数必须为20。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功"}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效店铺"
+}`
+ + 失败：` {
+	status: "9998",
+	msg: "无效客户端"
+}`
+###接口5： 获取店铺页面数据接口
+- url: mer/getMerDetail.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID`
+		`page: '1'// 分页查询-请求页数`
+		`pageSize: '10'// 每页的最大数据量`
+		`sort: 'CREATE_TIME.desc'// 按照什么排序，字段名后加.asc升序排序，.desc倒序排序`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+   + 如果不传递page和pageSize参数，接口返回店铺基本信息和店铺下所有商品的基本信息
+   + 如果传递page和pageSize参数，当page==1时，接口返回店铺基本信息和第一页请求的pageSize数据量的数据，以及查询的商品数据量公有多少条；page!=1时，接口返回的数据不再包含店铺基本信息，只返回本次分页请求的商品信息条数。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功"}`
+ + 失败：` {
+	status: "9999",
+	msg: "失败"
+}`
