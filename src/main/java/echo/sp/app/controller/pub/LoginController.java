@@ -1,4 +1,4 @@
-package echo.sp.app.controller;
+package echo.sp.app.controller.pub;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -164,6 +164,7 @@ public class LoginController extends CoreController{
 			super.writeJson(response, "9996", "无效密码", null, null);
 		} else {
 			try {
+				
 				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
 				
 				Map parmMap = new HashMap();
@@ -241,6 +242,7 @@ public class LoginController extends CoreController{
 			super.writeJson(response, "9996", "无效密码", null, null);
 		} else {
 			try {
+				
 				pwd = MD5Util.getMD5String(Encodes.decodeBase64String(pwd));
 				
 				Map parmMap = new HashMap();

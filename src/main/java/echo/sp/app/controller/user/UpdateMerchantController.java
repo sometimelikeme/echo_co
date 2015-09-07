@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.utils.DateUtils;
-import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.RandomUtil;
 import echo.sp.app.command.utils.UserAgentUtils;
@@ -49,6 +48,7 @@ public class UpdateMerchantController extends CoreController{
 		} else if ("".equals(user_id) || user_id.length() == 0) {
 			super.writeJson(response, "9997", "无效账号", null, null);
 		} else {
+			
 			// 检查当前用户是否已经是店铺账号
 			Map parmMap = new HashMap();
 			parmMap.put("USER_ID", user_id);
@@ -107,6 +107,7 @@ public class UpdateMerchantController extends CoreController{
 		} else if ("".equals(mer_id) || mer_id.length() == 0) {
 			super.writeJson(response, "9997", "无效账号", null, null);
 		} else {
+			
 			String mer_name = (String)paramMap.get("mer_name"),
 				   mer_type = (String)paramMap.get("mer_type"),
 				   mer_ower = (String)paramMap.get("mer_ower"),

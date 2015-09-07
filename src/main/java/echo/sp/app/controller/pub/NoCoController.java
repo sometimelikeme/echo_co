@@ -1,4 +1,4 @@
-package echo.sp.app.controller;
+package echo.sp.app.controller.pub;
 
 import java.util.HashMap;
 import java.util.Map;
