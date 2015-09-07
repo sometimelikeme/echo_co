@@ -4,8 +4,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.MerStoreDAO">
 	<select id="getMerDetail" parameterType="map" resultType="Map">
-          SELECT * FROM T_MERCHANTS 
-          WHERE MERCHANT_ID = #{MERCHANT_ID}
+          SELECT * FROM T_MERCHANTS A,T_MERCHANT_EXPAND B
+          WHERE A.MERCHANT_ID = #{MERCHANT_ID}
+          AND B.MERCHANT_ID = #{MERCHANT_ID}
+          AND A.MERCHANT_ID = B.MERCHANT_ID
     </select>
     
     <select id="getMerItems" parameterType="map" resultType="Map">
