@@ -47,7 +47,7 @@ public class LoginController extends CoreController{
 	 * @param tel
 	 */
 	@RequestMapping("login/checkReg")
-	public void checkReg(HttpServletResponse response, @RequestParam String tel) {
+	public void checkReg(HttpServletResponse response, @RequestParam String tel) { 
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---checkReg---begin: " + tel);
 		}

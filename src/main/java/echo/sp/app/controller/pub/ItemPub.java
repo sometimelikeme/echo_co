@@ -96,7 +96,7 @@ public class ItemPub {
 				parmMap.put("USER_ID", user_id);
 				parmMap.put("STATUS", "30");
 				int resInt = merItemService.checkMerItem(parmMap);
-				paramMap.put("BELONG_ITEM", resInt == 0 ? "0" : "1");
+				paramMap.put("BELONG_ITEM", resInt == 0 ? "0" : "1"); 
 				// 查询商品评论
 				sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
 				pageBounds = new PageBounds(Order.formString(sortString));
