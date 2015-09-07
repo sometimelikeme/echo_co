@@ -1,6 +1,9 @@
 package echo.sp.app.command.utils;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**   
  * @author Ethan   
@@ -9,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SessionPro{
 	
 	public static void clearSession(HttpServletRequest req) {
-		req.getSession().invalidate();
+		// req.getSession().invalidate();
+		HttpSession session = req.getSession();
+		Enumeration em = session.getAttributeNames();
+		while (em.hasMoreElements()) {
+			session.removeAttribute(em.nextElement().toString());
+		}
 	}
 }
