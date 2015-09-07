@@ -18,5 +18,5 @@ public interface MerItemService {
 	public int updateMerItem(Map parmMap);
 	
 	// 检查商品是否为本店商品
-	public int checkMerItem(Map parmMap);
+	public int checkMerItem(Map parmMap); 
 }
