@@ -32,6 +32,13 @@
           WHERE ITEM_ID = #{ITEM_ID}
  	</update> 
  	
+ 	<update id="updateToPreItem" parameterType="map">  
+          UPDATE T_ITEMS SET 
+          	IS_PREF = #{IS_PREF},
+          	CURR_PRICE = #{CURR_PRICE,jdbcType=NUMERIC}
+          WHERE ITEM_ID = #{ITEM_ID}
+ 	</update>
+ 	
  	<select id="searchMerItem" parameterType="map" resultType="Map">
           SELECT * FROM T_ITEMS
           WHERE 1=1

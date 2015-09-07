@@ -42,4 +42,10 @@ public class MerItemServiceImpl implements MerItemService {
 		return merItemDAO.checkMerItem(parmMap);
 	}
 
+	// 升级商品为团购商品
+	@Override
+	public int updateToPreItem(Map parmMap) {
+		return merItemDAO.updateToPreItem(parmMap);
+	}
+
 }

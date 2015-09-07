@@ -219,6 +219,40 @@ public class MerItemController extends CoreController{
 	}
 	
 	/**
+	 * 升级商品为团购商品
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("mer/updateToPreItem")
+	public void updateToPreItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("MerItemController---updateToPreItem---dataParm: " + dataParm);
+		}
+		
+		super.getParm(req, response);
+		
+		Map paramMap = data.getDataset();
+		
+		String mer_id = (String) paramMap.get("MERCHANT_ID"),
+			   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
+			   ut = (String)paramMap.get("ut");
+		
+		if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
+			super.writeJson(response, Code.FAIL, "无效店铺", null, null);
+		} else if (!"20".equals(ut)) {
+			super.writeJson(response, "9998", "无效客户端", null, null);
+		} else {
+			
+			paramMap.put("IS_PREF", "1");
+			
+			merItemService.updateToPreItem(paramMap);
+
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+		}
+	}
+	
+	/**
 	 * 查询商品
 	 * @param req
 	 * @param response

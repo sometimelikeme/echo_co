@@ -19,4 +19,7 @@ public interface MerItemService {
 	
 	// 检查商品是否为本店商品
 	public int checkMerItem(Map parmMap); 
+	
+	// 升级商品为团购商品
+	public int updateToPreItem(Map parmMap);
 }
