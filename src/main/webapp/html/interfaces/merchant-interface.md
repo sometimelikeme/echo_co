@@ -112,10 +112,10 @@
 	+ 本接口未做客户端限制，因为用户也需要调用该接口。
 	+ 参数key值与数据库字段值相同，参数是可选，非必须。
 	+ 本接口返回3种类型数据：
-	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序，成功返回数据格式如下：
+	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序；同时dataset中的BELONG_ITEM用来表示该商品是否为用户自己店铺的商品；中增加成功返回数据格式如下：
 	    `{"status":"0000","msg":"成功",`
 	    `"dataset_line":[{"COMENT_TITLE":"挺好",//评论标题 ``"ORDER_ID":"a70f119a890f467b8d7a632c2fabd873",// 订单号 ``"COMMENT_ID":"a70f119a890f467b8d7a632c2fabd873",//评论ID ``"USER_ID":"a70f119a890f467b8d7a632c2fabd873",`
-	    `"COMMENT_DESC":"真不错",``"ITEM_ID":10012,// 商品ID "ITEM_POINT":3.5,// 评分 "COMMENT_TIME":"2015-08-31 16:06:23"// 时间戳}],``"dataset":{"MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-08-31 16:06:23","ITEM_ID":10012,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6S","ITEM_SHORT_NAME":"iphone6S","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":5266.00}}`
+	    `"COMMENT_DESC":"真不错",``"ITEM_ID":10012,// 商品ID "ITEM_POINT":3.5,// 评分 "COMMENT_TIME":"2015-08-31 16:06:23"// 时间戳}],``"dataset":{"MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-08-31 16:06:23","ITEM_ID":10012,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6S","ITEM_SHORT_NAME":"iphone6S","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":5266.00,BELONG_ITEM: '1'// 1-是，0-否}}`
 	 + 当带有page和pageSize参数的时候，接口认为是执行分页查询，则将总页数参数放入dataset对象中，查询出来的商品列表放入dataset_line：
 	 	`{"status":"0000","msg":"成功",`
 		`"dataset_line":[{"ITEM_DESC":"www","MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-09-01 10:16:19","ITEM_ID":10023,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6S","ITEM_SHORT_NAME":"iphone6S","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":5266.00},{"MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-09-01 08:35:28","ITEM_ID":10022,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6","ITEM_SHORT_NAME":"iphone6","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":4566.00},{"MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-09-01 08:35:27","ITEM_ID":10021,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6","ITEM_SHORT_NAME":"iphone6","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":4566.00}],`
@@ -128,5 +128,4 @@
 	status: "9999",
 	msg: "无匹配商品"
 }`
-
 

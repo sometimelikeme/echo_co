@@ -67,4 +67,14 @@
     <select id="searchItemComments" parameterType="map" resultType="Map">
           SELECT * FROM T_ITEM_COMMENTS WHERE ITEM_ID = #{ITEM_ID}
     </select>
+    
+    <select id="checkMerItem" parameterType="map" resultType="int">
+          SELECT COUNT(*) FROM T_ITEMS A,T_MERCHANTS B
+          WHERE A.ITEM_ID = #{ITEM_ID}
+          AND A.MERCHANT_ID = B.MERCHANT_ID
+          AND A.MERCHANT_ID = #{MERCHANT_ID}
+          AND B.MERCHANT_ID = #{MERCHANT_ID}
+          AND B.USER_ID = #{USER_ID}
+          AND A.STATUS = #{STATUS}
+    </select>
 </mapper>

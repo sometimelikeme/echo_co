@@ -36,4 +36,10 @@ public class MerItemServiceImpl implements MerItemService {
 		return merItemDAO.updateMerItem(parmMap);
 	}
 
+	// 检查商品是否为本店商品
+	@Override
+	public int checkMerItem(Map parmMap) {
+		return merItemDAO.checkMerItem(parmMap);
+	}
+
 }

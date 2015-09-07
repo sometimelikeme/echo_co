@@ -14,6 +14,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.controller.mer.MerItemController;
+import echo.sp.app.service.MerItemService;
 
 /**   
  * ITEM PUB SERVICE
@@ -34,7 +35,7 @@ public class ItemPub {
 	 *   sort参数来执行排序
 	 *   同时返回查询的总记录数
 	 */
-	public static Map searchMerItem(Map paramMap, SqlSessionFactory sqlSessionFactory) {
+	public static Map searchMerItem(Map paramMap, SqlSessionFactory sqlSessionFactory, MerItemService merItemService, String user_id, String mer_id) {
 		// PAGE PARAMETERS
 		Object page = paramMap.get("page"),// PAGE NUMBER
 			   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
@@ -77,7 +78,7 @@ public class ItemPub {
 		if (PubTool.isListHasData(resList)) {
 			hasData = true;
 			// 处理策略一：如执行分页查询,则将总页数参数放入MAP对象中
-	        // 处理策略二: 若传入的是ITEM_ID切当前有数据集，则将当前商品放入MAP中,评论放入LIST
+	        // 处理策略二: 若传入的是ITEM_ID切当前有数据集，则将当前商品放入MAP中,评论放入LIST; 同时MAP中存放BELONG_ITEM用于判断该商品手否为本店商品
 			// 当非上述两种情况，直接将查询出来的商品列表放入dataset_line中，dataset对象为空，数据格式请参照分页的结果
 	        if (isPage) {
 	        	// Get totalCount
@@ -88,9 +89,18 @@ public class ItemPub {
 			} else if (item_id != null && !"".equals(item_id.toString())
 					&& PubTool.isListHasData(resList) && resList.size() == 1) {// 标志当前执行查询的为具体商品
 				paramMap = (Map) resList.get(0);
+				// 查询商品是否为本店商品
+				Map parmMap = new HashMap();
+				parmMap.put("ITEM_ID", item_id);
+				parmMap.put("MERCHANT_ID", mer_id);
+				parmMap.put("USER_ID", user_id);
+				parmMap.put("STATUS", "30");
+				int resInt = merItemService.checkMerItem(parmMap);
+				paramMap.put("BELONG_ITEM", resInt == 0 ? "0" : "1");
+				// 查询商品评论
 				sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
 				pageBounds = new PageBounds(Order.formString(sortString));
-				Map parmMap = new HashMap();
+				parmMap = new HashMap();
 				parmMap.put("ITEM_ID", item_id);
 				resList = PubTool.getResultList("MerItemDAO.searchItemComments", parmMap, pageBounds, sqlSessionFactory);
 			} else {
