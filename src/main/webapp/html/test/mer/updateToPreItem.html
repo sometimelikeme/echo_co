@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http,$rootScope){
+    		$http({
+                method: 'GET',
+                url: "http://123.56.45.223:8080/echo/" + "mer/updateToPreItem.do",
+                params: {
+                	dataParm:{
+                		dataset:{
+                			MERCHANT_ID:'2bdfff8816014521979c06c96e7445d1',
+                			ut: '20',// 登陆客户端
+                			ITEM_ID: '10012',
+                			CURR_PRICE: '1231.11'
+                		}
+                	},
+                	sc_co: 'b7369c8418f745c8b400c84f1ab73a62',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            	$rootScope.dd = data;
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+</body>
+</html>
