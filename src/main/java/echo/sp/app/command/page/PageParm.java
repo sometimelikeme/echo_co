@@ -5,6 +5,6 @@ package echo.sp.app.command.page;
  * @date 2015年8月11日 
  */
 public interface PageParm {
-	String page = "1";
-	String limit = "10";
+	int page = 1;
+	int limit = 10;
 }
