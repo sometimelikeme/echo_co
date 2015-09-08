@@ -310,14 +310,16 @@ public class LoginController extends CoreController{
 		
 		// Get User Base Information
 		resMap = userService.getUserInfo(parmMap);
+		
 		// Get Merchant Base Information
 		Map merMap = userService.getMerchantInfo(parmMap);
-		
-		resMap.putAll(merMap);    
-		
+		if (merMap != null) {
+			resMap.putAll(merMap);
+			session.setAttribute("MERCHANT_ID", resMap.get("MERCHANT_ID").toString());
+		}
+		    
 		session.setAttribute("user_id", user_id);
 		session.setAttribute("CANT_CODE", resMap.get("CANT_CODE"));// District Number
-		session.setAttribute("MERCHANT_ID", resMap.get("MERCHANT_ID").toString());
 		
 		return resMap;
 	}
