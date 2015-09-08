@@ -19,6 +19,7 @@ import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.RandomUtil;
 import echo.sp.app.command.utils.UserAgentUtils;
+import echo.sp.app.service.MerStoreService;
 import echo.sp.app.service.UserService;
 
 /**   
@@ -33,6 +34,9 @@ public class UpdateMerchantController extends CoreController{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private MerStoreService merStoreService;
 	
 	@RequestMapping("user/merApply")
 	public void merApply(HttpServletRequest req, HttpServletResponse response, 
@@ -68,11 +72,9 @@ public class UpdateMerchantController extends CoreController{
 				
 				res = userService.insertToMerchant(parmMap);
 				
-				parmMap = new HashMap();
 				String CODE = "9995",
 					   MSG = "申请失败";
 				if (res == 1) {
-					parmMap.put("MERCHANT_ID", mer_id);
 					CODE = Code.SUCCESS;
 					MSG = Code.SUCCESS_MSG;
 				}
@@ -152,6 +154,7 @@ public class UpdateMerchantController extends CoreController{
 				   MSG = "提交失败";
 			if (res == 1) {
 				paramMap.put("MERCHANT_ID", mer_id);
+				paramMap = merStoreService.getMerDetail(paramMap);
 				CODE = Code.SUCCESS;
 				MSG = Code.SUCCESS_MSG;
 			}
