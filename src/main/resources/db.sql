@@ -188,7 +188,7 @@ CREATE TABLE T_ITEMS(
   	POINT_NUM DECIMAL(2,2),--评论次数
 	CREATE_TIME VARCHAR(32),--创建时间
 	LAST_UPDATE VARCHAR(32),--最近更新时间
-	STATUS CHAR(2),--商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过
+	STATUS CHAR(2),--商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过, 50-删除商品
 	ITEM_DESC VARCHAR(512),--商品描述
   	PRIMARY KEY (ITEM_ID)
 );
