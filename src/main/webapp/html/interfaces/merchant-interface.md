@@ -129,7 +129,7 @@
 	msg: "无匹配商品" 
 }`
 ###接口4： 更新商品为团购商品
-- url: mer/addMerItem.do
+- url: mer/updateToPreItem.do
 - 参数一： 更新商品为团购商品参数对象
 	`dataParm: {`
 	`dataset: {`
@@ -166,7 +166,6 @@
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
-- 参数三： sc_co 用户私钥
 - 注意：
    + 如果不传递page和pageSize参数，接口返回店铺基本信息和店铺下所有商品的基本信息
    + 如果传递page和pageSize参数，当page==1时，接口返回店铺基本信息和第一页请求的pageSize数据量的数据，以及查询的商品数据量公有多少条；page!=1时，接口返回的数据不再包含店铺基本信息，只返回本次分页请求的商品信息条数。
