@@ -60,6 +60,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		String no_co = request.getParameter("no_co");
 		String sc_co = request.getParameter("sc_co");
 		
+		if (logger.isDebugEnabled()) {
+			logger.debug("LoginInterceptor---preHandle---url: " + url + ";no_co: " + no_co + ";sc_co: " + sc_co);
+		}
+		
 		if (url.contains(NORMAL_URI)) { // FIRST GET THE NORMAL CODE.
 			flag = true;
 		} else if (no_co != null && sc_co != null) { // SECRET ACCESS.
