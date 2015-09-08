@@ -62,7 +62,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("LoginInterceptor---preHandle---url: " + url + ";no_co: " + no_co + ";sc_co: " + sc_co);
-		}
+		} 
 		
 		if (url.contains(NORMAL_URI)) { // FIRST GET THE NORMAL CODE.
 			flag = true;
