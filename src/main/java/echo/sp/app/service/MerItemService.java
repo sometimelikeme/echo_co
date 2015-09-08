@@ -22,4 +22,7 @@ public interface MerItemService {
 	
 	// 升级商品为团购商品
 	public int updateToPreItem(Map parmMap);
+	
+	// 获取商品信息
+	public Map getItemInfo(Map parmMap);
 }

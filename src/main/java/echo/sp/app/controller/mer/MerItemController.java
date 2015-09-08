@@ -134,6 +134,7 @@ public class MerItemController extends CoreController{
 				   MSG = "提交失败";
 			if (res == 1) {
 				parmMap.put("ITEM_ID", item.getITEM_ID());
+				parmMap = merItemService.getItemInfo(parmMap);
 				CODE = Code.SUCCESS;
 				MSG = Code.SUCCESS_MSG;
 			}
@@ -175,6 +176,7 @@ public class MerItemController extends CoreController{
 
 			Map parmMap = new HashMap();
 			parmMap.put("ITEM_ID", paramMap.get("ITEM_ID"));
+			parmMap = merItemService.getItemInfo(parmMap);
 
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
 		}
@@ -248,8 +250,10 @@ public class MerItemController extends CoreController{
 			paramMap.put("IS_PREF", "1");
 			paramMap.put("LAST_UPDATE", DateUtils.getDateTime());
 			merItemService.updateToPreItem(paramMap);
-
-			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			
+			Map parmMap = merItemService.getItemInfo(paramMap);
+			
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
 		}
 	}
 	
