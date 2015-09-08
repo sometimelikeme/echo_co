@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.page.PageParm;
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.service.MerStoreService;
 
@@ -62,18 +64,20 @@ public class MerStoreController extends CoreController{
 				   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
 				   sort = paramMap.get("sort"),// SORT INFO
 				   mer_id = paramMap.get("MERCHANT_ID");
-				
-			String sortString = sort == null ? "" : sort.toString();
 			String merchant_id = mer_id.toString();
-			int pageInt = Integer.parseInt(page.toString()),
-				pageSizeInt = Integer.parseInt(pageSize.toString());
-			
+			// 默认按照最新更改时间排序
+			String sortString = sort == null ? "LAST_UPDATE.desc" : sort.toString();
+			// Initializing page as 999999 which is impossible
+			int pageInt = 999999;
+			if (page != null && pageSize != null) {
+				pageInt = Integer.parseInt(page.toString());
+			}
 			
 			Map resMap = new HashMap();
 			Map parmMap = new HashMap();
 			parmMap.put("MERCHANT_ID", merchant_id);
-			if (pageInt == 1) {
-				// Get Merchant Base Information, Only Get When the First Page Asks.
+			// 当且仅当调用参数不包含分页信息, 或者当前分页为第一页时；获取店铺基本信息
+			if ((page == null && pageSize == null) || pageInt == 1) {
 				resMap = merStoreService.getMerDetail(parmMap);
 			}
 			
@@ -85,6 +89,7 @@ public class MerStoreController extends CoreController{
 			
 			if (page != null && pageSize != null) {
 				isPage = true;
+				int pageSizeInt = Integer.parseInt(pageSize.toString());
 				pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
 			} else if (!"".equals(sort)) {
 				pageBounds = new PageBounds(Order.formString(sortString));
