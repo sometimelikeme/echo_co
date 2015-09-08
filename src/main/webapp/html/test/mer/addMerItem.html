@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://123.56.45.223:8080/echo/" + "mer/addMerItem.do",
+                params: {
+                	dataParm:{
+                		dataset:{
+                			MERCHANT_ID: '2bdfff8816014521979c06c96e7445d1', 
+                        	ut: '20',
+                        	ITEM_NAME: 'iphone9',
+                        	ITEM_SHORT_NAME: 'iphone9',
+                        	CATEGORY_ID: '100',
+                        	IS_PREF: '1',
+                        	IS_SKILL:'0',
+                        	IS_POINT:'0',
+                        	CURR_PRICE:'4566',
+                        	ORI_PRICE:'5200',
+                        	HEAD_ICON:'xxx',
+                        	MAIN_ICON:'xxx',
+                        	INVENTORY:'200',
+                        	ITEM_DESC:'wonderful phone'
+                		}
+                	},
+                	sc_co: 'cf35f1c311cd4ee7ae19ca3e0682883e',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>

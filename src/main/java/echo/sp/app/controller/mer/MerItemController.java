@@ -169,7 +169,8 @@ public class MerItemController extends CoreController{
 		} else if (!"20".equals(ut)) {
 			super.writeJson(response, "9998", "无效客户端", null, null);
 		} else {
-
+			
+			paramMap.put("LAST_UPDATE", DateUtils.getDateTime());
 			int res = merItemService.updateMerItem(paramMap);
 
 			Map parmMap = new HashMap();
@@ -245,7 +246,7 @@ public class MerItemController extends CoreController{
 		} else {
 			
 			paramMap.put("IS_PREF", "1");
-			
+			paramMap.put("LAST_UPDATE", DateUtils.getDateTime());
 			merItemService.updateToPreItem(paramMap);
 
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
