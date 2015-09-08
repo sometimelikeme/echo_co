@@ -65,7 +65,7 @@
       </update> 
       
       <select id="getUserInfo" parameterType="map" resultType="Map">
-          SELECT USER_NAME,USER_TYPE,USER_ICON,NICKNAME,GENDER,TEL_NUMBER,
+          SELECT USER_ID,USER_NAME,USER_TYPE,USER_ICON,NICKNAME,GENDER,TEL_NUMBER,
           TEL_REC,CANT_CODE,USER_ADDR,EMAIL,INVITER,REG_TIME,ABILITY
           FROM T_USERS WHERE USER_ID = #{USER_ID} AND IN_VALID = #{IN_VALID}
       </select>
