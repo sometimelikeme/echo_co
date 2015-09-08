@@ -1,5 +1,6 @@
 package echo.sp.app.controller.user;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +53,8 @@ public class UserInfoController extends CoreController {
 		
 		String user_id = (String) paramMap.get("USER_ID"), 
 			   ut = (String) paramMap.get("ut"), 
-			   s_user_id = (String) session.getAttribute("user_id");
+			   s_user_id = (String) session.getAttribute("user_id"),
+			   email = (String)paramMap.get("EMAIL");
 		
 		// Get and compare with user id in session
 		if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
@@ -61,13 +63,18 @@ public class UserInfoController extends CoreController {
 			super.writeJson(response, "9998", "无效客户端", null, null);
 		} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 			super.writeJson(response, "9997", "无效设备", null, null);
-		} else if (!ValidUtils.isEmail((String)paramMap.get("EMAIL"))) {
+		} else if (!"".equals(email) && !ValidUtils.isEmail(email)) {
 			super.writeJson(response, "9996", "无效邮箱", null, null);	
 		} else {
 			
 			int res = userService.updateUserInfo(paramMap);
+			
+			paramMap = new HashMap();
+			paramMap.put("USER_ID", user_id);
+			
+			paramMap = userService.getUserInfo(paramMap);
 
-			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, null);
 		}
 	}
 	
@@ -105,8 +112,13 @@ public class UserInfoController extends CoreController {
 		} else {
 			
 			int res = userService.updateUserIC(paramMap);
+			
+			paramMap = new HashMap();
+			paramMap.put("USER_ID", user_id);
+			
+			paramMap = userService.getUserInfo(paramMap);
 
-			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, null);
 		}
 	}
 	
@@ -143,8 +155,13 @@ public class UserInfoController extends CoreController {
 			paramMap.put("PAY_PWD", MD5Util.getMD5String(Encodes.decodeBase64String(paramMap.get("PAY_PWD").toString())));
 			
 			int res = userService.updateUserAcc(paramMap);
+			
+			paramMap = new HashMap();
+			paramMap.put("USER_ID", user_id);
+			
+			paramMap = userService.getUserInfo(paramMap);
 
-			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, null);
 		}
 	}
 }
