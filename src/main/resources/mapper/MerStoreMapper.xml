@@ -4,7 +4,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.MerStoreDAO">
 	<select id="getMerDetail" parameterType="map" resultType="Map">
-          SELECT * FROM T_MERCHANTS A,T_MERCHANT_EXPAND B
+          SELECT A.MERCHANT_ID, USER_ID, MERCHANT_NAME, SHORT_NAME, MERCHANT_TYPE, 
+          MERCHANT_OWNER, TEL_NUMBER, HEAD_ICON, MAIN_ICON, CANT_CODE, LONGITUDE, 
+          LATITUDE, MERCHANT_ADDR, ABILITY, BUSI_DESC, OPEN_HOURS, STATUS, BUSI_TYPE,
+          REG_TIME, LAST_UPDATE, TOTAL_POINT
+          FROM T_MERCHANTS A,T_MERCHANT_EXPAND B
           WHERE A.MERCHANT_ID = #{MERCHANT_ID}
           AND B.MERCHANT_ID = #{MERCHANT_ID}
           AND A.MERCHANT_ID = B.MERCHANT_ID 
