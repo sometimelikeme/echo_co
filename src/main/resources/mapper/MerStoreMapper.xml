@@ -17,4 +17,4 @@
     <select id="getMerItems" parameterType="map" resultType="Map">
           SELECT * FROM T_ITEMS WHERE MERCHANT_ID = #{MERCHANT_ID}
     </select>
-</mapper>
+</mapper> 
