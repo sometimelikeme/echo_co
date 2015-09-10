@@ -51,16 +51,22 @@ public class LoginController extends CoreController{
 		if (logger.isDebugEnabled()) {
 			logger.debug("UserController---checkReg---begin: " + tel);
 		}
-		if (!"".equals(tel) && ValidUtils.isMobileNO(tel)) {
-			Map parmMap = new HashMap();
-			parmMap.put("TEL", tel);
-			int res = userService.getCheckReg(parmMap);
-			parmMap = new HashMap();
-			parmMap.put("IS_EXIST", res > 0 ? "1" : "0");
-			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
-		} else {
-			super.writeJson(response, "9998", "无效手机号码", null, null);
+		try {
+			if (!"".equals(tel) && ValidUtils.isMobileNO(tel)) {
+				Map parmMap = new HashMap();
+				parmMap.put("TEL", tel);
+				int res = userService.getCheckReg(parmMap);
+				parmMap = new HashMap();
+				parmMap.put("IS_EXIST", res > 0 ? "1" : "0");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
+			} else {
+				super.writeJson(response, "9998", "无效手机号码", null, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserController---checkReg---interface error: ", e);
 		}
+		
 	}
 	
 	
@@ -134,6 +140,7 @@ public class LoginController extends CoreController{
 					super.writeJson(response, CODE, MSG, parmMap, null);
 					
 				} catch (Exception e) {
+					super.writeJson(response, "9992", "后台程序执行失败", null, null);
 					logger.error("UserController---registAlg---interface error: ", e);
 				}
 			}
@@ -180,7 +187,7 @@ public class LoginController extends CoreController{
 						parmMap = new HashMap();
 						parmMap.put("USER_ID", user_id);
 						if (userService.checkMerchant(parmMap) == 0) {
-							super.writeJson(response, "9993", "您还未申请店铺", null, null);
+							super.writeJson(response, "9992", "您还未申请店铺", null, null);
 							return;
 						}
 					}
@@ -215,6 +222,7 @@ public class LoginController extends CoreController{
 				super.writeJson(response, CODE, MSG, parmMap, null);
 				
 			} catch (Exception e) {
+				super.writeJson(response, "9992", "后台程序执行失败", null, null);
 				logger.error("UserController---login---interface error: ", e);
 			}
 		}
@@ -275,7 +283,8 @@ public class LoginController extends CoreController{
 				super.writeJson(response, CODE, MSG, paramMap, null);
 				
 			} catch (Exception e) {
-				logger.error("UserController---login---interface error: ", e);
+				super.writeJson(response, "9992", "后台程序执行失败", null, null);
+				logger.error("UserController---changePwd---interface error: ", e);
 			}
 		}
 		

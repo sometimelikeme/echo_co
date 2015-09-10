@@ -52,11 +52,11 @@ public class MerStoreController extends CoreController{
 			logger.debug("MerStoreController---getMerDetail---dataParm: " + dataParm);
 		}
 		
-		super.getParm(req, response);
-		
-		Map paramMap = data.getDataset();
-		
 		try {
+			
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
 			
 			Object page = paramMap.get("page"),// PAGE NUMBER
 				   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
@@ -107,7 +107,7 @@ public class MerStoreController extends CoreController{
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
 		} catch (Exception e) {
 			logger.error("MerStoreController---getMerDetail---interface error: ",e);
-			super.writeJson(response, Code.FAIL, Code.FAIL_MSG, null, null);
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 		}
 	}
 }
