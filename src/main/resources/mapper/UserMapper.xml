@@ -36,8 +36,8 @@
       </select>
       
       <insert id="insertToMerchant" parameterType="map">
-          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,STATUS,REG_TIME)
-          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{STATUS},#{REG_TIME})
+          INSERT INTO T_MERCHANTS(MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,STATUS,REG_TIME,LAST_UPDATE)
+          VALUES(#{MERCHANT_ID},#{USER_ID},#{MERCHANT_NAME},#{MERCHANT_TYPE},#{STATUS},#{REG_TIME},#{REG_TIME})
       </insert>
       
       <insert id="insertToMerchantExpand" parameterType="map">
