@@ -142,6 +142,7 @@ public class UpdateMerchantController extends CoreController{
 			paramMap.put("OPEN_HOURS", open_hour);
 			paramMap.put("STATUS", status);
 			paramMap.put("BUSI_TYPE", busi_type);
+			paramMap.put("LAST_UPDATE", DateUtils.getDateTime());
 			
 			int res = userService.updateToMerchant(paramMap); 
 			

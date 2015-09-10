@@ -60,7 +60,8 @@
           	BUSI_DESC = #{BUSI_DESC},
           	OPEN_HOURS = #{OPEN_HOURS},
           	STATUS = #{STATUS},
-          	BUSI_TYPE = #{BUSI_TYPE} 
+          	BUSI_TYPE = #{BUSI_TYPE},
+          	LAST_UPDATE = #{LAST_UPDATE}
           	WHERE MERCHANT_ID = #{MERCHANT_ID}
       </update> 
       
