@@ -27,13 +27,25 @@ public class MerItemServiceImpl implements MerItemService {
 	// 增加商品
 	@Override
 	public int addMerItem(Item item) {
-		return merItemDAO.addMerItem(item);
+		int returnInt = 0;
+    	try {
+    		returnInt = merItemDAO.addMerItem(item);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 
 	// 修改商品
 	@Override 
 	public int updateMerItem(Map parmMap) {
-		return merItemDAO.updateMerItem(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = merItemDAO.updateMerItem(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 
 	// 检查商品是否为本店商品
@@ -45,7 +57,13 @@ public class MerItemServiceImpl implements MerItemService {
 	// 升级商品为团购商品
 	@Override
 	public int updateToPreItem(Map parmMap) {
-		return merItemDAO.updateToPreItem(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = merItemDAO.updateToPreItem(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 	
 	// 获取商品信息

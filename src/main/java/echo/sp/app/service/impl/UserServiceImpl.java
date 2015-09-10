@@ -34,12 +34,17 @@ public class UserServiceImpl implements UserService{
     @Override
 	public int addRegistAlg(Map parmMap) {
     	int returnInt = 0;
-		if (userDAO.addRegistAlg(parmMap) > 0) {
-			parmMap.put("TOTAL_POINT", "0");
-			parmMap.put("TOTAL_MONEY", "0");
-			if (userDAO.addUserExpand(parmMap) > 0) {
-				returnInt = 1;
-			};
+    	try {
+    		if (userDAO.addRegistAlg(parmMap) > 0) {
+    			parmMap.put("TOTAL_POINT", "0");
+    			parmMap.put("TOTAL_MONEY", "0");
+    			if (userDAO.addUserExpand(parmMap) > 0) {
+    				returnInt = 1;
+    			};
+    		}
+		} catch (Exception e) {
+			//  默认spring事务只在发生未被捕获的 runtimeexcetpion时才回滚
+			throw new RuntimeException();
 		}
 		return returnInt;
 	}
@@ -59,7 +64,13 @@ public class UserServiceImpl implements UserService{
 	// CHANGE PASSWORD
 	@Override
 	public int updatePwd(Map parmMap) {
-		return userDAO.updatePwd(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = userDAO.updatePwd(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 	
 	// CHECK IF MERCHANT
@@ -73,11 +84,15 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int insertToMerchant(Map parmMap) {
 		int returnInt = 0;
-		if (userDAO.insertToMerchant(parmMap) > 0) {
-			parmMap.put("TOTAL_POINT", "0");// 总和评分初始化为0
-			if (userDAO.insertToMerchantExpand(parmMap) > 0) {
-				returnInt = 1;
-			};
+    	try {
+    		if (userDAO.insertToMerchant(parmMap) > 0) {
+    			parmMap.put("TOTAL_POINT", "0");// 总和评分初始化为0
+    			if (userDAO.insertToMerchantExpand(parmMap) > 0) {
+    				returnInt = 1;
+    			};
+    		}
+		} catch (Exception e) {
+			throw new RuntimeException();
 		}
 		return returnInt;
 	}
@@ -85,7 +100,13 @@ public class UserServiceImpl implements UserService{
 	// FULFILL MERCHANT INFORMATION
 	@Override
 	public int updateToMerchant(Map parmMap) {
-		return userDAO.updateToMerchant(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = userDAO.updateToMerchant(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 	
 	// 登陆后获取用户基本信息
@@ -97,19 +118,37 @@ public class UserServiceImpl implements UserService{
 	// 完善用户基本信息
 	@Override
 	public int updateUserInfo(Map parmMap) {
-		return userDAO.updateUserInfo(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = userDAO.updateUserInfo(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 	
 	// 完善用户身份证信息
 	@Override
 	public int updateUserIC(Map parmMap) {
-		return userDAO.updateUserIC(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = userDAO.updateUserIC(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 
 	// FULFILL USER BANK ACCOUNT
 	@Override
 	public int updateUserAcc(Map parmMap) {
-		return userDAO.updateUserAcc(parmMap);
+		int returnInt = 0;
+    	try {
+    		returnInt = userDAO.updateUserAcc(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 
 }
