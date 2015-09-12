@@ -32,6 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"login/changePwd.do",
 		"login/exit.do",
 		"mer/searchMerItem.do",
+		"mer/getMerList.do",
 		"mer/getMerDetail.do"
 	};
 	

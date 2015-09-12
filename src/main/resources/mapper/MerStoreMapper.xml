@@ -17,4 +17,27 @@
     <select id="getMerItems" parameterType="map" resultType="Map">
           SELECT * FROM T_ITEMS WHERE MERCHANT_ID = #{MERCHANT_ID}
     </select>
+    
+    <select id="getMerList" parameterType="map" resultType="Map">
+          SELECT * FROM T_MERCHANTS
+          WHERE STATUS = '30'
+          <if test="MERCHANT_NAME != null and MERCHANT_NAME != '' ">  
+          		AND MERCHANT_NAME LIKE CONCAT(CONCAT('%', #{MERCHANT_NAME, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    	  <if test="SHORT_NAME != null and SHORT_NAME != '' ">  
+          		AND SHORT_NAME LIKE CONCAT(CONCAT('%', #{SHORT_NAME, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    	  <if test="MERCHANT_TYPE != null and MERCHANT_TYPE != '' ">  
+          		AND MERCHANT_TYPE = #{MERCHANT_TYPE} 
+    	  </if>
+    	  <if test="MERCHANT_ADDR != null and MERCHANT_ADDR != '' ">  
+          		AND MERCHANT_ADDR LIKE CONCAT(CONCAT('%', #{MERCHANT_ADDR, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    	  <if test="ABILITY != null and ABILITY != '' ">  
+          		AND ABILITY LIKE CONCAT(CONCAT('%', #{ABILITY, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    	  <if test="BUSI_DESC != null and BUSI_DESC != '' ">  
+          		AND BUSI_DESC LIKE CONCAT(CONCAT('%', #{BUSI_DESC, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    </select>
 </mapper> 

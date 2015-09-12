@@ -41,6 +41,50 @@ public class MerStoreController extends CoreController{
 	private SqlSessionFactory sqlSessionFactory;
 	
 	/**
+	 * Get Merchant List
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("mer/getMerList")
+	public void getMerList(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("MerStoreController---getMerList---dataParm: " + dataParm);
+		}
+		
+		try {
+			
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			Object sort = paramMap.get("sort");
+			
+			// Sort as Merchant Level Ascending Default
+			String sortString = sort == null ? "MER_LEVEL.asc" : sort.toString();
+			
+			int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
+			int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
+			
+			PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+			List resList = PubTool.getResultList("MerStoreDAO.getMerList", paramMap, pageBounds, sqlSessionFactory);
+				
+			Map resMap = new HashMap();
+			int totalCount = 0;
+			if (PubTool.isListHasData(resList)) {
+	    		totalCount = ((PageList) resList).getPaginator().getTotalCount();
+			}
+			resMap.put("totalCount", totalCount);
+			
+			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
+			
+		} catch (Exception e) {
+			logger.error("MerStoreController---getMerList---interface error: ",e);
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+		}
+	}
+	
+	/**
 	 * Get Merchant Detail Information
 	 * @param req
 	 * @param response

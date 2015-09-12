@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://123.56.45.223:8080/echo/" + "mer/getMerList.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                			MERCHANT_NAME:'试',
+                			page:'1',
+                			pageSize: '10'
+                		}
+                	})),
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
