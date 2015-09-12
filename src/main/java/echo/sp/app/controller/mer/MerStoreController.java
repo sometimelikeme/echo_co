@@ -82,7 +82,7 @@ public class MerStoreController extends CoreController{
 				resMap = merStoreService.getMerDetail(parmMap);
 			}
 			
-			if ("1".equals(item_need.toString())) {
+			if (item_need !=null && "1".equals(item_need.toString())) {
 				// Get Item Information of Merchant
 				PageBounds pageBounds;
 				
