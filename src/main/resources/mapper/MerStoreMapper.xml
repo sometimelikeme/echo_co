@@ -19,7 +19,8 @@
     </select>
     
     <select id="getMerList" parameterType="map" resultType="Map">
-          SELECT * FROM T_MERCHANTS
+          SELECT MERCHANT_ID,USER_ID,MERCHANT_NAME,MERCHANT_TYPE,HEAD_ICON,ABILITY,OPEN_HOURS
+          FROM T_MERCHANTS
           WHERE STATUS = '30'
           <if test="MERCHANT_NAME != null and MERCHANT_NAME != '' ">  
           		AND MERCHANT_NAME LIKE CONCAT(CONCAT('%', #{MERCHANT_NAME, jdbcType=VARCHAR}),'%') 
