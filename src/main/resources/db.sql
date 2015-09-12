@@ -164,7 +164,7 @@ CREATE TABLE T_MERCHANTS(
   STATUS CHAR(2),--店铺状态:10-已提交，20-审核中，30-审核通过
   BUSI_TYPE VARCHAR(32),--商品店铺类型，维护到枚举表
   REG_TIME VARCHAR(32),--开店时间
-  LAST_UPDATE VARCHAR(32),--最近更新时间
+  LAST_UPDATE VARCHAR(32),--最近更新时间 
   MER_LEVEL CHAR(2) DEFAULT '99',--店铺级别 级别越高被搜到的几率越大 查询到的排名越高
   PRIMARY KEY(MERCHANT_ID)
 );
