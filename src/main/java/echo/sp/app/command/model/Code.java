@@ -22,6 +22,12 @@ public class Code {
      */
     public static String FAIL="9999";
     public static String FAIL_MSG="失败";
+    
+    /**
+     * 后台程序执行失败
+     */
+    public static String CODE_FAIL="9992";
+    public static String CODE_FAIL_MSG="后台程序执行失败";
 
     /**
      * 缺少相关的参数错
