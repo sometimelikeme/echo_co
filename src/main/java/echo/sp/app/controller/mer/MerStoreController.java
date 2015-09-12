@@ -61,7 +61,9 @@ public class MerStoreController extends CoreController{
 			Object page = paramMap.get("page"),// PAGE NUMBER
 				   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
 				   sort = paramMap.get("sort"),// SORT INFO
-				   mer_id = paramMap.get("MERCHANT_ID");
+				   mer_id = paramMap.get("MERCHANT_ID"),
+				   item_need = paramMap.get("item_need");
+			
 			String merchant_id = mer_id.toString();
 			// 默认按照最新更改时间排序
 			String sortString = sort == null ? "LAST_UPDATE.desc" : sort.toString();
@@ -72,6 +74,7 @@ public class MerStoreController extends CoreController{
 			}
 			
 			Map resMap = new HashMap();
+			List resList = null;
 			Map parmMap = new HashMap();
 			parmMap.put("MERCHANT_ID", merchant_id);
 			// 当且仅当调用参数不包含分页信息, 或者当前分页为第一页时；获取店铺基本信息
@@ -79,32 +82,34 @@ public class MerStoreController extends CoreController{
 				resMap = merStoreService.getMerDetail(parmMap);
 			}
 			
-			
-			// Get Item Information of Merchant
-			PageBounds pageBounds;
-			
-			Boolean isPage = false;
-			
-			if (page != null && pageSize != null) {
-				isPage = true;
-				int pageSizeInt = Integer.parseInt(pageSize.toString());
-				pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
-			} else if (!"".equals(sort)) {
-				pageBounds = new PageBounds(Order.formString(sortString));
-			} else {
-				pageBounds = new PageBounds();
-			}
-			
-			List resList = PubTool.getResultList("MerStoreDAO.getMerItems", parmMap, pageBounds, sqlSessionFactory);
-			
-			// Only Get When the First Page Asks.
-			if (PubTool.isListHasData(resList) && isPage && pageInt == 1) {
-	    		PageList pageList = (PageList) resList;
-	    		int totalCount = pageList.getPaginator().getTotalCount();
-	    		resMap.put("totalCount", totalCount);
+			if ("1".equals(item_need.toString())) {
+				// Get Item Information of Merchant
+				PageBounds pageBounds;
+				
+				Boolean isPage = false;
+				
+				if (page != null && pageSize != null) {
+					isPage = true;
+					int pageSizeInt = Integer.parseInt(pageSize.toString());
+					pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				} else if (!"".equals(sort)) {
+					pageBounds = new PageBounds(Order.formString(sortString));
+				} else {
+					pageBounds = new PageBounds();
+				}
+				
+				resList = PubTool.getResultList("MerStoreDAO.getMerItems", parmMap, pageBounds, sqlSessionFactory);
+				
+				// Only Get When the First Page Asks.
+				if (PubTool.isListHasData(resList) && isPage && pageInt == 1) {
+		    		PageList pageList = (PageList) resList;
+		    		int totalCount = pageList.getPaginator().getTotalCount();
+		    		resMap.put("totalCount", totalCount);
+				}
 			}
 			
 			super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
+			
 		} catch (Exception e) {
 			logger.error("MerStoreController---getMerDetail---interface error: ",e);
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
