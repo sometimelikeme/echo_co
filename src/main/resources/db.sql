@@ -268,6 +268,15 @@ CREATE TABLE T_ORDERS_LINE(
 	PRIMARY KEY (ORDER_ID,ITEM_ID)
 );
 
+--支付信息日志表
+CREATE TABLE T_ORDERS_PAY_LOG(
+	ORDER_ID VARCHAR(32) NOT NULL,--订单号
+	RETURN_ID VARCHAR(32) NOT NULL,--调用第三方支付返回的ID号
+	TOTAL_PAYMENT DECIMAL(9,2),--支付总金额
+	TIME_STAMP VARCHAR(32) NOT NULL,
+	PRIMARY KEY (ORDER_ID)
+);
+
 -----------------------任务系统---------------------
 
 --任务板块表
