@@ -129,7 +129,8 @@ public class UpdateMerchantController extends CoreController{
 					   desc = (String)paramMap.get("desc"),
 					   open_hour = (String)paramMap.get("open_hour"),
 					   status = "20",// 审核状态
-					   busi_type = (String)paramMap.get("busi_type");
+					   busi_type = (String)paramMap.get("busi_type"),
+					   tel_number = (String)paramMap.get("tel_number");
 				
 				paramMap = new HashMap();
 				
@@ -149,6 +150,7 @@ public class UpdateMerchantController extends CoreController{
 				paramMap.put("STATUS", status);
 				paramMap.put("BUSI_TYPE", busi_type);
 				paramMap.put("LAST_UPDATE", DateUtils.getDateTime());
+				paramMap.put("TEL_NUMBER", tel_number);
 				
 				int res = userService.updateToMerchant(paramMap); 
 				

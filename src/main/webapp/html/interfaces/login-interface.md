@@ -220,7 +220,8 @@
 		`ability: 'coding',// 技能 `
 		`desc: 'i am a coder',// 描述 `
 		`open_hour: '1-24',// 开放时间`
-		`busi_type: 'code' // 经营类型`
+		`busi_type: 'code', // 经营类型`
+		`tel_number: '11111111' // 经营类型`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
