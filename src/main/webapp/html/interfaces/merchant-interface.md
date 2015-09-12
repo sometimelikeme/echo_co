@@ -193,3 +193,26 @@
 	status: "9992",
 	msg: "后台程序执行失败",
 }`
+###接口6： 查询店铺列表
+- url: mer/getMerList.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`page: '1'，// required 分页查询-请求页数`
+		`pageSize: '10'，// required 每页的最大数据量`
+		`sort: 'CREATE_TIME.desc'，// optimal 按照什么排序，字段名后加.asc升序排序，.desc倒序排序；默认按照MER_LEVEL升序排序`
+		`MERCHANT_NAME: ''，// optimal 根据店铺名称模糊查询`
+		`SHORT_NAME: ''，// optimal 根据店铺简称模糊查询`
+		`MERCHANT_TYPE: ''，// optimal 店铺类型`
+		`MERCHANT_ADDR: ''，// optimal 根据店铺地址模糊查询`
+		`ABILITY: ''，// optimal 根据店铺技能模糊查询`
+		`BUSI_DESC: ''// optimal 根据店铺描述模糊查询`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[{"LAST_UPDATE":"2015-09-12 14:49:53","MERCHANT_OWNER":"","MAIN_ICON":"http://echoapp.oss-cn-beijing.aliyuncs.com/9f9cdc2a6ff44a50a334d1fe183c3b44_shoppic.jpg","HEAD_ICON":"http://echoapp.oss-cn-beijing.aliyuncs.com/9f9cdc2a6ff44a50a334d1fe183c3b44_shopicon.jpg","BUSI_TYPE":"","USER_ID":"704aef6642e447eea5a7163dce4c73a5","OPEN_HOURS":"","BUSI_DESC":"","MERCHANT_ADDR":"","CANT_CODE":"","STATUS":"30","LATITUDE":0E-8,"TEL_NUMBER":"","MER_LEVEL":"99","REG_TIME":"2015-09-10 19:54:36","ABILITY":"","MERCHANT_TYPE":"","LONGITUDE":0E-8,"MERCHANT_ID":"9f9cdc2a6ff44a50a334d1fe183c3b44","MERCHANT_NAME":"测试"}],"dataset":{"totalCount":1}}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
