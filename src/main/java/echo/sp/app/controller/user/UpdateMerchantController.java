@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.RandomUtil;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.MerStoreService;
+import echo.sp.app.service.PubToolService;
 import echo.sp.app.service.UserService;
 
 /**   
@@ -37,6 +39,9 @@ public class UpdateMerchantController extends CoreController{
 	
 	@Autowired
 	private MerStoreService merStoreService;
+	
+	@Autowired
+	private PubToolService pubToolService;
 	
 	@RequestMapping("user/merApply")
 	public void merApply(HttpServletRequest req, HttpServletResponse response, 
@@ -128,9 +133,14 @@ public class UpdateMerchantController extends CoreController{
 					   ability = (String)paramMap.get("ability"),
 					   desc = (String)paramMap.get("desc"),
 					   open_hour = (String)paramMap.get("open_hour"),
-					   status = "20",// 审核状态
 					   busi_type = (String)paramMap.get("busi_type"),
 					   tel_number = (String)paramMap.get("tel_number");
+				
+				Map parmMap = new HashMap();
+				// 更新维护店铺信息是否需要审核：1-是，0-否（默认）
+				parmMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
+				parmMap.put("PARM_NAME", "MER_APPLY_CHECK");
+				String status = "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "20" : "30";
 				
 				paramMap = new HashMap();
 				
