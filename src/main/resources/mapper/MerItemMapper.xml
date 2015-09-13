@@ -90,4 +90,10 @@
     <select id="getItemInfo" parameterType="map" resultType="Map">
           SELECT * FROM T_ITEMS WHERE ITEM_ID = #{ITEM_ID}
     </select>
+    
+    <select id="getMerItemQty" parameterType="map" resultType="int">
+          SELECT COUNT(*) FROM T_ITEMS 
+          WHERE MERCHANT_ID = #{MERCHANT_ID} 
+          AND STATUS != '50'
+    </select>
 </mapper>

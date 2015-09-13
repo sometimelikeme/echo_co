@@ -71,5 +71,11 @@ public class MerItemServiceImpl implements MerItemService {
 	public Map getItemInfo(Map parmMap) {
 		return merItemDAO.getItemInfo(parmMap);
 	}
+	
+	// 获取某店铺下的商品总量
+	@Override
+	public int getMerItemQty(Map parmMap) {
+		return merItemDAO.getMerItemQty(parmMap);
+	}
 
 }

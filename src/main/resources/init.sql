@@ -17,6 +17,9 @@ INSERT INTO T_ITEMS_CATEGORY(CATEGORY_ID, CATEGORY_NAME)
 --机构参数
 --店铺信息维护是否需要审核
 INSERT INTO T_ORG_PARM VALUES('120000','MER_APPLY_CHECK','0','更新维护店铺信息是否需要审核：1-是，0-否（默认）','1');
---店铺上传上新是否需要审核
+--店铺上传上传商品是否需要审核
 INSERT INTO T_ORG_PARM VALUES('120000','MER_ITEM_CHECK','0','店铺上传商品是否需要管理员审核：1-是，0-否（默认）','1');
+--店铺上传商品的最大数量,默认无限制
+INSERT INTO T_ORG_PARM VALUES('120000','MER_ITEM_MAX_QTY','5','店铺上传商品店铺上传商品的最大数量,默认无限制','1');
+
 

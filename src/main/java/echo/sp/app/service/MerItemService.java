@@ -25,4 +25,7 @@ public interface MerItemService {
 	
 	// 获取商品信息
 	public Map getItemInfo(Map parmMap);
+	
+	// 获取某店铺下的商品总量
+	public int getMerItemQty(Map parmMap);
 }

@@ -80,6 +80,8 @@ public class MerItemController extends CoreController{
 				
 				Map parmMap = new HashMap();
 				
+				String cant_code = (String) session.getAttribute("CANT_CODE");// 地区号
+				
 				parmMap.put("USER_ID", user_id);
 				Map merMap = userService.getMerchantInfo(parmMap);
 				
@@ -89,12 +91,30 @@ public class MerItemController extends CoreController{
 					return;
 				}
 				
+				// 店铺上传商品的最大数量,默认无限制
 				parmMap = new HashMap();
+				parmMap.put("CANT_CODE", cant_code);
+				parmMap.put("PARM_NAME", "MER_ITEM_MAX_QTY");
+				String max_qty = PubTool.getOrgParm(parmMap, pubToolService);
+				if (!"".equals(max_qty)) {
+					int max_qty_int = Integer.parseInt(max_qty);
+					parmMap = new HashMap();
+					parmMap.put("MERCHANT_ID", mer_id);
+					int curr_qty = merItemService.getMerItemQty(parmMap);
+					if (curr_qty >= max_qty_int) {
+						if (logger.isDebugEnabled()) {
+							logger.debug("MerItemController---addMerItem---max_qty_int: " + max_qty_int + ";curr_qty: " + curr_qty);
+						}
+						super.writeJson(response, "9995", "您的店铺已经达到商品最大限量!", null, null);
+						return;
+					}
+				}
 				
 				// 店铺上传商品是否需要管理员审核：1-是，0-否（默认）
-				parmMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
-				parmMap.put("PARM_NAME", "MER_ITEM_CHECK");
 				// 商品状态：10-提交，20-审核中，30-审核通过，40-审核未通过;默认不审核
+				parmMap = new HashMap();
+				parmMap.put("CANT_CODE", cant_code);
+				parmMap.put("PARM_NAME", "MER_ITEM_CHECK");
 				String item_status = "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "10" : "30";
 				
 				if (logger.isDebugEnabled()) {
