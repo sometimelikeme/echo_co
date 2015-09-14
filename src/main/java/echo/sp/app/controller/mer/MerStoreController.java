@@ -123,6 +123,11 @@ public class MerStoreController extends CoreController{
 			parmMap.put("MERCHANT_ID", merchant_id);
 			// 当且仅当调用参数不包含分页信息, 或者当前分页为第一页时；获取店铺基本信息
 			if ((page == null && pageSize == null) || pageInt == 1) {
+				// 若当前用户处于登陆状态, 返回该用户是否收藏目前店铺标志
+				Object user_obj = req.getSession().getAttribute("user_id");
+				if (user_obj != null) {
+					parmMap.put("USER_ID", user_obj.toString());
+				}
 				resMap = merStoreService.getMerDetail(parmMap);
 			}
 			

@@ -4,11 +4,20 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.MerStoreDAO">
 	<select id="getMerDetail" parameterType="map" resultType="Map">
-          SELECT A.MERCHANT_ID, USER_ID, MERCHANT_NAME, SHORT_NAME, MERCHANT_TYPE, 
+          SELECT A.MERCHANT_ID, A.USER_ID, MERCHANT_NAME, SHORT_NAME, MERCHANT_TYPE, 
           MERCHANT_OWNER, TEL_NUMBER, HEAD_ICON, MAIN_ICON, CANT_CODE, LONGITUDE, 
           LATITUDE, MERCHANT_ADDR, ABILITY, BUSI_DESC, OPEN_HOURS, STATUS, BUSI_TYPE,
           REG_TIME, LAST_UPDATE, TOTAL_POINT
-          FROM T_MERCHANTS A,T_MERCHANT_EXPAND B
+          <if test="USER_ID != null and USER_ID != '' ">  
+          , C.MERCHANT_ID IS_COLL
+    	  </if>
+          FROM T_MERCHANTS A
+          <if test="USER_ID != null and USER_ID != '' ">  
+          		LEFT JOIN T_USER_MER_COLL C
+          		ON C.USER_ID = #{USER_ID}
+          		AND A.MERCHANT_ID = C.MERCHANT_ID
+    	  </if>
+          ,T_MERCHANT_EXPAND B
           WHERE A.MERCHANT_ID = #{MERCHANT_ID}
           AND B.MERCHANT_ID = #{MERCHANT_ID}
           AND A.MERCHANT_ID = B.MERCHANT_ID 
