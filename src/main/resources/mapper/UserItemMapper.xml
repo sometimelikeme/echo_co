@@ -7,14 +7,29 @@
         INSERT INTO T_USER_MER_COLL(USER_ID,MERCHANT_ID,NOTE,TIME1)
         VALUES(#{USER_ID},#{MERCHANT_ID},#{NOTE},#{TIME1})
     </insert>
+    
     <insert id="addItemColl" parameterType="map">
         INSERT INTO T_USER_ITEM_COLL(USER_ID,ITEM_ID,NOTE,TIME1)
         VALUES(#{USER_ID},#{ITEM_ID},#{NOTE},#{TIME1})
     </insert>
+    
     <delete id="deleteMerColl" parameterType="map">  
         DELETE FROM T_USER_MER_COLL WHERE USER_ID = #{USER_ID} AND MERCHANT_ID = #{MERCHANT_ID}
     </delete>  
+    
     <delete id="deleteItemColl" parameterType="map">  
         DELETE FROM T_USER_ITEM_COLL WHERE USER_ID = #{USER_ID} AND ITEM_ID = #{ITEM_ID}
     </delete> 
+    
+    <select id="getMerColl" parameterType="map" resultType="Map">
+          SELECT * FROM T_MERCHANTS A, T_USER_MER_COLL B
+          WHERE A.MERCHANT_ID = B.MERCHANT_ID
+          AND B.USER_ID = #{USER_ID}
+    </select>
+    
+    <select id="getItemColl" parameterType="map" resultType="Map">
+          SELECT * FROM T_ITEMS A, T_USER_ITEM_COLL B
+          WHERE A.ITEM_ID = B.ITEM_ID
+          AND B.USER_ID = #{USER_ID}
+    </select>
 </mapper>

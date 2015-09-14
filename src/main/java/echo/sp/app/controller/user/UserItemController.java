@@ -1,5 +1,7 @@
 package echo.sp.app.controller.user;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.UserItemService;
@@ -222,11 +229,70 @@ public class UserItemController extends CoreController{
 			} else {
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSizeInt").toString());
-				String sortString = "LAST_UPDATE.desc";
+				String sortString = "TIME1.desc";
+				
+				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				List resList = PubTool.getResultList("UserItemDAO.getMerColl", paramMap, pageBounds, sqlSessionFactory);
+				
+				Map daMap = null;
+				if (PubTool.isListHasData(resList)) {
+					daMap = new HashMap();
+		    		daMap.put("totalCount", ((PageList) resList).getPaginator().getTotalCount());
+				}
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, daMap, resList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
-			logger.error("UserItemController---addMerColl---interface error: ", e);
+			logger.error("UserItemController---getMerColl---interface error: ", e);
+		}
+	}
+	
+	/**
+	 * 获取收藏商品列表
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("user/getItemColl")
+	public void getItemColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserItemController---getItemColl---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			// Get and compare with user id in session
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {// Only user has access
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				int pageInt = Integer.parseInt(paramMap.get("page").toString());
+				int pageSizeInt = Integer.parseInt(paramMap.get("pageSizeInt").toString());
+				String sortString = "TIME1.desc";
+				
+				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				List resList = PubTool.getResultList("UserItemDAO.getItemColl", paramMap, pageBounds, sqlSessionFactory);
+				
+				Map daMap = null;
+				if (PubTool.isListHasData(resList)) {
+					daMap = new HashMap();
+		    		daMap.put("totalCount", ((PageList) resList).getPaginator().getTotalCount());
+				}
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, daMap, resList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserItemController---getItemColl---interface error: ", e);
 		}
 	}
 }
