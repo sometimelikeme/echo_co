@@ -28,4 +28,7 @@ public interface MerItemDAO {
 	
 	// 获取某店铺下的商品总量
 	public int getMerItemQty(Map parmMap);
+	
+	// 获取某商品手否被当前用户收藏
+	public int getIsItemColl(Map parmMap);
 }

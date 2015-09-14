@@ -233,14 +233,15 @@ public class MerItemController extends CoreController{
 		}
 		
 		try {
+			
 			super.getParm(req, response);
 			
 			Map paramMap = data.getDataset();
 			
 			// sqlSessionFactory injection
 			Map resMap = ItemPub.searchMerItem(paramMap, sqlSessionFactory,
-					merItemService, session.getAttribute("user_id").toString(),
-					session.getAttribute("MERCHANT_ID").toString()); 
+					merItemService, PubTool.processNull(session.getAttribute("user_id")),
+					PubTool.processNull(session.getAttribute("MERCHANT_ID"))); 
 			
 			String CODE = Code.FAIL,
 				   MSG = "无匹配商品";

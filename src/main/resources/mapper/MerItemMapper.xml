@@ -96,4 +96,10 @@
           WHERE MERCHANT_ID = #{MERCHANT_ID} 
           AND STATUS != '50'
     </select>
+    
+    <select id="getIsItemColl" parameterType="map" resultType="int">
+          SELECT COUNT(*) FROM T_USER_ITEM_COLL 
+          WHERE USER_ID = #{USER_ID} 
+          AND ITEM_ID = #{ITEM_ID}
+    </select>
 </mapper>

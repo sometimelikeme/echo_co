@@ -8,18 +8,18 @@
     	angular.module('TTT',[]).run(function($log,$http,$rootScope){
     		$http({
                 method: 'GET',
-                url: "http://localhost:8080/echo/" + "mer/searchMerItem.do",
+                url: "http://123.56.45.223:8080/echo/" + "mer/searchMerItem.do",
                 params: {
                 	dataParm:{
                 		dataset:{
-                			ITEM_ID:'10012',
+                			ITEM_ID:'10035',
                 			//ITEM_NAME: 'one',
                 			//page:'1',
                 			//pageSize:'3',
                 			sort:'CREATE_TIME.desc'
                 		}
                 	},
-                	sc_co: '1204e9ce06fc40a0bc954979471a760e',
+                	// sc_co: '1204e9ce06fc40a0bc954979471a760e',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {

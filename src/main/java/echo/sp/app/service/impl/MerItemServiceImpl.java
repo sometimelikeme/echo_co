@@ -78,4 +78,10 @@ public class MerItemServiceImpl implements MerItemService {
 		return merItemDAO.getMerItemQty(parmMap);
 	}
 
+	// 获取某商品手否被当前用户收藏
+	@Override
+	public int getIsItemColl(Map parmMap) {
+		return merItemDAO.getIsItemColl(parmMap);
+	}
+
 }

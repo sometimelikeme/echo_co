@@ -33,6 +33,15 @@ public class PubTool {
 	
 	/**
 	 * 
+	 * @param s
+	 * @return
+	 */
+	public static String processNull(Object s) { 
+		return s == null ? "" : s.toString();
+	}
+	
+	/**
+	 * 
 	 * DESC：判断List不为null切含有数据
 	 * By Ethan
 	 * 2015年8月1日
