@@ -22,13 +22,13 @@
     </delete> 
     
     <select id="getMerColl" parameterType="map" resultType="Map">
-          SELECT * FROM T_MERCHANTS A, T_USER_MER_COLL B
+          SELECT A.*,B.TIME1 FROM T_MERCHANTS A, T_USER_MER_COLL B
           WHERE A.MERCHANT_ID = B.MERCHANT_ID
           AND B.USER_ID = #{USER_ID}
     </select>
     
     <select id="getItemColl" parameterType="map" resultType="Map">
-          SELECT * FROM T_ITEMS A, T_USER_ITEM_COLL B
+          SELECT A.*,B.TIME1 FROM T_ITEMS A, T_USER_ITEM_COLL B
           WHERE A.ITEM_ID = B.ITEM_ID
           AND B.USER_ID = #{USER_ID}
     </select>
