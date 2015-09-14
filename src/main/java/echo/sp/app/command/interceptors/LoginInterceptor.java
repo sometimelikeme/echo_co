@@ -42,6 +42,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"user/updateUserIC.do",
 		"user/updateUserAcc.do",
 		"user/merApply.do",
+		"user/merColl.do",
+		"user/itemColl.do",
 		"mer/toMerchant.do",
 		"mer/addMerItem.do",
 		"mer/updateMerItem.do",
