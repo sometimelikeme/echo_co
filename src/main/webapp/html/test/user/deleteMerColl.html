@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET',
+                url: "http://123.56.45.223:8080/echo/" + "user/deleteMerColl.do",
+                params: {
+                	dataParm:{
+                		dataset:{
+                			MERCHANT_ID: '50e532a0d6a244d58e43c0edc8247ee2',
+							USER_ID: '47bdfdc734c9429381e7e2793fe28cc8',
+                        	ut: '10'
+                		}
+                	},
+                	sc_co: '5ac959c2045e4e8c966b483cd2893bd5',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
