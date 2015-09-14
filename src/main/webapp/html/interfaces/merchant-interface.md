@@ -124,7 +124,7 @@
 	+ 本接口未做客户端限制，因为用户也需要调用该接口。
 	+ 参数key值与数据库字段值相同，参数是可选，非必须。
 	+ 本接口返回3种类型数据：
-	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序；同时dataset中的BELONG_ITEM用来表示该商品是否为用户自己店铺的商品；中增加成功返回数据格式如下：
+	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序；同时dataset中的BELONG_ITEM用来表示该商品是否为用户自己店铺的商品；增加成功返回数据格式如下(查询商品接口mer/searchMerItem,增加查询具体商品时,返回该商品是否被当前用户所收藏的标志字段`IS_COLL`为1)：
 	    `{"status":"0000","msg":"成功",`
 	    `"dataset_line":[{"COMENT_TITLE":"挺好",//评论标题 ``"ORDER_ID":"a70f119a890f467b8d7a632c2fabd873",// 订单号 ``"COMMENT_ID":"a70f119a890f467b8d7a632c2fabd873",//评论ID ``"USER_ID":"a70f119a890f467b8d7a632c2fabd873",`
 	    `"COMMENT_DESC":"真不错",``"ITEM_ID":10012,// 商品ID "ITEM_POINT":3.5,// 评分 "COMMENT_TIME":"2015-08-31 16:06:23"// 时间戳}],``"dataset":{"MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-08-31 16:06:23","ITEM_ID":10012,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6S","ITEM_SHORT_NAME":"iphone6S","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":5266.00,BELONG_ITEM: '1'// 1-是，0-否}}`
@@ -191,8 +191,9 @@
    + item_need不传或者不为1的情况下,仅仅返回店铺信息。
    + 如果不传递page和pageSize参数，接口返回店铺基本信息和店铺下所有商品的基本信息
    + 如果传递page和pageSize参数，当page==1时，接口返回店铺基本信息和第一页请求的pageSize数据量的数据，以及查询的商品数据量公有多少条totalCount；page!=1时，接口返回的数据不再包含店铺基本信息，只返回本次分页请求的商品信息条数。
+   + 返回的dataset中如果`IS_COLL`不为空，表示该店铺已经被用户所收藏
 - 返回值：
- + 成功： `{"status":"0000","msg":"成功"}`
+ + 成功： `{"status":"0000","msg":"成功",dataset:{},datasetline:[]}`
  + 失败：` {
 	status: "9992",
 	msg: "后台程序执行失败",
