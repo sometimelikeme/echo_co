@@ -25,8 +25,10 @@
 ### 2015-9-14
 - 查询具体店铺接口`mer/getMerDetail`增加用户是否收藏该店铺，`IS_COLL`不为空
 - 查询商品接口`mer/searchMerItem`,增加查询具体商品时,返回该商品是否被当前用户所收藏的标志字段`IS_COLL`为1
-- 增加用户收藏、删除店铺和商品的接口。注意：客户端收藏店铺时，判断用户是否已经收藏。
+- 增加用户收藏、删除店铺和商品的接口。注意：客户端收藏店铺时，判断用户是否已经收藏。请查看[http://123.56.45.223:8080/echo//html/interfaces/user-interface.html](http://123.56.45.223:8080/echo//html/interfaces/user-interface.html "用户相关接口文档")
   + user/addMerColl
   + user/addItemColl
   + user/deleteMerColl
   + user/deleteItemColl
+  + user/getMerColl
+  + user/getItemColl
