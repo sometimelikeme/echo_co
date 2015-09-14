@@ -5,9 +5,9 @@
 - 参数一： 收藏店铺参数对象
 	`dataParm: {`
 	`dataset: {`
-		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID`
-		`ut: '10',// 登陆客户端`
-		`USER_ID: '100012'// 用户ID`
+		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required店铺ID`
+		`ut: '10',// required登陆客户端`
+		`USER_ID: '100012'//required用户ID`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
@@ -38,9 +38,9 @@
 - 参数一： 收藏商品参数对象
 	`dataParm: {`
 	`dataset: {`
-		`ITEM_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',`
-		`ut: '10',// 登陆客户端`
-		`USER_ID: '100012'// 用户ID`
+		`ITEM_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required`
+		`ut: '10',// required登陆客户端`
+		`USER_ID: '100012'// required用户ID`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
@@ -71,9 +71,9 @@
 - 参数一： 取消收藏店铺参数对象
 	`dataParm: {`
 	`dataset: {`
-		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID`
-		`ut: '10',// 登陆客户端`
-		`USER_ID: '100012'// 用户ID`
+		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required店铺ID`
+		`ut: '10',// required登陆客户端`
+		`USER_ID: '100012'// required用户ID`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
@@ -104,9 +104,9 @@
 - 参数一： 取消收藏商品参数对象
 	`dataParm: {`
 	`dataset: {`
-		`ITEM_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',`
-		`ut: '10',// 登陆客户端`
-		`USER_ID: '100012'// 用户ID`
+		`ITEM_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required`
+		`ut: '10',// required登陆客户端`
+		`USER_ID: '100012'// required用户ID`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
