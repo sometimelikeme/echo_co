@@ -189,7 +189,7 @@ public class UserItemController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				userItemService.deleteMerColl(paramMap);
+				userItemService.deleteItemColl(paramMap);
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
 			}
 		} catch (Exception e) {
