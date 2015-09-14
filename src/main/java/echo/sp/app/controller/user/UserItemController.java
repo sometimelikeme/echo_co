@@ -228,7 +228,7 @@ public class UserItemController extends CoreController{
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());
-				int pageSizeInt = Integer.parseInt(paramMap.get("pageSizeInt").toString());
+				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());
 				String sortString = "TIME1.desc";
 				
 				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
@@ -277,7 +277,7 @@ public class UserItemController extends CoreController{
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());
-				int pageSizeInt = Integer.parseInt(paramMap.get("pageSizeInt").toString());
+				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());
 				String sortString = "TIME1.desc";
 				
 				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
