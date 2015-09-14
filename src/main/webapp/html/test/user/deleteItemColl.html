@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET',
+                url: "http://123.56.45.223:8080/echo/" + "user/deleteItemColl.do",
+                params: {
+                	dataParm:{
+                		dataset:{
+                			ITEM_ID: '10035',
+							USER_ID: '47bdfdc734c9429381e7e2793fe28cc8',
+                        	ut: '10'
+                		}
+                	},
+                	sc_co: 'ef5d85fd5e1c4de49749604349d1a4b6',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
