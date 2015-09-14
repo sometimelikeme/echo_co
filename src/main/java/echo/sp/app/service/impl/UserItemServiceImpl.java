@@ -1,5 +1,7 @@
 package echo.sp.app.service.impl;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +22,49 @@ public class UserItemServiceImpl implements UserItemService{
 	
 	@Autowired
     private UserItemDAO userItemDAO;
+
+	@Override
+	public int addMerColl(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		returnInt = userItemDAO.addMerColl(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int addItemColl(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		returnInt = userItemDAO.addItemColl(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int deleteMerColl(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		returnInt = userItemDAO.deleteMerColl(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int deleteItemColl(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		returnInt = userItemDAO.deleteItemColl(parmMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 	
 }
