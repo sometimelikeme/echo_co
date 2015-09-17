@@ -152,8 +152,7 @@
 	`dataset: {`
 		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID`
 		`ut: '20',// 登陆客户端`
-		`ITEM_ID: '100012',// 商品名称`
-		`CURR_PRICE: '123.11'// 团购价格`
+		`ITEM_ID: '100012'// 商品名称`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
