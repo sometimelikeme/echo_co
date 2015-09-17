@@ -37,7 +37,6 @@
  	<update id="updateToPreItem" parameterType="map">  
           UPDATE T_ITEMS SET 
           	IS_PREF = #{IS_PREF},
-          	CURR_PRICE = #{CURR_PRICE,jdbcType=NUMERIC},
           	LAST_UPDATE = #{LAST_UPDATE}
           WHERE ITEM_ID = #{ITEM_ID}
  	</update>
