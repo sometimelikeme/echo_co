@@ -73,6 +73,7 @@
 		`IS_SKILL: '0',// 是否为技能商品`
 		`IS_POINT: '0',// 是否为积分商城商品`
 		`CURR_PRICE: '123.11',// 当前价格`
+		`ORI_PRICE: '123.11',// 原价`
 		`HEAD_ICON: '',// 商品小图标`
 		`MAIN_ICON: '',// 商品大图标`
 		`INVENTORY: '100',// 库存量`
