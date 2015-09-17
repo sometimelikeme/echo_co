@@ -25,6 +25,7 @@
           	IS_SKILL = #{IS_SKILL},
           	IS_POINT = #{IS_POINT},
           	CURR_PRICE = #{CURR_PRICE,jdbcType=NUMERIC},
+          	ORI_PRICE = #{ORI_PRICE,jdbcType=NUMERIC},
           	HEAD_ICON = #{HEAD_ICON},
           	MAIN_ICON = #{MAIN_ICON},
           	INVENTORY = #{INVENTORY,jdbcType=NUMERIC},
