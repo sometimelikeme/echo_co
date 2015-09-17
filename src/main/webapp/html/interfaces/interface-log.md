@@ -32,3 +32,6 @@
   + user/deleteItemColl
   + user/getMerColl
   + user/getItemColl
+### 2015-9-17
+- 更新商品信息增加商品原价`ORI_PRICE`的维护
+- 商品升级为团购商品, 不再需要商品现价`CURR_PRICE`参数
