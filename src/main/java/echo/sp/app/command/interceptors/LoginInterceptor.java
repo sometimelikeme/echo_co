@@ -26,33 +26,45 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
 	private static final String[] IGNORE_URI = {
-		"login/checkReg.do",
-		"login/registAlg.do",
-		"login/login.do", 
-		"login/changePwd.do",
-		"login/exit.do",
-		"mer/searchMerItem.do",
-		"mer/getMerList.do",
-		"mer/getMerDetail.do"
+		"login/checkReg.do",// 检查用户手机号是否已经注册
+		"login/registAlg.do",// 注册账号并登陆系统
+		"login/login.do",// 登陆系统
+		"login/changePwd.do",// 修改密码
+		"login/exit.do",// 退出
+		"mer/searchMerItem.do",// 查询商品
+		"mer/getMerList.do",// 查询店铺列表
+		"mer/getMerDetail.do"// 查询店铺详情
 	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
 	private static final String[] SECRET_URI = {
-		"user/updateUserInfo.do",
-		"user/updateUserIC.do",
-		"user/updateUserAcc.do", 
-		"user/merApply.do",
-		"user/addMerColl.do",
-		"user/addItemColl.do",
-		"user/deleteMerColl.do",
-		"user/deleteItemColl.do",
-		"user/getMerColl.do",
-		"user/getItemColl.do",
-		"mer/toMerchant.do",
-		"mer/addMerItem.do",
-		"mer/updateMerItem.do",
-		"mer/delMerItem.do",
-		"mer/updateToPreItem.do"
+		"user/updateUserInfo.do",// 更新用户基本信息
+		"user/updateUserIC.do",// 更新身份信息
+		"user/updateUserAcc.do",// 更新账户信息
+		"user/merApply.do",// 申请店铺权限
+		"user/addMerColl.do",// 收藏店铺
+		"user/addItemColl.do",// 收藏商品
+		"user/deleteMerColl.do",// 删除收藏店铺
+		"user/deleteItemColl.do",// 删除收藏商品
+		"user/getMerColl.do",// 获取收藏店铺列表
+		"user/getItemColl.do",// 获取收藏商品列表
+		"mer/toMerchant.do",// 维护店铺信息
+		"mer/addMerItem.do",// 增加商品
+		"mer/updateMerItem.do",// 更新商品信息
+		"mer/delMerItem.do",// 删除商品
+		"mer/updateToPreItem.do",// 设置商品为团购商品
+		"order/shipOrder.do",// 下单
+		"order/cancelOrder.do",// 取消
+		"order/payOrder.do",// 支付
+		"order/backOrder.do",// 退单
+		"order/consuOrder.do",// 消费
+		"order/closeOrder.do",// 结束
+		"order/delOrder.do",// 删除
+		"order/itemComment.do",// 评论
+		"order/itemCommentReply.do",// 回复
+		"order/getOrders.do",// 获取订单列表-支持用户和店铺、以及根据订单别号等查询
+		"order/getOrderDetail.do",// 根据订单号获取订单详情
+		"order/checkItemValid.do"// 判断某个商品是否有效，以及库存够
 	};
 	 
     @SuppressWarnings("unused")
