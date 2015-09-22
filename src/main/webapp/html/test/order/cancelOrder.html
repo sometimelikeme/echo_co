@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "order/cancelOrder.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                			USER_ID:'47bdfdc734c9429381e7e2793fe28cc8',
+                			ut:'10',
+                			ORDER_ID:'e41373c00ed24008a77600a79fe5cc4c',
+                			CANCEL_TYPE:'10',
+							CANCEL_REASON:''
+                		}
+                	})),
+                	sc_co: 'fc5b8bce3c0a4178b03e6f151bb712f0',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>

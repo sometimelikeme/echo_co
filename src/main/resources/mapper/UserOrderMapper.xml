@@ -36,4 +36,13 @@
     	SELECT * FROM T_ORDERS_LINE WHERE ORDER_ID = #{ORDER_ID}
     </select>
     
+    <update id="updateOrderForCancel" parameterType="map">  
+          UPDATE T_ORDERS SET 
+          STATUS = '20',
+          CANCEL_TIME = #{CANCEL_TIME},
+          CANCEL_TYPE = #{CANCEL_TYPE},
+          CANCEL_REASON = #{CANCEL_REASON} 
+          WHERE ORDER_ID = #{ORDER_ID}
+    </update> 
+    
 </mapper>

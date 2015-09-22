@@ -22,4 +22,6 @@ public interface UserOrderDAO {
 	// Get Order Line Information
 	public List getOrderLine(Map parmMap);
 	
+	// Cancel Order
+	public int updateOrderForCancel(Map parmMap);
 }

@@ -55,4 +55,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 		return resMap;
 		
 	}
+
+	@Override
+	public int updateOrderForCancel(Map parmMap) {
+		return userOrderDAO.updateOrderForCancel(parmMap);
+	}
 }

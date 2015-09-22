@@ -148,4 +148,57 @@ public class UserOrderController extends CoreController{
 			logger.error("UserOrderController---addOrder---interface error: ", e);
 		}
 	}
+	
+	/**
+	 * 取消订单
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("order/cancelOrder")
+	public void cancelOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserOrderController---cancelOrder---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			// Get and compare with user id in session
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {// Only user has access
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				
+				Map reMap = userOrderService.getOrderDetail(paramMap);
+				
+				Map orderMap = (Map) reMap.get("HEAD");
+				
+				if (!"10".equals(orderMap.get("STATUS").toString())) {
+					super.writeJson(response, "9996", "只能取消处于下单状态的订单", null, null);
+					return;
+				}
+				
+				paramMap.put("CANCEL_TIME", DateUtils.getDateTime());
+				
+				userOrderService.updateOrderForCancel(paramMap);
+				
+				reMap = userOrderService.getOrderDetail(paramMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) reMap.get("HEAD"), (List) reMap.get("LINE"));
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserOrderController---cancelOrder---interface error: ", e);
+		}
+	}
 }
