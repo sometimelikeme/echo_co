@@ -2,6 +2,7 @@
 ##### 用户登陆相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/login-interface.html](http://123.56.45.223:8080/echo//html/interfaces/login-interface.html "用户相关接口文档")
 ##### 店铺相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/merchant-interface.html](http://123.56.45.223:8080/echo//html/interfaces/merchant-interface.html "店铺相关接口文档")
 ##### 用户操作相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/user-interface.html](http://123.56.45.223:8080/echo//html/interfaces/user-interface.html "用户相关接口文档")
+##### 用户订单相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/order-interface.html](http://123.56.45.223:8080/echo//html/interfaces/order-interface.html "用户订单相关接口文档")
 #### 2015-9-7
 - 增加用户退出的接口，请查看[http://123.56.45.223:8080/echo//html/interfaces/login-interface.html](http://123.56.45.223:8080/echo//html/interfaces/login-interface.html "用户相关接口文档")-接口11。
 - 调用需要sc_no的接口,如果发现sc_no不一致，执行回话清除动作。
@@ -35,3 +36,6 @@
 ### 2015-9-17
 - 更新商品信息增加商品原价`ORI_PRICE`的维护
 - 商品升级为团购商品, 不再需要商品现价`CURR_PRICE`参数
+### 2015-9-22
+- 增加下单接口
+- 增加取消订单接口
