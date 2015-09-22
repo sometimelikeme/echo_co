@@ -103,8 +103,8 @@
           AND ITEM_ID = #{ITEM_ID}
     </select>
     
-    <select id="getItemInvtentory" parameterType="map" resultType="String">
-          SELECT INVENTORY FROM T_ITEMS 
+    <select id="getItemInvtentory" parameterType="map" resultType="Map">
+          SELECT INVENTORY,QTY_SOLD FROM T_ITEMS 
           WHERE ITEM_ID = #{ITEM_ID} 
           AND STATUS = '30'
     </select>

@@ -17,6 +17,15 @@
 	        #{itm.SINGLE_PAY,jdbcType=NUMERIC})
 	    </foreach>
  	</insert>
- 	
+ 	<update id="modifyItemQty" parameterType="java.util.List">  
+	    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+	        UPDATE T_ITEMS
+	        <set>
+	            INVENTORY = #{item.INVENTORY,jdbcType=NUMERIC},
+	            QTY_SOLD = #{item.QTY_SOLD_REAL,jdbcType=NUMERIC}
+	        </set>
+	        WHERE ITEM_ID = #{item.ITEM_ID}
+	    </foreach>  
+	</update>
  	
 </mapper>
