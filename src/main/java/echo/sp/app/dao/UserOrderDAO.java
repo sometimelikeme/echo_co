@@ -13,4 +13,6 @@ public interface UserOrderDAO {
 	public int addOrderHead(Map parmMap);
 	// Make Order
 	public int addOrderLine(List list);
+	// Update Inventory and Sold in T_ITEMS
+	public int modifyItemQty(List list);
 }
