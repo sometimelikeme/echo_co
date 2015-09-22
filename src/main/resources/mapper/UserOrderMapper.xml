@@ -3,5 +3,20 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.UserOrderDAO">
-	
+
+	<insert id="addOrderHead" parameterType="map">
+	    INSERT INTO T_ORDERS(ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,ORDER_TIME)
+        VALUES(#{ORDER_ID},#{MERCHANT_ID},#{USER_ID},#{ORDER_TYPE},'10',#{ORDER_TIME})
+    </insert>
+    <insert id="addOrderLine" parameterType="java.util.List">
+	   	INSERT INTO T_ORDERS_LINE(ORDER_ID,ITEM_ID,QTY_SOLD,PAY_PRICE,SINGLE_PAY) VALUES
+    	<foreach collection="list" item="itm" separator=",">
+	       (#{itm.ORDER_ID},#{itm.ITEM_ID},
+	        #{itm.QTY_SOLD,jdbcType=NUMERIC},
+	        #{itm.PAY_PRICE,jdbcType=NUMERIC},
+	        #{itm.SINGLE_PAY,jdbcType=NUMERIC})
+	    </foreach>
+ 	</insert>
+ 	
+ 	
 </mapper>
