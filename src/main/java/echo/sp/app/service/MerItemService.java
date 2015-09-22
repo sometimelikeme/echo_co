@@ -31,4 +31,7 @@ public interface MerItemService {
 	
 	// 获取某商品手否被当前用户收藏
 	public int getIsItemColl(Map parmMap);
+	
+	// 查询某商品的库存量
+	public String getItemInvtentory(Map parmMap);
 }

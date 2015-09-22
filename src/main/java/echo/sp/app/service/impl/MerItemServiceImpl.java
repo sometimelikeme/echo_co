@@ -83,5 +83,11 @@ public class MerItemServiceImpl implements MerItemService {
 	public int getIsItemColl(Map parmMap) {
 		return merItemDAO.getIsItemColl(parmMap);
 	}
+	
+	// 查询某商品的库存量
+	@Override
+	public String getItemInvtentory(Map parmMap) {
+		return merItemDAO.getItemInvtentory(parmMap);
+	}
 
 }
