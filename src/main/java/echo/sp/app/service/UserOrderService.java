@@ -10,4 +10,6 @@ import java.util.Map;
 public interface UserOrderService {
 	// Make Order
 	public int addOrder(Map parmMap);
+	// Get Order Detail
+	public Map getOrderDetail(Map parmMap);
 }

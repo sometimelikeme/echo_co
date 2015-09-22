@@ -9,10 +9,17 @@ import java.util.Map;
  * @date 2015年8月29日 
  */
 public interface UserOrderDAO {
+	
 	// Make Order
 	public int addOrderHead(Map parmMap);
 	// Make Order
 	public int addOrderLine(List list);
 	// Update Inventory and Sold in T_ITEMS
 	public int modifyItemQty(List list);
+	
+	// Get Order Head Information
+	public Map getOrderHead(Map parmMap);
+	// Get Order Line Information
+	public List getOrderLine(Map parmMap);
+	
 }

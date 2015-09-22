@@ -1,5 +1,6 @@
 package echo.sp.app.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,5 +42,17 @@ public class UserOrderServiceImpl implements UserOrderService{
 			throw new RuntimeException();
 		}
 		return returnInt;
+	}
+
+	@Override
+	public Map getOrderDetail(Map parmMap) {
+		
+		Map resMap = new HashMap();
+		
+		resMap.put("HEAD", userOrderDAO.getOrderHead(parmMap));
+		resMap.put("LINE", userOrderDAO.getOrderLine(parmMap));
+		
+		return resMap;
+		
 	}
 }
