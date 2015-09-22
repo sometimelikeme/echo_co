@@ -29,8 +29,11 @@ public class UserOrderServiceImpl implements UserOrderService{
 		int returnInt = 0;
     	try {
     		if (userOrderDAO.addOrderHead((Map)parmMap.get("head")) > 0) {
-    			if (userOrderDAO.addOrderLine((List)parmMap.get("line")) > 0) {
-    				returnInt = 1;
+    			List lineList = (List)parmMap.get("line");
+    			if (userOrderDAO.addOrderLine(lineList) > 0) {
+    				if (userOrderDAO.modifyItemQty(lineList) > 0) {
+    					returnInt = 1;
+					}
     			};
     		}
 		} catch (Exception e) {
