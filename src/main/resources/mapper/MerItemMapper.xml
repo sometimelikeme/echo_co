@@ -102,4 +102,10 @@
           WHERE USER_ID = #{USER_ID} 
           AND ITEM_ID = #{ITEM_ID}
     </select>
+    
+    <select id="getItemInvtentory" parameterType="map" resultType="String">
+          SELECT INVENTORY FROM T_ITEMS 
+          WHERE ITEM_ID = #{ITEM_ID} 
+          AND STATUS = '30'
+    </select>
 </mapper>
