@@ -12,4 +12,6 @@ public interface UserOrderService {
 	public int addOrder(Map parmMap);
 	// Get Order Detail
 	public Map getOrderDetail(Map parmMap);
+	// Cancel Order
+	public int updateOrderForCancel(Map parmMap);
 }
