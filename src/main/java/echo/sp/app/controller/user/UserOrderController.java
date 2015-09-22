@@ -136,7 +136,12 @@ public class UserOrderController extends CoreController{
 				
 				userOrderService.addOrder(parmMap);
 				
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				parmMap = new HashMap();
+				parmMap.put("ORDER_ID", order_id);
+				
+				Map reMap = userOrderService.getOrderDetail(parmMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) reMap.get("HEAD"), (List) reMap.get("LINE"));
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
