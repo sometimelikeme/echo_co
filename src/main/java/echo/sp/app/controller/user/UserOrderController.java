@@ -41,7 +41,12 @@ public class UserOrderController extends CoreController{
 	private MerItemService merItemService;
 	
 	/**
-	 * Make Order
+	 * 用户下单接口
+	 * 参数说明请参考接口说明
+	 * 1. 插入头表数据，批量插入行表数据
+	 * 2. 更新库存信息，商品销量
+	 * 3. 执行结束后查询订单信息返回
+	 * 注意：若用户发生退单和退款情况，亦更新库存信息，商品销量
 	 * @param req
 	 * @param response
 	 * @param dataParm
@@ -86,24 +91,38 @@ public class UserOrderController extends CoreController{
 				paramMap.put("ORDER_TIME", DateUtils.getDateTime());
 				
 				// Compare inventory and quantity
-				String inventory;
-				String qty_sold;
+				// Compute New Inventory
 				Map temMap;
+				Map resMap;
 				Boolean isBreak = false;
+				BigDecimal inventory_de;// 库存量
+				BigDecimal qty_sold_de;// 销量
+				BigDecimal qty_sold;// 需求量
 				for (int i = 0; i < itemList.size(); i++) {
 					
 					temMap = (Map) itemList.get(i);
 					
-					inventory = merItemService.getItemInvtentory(temMap);
+					resMap = merItemService.getItemInvtentory(temMap);
 					
-					qty_sold = temMap.get("QTY_SOLD").toString();
+					if (resMap == null) {
+						super.writeJson(response, "9994", "商品：" + temMap.get("ITEM_NAME") + " 库存不足", null, null);
+						isBreak = true;
+					}
 					
-					if (inventory == null || (inventory != null && new BigDecimal(inventory).compareTo(new BigDecimal(qty_sold)) < 0)) {
+					inventory_de = new BigDecimal(resMap.get("INVENTORY").toString());
+					
+					qty_sold_de = new BigDecimal(resMap.get("QTY_SOLD").toString());
+					
+					qty_sold = new BigDecimal(temMap.get("QTY_SOLD").toString());
+					
+					if (inventory_de.compareTo(qty_sold) < 0) {
 						super.writeJson(response, "9994", "商品：" + temMap.get("ITEM_NAME") + " 库存不足", null, null);
 						isBreak = true;
 						break;
 					}
 					
+					temMap.put("INVENTORY", inventory_de.subtract(qty_sold));
+					temMap.put("QTY_SOLD_REAL", qty_sold_de.add(qty_sold));
 					temMap.put("ORDER_ID", order_id);
 				}
 				
