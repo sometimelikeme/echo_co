@@ -51,7 +51,7 @@
              * optional 为自定义参数对象，目前只支持基本类型的key ＝》 value, 不支持嵌套对象；
              * 回调时如果有optional则会传递给webhook地址，webhook的使用请查阅文档
              */
-            "optional": {"test": "willreturn"}
+            "optional": {"test": "willreturn"} 
         });
 
     }
