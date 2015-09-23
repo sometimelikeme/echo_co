@@ -12,11 +12,11 @@ import javax.servlet.http.HttpSession;
 public class SessionPro{
 	
 	public static void clearSession(HttpServletRequest req) {
-		// req.getSession().invalidate();
 		HttpSession session = req.getSession();
 		Enumeration em = session.getAttributeNames();
 		while (em.hasMoreElements()) {
 			session.removeAttribute(em.nextElement().toString());
 		}
+		session.invalidate();
 	}
 }
