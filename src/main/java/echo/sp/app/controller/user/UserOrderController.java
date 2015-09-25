@@ -287,6 +287,8 @@ public class UserOrderController extends CoreController{
 			
 			
 			// 增加额外的额外验证自定义签名验证
+			// 根据section动态产生签名
+			// 签名算法同验证签名
 			Gson gson = new Gson();
 			Optional optionalObj = gson.fromJson(optional, Optional.class);
 			
@@ -312,6 +314,7 @@ public class UserOrderController extends CoreController{
 				writer.write(fail);
 				return;
 			}
+			
 			
 			// 根据transactionId订单号来查询订单的支付状态
 			// 这里的支付状态包括支付和退款两种状态的判断
