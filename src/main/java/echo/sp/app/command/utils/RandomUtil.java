@@ -9,6 +9,21 @@ public class RandomUtil {
 	public static final String NUMBERCHAR = "0123456789";
 
 	/**
+	 * 返回一个定长的随机字符串(只包含数字)
+	 * @param length 随机字符串长度
+	 * @return 随机字符串
+	 */
+	public static String generateNumString(int length) {
+		StringBuffer sb = new StringBuffer();
+		Random random = new Random();
+		for (int i = 0; i < length; i++) {
+			sb.append(NUMBERCHAR.charAt(random.nextInt(NUMBERCHAR.length())));
+		}
+		return sb.toString();
+	}
+	
+	
+	/**
 	 * 返回一个定长的随机字符串(只包含大小写字母、数字)
 	 * @param length 随机字符串长度
 	 * @return 随机字符串
@@ -106,7 +121,7 @@ public class RandomUtil {
 		return result;
 	}
 
-//	public static void main(String[] args) {
+	public static void main(String[] args) {
 //		System.out.println("返回一个定长的随机字符串(只包含大小写字母、数字):" + generateString(10));
 //		System.out.println("返回一个定长的随机纯字母字符串(只包含大小写字母):" + generateMixString(10));
 //		System.out.println("返回一个定长的随机纯大写字母字符串(只包含大小写字母):"
@@ -118,5 +133,6 @@ public class RandomUtil {
 //				+ toFixdLengthString(123, 10));
 //		int[] in = { 1, 2, 3, 4, 5, 6, 7 };
 //		System.out.println("每次生成的len位数都不相同:" + getNotSimple(in, 3));
-//	}
+		System.out.println(generateNumString(12));
+	}
 }
