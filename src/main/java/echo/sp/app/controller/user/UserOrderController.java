@@ -337,6 +337,8 @@ public class UserOrderController extends CoreController{
 			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
 			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG, 放到后台一个事务
 			// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
+			// 生成订单别号和唯一码-对于支付！
+			
 			Map parmMap = new HashMap();
 			parmMap.put("payLogMap", payLogMap);
 			parmMap.put("payMap", payMap);
