@@ -1,7 +1,6 @@
 package echo.sp.app.controller.user;
 
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
-import echo.sp.app.command.model.JsonBean;
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
