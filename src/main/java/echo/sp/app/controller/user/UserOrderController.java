@@ -278,6 +278,7 @@ public class UserOrderController extends CoreController{
 			// 如果当前订单为已支付,直接返回success;主要是为了处理beecloud的如下问题：
 			// !!!注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
 			if (true) {
+				// 提供根据订单号获取订单状态的接口
 				writer.write(success);
 				// return;
 			}
@@ -300,74 +301,37 @@ public class UserOrderController extends CoreController{
 				
 				WX wx = gson.fromJson(messageDetail, WX.class);
 				
-				String wxTransaction_id = wx.getTransaction_id();
+				payLogMap.put("TRANS_ID", wx.getTransaction_id());
 				
-				payLogMap.put("TRANS_ID", wxTransaction_id);
-				
-				payMap.put("SINNAL", "WX");
-				payMap.put("TRANSACTION_ID", wxTransaction_id);
-				payMap.put("OPENID", wx.getOpenid());
-				payMap.put("CASH_FEE", wx.getCash_fee());
-				payMap.put("OUT_TRADE_NO", wx.getOut_trade_no());
-				payMap.put("TOTAL_FEE", wx.getTotal_fee());
-				payMap.put("RESULT_CODE", wx.getResult_code());
-				payMap.put("TIME_END", wx.getTime_end());
-				payMap.put("RETURN_CODE", wx.getReturn_code());
+				payMap = getWxMap(wx);
 				
 			} else if ("ALI".equals(channelType)) {
+				
 				pay_type = "10";
 				
 				ALI ali = gson.fromJson(messageDetail, ALI.class);
 				
-				String aliTrade_no = ali.getTrade_no();
+				payLogMap.put("TRANS_ID", ali.getTrade_no());
 				
-				payLogMap.put("TRANS_ID", aliTrade_no);
-				
-				payMap.put("SINNAL", "ALI");
-				payMap.put("DISCOUNT", ali.getDiscount());
-				payMap.put("SUBJECT", ali.getSubject());
-				payMap.put("TRADE_NO", aliTrade_no);
-				payMap.put("BUYER_EMAIL", ali.getBuyer_email());
-				payMap.put("GMT_CREATE", ali.getGmt_create());
-				payMap.put("NOTIFY_TYPE", ali.getNotify_type());
-				payMap.put("QUANTITY", ali.getQuantity());
-				payMap.put("OUT_TRADE_NO", ali.getOut_trade_no());
-				payMap.put("SELLER_ID", ali.getSeller_id());
-				payMap.put("TRADE_STATUS", ali.getTrade_status());
-				payMap.put("TOTAL_FEE", ali.getTotal_fee());
-				payMap.put("PRICE", ali.getPrice());
-				payMap.put("BUYER_ID", ali.getBuyer_id());
-				payMap.put("USE_COUPON", ali.getUse_coupon());
+				payMap = getAliMap(ali);
 				
 			} else if ("UN".equals(channelType)) {
+				
 				pay_type = "30";
 				
 				UN un = gson.fromJson(messageDetail, UN.class);
 				
-				String aliQueryId = un.getQueryId();
+				payLogMap.put("TRANS_ID", un.getQueryId());
 				
-				payLogMap.put("TRANS_ID", aliQueryId);
-				
-				payMap.put("SINNAL", "UN");
-				payMap.put("ORDERID", un.getOrderId());
-				payMap.put("TRACENO", un.getTraceNo());
-				payMap.put("QUERYID", aliQueryId);
-				payMap.put("RESPMSG", un.getRespMsg());
-				payMap.put("TXNTIME", un.getTxnTime());
-				payMap.put("RESPCODE", un.getRespCode());
-				payMap.put("TXNAMT", un.getTxnAmt());
+				payMap = getUnMap(un);
 				
 			}
 			
+			// 支付类型
 			payLogMap.put("PAY_TYPE", pay_type);
 			
-			// 判断支付; 生成支付对象参数
-			if ("PAY".equals(transactionType)) {// 支付
-				payLogMap.put("TRANS_TYPE", "10");
-			} else if ("REFUND".equals(transactionType)) {// 退款
-				payLogMap.put("TRANS_TYPE", "20");
-			}
-			
+			// 判断支付(支付/退款); 生成支付对象参数
+			payLogMap.put("TRANS_TYPE", "PAY".equals(transactionType) ? "10" : "20");
 			
 			// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
 			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
@@ -377,8 +341,7 @@ public class UserOrderController extends CoreController{
 			parmMap.put("payLogMap", payLogMap);
 			parmMap.put("payMap", payMap);
 			
-			
-			
+			writer.write(success);
 			response.getWriter().flush();
 		} catch (Exception e) {
 			logger.error("UserOrderController---payOrder---interface error: ", e);
@@ -387,5 +350,67 @@ public class UserOrderController extends CoreController{
 				writer.close();
 			}
 		}
+	}
+	
+	/**
+	 * 组织微信支付信息
+	 * @param wx
+	 * @return
+	 */
+	private Map getWxMap(WX wx) {
+		Map payMap = new HashMap();
+		payMap.put("SINNAL", "WX");
+		payMap.put("TRANSACTION_ID", wx.getTransaction_id());
+		payMap.put("OPENID", wx.getOpenid());
+		payMap.put("CASH_FEE", wx.getCash_fee());
+		payMap.put("OUT_TRADE_NO", wx.getOut_trade_no());
+		payMap.put("TOTAL_FEE", wx.getTotal_fee());
+		payMap.put("RESULT_CODE", wx.getResult_code());
+		payMap.put("TIME_END", wx.getTime_end());
+		payMap.put("RETURN_CODE", wx.getReturn_code());
+		return payMap;
+	}
+	
+	/**
+	 * 组织支付宝支付信息
+	 * @param ali
+	 * @return
+	 */
+	private Map getAliMap(ALI ali) {
+		Map payMap = new HashMap();
+		payMap.put("SINNAL", "ALI");
+		payMap.put("DISCOUNT", ali.getDiscount());
+		payMap.put("SUBJECT", ali.getSubject());
+		payMap.put("TRADE_NO", ali.getTrade_no());
+		payMap.put("BUYER_EMAIL", ali.getBuyer_email());
+		payMap.put("GMT_CREATE", ali.getGmt_create());
+		payMap.put("NOTIFY_TYPE", ali.getNotify_type());
+		payMap.put("QUANTITY", ali.getQuantity());
+		payMap.put("OUT_TRADE_NO", ali.getOut_trade_no());
+		payMap.put("SELLER_ID", ali.getSeller_id());
+		payMap.put("TRADE_STATUS", ali.getTrade_status());
+		payMap.put("TOTAL_FEE", ali.getTotal_fee());
+		payMap.put("PRICE", ali.getPrice());
+		payMap.put("BUYER_ID", ali.getBuyer_id());
+		payMap.put("USE_COUPON", ali.getUse_coupon());
+		return payMap;
+	}
+	
+	/**
+	 * 组织银联支付信息
+	 * @param un
+	 * @return
+	 */
+	private Map getUnMap(UN un) {
+		Map payMap = new HashMap();
+		payMap.put("SINNAL", "UN");
+		payMap.put("ORDERID", un.getOrderId());
+		payMap.put("TRACENO", un.getTraceNo());
+		payMap.put("QUERYID", un.getQueryId());
+		payMap.put("RESPMSG", un.getRespMsg());
+		payMap.put("TXNTIME", un.getTxnTime());
+		payMap.put("RESPCODE", un.getRespCode());
+		payMap.put("TXNAMT", un.getTxnAmt());
+		return payMap;
 	}
 }
