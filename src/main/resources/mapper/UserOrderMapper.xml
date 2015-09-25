@@ -45,4 +45,42 @@
           WHERE ORDER_ID = #{ORDER_ID}
     </update> 
     
+    
+    <insert id="insertToWxLog" parameterType="map">
+	    INSERT INTO T_WX_PAY_LOG(ORDER_ID,TRANSACTION_ID,OUT_TRADE_NO,OPENID,
+	    	CASH_FEE,TOTAL_FEE,RESULT_CODE,RETURN_CODE,TIME_END)
+        VALUES(#{ORDER_ID},#{TRANSACTION_ID},#{OUT_TRADE_NO},#{OPENID},
+        	#{CASH_FEE,jdbcType=NUMERIC},#{TOTAL_FEE,jdbcType=NUMERIC},
+        	#{RESULT_CODE},#{RETURN_CODE},#{TIME_END})
+    </insert>
+    <insert id="insertToAliLog" parameterType="map">
+	    INSERT INTO T_ALI_PAY_LOG(ORDER_ID,TRADE_NO,OUT_TRADE_NO,BUYER_EMAIL,
+	    	BUYER_ID,SELLER_ID,SUBJECT,TOTAL_FEE,DISCOUNT,USE_COUPON,TRADE_STATUS,
+	    	NOTIFY_TYPE,GMT_CREATE)
+        VALUES(#{ORDER_ID},#{TRADE_NO},#{OUT_TRADE_NO},#{BUYER_EMAIL},
+        	#{BUYER_ID},#{SELLER_ID},#{SUBJECT},#{TOTAL_FEE,jdbcType=NUMERIC},#{DISCOUNT,jdbcType=NUMERIC},
+        	#{USE_COUPON},#{TRADE_STATUS},#{NOTIFY_TYPE},#{GMT_CREATE})
+    </insert>
+    <insert id="insertToUnLog" parameterType="map">
+	    INSERT INTO T_UN_PAY_LOG(ORDER_ID,QUERYID,TRACENO,OUT_TRADE_NO,
+	    	TXNAMT,RESPMSG,RESPCODE,TXNTIME)
+        VALUES(#{ORDER_ID},#{QUERYID},#{TRACENO},#{OUT_TRADE_NO},
+        	#{TXNAMT,jdbcType=NUMERIC},#{RESPMSG},#{RESPCODE},#{TXNTIME})
+    </insert>
+    <insert id="insertToPayLog" parameterType="map">
+	    INSERT INTO T_ORDERS_PAY_LOG(ORDER_ID,TRANS_ID,TRANS_TYPE,PAY_TYPE,
+	    	TOTAL_PAYMENT,TIME_STAMP)
+        VALUES(#{ORDER_ID},#{TRANS_ID},#{TRANS_TYPE},#{PAY_TYPE},
+        	#{TOTAL_PAYMENT,jdbcType=NUMERIC},#{TIME_STAMP})
+    </insert>
+    <update id="updateOrderPay" parameterType="map">  
+          UPDATE T_ORDERS SET 
+          STATUS = #{STATUS},
+          PAY_TYPE = #{PAY_TYPE},
+          ORDER_ALIAS_ID = #{ORDER_ALIAS_ID},
+          CAPTCHA = #{CAPTCHA},
+          PAY_TIME = #{PAY_TIME},
+          BACK_TIME = #{BACK_TIME}
+          WHERE ORDER_ID = #{ORDER_ID}
+    </update> 
 </mapper>
