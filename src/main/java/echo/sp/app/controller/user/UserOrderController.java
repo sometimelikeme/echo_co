@@ -427,7 +427,7 @@ public class UserOrderController extends CoreController{
 		Map payMap = new HashMap();
 		payMap.put("SINNAL", "UN");
 		payMap.put("OUT_TRADE_NO", un.getOrderId());// 为了统一，写成OUT_TRADE_NO
-		payMap.put("TRACENO", un.getTraceNo());
+		payMap.put("TRACENO", un.getTraceNo()); 
 		payMap.put("QUERYID", un.getQueryId());
 		payMap.put("RESPMSG", un.getRespMsg());
 		payMap.put("TXNTIME", un.getTxnTime());
