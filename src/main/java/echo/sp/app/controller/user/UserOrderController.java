@@ -243,7 +243,8 @@ public class UserOrderController extends CoreController{
 	 * @param optional 附加参数，为一个JSON格式的Map，客户在发起购买或者退款操作时添加的附加信息
 	 * optional 为自定义参数对象，目前只支持基本类型的key ＝》 value, 不支持嵌套对象；
 	 * 回调时如果有optional则会传递给webhook地址，webhook的使用请查阅文档
-	 * 本方法提供BeeCloud的支付或者退款的回调接口
+	 * 本接口提供BeeCloud的支付或者退款的回调接口
+	 * 生成由BeeCloud返回的支付日志
 	 */
 	@RequestMapping("order/payOrder")
 	public void payOrder(HttpServletRequest req, HttpServletResponse response,
