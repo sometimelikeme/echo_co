@@ -1,5 +1,6 @@
 package echo.sp.app.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -30,6 +31,27 @@ public class MerOrderServiceImpl implements MerOrderService {
 
 	@Override
 	public int updateOrderClose(Map parmMap) {
-		return merOrderDAO.updateOrderClose(parmMap);
+		int returnInt = 0;
+    	try {
+    		merOrderDAO.updateOrderClose(parmMap);
+    		merOrderDAO.insertUserPoint(parmMap);
+    		
+    		// 汇总积分
+    		String totalPoint = merOrderDAO.getTotalPoint(parmMap);
+    		BigDecimal pointNumBig = new BigDecimal(parmMap.get("POINT_NUM").toString());
+    		BigDecimal totalPointBig;
+    		if (totalPoint == null || "".equals(totalPoint)) {
+    			totalPointBig = pointNumBig;
+			} else {
+				totalPointBig = new BigDecimal(totalPoint).add(pointNumBig);
+			}
+    		parmMap.put("TOTAL_POINT", totalPointBig);
+    		merOrderDAO.UpdateUserTotalPoint(parmMap);
+    		
+    		returnInt = 1;
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 }

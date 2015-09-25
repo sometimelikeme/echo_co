@@ -1,5 +1,6 @@
 package echo.sp.app.controller.mer;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.aspectj.apache.bcel.generic.NEW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.MD5Util;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.MerOrderService;
+import echo.sp.app.service.PubToolService;
 import echo.sp.app.service.UserOrderService;
 
 /**  
@@ -46,6 +49,9 @@ public class MerOrderController extends CoreController{
 	
 	@Autowired
 	private UserOrderService userOrderService;
+	
+	@Autowired
+	private PubToolService pubToolService;
 	
 	/**
 	 * 获取订单列表
@@ -246,6 +252,22 @@ public class MerOrderController extends CoreController{
 				}
 				// 修改订单为关闭状态
 				paramMap.put("SHUT_TIME", DateUtils.getDateTime());
+				// 用于计算返还积分
+				paramMap.put("USER_ID", orderMap.get("USER_ID"));
+				// 计算积分
+				parmMap = new HashMap();
+				parmMap.put("CANT_CODE", (String) session.getAttribute("CANT_CODE"));
+				parmMap.put("PARM_NAME", "PER_POINT_AWARD_ORDER");
+				String per_point = PubTool.getOrgParm(parmMap, pubToolService);
+				String pointNum = "0";
+				if (!"".equals(per_point)) {
+					pointNum = new BigDecimal(orderMap.get("TOTAL_PAY").toString())
+							.multiply(new BigDecimal(per_point))
+							.divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP).toString();
+				}
+				paramMap.put("POINT_NUM", pointNum);
+				paramMap.put("TIME1", DateUtils.getDateTime());
+				paramMap.put("DATE1", DateUtils.getToday());
 				merOrderService.updateOrderClose(paramMap);
 				
 				orderMap = userOrderService.getOrderDetail(parmMap);
