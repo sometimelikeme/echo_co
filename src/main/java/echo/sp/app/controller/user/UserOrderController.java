@@ -416,9 +416,10 @@ public class UserOrderController extends CoreController{
 			
 			// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
 			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
-			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG, 放到后台一个事务
+			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG
 			// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
 			// 生成订单别号和唯一码-对于支付！
+			// 在客户端收到支付成功后的消息后，调用获取订单的接口，获取订单信息
 			parmMap = new HashMap();
 			parmMap.put("payLogMap", payLogMap);
 			parmMap.put("payMap", payMap);
