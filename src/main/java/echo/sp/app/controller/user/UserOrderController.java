@@ -399,10 +399,10 @@ public class UserOrderController extends CoreController{
 			
 			String pay_timeString = "";
 			String back_time = "";
-			if (pay_time != null && !"".equals(pay_time.toString())) {
+			if (pay_time != null && !"".equals(pay_time.toString())) {// 已付款
 				pay_timeString = pay_time.toString();
 				back_time = DateUtils.getDateTime();
-			} else {
+			} else {// 未付款
 				pay_timeString = DateUtils.getDateTime();
 			}
 			
