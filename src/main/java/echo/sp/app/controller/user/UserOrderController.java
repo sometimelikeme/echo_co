@@ -25,6 +25,7 @@ import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
 import echo.sp.app.command.utils.Prop;
+import echo.sp.app.command.utils.RandomUtil;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.model.paymodel.WX;
 import echo.sp.app.service.MerItemService;
@@ -324,7 +325,13 @@ public class UserOrderController extends CoreController{
 			Map parmMap = new HashMap();
 			parmMap.put("ORDER_ID", transactionId);
 			Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
+			// 无效订单号
+			if (orderMap == null) {
+				writer.write(success);
+				return;
+			}
 			String order_status = orderMap.get("STATUS").toString();
+			Object pay_time = orderMap.get("PAY_TIME");// 用来判断更新订单时间
 			// 支付状态成功，遇到重复推送; 退款状态成功，遇到重复推送
 			if (("PAY".equals(transactionType) && "30".equals(order_status)) || ("REFUND".equals(transactionType) && "40".equals(order_status))) {
 				writer.write(success);
@@ -382,6 +389,27 @@ public class UserOrderController extends CoreController{
 			// 判断支付(支付/退款); 生成支付对象参数
 			payLogMap.put("TRANS_TYPE", "PAY".equals(transactionType) ? "10" : "20");
 			
+			// 组织更新订单状态参数集合
+			Map upMap = new HashMap();
+			upMap.put("ORDER_ID", transactionId);
+			upMap.put("STATUS", "PAY".equals(transactionType) ? "30" : "40");
+			upMap.put("PAY_TYPE", pay_type);
+			upMap.put("ORDER_ALIAS_ID", RandomUtil.generateNumString(12));
+			upMap.put("CAPTCHA", RandomUtil.generateString(6));
+			
+			String pay_timeString = "";
+			String back_time = "";
+			if (pay_time != null && !"".equals(pay_time.toString())) {
+				pay_timeString = pay_time.toString();
+				back_time = DateUtils.getDateTime();
+			} else {
+				pay_timeString = DateUtils.getDateTime();
+			}
+			
+			upMap.put("PAY_TIME", pay_timeString);
+			upMap.put("BACK_TIME", back_time);
+			
+			
 			// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
 			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
 			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG, 放到后台一个事务
@@ -391,9 +419,13 @@ public class UserOrderController extends CoreController{
 			parmMap = new HashMap();
 			parmMap.put("payLogMap", payLogMap);
 			parmMap.put("payMap", payMap);
+			parmMap.put("upMap", upMap);
+			
+			userOrderService.updateOrderPay(parmMap);
 			
 			writer.write(success);
 			response.getWriter().flush();
+			
 		} catch (Exception e) {
 			logger.error("UserOrderController---payOrder---interface error: ", e);
 		} finally {
