@@ -1,5 +1,7 @@
 package echo.sp.app.controller.user;
 
+import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -15,14 +17,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.model.JsonBean;
 import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
+import echo.sp.app.command.utils.MD5Util;
+import echo.sp.app.command.utils.Prop;
 import echo.sp.app.command.utils.UserAgentUtils;
+import echo.sp.app.model.paymodel.WX;
 import echo.sp.app.service.MerItemService;
 import echo.sp.app.service.UserOrderService;
+import echo.sp.app.model.paymodel.*;
 
 /**  
  * User Order
@@ -199,6 +209,183 @@ public class UserOrderController extends CoreController{
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 			logger.error("UserOrderController---cancelOrder---interface error: ", e);
+		}
+	}
+	
+
+	/**
+	 * 
+	 * @param req
+	 * @param response
+	 * @param sign	服务器端通过计算appID + appSecret + timestamp的MD5生成的签名(32字符十六进制),
+	 * 				请在接受数据时自行按照此方式验证sign的正确性，不正确不返回success即可
+	 * @param timestamp 服务端的时间（毫秒），用以验证sign, MD5计算请参考sign的解释
+	 * @param channelType WX/ALI/UN/KUAIQIAN/JD 分别代表微信/支付宝/银联/块钱/京东
+	 * @param transactionType PAY/REFUND 分别代表支付和退款的结果确认
+	 * @param transactionId	交易单号，对应支付请求的bill_no或者退款请求的refund_no-调用支付时传递的out_trade_no
+	 * @param transactionFee 交易金额，是以分为单位的整数，对应支付请求的total_fee或者退款请求的refund_fee
+	 * @param messageDetail {orderId:xxx…..} 用一个map代表处理结果的详细信息，例如支付的订单号，金额， 商品信息
+	 * @param optional 附加参数，为一个JSON格式的Map，客户在发起购买或者退款操作时添加的附加信息
+	 * 本方法提供BeeCloud的支付或者退款的回调接口
+	 */
+	@RequestMapping("order/payOrder")
+	public void payOrder(HttpServletRequest req, HttpServletResponse response,
+			@RequestParam String sign, 
+			@RequestParam String timestamp,
+			@RequestParam String channelType,
+			@RequestParam String transactionType,
+			@RequestParam String transactionId,
+			@RequestParam String transactionFee,
+			@RequestParam String messageDetail, 
+			@RequestParam String optional) {
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserOrderController---payOrder---sign: " + sign
+					+ "; timestamp: " + timestamp 
+					+ "; channelType: " + channelType 
+					+ "; transactionType: " + transactionType
+					+ "; transactionId: " + transactionId
+					+ "; transactionFee: " + transactionFee
+					+ "; messageDetail: " + messageDetail 
+					+ "; optional: " + optional);
+		}
+		
+		response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        
+		PrintWriter writer = null;
+		
+		try {
+			
+			writer = response.getWriter();
+			
+			String fail = "fail";
+			String success = "success";
+			
+			
+			// 验证签名
+			if (!sign.equals(MD5Util.getMessageDigest(Prop.getString("beecloud.appID") + Prop.getString("beecloud.appSecret") + timestamp))) {
+				writer.write(fail);
+				return;
+			}
+			
+			
+			// 是否需要额外验证自定义签名?
+			
+			
+			// 根据transactionId订单号来查询订单的支付状态
+			// 这里的支付状态包括支付和退款两种状态的判断
+			// 如果当前订单为已支付,直接返回success;主要是为了处理beecloud的如下问题：
+			// !!!注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
+			if (true) {
+				writer.write(success);
+				// return;
+			}
+			
+			
+			Map payLogMap = new HashMap();
+			payLogMap.put("ORDER_ID", transactionId);
+			payLogMap.put("TIME_STAMP", timestamp);
+			payLogMap.put("TOTAL_PAYMENT", PubTool.parseCentToYu(transactionFee));
+				
+			Gson gson = new Gson();
+			
+			Map payMap = new HashMap();
+			
+			String pay_type = "";
+			
+			if ("WX".equals(channelType)) {
+				
+				pay_type = "20";
+				
+				WX wx = gson.fromJson(messageDetail, WX.class);
+				
+				String wxTransaction_id = wx.getTransaction_id();
+				
+				payLogMap.put("TRANS_ID", wxTransaction_id);
+				
+				payMap.put("SINNAL", "WX");
+				payMap.put("TRANSACTION_ID", wxTransaction_id);
+				payMap.put("OPENID", wx.getOpenid());
+				payMap.put("CASH_FEE", wx.getCash_fee());
+				payMap.put("OUT_TRADE_NO", wx.getOut_trade_no());
+				payMap.put("TOTAL_FEE", wx.getTotal_fee());
+				payMap.put("RESULT_CODE", wx.getResult_code());
+				payMap.put("TIME_END", wx.getTime_end());
+				payMap.put("RETURN_CODE", wx.getReturn_code());
+				
+			} else if ("ALI".equals(channelType)) {
+				pay_type = "10";
+				
+				ALI ali = gson.fromJson(messageDetail, ALI.class);
+				
+				String aliTrade_no = ali.getTrade_no();
+				
+				payLogMap.put("TRANS_ID", aliTrade_no);
+				
+				payMap.put("SINNAL", "ALI");
+				payMap.put("DISCOUNT", ali.getDiscount());
+				payMap.put("SUBJECT", ali.getSubject());
+				payMap.put("TRADE_NO", aliTrade_no);
+				payMap.put("BUYER_EMAIL", ali.getBuyer_email());
+				payMap.put("GMT_CREATE", ali.getGmt_create());
+				payMap.put("NOTIFY_TYPE", ali.getNotify_type());
+				payMap.put("QUANTITY", ali.getQuantity());
+				payMap.put("OUT_TRADE_NO", ali.getOut_trade_no());
+				payMap.put("SELLER_ID", ali.getSeller_id());
+				payMap.put("TRADE_STATUS", ali.getTrade_status());
+				payMap.put("TOTAL_FEE", ali.getTotal_fee());
+				payMap.put("PRICE", ali.getPrice());
+				payMap.put("BUYER_ID", ali.getBuyer_id());
+				payMap.put("USE_COUPON", ali.getUse_coupon());
+				
+			} else if ("UN".equals(channelType)) {
+				pay_type = "30";
+				
+				UN un = gson.fromJson(messageDetail, UN.class);
+				
+				String aliQueryId = un.getQueryId();
+				
+				payLogMap.put("TRANS_ID", aliQueryId);
+				
+				payMap.put("SINNAL", "UN");
+				payMap.put("ORDERID", un.getOrderId());
+				payMap.put("TRACENO", un.getTraceNo());
+				payMap.put("QUERYID", aliQueryId);
+				payMap.put("RESPMSG", un.getRespMsg());
+				payMap.put("TXNTIME", un.getTxnTime());
+				payMap.put("RESPCODE", un.getRespCode());
+				payMap.put("TXNAMT", un.getTxnAmt());
+				
+			}
+			
+			payLogMap.put("PAY_TYPE", pay_type);
+			
+			// 判断支付; 生成支付对象参数
+			if ("PAY".equals(transactionType)) {// 支付
+				payLogMap.put("TRANS_TYPE", "10");
+			} else if ("REFUND".equals(transactionType)) {// 退款
+				payLogMap.put("TRANS_TYPE", "20");
+			}
+			
+			
+			// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
+			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
+			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG, 放到后台一个事务
+			// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
+			Map parmMap = new HashMap();
+			parmMap.put("payLogMap", payLogMap);
+			parmMap.put("payMap", payMap);
+			
+			
+			
+			response.getWriter().flush();
+		} catch (Exception e) {
+			logger.error("UserOrderController---payOrder---interface error: ", e);
+		} finally {
+			if (null != writer) {
+				writer.close();
+			}
 		}
 	}
 }
