@@ -299,7 +299,7 @@ public class MerItemController extends CoreController{
 	}
 	
 	/**
-	 * 查询商品
+	 * 删除商品
 	 * @param req
 	 * @param response
 	 * @param dataParm
