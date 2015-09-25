@@ -244,7 +244,7 @@ CREATE TABLE T_ORDERS(
 	PAY_TYPE CHAR(2),--支付方式：10-支付宝,20-微信,30-银联,40-积分
 	TOTAL_PAY DECIMAL(9,2),--付款总金额/总积分
 	ORDER_ALIAS_ID VARCHAR(32),--订单别号 生成12为订单数字码
-    CAPTCHA VARCHAR(32),--验证码 6为数字和字母验证码/大小写都支持-MD5加密
+    CAPTCHA VARCHAR(32),--验证码 6为数字和字母验证码/大小写都支持
 	ORDER_TIME VARCHAR(32),--下单时间
 	CANCEL_TIME VARCHAR(32),--取消时间
 	PAY_TIME VARCHAR(32),--付款时间
