@@ -7,7 +7,14 @@ package echo.sp.app.model.paymodel;
 public class Optional {
 	String ORDER_ID = "";// 订单号
 	String RANDOM_ID = "";// 随机号
-	String SECTION = "";// 当前随机号所在序列:支持枚举1,2
+	String SECTION = "";// 当前随机号所在序列:支持枚举1,2,3,4
+	String SIGN = "";// 签名
+	public String getSIGN() {
+		return SIGN;
+	}
+	public void setSIGN(String sIGN) {
+		SIGN = sIGN;
+	}
 	public String getORDER_ID() {
 		return ORDER_ID;
 	}

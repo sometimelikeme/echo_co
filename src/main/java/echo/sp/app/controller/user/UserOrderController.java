@@ -240,6 +240,8 @@ public class UserOrderController extends CoreController{
 	 * @param transactionFee 交易金额，是以分为单位的整数，对应支付请求的total_fee或者退款请求的refund_fee
 	 * @param messageDetail {orderId:xxx…..} 用一个map代表处理结果的详细信息，例如支付的订单号，金额， 商品信息
 	 * @param optional 附加参数，为一个JSON格式的Map，客户在发起购买或者退款操作时添加的附加信息
+	 * optional 为自定义参数对象，目前只支持基本类型的key ＝》 value, 不支持嵌套对象；
+	 * 回调时如果有optional则会传递给webhook地址，webhook的使用请查阅文档
 	 * 本方法提供BeeCloud的支付或者退款的回调接口
 	 */
 	@RequestMapping("order/payOrder")
@@ -284,8 +286,32 @@ public class UserOrderController extends CoreController{
 			}
 			
 			
-			// 是否需要额外验证自定义签名?
+			// 增加额外的额外验证自定义签名验证
+			Gson gson = new Gson();
+			Optional optionalObj = gson.fromJson(optional, Optional.class);
 			
+			String appid = Prop.getString("beecloud.appID");
+			String appSecret = Prop.getString("beecloud.appSecret");
+			String order_id = optionalObj.getORDER_ID();
+			String random_id = optionalObj.getRANDOM_ID();
+			String section = optionalObj.getSECTION();
+			
+			String genSign = "";
+			
+			if ("1".equals(section)) {
+				genSign = random_id + appid + order_id + appSecret;
+			} else if ("2".equals(section)) {
+				genSign = appid + random_id + order_id + appSecret;
+			} else if ("3".equals(section)) {
+				genSign = appid + order_id + random_id + appSecret;
+			} else if ("3".equals(section)) {
+				genSign = appid + order_id + appSecret + random_id; 
+			}
+			
+			if (!optionalObj.getSIGN().equals(MD5Util.getMessageDigest(genSign))) {
+				writer.write(fail);
+				return;
+			}
 			
 			// 根据transactionId订单号来查询订单的支付状态
 			// 这里的支付状态包括支付和退款两种状态的判断
@@ -308,7 +334,7 @@ public class UserOrderController extends CoreController{
 			payLogMap.put("TIME_STAMP", timestamp);
 			payLogMap.put("TOTAL_PAYMENT", PubTool.parseCentToYu(transactionFee));
 				
-			Gson gson = new Gson();
+			gson = new Gson();
 			
 			Map payMap = new HashMap();
 			payMap.put("ORDER_ID", transactionId);
