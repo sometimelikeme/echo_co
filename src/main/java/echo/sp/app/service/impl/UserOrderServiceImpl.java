@@ -60,4 +60,35 @@ public class UserOrderServiceImpl implements UserOrderService{
 	public int updateOrderForCancel(Map parmMap) {
 		return userOrderDAO.updateOrderForCancel(parmMap);
 	}
+
+	@Override
+	public int updateOrderPay(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		
+    		Map payLogMap = (Map)parmMap.get("payLogMap");
+    		Map payMap = (Map)parmMap.get("payMap");
+    		Map upMap = (Map)parmMap.get("upMap");
+    		
+    		String pay_type = parmMap.get("pay_type").toString();
+    		
+    		if ("10".equals(pay_type)) {
+				userOrderDAO.insertToAliLog(parmMap);
+			} else if ("20".equals(pay_type)) {
+				userOrderDAO.insertToWxLog(parmMap);
+			} else if ("30".equals(pay_type)) {
+				userOrderDAO.insertToUnLog(parmMap);
+			}
+    		
+    		userOrderDAO.insertToPayLog(payLogMap);
+    		
+    		userOrderDAO.updateOrderPay(upMap);
+    		
+			returnInt = 1;
+			
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 }

@@ -14,4 +14,7 @@ public interface UserOrderService {
 	public Map getOrderDetail(Map parmMap);
 	// Cancel Order
 	public int updateOrderForCancel(Map parmMap);
+	// Generate Pay Log
+	// Update Pay Action on Order
+	public int updateOrderPay(Map parmMap);
 }

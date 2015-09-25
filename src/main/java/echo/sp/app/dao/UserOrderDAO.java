@@ -24,4 +24,12 @@ public interface UserOrderDAO {
 	
 	// Cancel Order
 	public int updateOrderForCancel(Map parmMap);
+	
+	// Generate Pay Log
+	// Update Pay Action on Order
+	public int insertToWxLog(Map parmMap);
+	public int insertToAliLog(Map parmMap);
+	public int insertToUnLog(Map parmMap);
+	public int insertToPayLog(Map parmMap);
+	public int updateOrderPay(Map parmMap);
 }
