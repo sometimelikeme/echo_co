@@ -5,28 +5,28 @@ package echo.sp.app.model.paymodel;
  * @date 2015年9月25日 
  */
 public class UN {
-	private String bizType;
-	private String orderId;// 商家内部交易号; EP: 2015081216171028 *
-	private String txnSubType;
-	private String signature;// 银联签名串 ，商户可忽略
-	private String traceNo;// 银联系统跟踪号; EP: 510067 
-	private String settleAmt;
-	private String settleCurrencyCode;
-	private String settleDate;
-	private String txnType;
-	private String certId;
-	private String encoding;
-	private String version;
-	private String queryId;// 银联交易流水号; EP: 2015081216170048 *
-	private String accessType;
-	private String respMsg;// 交易返回信息 Success! 代表成功; EP: Success!
-	private String traceTime;
-	private String txnTime;// 交易创建时间; EP: 20150528103823 *
-	private String merId;
-	private String currencyCode;
-	private String respCode;// 交易返回码 00 代表成功; EP: 00
-	private String signMethod;
-	private String txnAmt;// 商品总价，单位为分; EP: 1 *
+	private String bizType = "";
+	private String orderId = "";// 商家内部交易号; EP: 2015081216171028 *
+	private String txnSubType = "";
+	private String signature = "";// 银联签名串 ，商户可忽略
+	private String traceNo = "";// 银联系统跟踪号; EP: 510067 
+	private String settleAmt = "";
+	private String settleCurrencyCode = "";
+	private String settleDate = "";
+	private String txnType = "";
+	private String certId = "";
+	private String encoding = "";
+	private String version = "";
+	private String queryId = "";// 银联交易流水号; EP: 2015081216170048 *
+	private String accessType = "";
+	private String respMsg = "";// 交易返回信息 Success! 代表成功; EP: Success!
+	private String traceTime = "";
+	private String txnTime = "";// 交易创建时间; EP: 20150528103823 *
+	private String merId = "";
+	private String currencyCode = "";
+	private String respCode = "";// 交易返回码 00 代表成功; EP: 00
+	private String signMethod = "";
+	private String txnAmt = "";// 商品总价，单位为分; EP: 1 *
 	public String getBizType() {
 		return bizType;
 	}

@@ -5,21 +5,21 @@ package echo.sp.app.model.paymodel;
  * @date 2015年9月25日 
  */
 public class WX {
-	private String transaction_id;// 微信交易号; EP: 1006410636201505250163820565 *
-	private String nonce_str;
-	private String bank_type;
-	private String openid;// 买家的openid; EP: 1 *
-	private String fee_type;
-	private String mch_id;
-	private String cash_fee;// 现金付款额; EP: 1 
-	private String out_trade_no;// 商家内部交易号; EP: 2015081216171028 *
-	private String appid;
-	private String total_fee;// 商品总价，单位为分; EP: 1 
-	private String trade_type;
-	private String result_code;// 业务结果; EP: SUCCESS 
-	private String time_end;// 交易结束时间; EP: 20150528103823 
-	private String is_subscribe;
-	private String return_code;// 通信标示; EP: SUCCESS
+	private String transaction_id = "";// 微信交易号; EP: 1006410636201505250163820565 *
+	private String nonce_str = "";
+	private String bank_type = "";
+	private String openid = "";// 买家的openid; EP: 1 *
+	private String fee_type = "";
+	private String mch_id = "";
+	private String cash_fee = "";// 现金付款额; EP: 1 
+	private String out_trade_no = "";// 商家内部交易号; EP: 2015081216171028 *
+	private String appid = "";
+	private String total_fee = "";// 商品总价，单位为分; EP: 1 
+	private String trade_type = "";
+	private String result_code = "";// 业务结果; EP: SUCCESS 
+	private String time_end = "";// 交易结束时间; EP: 20150528103823 
+	private String is_subscribe = "";
+	private String return_code = "";// 通信标示; EP: SUCCESS
 	public String getTransaction_id() {
 		return transaction_id;
 	}

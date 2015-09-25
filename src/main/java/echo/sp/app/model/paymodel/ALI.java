@@ -5,29 +5,29 @@ package echo.sp.app.model.paymodel;
  * @date 2015年9月25日 
  */
 public class ALI {
-	private String bc_appid;
-	private String discount;// 折扣; EP: 0
-	private String payment_type;
-	private String subject;// 订单标题; EP: 白开水 
-	private String trade_no;// 支付宝交易号; EP: 2014040311001004370000361525 *
-	private String buyer_email;// 买家支付宝账号可以是email或者手机号; EP: 13758698870 *
-	private String gmt_create;// 交易创建时间; EP: 2008-10-22 20:49:31 *
-	private String notify_type;// 通知类型; EP: trade_status_sync
-	private String quantity;// 购买数量; EP: 1
-	private String out_trade_no;// 商家内部交易号; EP: test_no *
-	private String seller_id;// 卖家支付宝唯一用户号; EP: 2088911356553910
-	private String notify_time;
-	private String body;
-	private String trade_status;// 交易状态; EP: WAIT_BUYER_PAY
-	private String is_total_fee_adjust;
-	private String total_fee;// 商品总价，单位为元; EP: 0.01 *
-	private String seller_email;
-	private String price;// 商品单价，单位为元; EP: 0.01 
-	private String buyer_id;// 买家支付宝唯一用户号; EP: 2088802823343621
-	private String notify_id;
-	private String use_coupon;// 买家是否使用了红包 （N/Y); EP: N
-	private String sign_type;
-	private String sign;
+	private String bc_appid = "";
+	private String discount = "";// 折扣; EP: 0
+	private String payment_type = "";
+	private String subject = "";// 订单标题; EP: 白开水 
+	private String trade_no = "";// 支付宝交易号; EP: 2014040311001004370000361525 *
+	private String buyer_email = "";// 买家支付宝账号可以是email或者手机号; EP: 13758698870 *
+	private String gmt_create = "";// 交易创建时间; EP: 2008-10-22 20:49:31 *
+	private String notify_type = "";// 通知类型; EP: trade_status_sync
+	private String quantity = "";// 购买数量; EP: 1
+	private String out_trade_no = "";// 商家内部交易号; EP: test_no *
+	private String seller_id = "";// 卖家支付宝唯一用户号; EP: 2088911356553910
+	private String notify_time = "";
+	private String body = "";
+	private String trade_status = "";// 交易状态; EP: WAIT_BUYER_PAY
+	private String is_total_fee_adjust = "";
+	private String total_fee = "";// 商品总价，单位为元; EP: 0.01 *
+	private String seller_email = "";
+	private String price = "";// 商品单价，单位为元; EP: 0.01 
+	private String buyer_id = "";// 买家支付宝唯一用户号; EP: 2088802823343621
+	private String notify_id = "";
+	private String use_coupon = "";// 买家是否使用了红包 （N/Y); EP: N
+	private String sign_type = "";
+	private String sign = "";
 	public String getBc_appid() {
 		return bc_appid;
 	}
