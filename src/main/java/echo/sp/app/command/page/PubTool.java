@@ -1,5 +1,6 @@
 package echo.sp.app.command.page;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,20 @@ import echo.sp.app.service.PubToolService;
 public class PubTool {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PubTool.class);
+	
+	/**
+	 * 转化支付货币分为元单位,空返回0
+	 * @param o
+	 * @return
+	 */
+	public static String parseCentToYu(Object o) {
+		String str = o.toString();
+		if ("".equals(str)) {
+			return "0";
+		}
+		BigDecimal bi = new BigDecimal(str);
+		return bi.divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP).toString();
+	}
 	
 	/**
 	 * PROCESS THE PARM. 
