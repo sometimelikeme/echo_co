@@ -15,7 +15,7 @@ public interface UserOrderDAO {
 	// Make Order
 	public int addOrderLine(List list);
 	// Update Inventory and Sold in T_ITEMS
-	public int modifyItemQty(List list);   
+	public int modifyItemQty(List list);    
 	
 	// Get Order Head Information
 	public Map getOrderHead(Map parmMap);

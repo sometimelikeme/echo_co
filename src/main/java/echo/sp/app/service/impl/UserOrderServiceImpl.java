@@ -77,7 +77,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			} else if ("20".equals(pay_type)) {
 				userOrderDAO.insertToWxLog(parmMap);
 			} else if ("30".equals(pay_type)) {
-				userOrderDAO.insertToUnLog(parmMap); 
+				userOrderDAO.insertToUnLog(parmMap);  
 			}
     		
     		userOrderDAO.insertToPayLog(payLogMap);
