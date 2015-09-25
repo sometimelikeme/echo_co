@@ -211,9 +211,26 @@ public class UserOrderController extends CoreController{
 	
 
 	/**
+	 * 在BeeCloud获得渠道的确认信息（包括支付成功，退款成功）后，会通过主动推送的方式将确认消息推送给客户的server。如果客户需要接收此类消息来实现业务逻辑，需要:
+	 * 1. 开通公网可以访问的IP地址和端口
+	 * 2. 接收BeeCloud Webhook服务器发起的HTTP POST请求报文。如果需要对传输加密，请使用支持HTTPS的webhook的url地址。
+	 * 注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
 	 * 
-	 * @param req
-	 * @param response
+	 * 推送机制：BeeCloud在"收到渠道的确认结果"后的1秒时刻主动向用户server发送消息
+	 * 推送重试机制：用户server接收到某条消息时如果未返回字符串"success", BeeCloud将认为此条消息未能被成功处理, 将触发推送重试机制;
+	 *    		      如果用户server一直未能返回字符串"success"，BeeCloud将在"收到渠道的确认结果"后的2秒，4秒，8秒，...，2^17秒（约36小时）时刻重发该条消息；
+	 *             如果在以上的某一时刻，用户server返回了字符串"success"则不再重发该消息 。
+	 * 
+	 * 处理消息后给BeeCloud返回结果:用户返回"success"字符串给BeeCloud代表-"正确接收并确认了本次状态数据的结果"，其他所有返回都代表需要继续重传本次的状态数据。
+	 * 
+	 * 推送接口标准:
+	 * 		HTTP 请求类型 : POST
+	 *  	HTTP 数据格式 : JSON
+	 *  	HTTP Content-type : application/json         
+	 *     
+	 * Beecloud-webhook: https://github.com/beecloud/beecloud-webhook    
+	 *   
+	 * 字段说明-参数含义:        
 	 * @param sign	服务器端通过计算appID + appSecret + timestamp的MD5生成的签名(32字符十六进制),
 	 * 				请在接受数据时自行按照此方式验证sign的正确性，不正确不返回success即可
 	 * @param timestamp 服务端的时间（毫秒），用以验证sign, MD5计算请参考sign的解释
@@ -274,10 +291,15 @@ public class UserOrderController extends CoreController{
 			// 这里的支付状态包括支付和退款两种状态的判断
 			// 如果当前订单为已支付,直接返回success;主要是为了处理beecloud的如下问题：
 			// !!!注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
-			if (true) {
-				// 提供根据订单号获取订单状态的接口
+			// 提供根据订单号获取订单状态的接口
+			Map parmMap = new HashMap();
+			parmMap.put("ORDER_ID", transactionId);
+			Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
+			String order_status = orderMap.get("STATUS").toString();
+			// 支付状态成功，遇到重复推送; 退款状态成功，遇到重复推送
+			if (("PAY".equals(transactionType) && "30".equals(order_status)) || ("REFUND".equals(transactionType) && "40".equals(order_status))) {
 				writer.write(success);
-				// return;
+				return;
 			}
 			
 			
@@ -336,7 +358,7 @@ public class UserOrderController extends CoreController{
 			// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
 			// 生成订单别号和唯一码-对于支付！
 			
-			Map parmMap = new HashMap();
+			parmMap = new HashMap();
 			parmMap.put("payLogMap", payLogMap);
 			parmMap.put("payMap", payMap);
 			
