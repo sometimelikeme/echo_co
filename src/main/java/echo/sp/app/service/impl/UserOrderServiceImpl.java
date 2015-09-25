@@ -84,7 +84,7 @@ public class UserOrderServiceImpl implements UserOrderService{
     		
     		userOrderDAO.updateOrderPay(upMap);
     		
-			returnInt = 1;
+			returnInt = 1; 
 			
 		} catch (Exception e) {
 			throw new RuntimeException();
