@@ -1,5 +1,7 @@
 package echo.sp.app.service.impl;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +22,9 @@ public class MerOrderServiceImpl implements MerOrderService {
 	
 	@Autowired
 	private MerOrderDAO merOrderDAO;
+
+	@Override
+	public int updateOrderComsume(Map parmMap) {
+		return merOrderDAO.updateOrderComsume(parmMap);
+	}
 }

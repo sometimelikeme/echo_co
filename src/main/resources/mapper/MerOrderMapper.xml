@@ -30,4 +30,10 @@
           AND ORDER_ALIAS_ID = #{ORDER_ALIAS_ID}
     </select>
     
+    <update id="updateOrderComsume" parameterType="map">  
+          UPDATE T_ORDERS SET 
+          STATUS = '50',
+          CONSUME_TIME = #{CONSUME_TIME}
+          WHERE ORDER_ID = #{ORDER_ID}
+    </update> 
 </mapper>

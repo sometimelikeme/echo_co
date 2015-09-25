@@ -22,6 +22,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.page.PubTool;
+import echo.sp.app.command.utils.DateUtils;
+import echo.sp.app.command.utils.MD5Util;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.MerOrderService;
 import echo.sp.app.service.UserOrderService;
@@ -130,6 +132,72 @@ public class MerOrderController extends CoreController{
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 			logger.error("MerOrderController---getOrders---interface error: ", e);
+		}
+	}
+	
+	
+	/**
+	 * 用户消费订单，店铺根据用户提供的订单别号和验证码来执行消费
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("order/consuOrder")
+	public void consuOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("MerOrderController---consuOrder---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id"),
+				   mer_id = (String) paramMap.get("MERCHANT_ID"), 
+				   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
+				   order_id = (String) paramMap.get("ORDER_ID");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {// Only user has access
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
+				super.writeJson(response, "9996", "无效店铺", null, null);
+			} else {
+				Map parmMap = new HashMap();
+				parmMap.put("ORDER_ID", order_id);
+				Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
+				// 无效订单号
+				if (orderMap == null) {
+					super.writeJson(response, "9995", "无效订单号", null, null);
+					return;
+				}
+				// 只有状态为支付状态方可消费
+				if (!"30".equals(orderMap.get("STATUS").toString())) {
+					super.writeJson(response, "9994", "订单未支付", null, null);
+					return;
+				}
+				// 判断验证码
+				if (!MD5Util.getMD5String(paramMap.get("CAPTCHA").toString()).equals(MD5Util.getMD5String(orderMap.get("CAPTCHA").toString()))) {
+					super.writeJson(response, "9993", "验证码错误", null, null);
+					return;
+				}
+				// 修改订单为消费状态
+				paramMap.put("CONSUME_TIME", DateUtils.getDateTime());
+				merOrderService.updateOrderComsume(paramMap);
+				
+				orderMap = userOrderService.getOrderDetail(parmMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) orderMap.get("HEAD"), (List) orderMap.get("LINE"));
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("MerOrderController---consuOrder---interface error: ", e);
 		}
 	}
 }
