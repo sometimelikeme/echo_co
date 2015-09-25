@@ -319,7 +319,7 @@ public class UserOrderController extends CoreController{
 			// 根据transactionId订单号来查询订单的支付状态
 			// 这里的支付状态包括支付和退款两种状态的判断
 			// 如果当前订单为已支付,直接返回success;主要是为了处理beecloud的如下问题：
-			// !!!注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
+			// 注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
 			// 提供根据订单号获取订单状态的接口
 			Map parmMap = new HashMap();
 			parmMap.put("ORDER_ID", transactionId);
