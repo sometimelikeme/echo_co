@@ -30,7 +30,11 @@
  	
  	
  	<select id="getOrderHead" parameterType="map" resultType="Map">
-    	SELECT * FROM T_ORDERS WHERE ORDER_ID = #{ORDER_ID}
+    	SELECT ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,
+        PAY_TYPE,TOTAL_PAY,ORDER_ALIAS_ID,ORDER_TIME,CANCEL_TIME,
+        PAY_TIME,BACK_TIME,CONSUME_TIME,SHUT_TIME,DEL_TIME,CANCEL_TYPE,
+        CANCEL_REASON,BACK_REASON,COMM_STATUS,NOTE
+    	FROM T_ORDERS WHERE ORDER_ID = #{ORDER_ID}
     </select>
     <select id="getOrderLine" parameterType="map" resultType="Map">
     	SELECT * FROM T_ORDERS_LINE WHERE ORDER_ID = #{ORDER_ID}
