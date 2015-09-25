@@ -3,5 +3,31 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.MerOrderDAO">
-	
+
+	<select id="getOrdersByUser" parameterType="map" resultType="Map">
+          SELECT ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,
+          PAY_TYPE,TOTAL_PAY,ORDER_ALIAS_ID,ORDER_TIME,CANCEL_TIME,
+          PAY_TIME,BACK_TIME,CONSUME_TIME,SHUT_TIME,DEL_TIME,CANCEL_TYPE,
+          CANCEL_REASON,BACK_REASON,COMM_STATUS,NOTE
+          FROM T_ORDERS
+          WHERE USER_ID = #{USER_ID}
+    </select>
+    <select id="getOrdersByMerchant" parameterType="map" resultType="Map">
+          SELECT ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,
+          PAY_TYPE,TOTAL_PAY,ORDER_ALIAS_ID,ORDER_TIME,CANCEL_TIME,
+          PAY_TIME,BACK_TIME,CONSUME_TIME,SHUT_TIME,DEL_TIME,CANCEL_TYPE,
+          CANCEL_REASON,BACK_REASON,COMM_STATUS,NOTE
+          FROM T_ORDERS
+          WHERE MERCHANT_ID = #{MERCHANT_ID}
+    </select>
+    <select id="getOrdersByAliaId" parameterType="map" resultType="Map">
+          SELECT ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,
+          PAY_TYPE,TOTAL_PAY,ORDER_ALIAS_ID,ORDER_TIME,CANCEL_TIME,
+          PAY_TIME,BACK_TIME,CONSUME_TIME,SHUT_TIME,DEL_TIME,CANCEL_TYPE,
+          CANCEL_REASON,BACK_REASON,COMM_STATUS,NOTE
+          FROM T_ORDERS
+          WHERE MERCHANT_ID = #{MERCHANT_ID}
+          AND ORDER_ALIAS_ID = #{ORDER_ALIAS_ID}
+    </select>
+    
 </mapper>
