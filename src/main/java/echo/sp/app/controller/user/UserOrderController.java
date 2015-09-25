@@ -311,6 +311,7 @@ public class UserOrderController extends CoreController{
 			Gson gson = new Gson();
 			
 			Map payMap = new HashMap();
+			payMap.put("ORDER_ID", transactionId);
 			
 			String pay_type = "";
 			
@@ -383,9 +384,9 @@ public class UserOrderController extends CoreController{
 		payMap.put("SINNAL", "WX");
 		payMap.put("TRANSACTION_ID", wx.getTransaction_id());
 		payMap.put("OPENID", wx.getOpenid());
-		payMap.put("CASH_FEE", wx.getCash_fee());
+		payMap.put("CASH_FEE", PubTool.parseCentToYu(wx.getCash_fee()));
 		payMap.put("OUT_TRADE_NO", wx.getOut_trade_no());
-		payMap.put("TOTAL_FEE", wx.getTotal_fee());
+		payMap.put("TOTAL_FEE", PubTool.parseCentToYu(wx.getTotal_fee()));
 		payMap.put("RESULT_CODE", wx.getResult_code());
 		payMap.put("TIME_END", wx.getTime_end());
 		payMap.put("RETURN_CODE", wx.getReturn_code());
@@ -400,7 +401,7 @@ public class UserOrderController extends CoreController{
 	private Map getAliMap(ALI ali) {
 		Map payMap = new HashMap();
 		payMap.put("SINNAL", "ALI");
-		payMap.put("DISCOUNT", ali.getDiscount());
+		payMap.put("DISCOUNT", PubTool.parseNumber(ali.getDiscount()));
 		payMap.put("SUBJECT", ali.getSubject());
 		payMap.put("TRADE_NO", ali.getTrade_no());
 		payMap.put("BUYER_EMAIL", ali.getBuyer_email());
@@ -425,7 +426,7 @@ public class UserOrderController extends CoreController{
 	private Map getUnMap(UN un) {
 		Map payMap = new HashMap();
 		payMap.put("SINNAL", "UN");
-		payMap.put("ORDERID", un.getOrderId());
+		payMap.put("OUT_TRADE_NO", un.getOrderId());// 为了统一，写成OUT_TRADE_NO
 		payMap.put("TRACENO", un.getTraceNo());
 		payMap.put("QUERYID", un.getQueryId());
 		payMap.put("RESPMSG", un.getRespMsg());
