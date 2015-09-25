@@ -327,7 +327,7 @@ public class UserOrderController extends CoreController{
 			Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
 			// 无效订单号
 			if (orderMap == null) {
-				writer.write(success);
+				writer.write(fail);
 				return;
 			}
 			String order_status = orderMap.get("STATUS").toString();
@@ -339,6 +339,7 @@ public class UserOrderController extends CoreController{
 			}
 			
 			
+			// 支付日志总表参数集
 			Map payLogMap = new HashMap();
 			payLogMap.put("ORDER_ID", transactionId);
 			payLogMap.put("TIME_STAMP", timestamp);
@@ -346,6 +347,7 @@ public class UserOrderController extends CoreController{
 				
 			gson = new Gson();
 			
+			// 支付日志分表参数集
 			Map payMap = new HashMap();
 			payMap.put("ORDER_ID", transactionId);
 			
@@ -383,11 +385,12 @@ public class UserOrderController extends CoreController{
 				
 			}
 			
+			
 			// 支付类型
 			payLogMap.put("PAY_TYPE", pay_type);
-			
 			// 判断支付(支付/退款); 生成支付对象参数
 			payLogMap.put("TRANS_TYPE", "PAY".equals(transactionType) ? "10" : "20");
+			
 			
 			// 组织更新订单状态参数集合
 			Map upMap = new HashMap();
@@ -415,7 +418,6 @@ public class UserOrderController extends CoreController{
 			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG, 放到后台一个事务
 			// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
 			// 生成订单别号和唯一码-对于支付！
-			
 			parmMap = new HashMap();
 			parmMap.put("payLogMap", payLogMap);
 			parmMap.put("payMap", payMap);
