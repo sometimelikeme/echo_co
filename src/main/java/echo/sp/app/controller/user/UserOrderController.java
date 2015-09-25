@@ -338,7 +338,12 @@ public class UserOrderController extends CoreController{
 				writer.write(success);
 				return;
 			}
-			// 只能当前状态为【支付订单】时才可以取消订单
+			// 只能当前状态为【下单】时才可以支付
+			if ("PAY".equals(transactionType) && !"10".equals(order_status)) {
+				writer.write(fail);
+				return;
+			}
+			// 只能当前状态为【支付订单】时才可以退单
 			if ("REFUND".equals(transactionType) && !"30".equals(order_status)) {
 				writer.write(fail);
 				return;
