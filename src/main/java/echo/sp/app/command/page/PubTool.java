@@ -22,6 +22,11 @@ public class PubTool {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PubTool.class);
 	
+	public static String parseNumber(Object o) {
+		String str = o.toString();
+		return "".equals(o.toString()) ? "0" : str;
+	}
+	
 	/**
 	 * 转化支付货币分为元单位,空返回0
 	 * @param o
