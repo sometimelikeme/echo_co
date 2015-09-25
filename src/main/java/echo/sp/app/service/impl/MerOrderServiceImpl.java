@@ -27,4 +27,9 @@ public class MerOrderServiceImpl implements MerOrderService {
 	public int updateOrderComsume(Map parmMap) {
 		return merOrderDAO.updateOrderComsume(parmMap);
 	}
+
+	@Override
+	public int updateOrderClose(Map parmMap) {
+		return merOrderDAO.updateOrderClose(parmMap);
+	}
 }

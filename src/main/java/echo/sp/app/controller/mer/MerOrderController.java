@@ -200,4 +200,61 @@ public class MerOrderController extends CoreController{
 			logger.error("MerOrderController---consuOrder---interface error: ", e);
 		}
 	}
+	
+	
+	/**
+	 * 用户关闭订单
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("order/closeOrder")
+	public void closeOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("MerOrderController---closeOrder---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id"),
+				   order_id = (String) paramMap.get("ORDER_ID");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				Map parmMap = new HashMap();
+				parmMap.put("ORDER_ID", order_id);
+				Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
+				// 无效订单号
+				if (orderMap == null) {
+					super.writeJson(response, "9996", "无效订单号", null, null);
+					return;
+				}
+				// 只有状态为消费状态方可关闭
+				if (!"50".equals(orderMap.get("STATUS").toString())) {
+					super.writeJson(response, "9995", "订单未消费，不可关闭", null, null);
+					return;
+				}
+				// 修改订单为关闭状态
+				paramMap.put("SHUT_TIME", DateUtils.getDateTime());
+				merOrderService.updateOrderClose(paramMap);
+				
+				orderMap = userOrderService.getOrderDetail(parmMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) orderMap.get("HEAD"), (List) orderMap.get("LINE"));
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("MerOrderController---closeOrder---interface error: ", e);
+		}
+	}
 }
