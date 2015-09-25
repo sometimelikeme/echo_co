@@ -24,6 +24,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	// GET NORML CODE URI.
 	private static String NORMAL_URI = "login/getCode.do"; 
 	
+	// Support BeeCloud Call Back Interface 
+	private static String PAY_URI = "order/payOrder.do";
+	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
 	private static final String[] IGNORE_URI = {
 		"login/checkReg.do",// 检查用户手机号是否已经注册
@@ -55,8 +58,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/updateToPreItem.do",// 设置商品为团购商品
 		"order/addOrder.do",// 下单
 		"order/cancelOrder.do",// 取消
-		"order/payOrder.do",// 支付
-		"order/backOrder.do",// 退单
 		"order/consuOrder.do",// 消费
 		"order/closeOrder.do",// 结束
 		"order/delOrder.do",// 删除
@@ -83,7 +84,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			logger.debug("LoginInterceptor---preHandle---url: " + url + ";no_co: " + no_co + ";sc_co: " + sc_co);
 		} 
 		
-		if (url.contains(NORMAL_URI)) { // FIRST GET THE NORMAL CODE.
+		// FIRST GET THE NORMAL CODE, OR PAY INTERFACE
+		if (url.contains(NORMAL_URI) || url.contains(PAY_URI)) { 
 			flag = true;
 		} else if (no_co != null && sc_co != null) { // SECRET ACCESS.
 			no_co = PubTool.processParm(no_co);
