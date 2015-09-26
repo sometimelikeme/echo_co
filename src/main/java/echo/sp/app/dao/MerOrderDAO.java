@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public interface MerOrderDAO {
 	// 消费订单
-	public int updateOrderComsume(Map parmMap);
+	public int updateOrderComsume(Map parmMap); 
 	// 结束订单
 	public int updateOrderClose(Map parmMap);
 	// 产生用户积分
