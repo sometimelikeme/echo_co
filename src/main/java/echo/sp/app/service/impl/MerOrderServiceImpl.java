@@ -91,4 +91,9 @@ public class MerOrderServiceImpl implements MerOrderService {
 		}
 		return returnInt;
 	}
+
+	@Override
+	public int updateOrderForDelete(Map parmMap) {
+		return merOrderDAO.updateOrderForDelete(parmMap);
+	}
 }

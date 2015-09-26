@@ -278,4 +278,57 @@ public class MerOrderController extends CoreController{
 			logger.error("MerOrderController---closeOrder---interface error: ", e);
 		}
 	}
+	
+	
+	/**
+	 * 删除订单
+	 * 订单的任何环节都可以删除订单
+	 * 删除后的订单可以在历史检索到
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("order/delOrder")
+	public void delOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("MerOrderController---delOrder---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id"),
+				   order_id = (String) paramMap.get("ORDER_ID");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				Map parmMap = new HashMap();
+				parmMap.put("ORDER_ID", order_id);
+				Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
+				// 无效订单号
+				if (orderMap == null) {
+					super.writeJson(response, "9996", "无效订单号", null, null);
+					return;
+				}
+				// 修改订单为删除状态
+				paramMap.put("DEL_TIME", DateUtils.getDateTime());
+				
+				merOrderService.updateOrderForDelete(parmMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("MerOrderController---delOrder---interface error: ", e);
+		}
+	}
 }

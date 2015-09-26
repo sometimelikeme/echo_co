@@ -19,4 +19,7 @@ public interface MerOrderService {
 	public int addComment(Map parmMap);
 	// 删除商品评论
 	public int deleteComment(Map parmMap);
+	
+	// 删除订单
+	public int updateOrderForDelete(Map parmMap);
 }

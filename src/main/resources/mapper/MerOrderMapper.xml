@@ -84,4 +84,9 @@
         UPDATE T_ORDERS SET COMM_STATUS = '1'
         WHERE ORDER_ID = #{ORDER_ID}
     </update>
+    
+    <update id="updateOrderForDelete" parameterType="map">  
+        UPDATE T_ORDERS SET STATUS = '70',DEL_TIME = #{DEL_TIME}
+        WHERE ORDER_ID = #{ORDER_ID}
+    </update> 
 </mapper>
