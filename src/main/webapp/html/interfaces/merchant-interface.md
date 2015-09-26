@@ -106,16 +106,18 @@
 - 参数一： 商品信息参数对象
 	`dataParm: {`
 	`dataset: {`
-		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// 店铺ID`
-		`ITEM_ID: '10012',// 商品ID`
-		`ITEM_NAME: 'iphone6',// 商品名称-支持模糊查询`
-		`ITEM_SHORT_NAME: 'iphone6',// 商品简称-支持模糊查询`
-		`CATEGORY_ID: '100',// 商品所述分类ID`
-		`IS_PREF: '1',// 是否为团购商品`
-		`IS_SKILL: '0',// 是否为技能商品`
-		`IS_POINT: '0',// 是否为积分商城商品`
-		`page: '1'// 分页查询-请求页数`
-		`pageSize: '10'// 每页的最大数据量`
+		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// optimal店铺ID`
+		`ITEM_ID: '10012',// optimal商品ID`
+		`ITEM_NAME: 'iphone6',// optimal商品名称-支持模糊查询`
+		`ITEM_SHORT_NAME: 'iphone6',// optimal商品简称-支持模糊查询`
+		`CATEGORY_ID: '100',// optimal商品所述分类ID`
+		`IS_PREF: '1',// optimal是否为团购商品`
+		`IS_SKILL: '0',// optimal是否为技能商品`
+		`IS_POINT: '0',// optimal是否为积分商城商品`
+		`page: '1'// optimal分页查询-请求页数-获取商品列表:该分页参数只针对获取商品；若传递ITEM_ID,该参数不用`
+		`pageSize: '10'// optimal每页的最大数据量-获取商品列表:该分页参数只针对获取商品；若传递ITEM_ID,该参数不用`
+		`pageComm: '1'// optimal评论分页查询-请求页数-获取商品列表:需要传递ITEM_ID配合使用`
+		`pageSizeComm: '10'// optimal评论每页的最大数据量-获取商品列表:需要传递ITEM_ID配合使用`
 		`sort: 'CREATE_TIME.desc'// 按照什么排序，字段名后加.asc升序排序，.desc倒序排序`
 		`IS_MER_INFO_NEED: '1'// optimal 增加该参数 则查询某个商品时，返回的MAP中增加其所在店铺的信息`
 	`}`
@@ -126,7 +128,7 @@
 	+ 本接口未做客户端限制，因为用户也需要调用该接口。
 	+ 参数key值与数据库字段值相同，参数是可选，非必须。
 	+ 本接口返回3种类型数据：
-	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序；同时dataset中的BELONG_ITEM用来表示该商品是否为用户自己店铺的商品；增加成功返回数据格式如下(查询商品接口mer/searchMerItem,增加查询具体商品时,返回该商品是否被当前用户所收藏的标志字段`IS_COLL`为1), 同时dataset中增加totalCount来计算总评论数：
+	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序；同时dataset中的BELONG_ITEM用来表示该商品是否为用户自己店铺的商品；增加成功返回数据格式如下(查询商品接口mer/searchMerItem,增加查询具体商品时,返回该商品是否被当前用户所收藏的标志字段`IS_COLL`为1), 同时dataset中增加totalCount来计算总评论数,第一请求获取到商品信息和第一批分页评论信息，后面的分页请求不再返回商品信息：
 	    `{"status":"0000","msg":"成功",`
 	    `"dataset_line":[{"COMENT_TITLE":"挺好",//评论标题 ``"ORDER_ID":"a70f119a890f467b8d7a632c2fabd873",// 订单号 ``"COMMENT_ID":"a70f119a890f467b8d7a632c2fabd873",//评论ID ``"USER_ID":"a70f119a890f467b8d7a632c2fabd873",`
 	    `"COMMENT_DESC":"真不错",``"ITEM_ID":10012,// 商品ID "ITEM_POINT":3.5,// 评分 "COMMENT_TIME":"2015-08-31 16:06:23"// 时间戳}],``"dataset":{"MAIN_ICON":"xxx","POINT_NUM":0.00,"HEAD_ICON":"xxx","CREATE_TIME":"2015-08-31 16:06:23","ITEM_ID":10012,"STATUS":"30","IS_PREF":"1","IS_SKILL":"0","QTY_SOLD":0.00,"INVENTORY":200.00,"ORI_PRICE":5200.00,"ITEM_NAME":"iphone6S","ITEM_SHORT_NAME":"iphone6S","IS_POINT":"0","CATEGORY_ID":"100","ITEM_POINT":0.00,"MERCHANT_ID":"a70f119a890f467b8d7a632c2fabd873","CURR_PRICE":5266.00,BELONG_ITEM: '1'// 1-是，0-否}}`
