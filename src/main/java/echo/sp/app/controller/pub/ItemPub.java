@@ -43,7 +43,9 @@ public class ItemPub {
 			   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
 			   sort = paramMap.get("sort"),// SORT INFO
 			   item_id = paramMap.get("ITEM_ID"),
-			   is_mer_info_need = paramMap.get("IS_MER_INFO_NEED");
+			   is_mer_info_need = paramMap.get("IS_MER_INFO_NEED"),
+			   pageComm = paramMap.get("pageComm"),// 评论分页参数
+			   pageSizeComm = paramMap.get("pageSizeComm");
 		
 		String sortString = sort == null ? "" : sort.toString();
 		
@@ -91,50 +93,64 @@ public class ItemPub {
 	        	paramMap.put("totalCount", totalCount);
 			} else if (item_id != null && !"".equals(item_id.toString())
 					&& PubTool.isListHasData(resList) && resList.size() == 1) {// 标志当前执行查询的为具体商品
+				
+				// 单个商品的信息
 				paramMap = (Map) resList.get(0);
+				
+				// 查询商品评论分页参数
+				// 默认按照时间倒序排序
+				sortString = "COMMENT_TIME.desc";
+				int pageInt = Integer.parseInt(pageComm.toString()),
+					pageSizeInt = Integer.parseInt(pageSizeComm.toString());
 				
 				Map parmMap = new HashMap();
 				
-				// 查询商品是否为本店商品
-				if (!"".equals(user_id) && !"".equals(mer_id)) {
-					parmMap.put("ITEM_ID", item_id);
-					parmMap.put("MERCHANT_ID", mer_id);
-					parmMap.put("USER_ID", user_id);
-					parmMap.put("STATUS", "30");
-					int resInt = merItemService.checkMerItem(parmMap);
-					paramMap.put("BELONG_ITEM", resInt == 0 ? "0" : "1");
-				}
-				 
-				// 查询登陆用户是否收藏该商品
-				if (!"".equals(user_id)) {
-					parmMap = new HashMap();
-					parmMap.put("ITEM_ID", item_id);
-					parmMap.put("USER_ID", user_id);
-					paramMap.put("IS_COLL", merItemService.getIsItemColl(parmMap) == 0 ? "0" : "1");
-				}
-				
-				// 单个商品信息获取增加店铺信息
-				if (is_mer_info_need != null) {
-					parmMap = new HashMap();
-					parmMap.put("ITEM_ID", item_id);
-					Map merMap = merItemService.getMerInfoByItemId(parmMap);
-					if (merMap != null) {
-						paramMap.putAll(merMap);
+				if (pageInt == 1) {// 仅在第一页请求时返回商品信息
+					
+					// 查询商品是否为本店商品
+					if (!"".equals(user_id) && !"".equals(mer_id)) {
+						parmMap.put("ITEM_ID", item_id);
+						parmMap.put("MERCHANT_ID", mer_id);
+						parmMap.put("USER_ID", user_id);
+						parmMap.put("STATUS", "30");
+						int resInt = merItemService.checkMerItem(parmMap);
+						paramMap.put("BELONG_ITEM", resInt == 0 ? "0" : "1");
 					}
+					 
+					// 查询登陆用户是否收藏该商品
+					if (!"".equals(user_id)) {
+						parmMap = new HashMap();
+						parmMap.put("ITEM_ID", item_id);
+						parmMap.put("USER_ID", user_id);
+						paramMap.put("IS_COLL", merItemService.getIsItemColl(parmMap) == 0 ? "0" : "1");
+					}
+					
+					// 单个商品信息获取增加店铺信息
+					if (is_mer_info_need != null) {
+						parmMap = new HashMap();
+						parmMap.put("ITEM_ID", item_id);
+						Map merMap = merItemService.getMerInfoByItemId(parmMap);
+						if (merMap != null) {
+							paramMap.putAll(merMap);
+						}
+					}
+				} else {
+					paramMap = null;
 				}
 				
-				// 查询商品评论
-				sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
-				pageBounds = new PageBounds(Order.formString(sortString));
+				pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
 				parmMap = new HashMap();
 				parmMap.put("ITEM_ID", item_id);
 				resList = PubTool.getResultList("MerItemDAO.searchItemComments", parmMap, pageBounds, sqlSessionFactory);
-				// 计算评论总数
-				int totalCount = 0;
-				if (PubTool.isListHasData(resList)) {
-					totalCount = ((PageList) resList).getPaginator().getTotalCount();
+				
+				if (pageInt == 1) {
+					// 计算评论总数
+					int totalCount = 0;
+					if (PubTool.isListHasData(resList)) {
+						totalCount = ((PageList) resList).getPaginator().getTotalCount();
+					}
+					paramMap.put("totalCount", totalCount);
 				}
-				paramMap.put("totalCount", totalCount);
 			} else {
 				paramMap = null;// 清空
 			}
