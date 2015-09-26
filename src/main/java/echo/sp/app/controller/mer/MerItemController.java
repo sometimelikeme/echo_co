@@ -123,7 +123,7 @@ public class MerItemController extends CoreController{
 				
 				paramMap.put("USER_ID", user_id);// 用户ID
 				paramMap.put("QTY_SOLD", "0");// 销量
-				paramMap.put("ITEM_POINT", "0");// 总和评分
+				paramMap.put("ITEM_POINT", "5");// 综合评分
 				paramMap.put("POINT_NUM", "0");// 评论次数
 				paramMap.put("CREATE_TIME", DateUtils.getDateTime());// 增加时间
 				paramMap.put("STATUS", item_status);// 状态
