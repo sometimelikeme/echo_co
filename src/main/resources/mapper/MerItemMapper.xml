@@ -74,7 +74,10 @@
     </select>
     
     <select id="searchItemComments" parameterType="map" resultType="Map">
-          SELECT * FROM T_ITEM_COMMENTS WHERE ITEM_ID = #{ITEM_ID}
+          SELECT A.*,B.USER_NAME,B.USER_ICON 
+          FROM T_ITEM_COMMENTS A, T_USERS B
+          WHERE ITEM_ID = #{ITEM_ID}
+          AND A.USER_ID = B.USER_ID
     </select>
     
     <select id="checkMerItem" parameterType="map" resultType="int">
