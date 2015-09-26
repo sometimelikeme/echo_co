@@ -11,6 +11,14 @@
           CANCEL_REASON,BACK_REASON,COMM_STATUS,NOTE
           FROM T_ORDERS
           WHERE USER_ID = #{USER_ID}
+          <choose>
+			<when test="STATUS == '70'">
+				AND 1 = 1
+			</when>
+			<otherwise>
+				AND STATUS != '70'
+			</otherwise>
+		</choose>
     </select>
     <select id="getOrdersByMerchant" parameterType="map" resultType="Map">
           SELECT ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,

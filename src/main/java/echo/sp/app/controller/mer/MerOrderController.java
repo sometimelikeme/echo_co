@@ -54,7 +54,7 @@ public class MerOrderController extends CoreController{
 	
 	/**
 	 * 获取订单列表
-	 * 1.默认传递USER_ID则分页获取用户下的所有订单列表
+	 * 1.默认传递USER_ID则分页获取用户下的所有订单列表，同时通过调用参数区分历史订单STATUS='70'
 	 * 2.增加参数MERCHANT_ID则分页获取店铺下的所有订单列表
 	 * 3.增加参数ORDER_ALIAS_ID则根据订单别号获取店铺下的订单列表
 	 * 4.传递ORDER_ID则根据订单号获取唯一的订单信息详情: dataset返回订单信息；dataset_line返回订单的商品信息。
