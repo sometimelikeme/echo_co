@@ -54,4 +54,34 @@ public class MerOrderServiceImpl implements MerOrderService {
 		}
 		return returnInt;
 	}
+
+	@Override
+	public Map getSingleCommentByUserId(Map parmMap) {
+		return merOrderDAO.getSingleCommentByUserId(parmMap);
+	}
+
+	@Override
+	public int addComment(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		merOrderDAO.deleteComment(parmMap);
+    		merOrderDAO.addComment(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int deleteComment(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		merOrderDAO.deleteComment(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 }

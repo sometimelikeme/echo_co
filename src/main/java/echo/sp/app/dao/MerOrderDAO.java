@@ -18,4 +18,11 @@ public interface MerOrderDAO {
 	public String getTotalPoint(Map parmMap);
 	// 汇总用户积分
 	public int UpdateUserTotalPoint(Map parmMap);
+	
+	// 根据用户ID来获取对某一个订单中某一个商品的评论
+	public Map getSingleCommentByUserId(Map parmMap);
+	// 删除商品评论
+	public int deleteComment(Map parmMap);
+	// 增加商品评论
+	public int addComment(Map parmMap);
 }

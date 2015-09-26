@@ -55,4 +55,21 @@
         TOTAL_POINT = #{TOTAL_POINT}
         WHERE USER_ID = #{USER_ID}
     </update> 
+    
+    <select id="getSingleCommentByUserId" parameterType="map" resultType="Map">
+        SELECT * FROM T_ITEM_COMMENTS 
+        WHERE USER_ID = #{USER_ID}
+        AND ITEM_ID = #{ITEM_ID}
+        AND ORDER_ID = #{ORDER_ID}
+    </select>
+    <delete id="deleteComment" parameterType="map">  
+        DELETE FROM T_ITEM_COMMENTS 
+        WHERE USER_ID = #{USER_ID}
+        AND ITEM_ID = #{ITEM_ID}
+        AND ORDER_ID = #{ORDER_ID}
+    </delete> 
+    <insert id="addComment" parameterType="map">
+	    INSERT INTO T_ITEM_COMMENTS(ORDER_ID,ITEM_ID,USER_ID,ITEM_POINT,COMENT_TITLE,COMMENT_DESC,COMMENT_TIME,NOTE)
+        VALUES(#{ORDER_ID},#{ITEM_ID},#{USER_ID},#{ITEM_POINT,jdbcType=NUMERIC},#{COMENT_TITLE},#{COMMENT_DESC},#{COMMENT_TIME},#{NOTE})
+    </insert>
 </mapper>

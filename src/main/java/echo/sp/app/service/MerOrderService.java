@@ -12,4 +12,11 @@ public interface MerOrderService {
 	public int updateOrderComsume(Map parmMap);
 	// 结束订单
 	public int updateOrderClose(Map parmMap);
+	
+	// 根据用户ID来获取对某一个订单中某一个商品的评论
+	public Map getSingleCommentByUserId(Map parmMap);
+	// 增加商品评论
+	public int addComment(Map parmMap);
+	// 删除商品评论
+	public int deleteComment(Map parmMap);
 }
