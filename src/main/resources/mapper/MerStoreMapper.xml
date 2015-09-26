@@ -28,7 +28,8 @@
     </select>
     
     <select id="getMerList" parameterType="map" resultType="Map">
-          SELECT * FROM T_MERCHANTS
+          SELECT A.*,B.TOTAL_POINT FROM T_MERCHANTS A LEFT JOIN T_MERCHANT_EXPAND B
+          ON A.MERCHANT_ID = B.MERCHANT_ID
           WHERE STATUS = '30'
           <if test="MERCHANT_NAME != null and MERCHANT_NAME != '' ">  
           		AND MERCHANT_NAME LIKE CONCAT(CONCAT('%', #{MERCHANT_NAME, jdbcType=VARCHAR}),'%') 
