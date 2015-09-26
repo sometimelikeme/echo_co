@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService{
 		int returnInt = 0;
     	try {
     		if (userDAO.insertToMerchant(parmMap) > 0) {
-    			parmMap.put("TOTAL_POINT", "0");// 总和评分初始化为0
+    			parmMap.put("TOTAL_POINT", "5");// 总和评分初始化为5
     			if (userDAO.insertToMerchantExpand(parmMap) > 0) {
     				returnInt = 1;
     			};
