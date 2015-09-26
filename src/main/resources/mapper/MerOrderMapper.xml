@@ -80,4 +80,8 @@
 	    INSERT INTO T_ITEM_COMMENTS(ORDER_ID,ITEM_ID,USER_ID,ITEM_POINT,COMENT_TITLE,COMMENT_DESC,COMMENT_TIME,NOTE)
         VALUES(#{ORDER_ID},#{ITEM_ID},#{USER_ID},#{ITEM_POINT,jdbcType=NUMERIC},#{COMENT_TITLE},#{COMMENT_DESC},#{COMMENT_TIME},#{NOTE})
     </insert>
+    <update id="updateOrderComment" parameterType="map">  
+        UPDATE T_ORDERS SET COMM_STATUS = '1'
+        WHERE ORDER_ID = #{ORDER_ID}
+    </update>
 </mapper>

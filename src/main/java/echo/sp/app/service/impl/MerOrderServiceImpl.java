@@ -60,12 +60,19 @@ public class MerOrderServiceImpl implements MerOrderService {
 		return merOrderDAO.getSingleCommentByUserId(parmMap);
 	}
 
+	
+	/**
+	 * 删除评论
+	 * 增加评论
+	 * 修改订单评论状态
+	 */
 	@Override
 	public int addComment(Map parmMap) {
 		int returnInt = 0;
     	try {
     		merOrderDAO.deleteComment(parmMap);
     		merOrderDAO.addComment(parmMap);
+    		merOrderDAO.updateOrderComment(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
 			throw new RuntimeException();

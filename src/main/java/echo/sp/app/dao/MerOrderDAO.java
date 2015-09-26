@@ -25,4 +25,6 @@ public interface MerOrderDAO {
 	public int deleteComment(Map parmMap);
 	// 增加商品评论
 	public int addComment(Map parmMap);
+	// 修改订单状态为已评论状态
+	public int updateOrderComment(Map parmMap);
 }
