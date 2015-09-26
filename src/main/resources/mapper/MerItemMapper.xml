@@ -108,4 +108,10 @@
           WHERE ITEM_ID = #{ITEM_ID} 
           AND STATUS = '30'
     </select>
+    
+    <select id="getMerInfoByItemId" parameterType="map" resultType="Map">
+          SELECT MERCHANT_ID,MERCHANT_NAME,TEL_NUMBER,MERCHANT_ADDR,BUSI_DESC 
+		  FROM T_MERCHANTS WHERE MERCHANT_ID = (SELECT MERCHANT_ID FROM T_ITEMS 
+		  WHERE ITEM_ID = #{ITEM_ID})
+    </select>
 </mapper>

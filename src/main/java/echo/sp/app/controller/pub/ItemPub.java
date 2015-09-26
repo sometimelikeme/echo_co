@@ -34,13 +34,16 @@ public class ItemPub {
 	 * 	  通过附加参数page,pageSize来执行分页查询,
 	 *   sort参数来执行排序
 	 *   同时返回查询的总记录数
+	 * 返回单个商品的信息增加用户是否已收藏标示
+	 * 通过参数IS_MER_INFO_NEED,来判断是否返回店铺信息
 	 */
 	public static Map searchMerItem(Map paramMap, SqlSessionFactory sqlSessionFactory, MerItemService merItemService, String user_id, String mer_id) {
 		// PAGE PARAMETERS
 		Object page = paramMap.get("page"),// PAGE NUMBER
 			   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
 			   sort = paramMap.get("sort"),// SORT INFO
-			   item_id = paramMap.get("ITEM_ID");
+			   item_id = paramMap.get("ITEM_ID"),
+			   is_mer_info_need = paramMap.get("IS_MER_INFO_NEED");
 		
 		String sortString = sort == null ? "" : sort.toString();
 		
@@ -110,12 +113,28 @@ public class ItemPub {
 					paramMap.put("IS_COLL", merItemService.getIsItemColl(parmMap) == 0 ? "0" : "1");
 				}
 				
+				// 单个商品信息获取增加店铺信息
+				if (is_mer_info_need != null) {
+					parmMap = new HashMap();
+					parmMap.put("ITEM_ID", item_id);
+					Map merMap = merItemService.getMerInfoByItemId(parmMap);
+					if (merMap != null) {
+						paramMap.putAll(merMap);
+					}
+				}
+				
 				// 查询商品评论
 				sortString = "COMMENT_TIME.desc";// 默认按照时间倒序排序
 				pageBounds = new PageBounds(Order.formString(sortString));
 				parmMap = new HashMap();
 				parmMap.put("ITEM_ID", item_id);
 				resList = PubTool.getResultList("MerItemDAO.searchItemComments", parmMap, pageBounds, sqlSessionFactory);
+				// 计算评论总数
+				int totalCount = 0;
+				if (PubTool.isListHasData(resList)) {
+					totalCount = ((PageList) resList).getPaginator().getTotalCount();
+				}
+				paramMap.put("totalCount", totalCount);
 			} else {
 				paramMap = null;// 清空
 			}

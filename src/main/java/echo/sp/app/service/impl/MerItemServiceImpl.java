@@ -90,4 +90,10 @@ public class MerItemServiceImpl implements MerItemService {
 		return merItemDAO.getItemInvtentory(parmMap);
 	}
 
+	// 根据商品ID获取店铺信息
+	@Override
+	public Map getMerInfoByItemId(Map parmMap) {
+		return merItemDAO.getMerInfoByItemId(parmMap);
+	}
+
 }

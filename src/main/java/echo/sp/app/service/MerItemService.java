@@ -34,4 +34,7 @@ public interface MerItemService {
 	
 	// 查询某商品的库存量和销量
 	public Map getItemInvtentory(Map parmMap);
+	
+	// 根据商品ID获取店铺信息
+	public Map getMerInfoByItemId(Map parmMap);
 }
