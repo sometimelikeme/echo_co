@@ -64,9 +64,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"comment/getSingleCommentByUserId.do",// 评论
 		"comment/addUpdateComment.do",// 评论
 		"comment/deleteComment.do",// 评论
-		"order/getOrders.do",// 获取订单列表-支持用户和店铺、以及根据订单别号等查询
-		"order/getOrderDetail.do",// 根据订单号获取订单详情
-		"order/checkItemValid.do"// 判断某个商品是否有效，以及库存够
+		"order/getOrders.do"// 获取订单列表-支持用户和店铺、以及根据订单别号等查询;根据订单号获取订单详情
 	};
 	 
     @SuppressWarnings("unused")
