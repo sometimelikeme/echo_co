@@ -1,5 +1,6 @@
 package echo.sp.app.controller.user;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -280,7 +281,9 @@ public class UserOrderController extends CoreController{
 			
 			// 验证签名
 			if (!sign.equals(MD5Util.getMessageDigest(Prop.getString("beecloud.appID") + Prop.getString("beecloud.appSecret") + timestamp))) {
+				logger.error(DateUtils.getDateTime() + ": 签名认证失败!");
 				writer.write(fail);
+				response.getWriter().flush();
 				return;
 			}
 			
@@ -310,7 +313,9 @@ public class UserOrderController extends CoreController{
 			}
 			
 			if (!optionalObj.getSIGN().equals(MD5Util.getMessageDigest(genSign))) {
+				logger.error(DateUtils.getDateTime() + ": 自定义签名认证失败!");
 				writer.write(fail);
+				response.getWriter().flush();
 				return;
 			}
 			
@@ -326,6 +331,7 @@ public class UserOrderController extends CoreController{
 			// 无效订单号
 			if (orderMap == null) {
 				writer.write(fail);
+				response.getWriter().flush();
 				return;
 			}
 			String order_status = orderMap.get("STATUS").toString();
@@ -337,15 +343,18 @@ public class UserOrderController extends CoreController{
 			}
 			// 只能当前状态为【下单】时才可以支付
 			if ("PAY".equals(transactionType) && !"10".equals(order_status)) {
+				logger.error(DateUtils.getDateTime() + ": 只能当前状态为【下单】时才可以支付!");
 				writer.write(fail);
+				response.getWriter().flush();
 				return;
 			}
 			// 只能当前状态为【支付订单】时才可以退单
 			if ("REFUND".equals(transactionType) && !"30".equals(order_status)) {
+				logger.error(DateUtils.getDateTime() + ": 只能当前状态为【支付订单】时才可以退单!");
 				writer.write(fail);
+				response.getWriter().flush();
 				return;
 			}
-			
 			
 			// 支付日志总表参数集
 			Map payLogMap = new HashMap();
@@ -357,7 +366,6 @@ public class UserOrderController extends CoreController{
 			
 			// 支付日志分表参数集
 			Map payMap = new HashMap();
-			payMap.put("ORDER_ID", transactionId);
 			
 			String pay_type = "";
 			
@@ -393,6 +401,7 @@ public class UserOrderController extends CoreController{
 				
 			}
 			
+			payMap.put("ORDER_ID", transactionId);
 			
 			// 支付类型
 			payLogMap.put("PAY_TYPE", pay_type);
@@ -433,6 +442,12 @@ public class UserOrderController extends CoreController{
 			
 		} catch (Exception e) {
 			logger.error("UserOrderController---payOrder---interface error: ", e);
+			writer.write("fail");
+			try {
+				response.getWriter().flush();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} finally {
 			if (null != writer) {
 				writer.close();

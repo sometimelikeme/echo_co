@@ -73,13 +73,12 @@ public class UserOrderServiceImpl implements UserOrderService{
 	public int updateOrderPay(Map parmMap) {
 		int returnInt = 0;
     	try {
-    		
     		Map payLogMap = (Map)parmMap.get("payLogMap");// 支付信息日志主表参数
     		Map payMap = (Map)parmMap.get("payMap");// 第三方支付返回的支付信息
     		Map upMap = (Map)parmMap.get("upMap");// 更新订单信息
     		
     		// Step1: 保存第三方支付返回的支付信息的数据库（包含支付和退款信息）
-    		String pay_type = parmMap.get("pay_type").toString();
+    		String pay_type = payLogMap.get("PAY_TYPE").toString();
     		if ("10".equals(pay_type)) {
 				userOrderDAO.insertToAliLog(payMap);
 			} else if ("20".equals(pay_type)) {
