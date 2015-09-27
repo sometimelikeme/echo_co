@@ -269,6 +269,8 @@ public class MerOrderController extends CoreController{
 				paramMap.put("DATE1", DateUtils.getToday());
 				merOrderService.updateOrderClose(paramMap);
 				
+				parmMap = new HashMap();
+				parmMap.put("ORDER_ID", order_id);
 				orderMap = userOrderService.getOrderDetail(parmMap);
 				
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) orderMap.get("HEAD"), (List) orderMap.get("LINE"));
