@@ -61,10 +61,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"order/consuOrder.do",// 消费
 		"order/closeOrder.do",// 结束
 		"order/delOrder.do",// 删除
+		"order/getOrders.do",// 获取订单列表-支持用户和店铺、以及根据订单别号等查询;根据订单号获取订单详情
 		"comment/getSingleCommentByUserId.do",// 评论
 		"comment/addUpdateComment.do",// 评论
-		"comment/deleteComment.do",// 评论
-		"order/getOrders.do"// 获取订单列表-支持用户和店铺、以及根据订单别号等查询;根据订单号获取订单详情
+		"comment/deleteComment.do"// 评论
 	};
 	 
     @SuppressWarnings("unused")
