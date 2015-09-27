@@ -128,8 +128,6 @@ public class UserOrderController extends CoreController{
 						break;
 					}
 					
-					// temMap.put("INVENTORY", inventory_de.subtract(qty_sold));
-					// temMap.put("QTY_SOLD_REAL", qty_sold_de.add(qty_sold));
 					temMap.put("ORDER_ID", order_id);
 				}
 				
@@ -407,21 +405,15 @@ public class UserOrderController extends CoreController{
 			upMap.put("ORDER_ID", transactionId);
 			upMap.put("STATUS", "PAY".equals(transactionType) ? "30" : "40");
 			upMap.put("PAY_TYPE", pay_type);
-			upMap.put("ORDER_ALIAS_ID", RandomUtil.generateNumString(12));
-			upMap.put("CAPTCHA", RandomUtil.generateString(6));
-			
-			String pay_timeString = "";
-			String back_time = "";
-			if (pay_time != null && !"".equals(pay_time.toString())) {// 已付款
-				pay_timeString = pay_time.toString();
-				back_time = DateUtils.getDateTime();
-			} else {// 未付款
-				pay_timeString = DateUtils.getDateTime();
+			// 生成支付的订单别号、验证码和时间戳
+			String timeStamp = DateUtils.getDateTime();
+			if ("PAY".equals(transactionType)) {// 付款
+				upMap.put("ORDER_ALIAS_ID", RandomUtil.generateNumString(12));
+				upMap.put("CAPTCHA", RandomUtil.generateString(6));
+				upMap.put("PAY_TIME", timeStamp);
+			} else if ("REFUND".equals(transactionType)) {// 退款
+				upMap.put("BACK_TIME", timeStamp);
 			}
-			
-			upMap.put("PAY_TIME", pay_timeString);
-			upMap.put("BACK_TIME", back_time);
-			
 			
 			// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
 			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
