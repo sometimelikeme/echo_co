@@ -83,7 +83,12 @@
           PAY_TYPE = #{PAY_TYPE},
           ORDER_ALIAS_ID = #{ORDER_ALIAS_ID},
           CAPTCHA = #{CAPTCHA},
-          PAY_TIME = #{PAY_TIME},
+          PAY_TIME = #{PAY_TIME}
+          WHERE ORDER_ID = #{ORDER_ID}
+    </update> 
+    <update id="updateOrderPayBack" parameterType="map">  
+          UPDATE T_ORDERS SET 
+          STATUS = #{STATUS},
           BACK_TIME = #{BACK_TIME}
           WHERE ORDER_ID = #{ORDER_ID}
     </update> 
