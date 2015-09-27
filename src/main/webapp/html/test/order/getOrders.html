@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "order/getOrders.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                			USER_ID:'47bdfdc734c9429381e7e2793fe28cc8',
+                			//ORDER_ID:'45c298a408df410eac0a1b2c8e6a86d9',
+                			MERCHANT_ID:'9f9cdc2a6ff44a50a334d1fe183c3b44',
+                			ORDER_ALIAS_ID: '114825653850',
+                			page:'1',
+                			pageSize:'10'
+                		}
+                	})),
+                	sc_co: '756123421e6b442db25aa05e96f67dbas',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>

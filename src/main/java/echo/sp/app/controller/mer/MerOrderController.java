@@ -101,6 +101,7 @@ public class MerOrderController extends CoreController{
 				List resList = null;
 				
 				Object mer_id = paramMap.get("MERCHANT_ID");
+				Object alia_id = paramMap.get("ORDER_ALIAS_ID");
 				
 				if (mer_id == null) {// 分页用户获取所有订单
 					pageInt = Integer.parseInt(page.toString());
@@ -108,7 +109,6 @@ public class MerOrderController extends CoreController{
 					pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
 					resList = PubTool.getResultList("MerOrderDAO.getOrdersByUser", paramMap, pageBounds, sqlSessionFactory);
 				} else {// 店铺获取旗下订单
-					Object alia_id = paramMap.get("ORDER_ALIAS_ID");
 					if (alia_id == null) {// 分页获取
 						pageInt = Integer.parseInt(page.toString());
 						pageSizeInt = Integer.parseInt(pageSize.toString());
@@ -121,12 +121,16 @@ public class MerOrderController extends CoreController{
 				}
 				
 				// dataset存放匹配总数据量
-				int totalCount = 0;
-				if (PubTool.isListHasData(resList)) {
-					totalCount = ((PageList) resList).getPaginator().getTotalCount();
+				if (alia_id == null) {
+					int totalCount = 0;
+					if (PubTool.isListHasData(resList)) {
+						totalCount = ((PageList) resList).getPaginator().getTotalCount();
+					}
+					paramMap = new HashMap();
+					paramMap.put("totalCount", totalCount);
+				} else {
+					paramMap = null;
 				}
-				paramMap = new HashMap();
-				paramMap.put("totalCount", totalCount);
 				
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, resList);
 			}
