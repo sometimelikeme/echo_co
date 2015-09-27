@@ -46,7 +46,7 @@ public class MerOrderServiceImpl implements MerOrderService {
 				totalPointBig = new BigDecimal(totalPoint).add(pointNumBig);
 			}
     		parmMap.put("TOTAL_POINT", totalPointBig);
-    		merOrderDAO.UpdateUserTotalPoint(parmMap);
+    		merOrderDAO.updateUserTotalPoint(parmMap);
     		
     		returnInt = 1;
 		} catch (Exception e) {

@@ -17,7 +17,7 @@ public interface MerOrderDAO {
 	// 获取当前总积分
 	public String getTotalPoint(Map parmMap);
 	// 汇总用户积分
-	public int UpdateUserTotalPoint(Map parmMap);
+	public int updateUserTotalPoint(Map parmMap);
 	
 	// 根据用户ID来获取对某一个订单中某一个商品的评论
 	public Map getSingleCommentByUserId(Map parmMap);
