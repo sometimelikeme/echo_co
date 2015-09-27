@@ -324,7 +324,7 @@ public class MerOrderController extends CoreController{
 				// 修改订单为删除状态
 				paramMap.put("DEL_TIME", DateUtils.getDateTime());
 				
-				merOrderService.updateOrderForDelete(parmMap);
+				merOrderService.updateOrderForDelete(paramMap);
 				
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
 			}
