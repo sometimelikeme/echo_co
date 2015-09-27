@@ -31,5 +31,8 @@ public interface UserOrderDAO {
 	public int insertToAliLog(Map parmMap);
 	public int insertToUnLog(Map parmMap);
 	public int insertToPayLog(Map parmMap);
+	// 付款处理
 	public int updateOrderPay(Map parmMap);
+	// 扣款处理
+	public int updateOrderPayBack(Map parmMap);
 }
