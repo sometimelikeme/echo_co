@@ -79,10 +79,6 @@ public class MerOrderController extends CoreController{
 			
 			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
 				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
-			} else if (!"10".equals(ut)) {// Only user has access
-				super.writeJson(response, "9998", "无效客户端", null, null);
-			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
-				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				
 				Object order_id = paramMap.get("ORDER_ID");
