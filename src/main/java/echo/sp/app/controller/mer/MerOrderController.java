@@ -74,7 +74,6 @@ public class MerOrderController extends CoreController{
 			Map paramMap = data.getDataset();
 			
 			String user_id = (String) paramMap.get("USER_ID"), 
-				   ut = (String) paramMap.get("ut"), 
 				   s_user_id = (String) session.getAttribute("user_id");
 			
 			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
