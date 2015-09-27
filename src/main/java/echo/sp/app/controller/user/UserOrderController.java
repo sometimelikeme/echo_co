@@ -52,9 +52,7 @@ public class UserOrderController extends CoreController{
 	 * 用户下单接口
 	 * 参数说明请参考接口说明
 	 * 1. 插入头表数据，批量插入行表数据
-	 * 2. 更新库存信息，商品销量
-	 * 3. 执行结束后查询订单信息返回
-	 * 注意：若用户发生退单和退款情况，亦更新库存信息，商品销量
+	 * 2. 执行结束后查询订单信息返回
 	 * @param req
 	 * @param response
 	 * @param dataParm
@@ -87,6 +85,7 @@ public class UserOrderController extends CoreController{
 				super.writeJson(response, "9996", "不能购买本店商品", null, null);
 			} else {
 				
+				// Dataset_line存放购买商品信息
 				List itemList = data.getDataset_line();
 				
 				if (!PubTool.isListHasData(itemList)) {
@@ -117,11 +116,11 @@ public class UserOrderController extends CoreController{
 						isBreak = true;
 					}
 					
-					inventory_de = new BigDecimal(resMap.get("INVENTORY").toString());
+					inventory_de = new BigDecimal(resMap.get("INVENTORY").toString());// 当前库存
 					
-					qty_sold_de = new BigDecimal(resMap.get("QTY_SOLD").toString());
+					qty_sold_de = new BigDecimal(resMap.get("QTY_SOLD").toString());// 当前销量
 					
-					qty_sold = new BigDecimal(temMap.get("QTY_SOLD").toString());
+					qty_sold = new BigDecimal(temMap.get("QTY_SOLD").toString());// 本次订单销量
 					
 					if (inventory_de.compareTo(qty_sold) < 0) {
 						super.writeJson(response, "9994", "商品：" + temMap.get("ITEM_NAME") + " 库存不足", null, null);
@@ -129,8 +128,8 @@ public class UserOrderController extends CoreController{
 						break;
 					}
 					
-					temMap.put("INVENTORY", inventory_de.subtract(qty_sold));
-					temMap.put("QTY_SOLD_REAL", qty_sold_de.add(qty_sold));
+					// temMap.put("INVENTORY", inventory_de.subtract(qty_sold));
+					// temMap.put("QTY_SOLD_REAL", qty_sold_de.add(qty_sold));
 					temMap.put("ORDER_ID", order_id);
 				}
 				

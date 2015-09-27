@@ -25,6 +25,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 	@Autowired
     private UserOrderDAO userOrderDAO;
 
+	/**
+	 * 执行订单头表和行表
+	 */
 	@Override
 	public int addOrder(Map parmMap) {
 		int returnInt = 0;
@@ -32,9 +35,9 @@ public class UserOrderServiceImpl implements UserOrderService{
     		if (userOrderDAO.addOrderHead((Map)parmMap.get("head")) > 0) {
     			List lineList = (List)parmMap.get("line");
     			if (userOrderDAO.addOrderLine(lineList) > 0) {
-    				if (userOrderDAO.modifyItemQty(lineList) > 0) {
+    				// if (userOrderDAO.modifyItemQty(lineList) > 0) {
     					returnInt = 1;
-					}
+					// }
     			};
     		}
 		} catch (Exception e) {
