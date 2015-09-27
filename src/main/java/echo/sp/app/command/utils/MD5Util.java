@@ -155,7 +155,7 @@ public class MD5Util {
     	}
         
 //        public static void main(String[] args) throws IOException {
-//            System.out.println("md5:" + getMD5String("3333333333331").length());
+//            System.out.println(getMessageDigest(Prop.getString("beecloud.appID") + Prop.getString("beecloud.appSecret") + "1426817510111"));
 //        }
 
 }
