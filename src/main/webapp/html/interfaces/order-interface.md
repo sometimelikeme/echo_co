@@ -29,7 +29,6 @@
 	+ 传递MERCHANT_ID是为了防止用户购买自己店铺的商品，这里的防止要在客户端来实现。
 	+ 购买商品的总价由客户端计算。
 	+ 本接口可实现一个店铺购买多个商品，dataset_line中放入多个商品信息即可。
-	+ 该接口在保存完订单信息后，同时更新商品表T_ITEM中的商品库存和销量信息；若将来用户取消订单，则反馈跟新商品表T_ITEM中的商品库存和销量信息。
 	+ 接口最终返回数据库中该订单的信息。
 - 返回值：
  + 成功： `{"status":"0000","msg":"成功","dataset_line":[{"ORDER_ID":"2c6aa0b9f3784bd4867005018ead5c47","SINGLE_PAY":20.10,"PAY_PRICE":20.10,"ITEM_NAME":"二锅头","ITEM_ID":10035,"QTY_SOLD":3.00},{"ORDER_ID":"2c6aa0b9f3784bd4867005018ead5c47","SINGLE_PAY":20.20,"PAY_PRICE":10.10,"ITEM_NAME":"老白干","ITEM_ID":10036,"QTY_SOLD":2.00}],"dataset":{"ORDER_TYPE":"10","USER_ID":"47bdfdc734c9429381e7e2793fe28cc8","ORDER_TIME":"2015-09-22 21:03:35","STATUS":"10","TOTAL_PAY":1000.00,"ORDER_ID":"2c6aa0b9f3784bd4867005018ead5c47","COMM_STATUS":"0","MERCHANT_ID":"9f9cdc2a6ff44a50a334d1fe183c3b44"}}`
