@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "order/consuOrder.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                			MERCHANT_ID: '9f9cdc2a6ff44a50a334d1fe183c3b44', 
+                			USER_ID:'47bdfdc734c9429381e7e2793fe28cc8',
+                			ut:'20',
+                			ORDER_ID:'45c298a408df410eac0a1b2c8e6a86d9',
+                			CAPTCHA:'f1c94f93d2013380b79c780323b8dee6'
+                		}
+                	})),
+                	sc_co: 'b0951fbfe3ee4e729a62be68f94c43ef',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
