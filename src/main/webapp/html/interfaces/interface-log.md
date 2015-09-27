@@ -3,6 +3,7 @@
 ##### 店铺相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/merchant-interface.html](http://123.56.45.223:8080/echo//html/interfaces/merchant-interface.html "店铺相关接口文档")
 ##### 用户操作相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/user-interface.html](http://123.56.45.223:8080/echo//html/interfaces/user-interface.html "用户相关接口文档")
 ##### 用户订单相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/order-interface.html](http://123.56.45.223:8080/echo//html/interfaces/order-interface.html "用户订单相关接口文档")
+##### 商品评价相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/comment-order-interface.html](http://123.56.45.223:8080/echo//html/interfaces/comment-order-interface.html "商品评价相关接口文档")
 #### 2015-9-7
 - 增加用户退出的接口，请查看[http://123.56.45.223:8080/echo//html/interfaces/login-interface.html](http://123.56.45.223:8080/echo//html/interfaces/login-interface.html "用户相关接口文档")-接口11。
 - 调用需要sc_no的接口,如果发现sc_no不一致，执行回话清除动作。
@@ -39,3 +40,7 @@
 ### 2015-9-22
 - 增加下单接口
 - 增加取消订单接口
+### 2015-9-27
+- 增加支付和退款订单接口
+- 增加消费、关闭、删除、获取订单接口
+- 增加商品评论相关接口

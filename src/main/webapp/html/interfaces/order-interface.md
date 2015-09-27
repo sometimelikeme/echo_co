@@ -6,7 +6,6 @@
 	`dataParm: {`
 	`dataset: {`
 		`MERCHANT_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required购买商品所在店铺ID`
-		`ut: '10',// required登陆客户端`
 		`USER_ID: '100012',//required用户ID`
 		`ORDER_TYPE: '10',//required订单来源类型：10-手机客户端，20-网页`
 		`TOTAL_PAY: ''//required购买总价格`

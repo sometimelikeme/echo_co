@@ -49,13 +49,10 @@ public class ItemCommentCtrl extends CoreController{
 			Map paramMap = data.getDataset();
 			
 			String user_id = (String) paramMap.get("USER_ID"), 
-				   ut = (String) paramMap.get("ut"), 
 				   s_user_id = (String) session.getAttribute("user_id");
 			
 			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
 				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
-			} else if (!"10".equals(ut)) {
-				super.writeJson(response, "9998", "无效客户端", null, null);
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
@@ -88,13 +85,10 @@ public class ItemCommentCtrl extends CoreController{
 			Map paramMap = data.getDataset();
 			
 			String user_id = (String) paramMap.get("USER_ID"), 
-				   ut = (String) paramMap.get("ut"), 
 				   s_user_id = (String) session.getAttribute("user_id");
 			
 			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
 				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
-			} else if (!"10".equals(ut)) {
-				super.writeJson(response, "9998", "无效客户端", null, null);
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
