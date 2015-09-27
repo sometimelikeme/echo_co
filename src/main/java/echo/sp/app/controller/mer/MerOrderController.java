@@ -188,7 +188,7 @@ public class MerOrderController extends CoreController{
 					return;
 				}
 				// 判断验证码
-				if (!MD5Util.getMD5String(paramMap.get("CAPTCHA").toString()).equals(MD5Util.getMD5String(orderMap.get("CAPTCHA").toString()))) {
+				if (!paramMap.get("CAPTCHA").toString().equals(MD5Util.getMD5String(orderMap.get("CAPTCHA").toString()))) {
 					super.writeJson(response, "9993", "验证码错误", null, null);
 					return;
 				}
