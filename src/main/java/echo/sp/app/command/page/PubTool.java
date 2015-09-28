@@ -22,6 +22,38 @@ public class PubTool {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PubTool.class);
 	
+	private  static double EARTH_RADIUS = 6378137; //WGS84  6378137.0 米
+	
+    private static double rad(double d){
+        return d * Math.PI / 180.0;
+    }
+    
+    /*   计算两点之间的距离     */
+	public static int GetDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
+		int returnDistance = 0;
+		try {
+			double radLat1 = rad(latitude1);
+			double radLat2 = rad(latitude2);
+			double a = radLat1 - radLat2;
+			double b = rad(longitude1) - rad(longitude2);
+			double doubleDistance = 2 * Math.asin(Math.sqrt(Math.pow(
+					Math.sin(a / 2), 2)
+					+ Math.cos(radLat1)
+					* Math.cos(radLat2)
+					* Math.pow(Math.sin(b / 2), 2)));
+			doubleDistance = doubleDistance * EARTH_RADIUS;
+			doubleDistance = Math.round(doubleDistance * 10000) / (double) 10000;
+			returnDistance = (int) doubleDistance;
+		} catch (Exception e) {
+			logger.error("  GetDistance error ...... longitude1=" + longitude1
+					+ " latitude1==" + latitude1 + "longitude2=" + longitude2
+					+ " latitude2==" + latitude2);
+		}
+
+		return returnDistance;
+	}
+	
+	// 转化为数字
 	public static String parseNumber(Object o) {
 		String str = o.toString();
 		return "".equals(o.toString()) ? "0" : str;
