@@ -224,3 +224,34 @@
 	status: "9992",
 	msg: "后台程序执行失败",
 }`
+###接口7： 删除商品
+- url: mer/delMerItem.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`MERCHANT_ID: '50e532a0d6a244d58e43c0edc8247ee2'，// required`
+		`ut: '20',// required`
+		`ITEM_ID: ''// required`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_no 私钥
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功"}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效店铺",
+}`
+ + 失败：` {
+	status: "9998",
+	msg: "无效客户端",
+}`
+ + 失败：` {
+	status: "9997",
+	msg: "该商品含有未完成的订单",
+	"dataset_line":[为完成的订单信息，以及下单者的电话TEL_NUMBER和名称USER_NAME]
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`

@@ -41,6 +41,10 @@
 - 增加下单接口
 - 增加取消订单接口
 ### 2015-9-27
+- 订单相关接口请查看[http://123.56.45.223:8080/echo//html/interfaces/order-interface.html](http://123.56.45.223:8080/echo//html/interfaces/order-interface.html "用户订单相关接口文档")
+- 评论相关接口清查看[http://123.56.45.223:8080/echo//html/interfaces/comment-order-interface.html](http://123.56.45.223:8080/echo//html/interfaces/comment-order-interface.html "商品评价相关接口文档")
 - 增加支付和退款订单接口
 - 增加消费、关闭、删除、获取订单接口
 - 增加商品评论相关接口
+### 2015-9-28
+- 增加店铺删除商品的接口
