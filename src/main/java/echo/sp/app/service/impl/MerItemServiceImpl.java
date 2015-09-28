@@ -1,5 +1,6 @@
 package echo.sp.app.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -94,6 +95,18 @@ public class MerItemServiceImpl implements MerItemService {
 	@Override
 	public Map getMerInfoByItemId(Map parmMap) {
 		return merItemDAO.getMerInfoByItemId(parmMap);
+	}
+	
+	// 根据商品ID未完成的订单列表
+	@Override
+	public List getUnFinishedOrders(Map parmMap) {
+		return merItemDAO.getUnFinishedOrders(parmMap);
+	}
+	
+	// 修改商品为删除状态
+	@Override
+	public int updateDeleteItem(Map parmMap) {
+		return merItemDAO.updateDeleteItem(parmMap);
 	}
 
 }

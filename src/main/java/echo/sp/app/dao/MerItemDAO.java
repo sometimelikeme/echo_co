@@ -1,5 +1,6 @@
 package echo.sp.app.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import echo.sp.app.model.Item;
@@ -37,4 +38,10 @@ public interface MerItemDAO {
 	
 	// 根据商品ID获取店铺信息
 	public Map getMerInfoByItemId(Map parmMap);
+	
+	// 根据商品ID未完成的订单列表
+	public List getUnFinishedOrders(Map parmMap);
+	
+	// 修改商品为删除状态
+	public int updateDeleteItem(Map parmMap);
 }

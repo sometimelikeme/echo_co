@@ -117,4 +117,18 @@
 		  FROM T_MERCHANTS WHERE MERCHANT_ID = (SELECT MERCHANT_ID FROM T_ITEMS 
 		  WHERE ITEM_ID = #{ITEM_ID})
     </select>
+    
+    <select id="getUnFinishedOrders" parameterType="map" resultType="Map">
+    	  SELECT A.*,C.USER_NAME,C.TEL_NUMBER 
+    	  FROM T_ORDERS A,T_ORDERS_LINE B,T_USERS C
+		  WHERE A.ORDER_ID = B.ORDER_ID
+		  AND B.ITEM_ID = #{ITEM_ID}
+		  AND A.STATUS IN ('10','30','50')
+		  AND A.USER_ID = C.USER_ID
+    </select>
+    
+    <update id="updateDeleteItem" parameterType="map">  
+          UPDATE T_ITEMS SET STATUS = '50'
+          WHERE ITEM_ID = #{ITEM_ID}
+ 	</update>
 </mapper>

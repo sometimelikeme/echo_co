@@ -16,6 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.page.PubTool;
@@ -308,6 +312,35 @@ public class MerItemController extends CoreController{
 	public void delMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("MerItemController---delMerItem---dataParm: " + dataParm);
+		}
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String mer_id = (String) paramMap.get("MERCHANT_ID"),
+				   s_mer_id = (String) session.getAttribute("MERCHANT_ID"),
+				   ut = (String)paramMap.get("ut");
+			
+			if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
+				super.writeJson(response, Code.FAIL, "无效店铺", null, null);
+			} else if (!"20".equals(ut)) {
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else {
+				// 查询该商品是否有未结束的订单
+				List orderList = merItemService.getUnFinishedOrders(paramMap);
+				
+				if (PubTool.isListHasData(orderList)) {
+					super.writeJson(response, "9997", "该商品含有未完成的订单", null, orderList);
+					return;
+				}
+				// 执行删除商品
+				merItemService.updateDeleteItem(paramMap);
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("MerItemController---delMerItem---interface error: ", e);
 		}
 	}
 }
