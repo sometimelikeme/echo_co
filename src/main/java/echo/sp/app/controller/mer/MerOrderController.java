@@ -326,7 +326,7 @@ public class MerOrderController extends CoreController{
 					return;
 				}
 				if ("50".equals(orderStatus)) {
-					super.writeJson(response, "9995", "该订单未关闭", null, null);
+					super.writeJson(response, "9994", "该订单未关闭", null, null);
 					return;
 				}
 				// 修改订单为删除状态
