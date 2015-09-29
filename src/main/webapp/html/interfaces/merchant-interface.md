@@ -214,7 +214,9 @@
 		`MERCHANT_TYPE: ''，// optimal 店铺类型`
 		`MERCHANT_ADDR: ''，// optimal 根据店铺地址模糊查询`
 		`ABILITY: ''，// optimal 根据店铺技能模糊查询`
-		`BUSI_DESC: ''// optimal 根据店铺描述模糊查询`
+		`BUSI_DESC: '',// optimal 根据店铺描述模糊查询`
+		`LONGITUDE: '',// required 当前消费者的经度`
+		`LATITUDE: ''// required 当前消费者的维度`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
