@@ -21,11 +21,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 	
-	// GET NORML CODE URI.
-	private static String NORMAL_URI = "login/getCode.do"; 
-	
-	// Support BeeCloud Call Back Interface 
-	private static String PAY_URI = "order/payOrder.do";
+	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
+	private static final String[] PUB_URL = {
+		"login/getCode.do",// GET NORML CODE URI.
+		"order/payOrder.do"// Support BeeCloud Call Back Interface  
+	};
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
 	private static final String[] IGNORE_URI = {
@@ -84,7 +84,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		} 
 		
 		// FIRST GET THE NORMAL CODE, OR PAY INTERFACE
-		if (url.contains(NORMAL_URI) || url.contains(PAY_URI)) { 
+		if (isPubUrl(url, PUB_URL)) { 
 			flag = true;
 		} else if (no_co != null && sc_co != null) { // SECRET ACCESS.
 			no_co = PubTool.processParm(no_co);
@@ -146,5 +146,22 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         super.postHandle(request, response, handler, modelAndView);
+    }
+    
+    /**
+     * 
+     * @param url
+     * @param urlArray
+     * @return
+     */
+    private boolean isPubUrl(String url, String[] urlArray){
+    	boolean b = false;
+    	for (String s : urlArray) {
+			if (url.contains(s)) {
+				b = true;
+				break;
+			}
+		} 
+    	return b;
     }
 }
