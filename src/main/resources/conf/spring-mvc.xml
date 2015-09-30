@@ -21,8 +21,8 @@
    	<!-- 定时器配置文件方式 -->
    	<task:scheduled-tasks>  
         <!--  这里表示的是每日24时执行一次   -->  
-        <task:scheduled ref="myTaskXml" method="show" cron="0 0 24 * * ?" />  
-        <task:scheduled ref="myTaskXml" method="print" cron="0 0 24 * * ?"/>  
+        <task:scheduled ref="myTaskXml" method="show" cron="0 0 1 * * ?" />  
+        <task:scheduled ref="myTaskXml" method="print" cron="0 0 1 * * ?"/>  
     </task:scheduled-tasks>  
     
     <!-- 扫描controller（controller层注入） -->
