@@ -208,7 +208,6 @@
 	`dataset: {`
 		`page: '1'，// required 分页查询-请求页数`
 		`pageSize: '10'，// required 每页的最大数据量`
-		`sort: 'CREATE_TIME.desc'，// optimal 按照什么排序，字段名后加.asc升序排序，.desc倒序排序；默认按照MER_LEVEL升序排序`
 		`MERCHANT_NAME: ''，// optimal 根据店铺名称模糊查询`
 		`SHORT_NAME: ''，// optimal 根据店铺简称模糊查询`
 		`MERCHANT_TYPE: ''，// optimal 店铺类型`
