@@ -29,7 +29,7 @@
     
     <select id="getMerList" parameterType="map" resultType="Map">
           SELECT A.*,B.TOTAL_POINT, 
-          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC})-A.LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC})-A.LATITUDE,2)) * 140000 DIST
+          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.LATITUDE,2)) * 140000 DIST
           FROM T_MERCHANTS A LEFT JOIN T_MERCHANT_EXPAND B
           ON A.MERCHANT_ID = B.MERCHANT_ID
           WHERE STATUS = '30'
