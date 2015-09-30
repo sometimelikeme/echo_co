@@ -73,6 +73,25 @@ public class MerStoreController extends CoreController{
 			int totalCount = 0;
 			if (PubTool.isListHasData(resList)) {
 	    		totalCount = ((PageList) resList).getPaginator().getTotalCount();
+	    		/*
+	    		 * 计算经纬度之间的距离
+	    		 * 1.java计算的较为精确, SQL计算能很好利用数据库的分页，但不够精确
+	    		 * 2.然而, SQL和java计算的出来按照距离排序，由近到远是一致的
+	    		 * 3.由此可以先用SQL分页查询出距离，这个距离为不精确距离，只是用来排序；取出数据集之后，再用java来计算精确距离
+	    		 */
+				double d1 = Double.parseDouble(paramMap.get("LONGITUDE").toString());// 参数经度
+				double d2 = Double.parseDouble(paramMap.get("LATITUDE").toString());// 参数维度
+				double d3;// 比较经度
+				double d4;// 比较维度
+				double dist;// 距离/米
+				Map temMap;
+	    		for (int i = 0; i < resList.size(); i++) {
+					temMap = (Map) resList.get(i);
+					d3 = Double.parseDouble(temMap.get("LONGITUDE").toString());
+					d4 = Double.parseDouble(temMap.get("LATITUDE").toString());
+					dist = PubTool.GetDistance(d1, d2, d3, d4);// recalculate
+					temMap.put("DIST", dist);
+				}
 			}
 			resMap.put("totalCount", totalCount);
 			
