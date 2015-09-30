@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:task="http://www.springframework.org/schema/task"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:context="http://www.springframework.org/schema/context"
   xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -10,8 +11,20 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.2.xsd
     http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+    http://www.springframework.org/schema/task 
+    http://www.springframework.org/schema/task/spring-task-3.2.xsd">
      
+    <!-- 支持定时器注解方式 -->
+   	<task:annotation-driven />
+   	
+   	<!-- 定时器配置文件方式 -->
+   	<task:scheduled-tasks>  
+        <!--  这里表示的是每日24时执行一次   -->  
+        <task:scheduled ref="myTaskXml" method="show" cron="0 0 24 * * ?" />  
+        <task:scheduled ref="myTaskXml" method="print" cron="0 0 24 * * ?"/>  
+    </task:scheduled-tasks>  
+    
     <!-- 扫描controller（controller层注入） -->
    	<context:component-scan base-package="echo.sp.app.controller"/>
     
