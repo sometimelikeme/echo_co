@@ -65,6 +65,7 @@ public class MerOrderServiceImpl implements MerOrderService {
 				totalmoneyBig = new BigDecimal(totalMoney).add(moneyNumBig);
 			}
     		parmMap.put("TOTAL_MONEY", totalmoneyBig);
+    		merOrderDAO.updateUserTotalMoney(parmMap);
     		
     		returnInt = 1;
 		} catch (Exception e) {
