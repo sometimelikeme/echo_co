@@ -109,7 +109,7 @@
     </update> 
     
     <select id="getConsumeOrders" parameterType="map" resultType="Map">
-        SELECT ORDER_ID, CONSUME_TIME
+        SELECT ORDER_ID, CONSUME_TIME, USER_ID, TOTAL_PAY
         FROM T_ORDERS 
         WHERE STATUS = '50'
         AND CONSUME_TIME IS NOT NULL 
