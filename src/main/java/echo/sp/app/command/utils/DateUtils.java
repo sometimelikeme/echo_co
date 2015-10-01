@@ -1,5 +1,6 @@
 package echo.sp.app.command.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,13 +20,18 @@ public class DateUtils extends DateFormatUtils {
 			"yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd",
 			"yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM" };
 	
-//	public static void main(String args[]) {
+	public static void main(String args[]) {
 //		System.out.print("ddddddddd: " + getNextDay(getToday(),3));
 //		System.out.println(getCurMonth());
 //		System.out.println(getNextMonth(getCurMonth(),1));
 //		System.out.println(getWeek(getToday()));
 //		System.out.println(getCurrentTimeMillis());
-//	}
+//		Date before = parseStringDate("2015-09-25 6:46:09");
+//		Date after = parseStringDate("2015-09-27 18:46:09");
+//		System.out.println(before);
+//		System.out.println(after);
+//		System.out.println(getDistanceOfTwoDate(before, after));
+	}
 	
 	/**
 	 * 获取当前系统日期 返回 8位 like 20050101
@@ -204,6 +210,23 @@ public class DateUtils extends DateFormatUtils {
 			formatDate = DateFormatUtils.format(date, "yyyy-MM-dd");
 		}
 		return formatDate;
+	}
+	
+	
+	/**
+	 * 将String的yyyy-MM-dd HH:mm:ss日期转化为日期
+	 * @param s
+	 * @return
+	 */
+	public static Date parseStringDate(String s) {
+		Date date = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = sdf.parse(s);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		return date;
 	}
 
 	/**
