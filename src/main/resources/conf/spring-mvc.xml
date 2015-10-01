@@ -20,7 +20,7 @@
    	
    	<!-- 定时器配置文件方式 -->
    	<task:scheduled-tasks>  
-        <!--  这里表示的是每日凌晨1时执行一次 , 用来关闭订单  -->  
+        <!--  这里表示的是每日凌晨1时执行一次 , 用来关闭逾期的订单  -->  
         <task:scheduled ref="myTaskXml" method="closeOrder" cron="0 0 1 * * ?" />  
     </task:scheduled-tasks>  
     
