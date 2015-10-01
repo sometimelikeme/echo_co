@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import echo.sp.app.command.page.PubTool;
 import echo.sp.app.dao.MerOrderDAO;
 import echo.sp.app.service.MerOrderService;
 
@@ -40,13 +41,30 @@ public class MerOrderServiceImpl implements MerOrderService {
     		String totalPoint = merOrderDAO.getTotalPoint(parmMap);
     		BigDecimal pointNumBig = new BigDecimal(parmMap.get("POINT_NUM").toString());
     		BigDecimal totalPointBig;
-    		if (totalPoint == null || "".equals(totalPoint)) {
+    		if (PubTool.processNullAndEmpty(totalPoint)) {
     			totalPointBig = pointNumBig;
 			} else {
 				totalPointBig = new BigDecimal(totalPoint).add(pointNumBig);
 			}
     		parmMap.put("TOTAL_POINT", totalPointBig);
     		merOrderDAO.updateUserTotalPoint(parmMap);
+    		
+    		// 将本次交易产生的费用返还到店铺账户中
+    		// 获取用户消费所在店铺的UER_ID
+    		Map merMap = merOrderDAO.getMerUserIdAndPay(parmMap);
+    		String moneyNum = merMap.get("TOTAL_PAY").toString();
+    		parmMap.put("MER_USER_ID", merMap.get("USER_ID"));
+    		parmMap.put("MONEY_NUM", merMap.get("TOTAL_PAY"));
+    		// 汇总总金额
+    		String totalMoney = merOrderDAO.getTotalMoney(parmMap);
+    		BigDecimal moneyNumBig = new BigDecimal(moneyNum);
+    		BigDecimal totalmoneyBig;
+    		if (PubTool.processNullAndEmpty(totalMoney)) {
+    			totalmoneyBig = pointNumBig;
+			} else {
+				totalmoneyBig = new BigDecimal(totalMoney).add(moneyNumBig);
+			}
+    		parmMap.put("TOTAL_MONEY", totalmoneyBig);
     		
     		returnInt = 1;
 		} catch (Exception e) {
