@@ -79,8 +79,8 @@ public class PubTool {
 	 * @param o
 	 * @return
 	 */
-	public static boolean processNullAndEmpty(Object o) { 
-		return o == null || (o != null && "".equals(o.toString()));
+	public static boolean processNullAndEmpty(String s) { 
+		return s == null || (s != null && "".equals(s));
 	}
 	
 	/**
