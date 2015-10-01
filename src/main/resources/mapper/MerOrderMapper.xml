@@ -63,6 +63,24 @@
         TOTAL_POINT = #{TOTAL_POINT}
         WHERE USER_ID = #{USER_ID}
     </update> 
+    <select id="getMerUserIdAndPay" parameterType="map" resultType="Map">
+        SELECT A.USER_ID,B.TOTAL_PAY
+        FROM T_MERCHANTS A,T_ORDERS B
+		WHERE A.MERCHANT_ID = B.MERCHANT_ID
+		AND B.ORDER_ID = #{ORDER_ID}
+    </select>
+    <insert id="insertUserMoney" parameterType="map">
+	    INSERT INTO T_USERS_MONEY(USER_ID,TIME1,DATE1,MONEY_NUM,ORDER_ID)
+        VALUES(#{MER_USER_ID},#{TIME1},#{DATE1},#{MONEY_NUM,jdbcType=NUMERIC},#{ORDER_ID})
+    </insert>
+     <select id="getTotalMoney" parameterType="map" resultType="String">
+        SELECT TOTAL_MONEY FROM T_USERS_EXPAND WHERE USER_ID = #{MER_USER_ID}
+    </select>
+    <update id="updateUserTotalMoney" parameterType="map">  
+        UPDATE T_USERS_EXPAND SET 
+        TOTAL_MONEY = #{TOTAL_MONEY}
+        WHERE USER_ID = #{MER_USER_ID}
+    </update> 
     
     <select id="getSingleCommentByUserId" parameterType="map" resultType="Map">
         SELECT * FROM T_ITEM_COMMENTS 
