@@ -107,4 +107,12 @@
         UPDATE T_ORDERS SET STATUS = '70',DEL_TIME = #{DEL_TIME}
         WHERE ORDER_ID = #{ORDER_ID}
     </update> 
+    
+    <select id="getConsumeOrders" parameterType="map" resultType="Map">
+        SELECT ORDER_ID, CONSUME_TIME
+        FROM T_ORDERS 
+        WHERE STATUS = '50'
+        AND CONSUME_TIME IS NOT NULL 
+        AND CONSUME_TIME != ''
+    </select>
 </mapper>

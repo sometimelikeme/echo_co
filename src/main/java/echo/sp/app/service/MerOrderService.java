@@ -1,5 +1,6 @@
 package echo.sp.app.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**   
@@ -22,4 +23,7 @@ public interface MerOrderService {
 	
 	// 删除订单
 	public int updateOrderForDelete(Map parmMap);
+	
+	// 获取已消费未关闭的订单列表
+	public List getConsumeOrders(Map parmMap);
 }

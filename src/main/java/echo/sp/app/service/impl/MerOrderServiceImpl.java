@@ -1,6 +1,7 @@
 package echo.sp.app.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -114,5 +115,10 @@ public class MerOrderServiceImpl implements MerOrderService {
 	@Override
 	public int updateOrderForDelete(Map parmMap) {
 		return merOrderDAO.updateOrderForDelete(parmMap);
+	}
+
+	@Override
+	public List getConsumeOrders(Map parmMap) {
+		return merOrderDAO.getConsumeOrders(parmMap);
 	}
 }
