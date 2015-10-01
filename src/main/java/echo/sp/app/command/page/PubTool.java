@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
+import org.omg.CORBA.Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,6 +72,15 @@ public class PubTool {
 		}
 		BigDecimal bi = new BigDecimal(str);
 		return bi.divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP).toString();
+	}
+	
+	/**
+	 * 返回变量是否为NULL或者空
+	 * @param o
+	 * @return
+	 */
+	public static boolean processNullAndEmpty(Object o) { 
+		return o == null || (o != null && "".equals(o.toString()));
 	}
 	
 	/**
