@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
-import org.omg.CORBA.Object;
+import java.lang.Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
