@@ -133,6 +133,7 @@ public class MerItemController extends CoreController{
 				item.setITEM_SHORT_NAME((String)paramMap.get("ITEM_SHORT_NAME"));
 				item.setMERCHANT_ID(mer_id);
 				item.setCATEGORY_ID((String)paramMap.get("CATEGORY_ID"));
+				item.setCATEGORY_TYPE((String)paramMap.get("CATEGORY_TYPE"));
 				item.setIS_PREF((String)paramMap.get("IS_PREF"));
 				item.setIS_SKILL((String)paramMap.get("IS_SKILL"));
 				item.setIS_POINT((String)paramMap.get("IS_POINT"));
