@@ -11,7 +11,8 @@ public class Item {
 	private String ITEM_NAME;
 	private String ITEM_SHORT_NAME;
 	private String MERCHANT_ID;
-	private String CATEGORY_ID;// 分类
+	private String CATEGORY_ID;// 二级分类
+	private String CATEGORY_TYPE;// 一级分类
 	private String IS_PREF;// 团购
 	private String IS_SKILL;// 技能
 	private String IS_POINT;// 积分商城
@@ -61,6 +62,12 @@ public class Item {
 	}
 	public void setCATEGORY_ID(String cATEGORY_ID) {
 		CATEGORY_ID = cATEGORY_ID;
+	}
+	public String getCATEGORY_TYPE() {
+		return CATEGORY_TYPE;
+	}
+	public void setCATEGORY_TYPE(String cATEGORY_TYPE) {
+		CATEGORY_TYPE = cATEGORY_TYPE;
 	}
 	public String getIS_PREF() {
 		return IS_PREF;
