@@ -9,18 +9,18 @@ INSERT INTO T_DICT VALUES('T_ITEMS_CATEGORY.CATEGORY_TYPE','商品一级分类',
 INSERT INTO T_DICT VALUES('T_ITEMS_CATEGORY.CATEGORY_TYPE','商品一级分类','30','酒店','一级分类图片地址');
 INSERT INTO T_DICT VALUES('T_ITEMS_CATEGORY.CATEGORY_TYPE','商品一级分类','40','娱乐','一级分类图片地址');
 INSERT INTO T_DICT VALUES('T_ITEMS_CATEGORY.CATEGORY_TYPE','商品一级分类','50','技能','一级分类图片地址');
---商品分类枚举-demo
-INSERT INTO T_ITEMS_CATEGORY VALUES('100001', '白酒', '10', '10','酒水-白酒','','','');
-INSERT INTO T_ITEMS_CATEGORY VALUES('100002', '红酒', '10', '10','酒水-红酒','','','');
-INSERT INTO T_ITEMS_CATEGORY VALUES('100003', '清酒', '10', '10','酒水-清酒','','','');
-INSERT INTO T_ITEMS_CATEGORY VALUES('200001', '火锅', '20', '10','美食-火锅','','','');
-INSERT INTO T_ITEMS_CATEGORY VALUES('200002', '自助', '20', '10','美食-助','','','');
 --任务一级分类-demo
 INSERT INTO T_DICT VALUES('T_SECTORS.SECTOR_TYPE','任务一级分类','10','兼职','一级分类图片地址');
 INSERT INTO T_DICT VALUES('T_SECTORS.SECTOR_TYPE','任务一级分类','20','学习','一级分类图片地址');
 INSERT INTO T_DICT VALUES('T_SECTORS.SECTOR_TYPE','任务一级分类','30','陪练','一级分类图片地址');
 INSERT INTO T_DICT VALUES('T_SECTORS.SECTOR_TYPE','任务一级分类','40','教练','一级分类图片地址');
 INSERT INTO T_DICT VALUES('T_SECTORS.SECTOR_TYPE','任务一级分类','50','活动','一级分类图片地址');
+--商品二级分类-demo
+INSERT INTO T_ITEMS_CATEGORY VALUES('100001', '白酒', '10', '10','酒水-白酒','','','');
+INSERT INTO T_ITEMS_CATEGORY VALUES('100002', '红酒', '10', '10','酒水-红酒','','','');
+INSERT INTO T_ITEMS_CATEGORY VALUES('100003', '清酒', '10', '10','酒水-清酒','','','');
+INSERT INTO T_ITEMS_CATEGORY VALUES('200001', '火锅', '20', '10','美食-火锅','','','');
+INSERT INTO T_ITEMS_CATEGORY VALUES('200002', '自助', '20', '10','美食-助','','','');
 --任务二级分类-demo
 INSERT INTO T_SECTORS VALUES('100001', '发传单', '10', '10','兼职-发传单','','','');
 INSERT INTO T_SECTORS VALUES('100002', '打电话', '10', '10','兼职-打电话','','','');

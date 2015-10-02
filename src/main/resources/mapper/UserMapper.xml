@@ -101,4 +101,21 @@
           	PAY_PWD = #{PAY_PWD}
           WHERE USER_ID = #{USER_ID}
       </update> 
+      
+      
+      <select id="getMerType" parameterType="map" resultType="Map">
+          SELECT * FROM T_DICT WHERE DICT_ID = 'T_MERCHANTS.MERCHANT_TYPE'
+      </select>
+      <select id="getCategoryType" parameterType="map" resultType="Map">
+          SELECT * FROM T_DICT WHERE DICT_ID = 'T_ITEMS_CATEGORY.CATEGORY_TYPE'
+      </select>
+      <select id="getSectorType" parameterType="map" resultType="Map">
+          SELECT * FROM T_DICT WHERE DICT_ID = 'T_SECTORS.SECTOR_TYPE'
+      </select>
+      <select id="getItemCategory" parameterType="map" resultType="Map">
+          SELECT * FROM T_ITEMS_CATEGORY
+      </select>
+      <select id="getTaskSectors" parameterType="map" resultType="Map">
+          SELECT * FROM T_SECTORS
+      </select>
 </mapper>
