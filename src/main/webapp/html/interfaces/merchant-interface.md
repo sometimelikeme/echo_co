@@ -9,7 +9,8 @@
 		`ut: '20',// 登陆客户端`
 		`ITEM_NAME: 'iphone6',// 商品名称`
 		`ITEM_SHORT_NAME: 'iphone6',// 商品简称`
-		`CATEGORY_ID: '100',// 商品所述分类ID`
+		`CATEGORY_ID: '100',// 商品所述二级分类ID`
+		`CATEGORY_TYPE: '100',// 商品所述一级分类ID`
 		`IS_PREF: '0',// 是否为团购商品`
 		`IS_SKILL: '0',// 是否为技能商品`
 		`IS_POINT: '0',// 是否为积分商城商品`
@@ -68,7 +69,8 @@
 		`ITEM_ID: '10012',// 商品ID`
 		`ITEM_NAME: 'iphone6',// 商品名称`
 		`ITEM_SHORT_NAME: 'iphone6',// 商品简称`
-		`CATEGORY_ID: '100',// 商品所述分类ID`
+		`CATEGORY_ID: '100',// 商品所述二级分类ID`
+		`CATEGORY_TYPE: '100',// 商品所述一级分类ID`
 		`IS_PREF: '1',// 是否为团购商品`
 		`IS_SKILL: '0',// 是否为技能商品`
 		`IS_POINT: '0',// 是否为积分商城商品`
@@ -110,7 +112,8 @@
 		`ITEM_ID: '10012',// optimal商品ID`
 		`ITEM_NAME: 'iphone6',// optimal商品名称-支持模糊查询`
 		`ITEM_SHORT_NAME: 'iphone6',// optimal商品简称-支持模糊查询`
-		`CATEGORY_ID: '100',// optimal商品所述分类ID`
+		`CATEGORY_ID: '100',// 商品所述二级分类ID`
+		`CATEGORY_TYPE: '100',// 商品所述一级分类ID`
 		`IS_PREF: '1',// optimal是否为团购商品`
 		`IS_SKILL: '0',// optimal是否为技能商品`
 		`IS_POINT: '0',// optimal是否为积分商城商品`
