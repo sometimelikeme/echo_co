@@ -8,8 +8,62 @@
 	status: "0000",
 	msg: "成功",
 	dataset: {
-		no_co: "QUJDREVGRw=="
-	}
+		no_co: "QUJDREVGRw==",
+		`T_ITEMS_CATEGORY.CATEGORY_TYPE: [`
+			`{`
+			`DICT_KEY: "10",`
+			`DICT_NAME: "商品一级分类",`
+			`NOTE: "备注",`
+			`DICT_VALUE: "酒水",`
+			`DICT_ID: "T_ITEMS_CATEGORY.CATEGORY_TYPE",`
+			`NOTE1: "一级分类图片地址",`
+			`NOTE2: "一级分类小图片地址",`
+			`},...`
+		`],`
+		`T_MERCHANTS.MERCHANT_TYPE: [`
+			`{`
+			`DICT_KEY: "10",`
+			`DICT_NAME: "店铺类型",`
+			`NOTE: "",`
+			`DICT_VALUE: "普通店铺",`
+			`DICT_ID: "T_MERCHANTS.MERCHANT_TYPE"`
+			`NOTE1: "一级分类图片地址",`
+			`NOTE2: "一级分类小图片地址",`
+			`},...`
+		`],`
+		`T_SECTORS.SECTOR_TYPE: [`
+			`{`
+			`DICT_KEY: "10",`
+			`DICT_NAME: "任务一级分类",`
+			`NOTE: "一级分类图片地址",`
+			`DICT_VALUE: "兼职",`
+			`DICT_ID: "T_SECTORS.SECTOR_TYPE"`
+			`},...`
+		`}],`
+		`T_SECTORS: [// 任务二级分类`
+			`{`
+			`SECTOR_DESC: "兼职-发传单",`
+			`CRT_TIME: "",`
+			`SECTOR_PIC: "",`
+			`SECTOR_NAME: "发传单",`
+			`NOTE: "",`
+			`SECTOR_STATUS: "10",`
+			`SECTOR_ID: "100001",`
+			`SECTOR_TYPE: "10"`
+		`}],...`
+		`T_ITEMS_CATEGORY: [// 商品二级分类`
+				`{`
+				`CATEGORY_STATUS: "10",`
+				`CATEGORY_DESC: "酒水-白酒",`
+				`CATEGORY_NAME: "白酒",`
+				`CRT_TIME: "",`
+				`CATEGORY_PIC: "",`
+				`NOTE: "",`
+				`CATEGORY_TYPE: "10",`
+				`CATEGORY_ID: "100001"`
+				`},...`
+		`}]`		
+	},
 }`
 ###接口2： 判断当前用户已注册
 - url: login/checkReg.do
