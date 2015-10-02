@@ -65,16 +65,14 @@ public class NoCoController extends CoreController{
 		PageBounds pageBounds;
 		List resList;
 		Map resMap = new HashMap();
-		// 获取店铺分类信息枚举
 		pageBounds = new PageBounds(Order.formString("DICT_KEY.asc"));
+		// 获取店铺分类信息枚举
 		resList = PubTool.getResultList("UserDAO.getMerType", new HashMap(), pageBounds, sqlSessionFactory);
-		resMap.put("T_MERCHANTS.MERCHANT_TYPE", resList);
 		// 获取商品一级分类枚举
-		resList = PubTool.getResultList("UserDAO.getCategoryType", new HashMap(), pageBounds, sqlSessionFactory);
-		resMap.put("T_ITEMS_CATEGORY.CATEGORY_TYPE", resList);
+		resList.addAll(PubTool.getResultList("UserDAO.getCategoryType", new HashMap(), pageBounds, sqlSessionFactory));
 		// 获取任务一级分类枚举
-		resList = PubTool.getResultList("UserDAO.getSectorType", new HashMap(), pageBounds, sqlSessionFactory);
-		resMap.put("T_SECTORS.SECTOR_TYPE", resList);
+		resList.addAll(PubTool.getResultList("UserDAO.getSectorType", new HashMap(), pageBounds, sqlSessionFactory));
+		resMap.put("T_DICT", resList);
 		// 获取商品二级分类枚举
 		pageBounds = new PageBounds();
 		resList = PubTool.getResultList("UserDAO.getItemCategory", new HashMap(), pageBounds, sqlSessionFactory);
