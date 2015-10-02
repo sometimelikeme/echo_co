@@ -5,12 +5,12 @@
 <mapper namespace="echo.sp.app.dao.MerItemDAO">
 	<insert id="addMerItem" useGeneratedKeys="true" keyProperty="ITEM_ID" parameterType="Item">
 	    INSERT INTO T_ITEMS(
-	    	ITEM_NAME,ITEM_SHORT_NAME,MERCHANT_ID,CATEGORY_ID,
+	    	ITEM_NAME,ITEM_SHORT_NAME,MERCHANT_ID,CATEGORY_ID,CATEGORY_TYPE,
 	    	IS_PREF,IS_SKILL,IS_POINT,CURR_PRICE,ORI_PRICE,
 	    	HEAD_ICON,MAIN_ICON,INVENTORY,QTY_SOLD,ITEM_POINT,
 	    	POINT_NUM,CREATE_TIME,STATUS,ITEM_DESC,LAST_UPDATE)
 	    VALUES(
-	    	#{ITEM_NAME},#{ITEM_SHORT_NAME},#{MERCHANT_ID},#{CATEGORY_ID},
+	    	#{ITEM_NAME},#{ITEM_SHORT_NAME},#{MERCHANT_ID},#{CATEGORY_ID},#{CATEGORY_TYPE},
 	    	#{IS_PREF},#{IS_SKILL},#{IS_POINT},#{CURR_PRICE,jdbcType=NUMERIC},#{ORI_PRICE,jdbcType=NUMERIC},
 	    	#{HEAD_ICON},#{MAIN_ICON},#{INVENTORY,jdbcType=NUMERIC},#{QTY_SOLD,jdbcType=NUMERIC},#{ITEM_POINT,jdbcType=NUMERIC},
 	    	#{POINT_NUM,jdbcType=NUMERIC},#{CREATE_TIME},#{STATUS},#{ITEM_DESC},#{CREATE_TIME})
@@ -21,6 +21,7 @@
           	ITEM_NAME = #{ITEM_NAME},
           	ITEM_SHORT_NAME = #{ITEM_SHORT_NAME},
           	CATEGORY_ID = #{CATEGORY_ID},
+          	CATEGORY_TYPE = #{CATEGORY_TYPE},
           	IS_PREF = #{IS_PREF},
           	IS_SKILL = #{IS_SKILL},
           	IS_POINT = #{IS_POINT},
@@ -58,6 +59,9 @@
     	  </if>
     	  <if test="CATEGORY_ID != null and CATEGORY_ID != '' ">  
           		AND CATEGORY_ID = #{CATEGORY_ID} 
+    	  </if>
+    	  <if test="CATEGORY_TYPE != null and CATEGORY_TYPE != '' ">  
+          		AND CATEGORY_TYPE = #{CATEGORY_TYPE} 
     	  </if>
     	  <if test="IS_PREF != null and IS_PREF != '' ">  
           		AND IS_PREF = #{IS_PREF} 
