@@ -9,7 +9,7 @@
 	msg: "成功",
 	dataset: {
 		no_co: "QUJDREVGRw==",
-		`T_ITEMS_CATEGORY.CATEGORY_TYPE: [`
+		`T_DICT: [`
 			`{`
 			`DICT_KEY: "10",`
 			`DICT_NAME: "商品一级分类",`
@@ -19,8 +19,6 @@
 			`NOTE1: "一级分类图片地址",`
 			`NOTE2: "一级分类小图片地址",`
 			`},...`
-		`],`
-		`T_MERCHANTS.MERCHANT_TYPE: [`
 			`{`
 			`DICT_KEY: "10",`
 			`DICT_NAME: "店铺类型",`
@@ -30,8 +28,6 @@
 			`NOTE1: "一级分类图片地址",`
 			`NOTE2: "一级分类小图片地址",`
 			`},...`
-		`],`
-		`T_SECTORS.SECTOR_TYPE: [`
 			`{`
 			`DICT_KEY: "10",`
 			`DICT_NAME: "任务一级分类",`
@@ -39,7 +35,7 @@
 			`DICT_VALUE: "兼职",`
 			`DICT_ID: "T_SECTORS.SECTOR_TYPE"`
 			`},...`
-		`}],`
+		`],`
 		`T_SECTORS: [// 任务二级分类`
 			`{`
 			`SECTOR_DESC: "兼职-发传单",`
