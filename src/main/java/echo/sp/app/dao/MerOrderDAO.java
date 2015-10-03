@@ -43,4 +43,7 @@ public interface MerOrderDAO {
 	
 	// 获取已消费未关闭的订单列表
 	public List getConsumeOrders(Map parmMap);
+	
+	// 根据订单ID获取订单商品详情
+	public List getOrderDetailByOrderId(Map parmMap);
 }

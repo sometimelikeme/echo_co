@@ -2,6 +2,7 @@ package echo.sp.app.controller.mer;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class MerOrderController extends CoreController{
 	 * 1.默认传递USER_ID则分页获取用户下的所有订单列表，同时通过调用参数区分历史订单STATUS='70'
 	 * 2.增加参数MERCHANT_ID则分页获取店铺下的所有订单列表
 	 * 3.增加参数ORDER_ALIAS_ID则根据订单别号获取店铺下的订单列表
-	 * 4.传递ORDER_ID则根据订单号获取唯一的订单信息详情: dataset返回订单信息；dataset_line返回订单的商品信息。
+	 * //4.传递ORDER_ID则根据订单号获取唯一的订单信息详情: dataset返回订单信息；dataset_line返回订单的商品信息。-暂弃用
 	 * @param req
 	 * @param response
 	 * @param dataParm
@@ -116,6 +117,19 @@ public class MerOrderController extends CoreController{
 					} else {// 根据订单别号获取
 						pageBounds = new PageBounds(Order.formString(sortString));
 						resList = PubTool.getResultList("MerOrderDAO.getOrdersByAliaId", paramMap, pageBounds, sqlSessionFactory);
+					}
+				}
+				
+				// 订单列表信息附加购买商品的图片、单价、数量、名称、描述
+				if (PubTool.isListHasData(resList)) {
+					Map teMap;
+					Map parmMap;
+					Iterator iterList = resList.iterator();
+					while (iterList.hasNext()) {
+						teMap = (Map)iterList.next();
+						parmMap = new HashMap();
+						parmMap.put("ORDER_ID", teMap.get("ORDER_ID"));
+						teMap.put("ITEM_INFO", merOrderService.getOrderDetailByOrderId(parmMap));
 					}
 				}
 				

@@ -121,4 +121,9 @@ public class MerOrderServiceImpl implements MerOrderService {
 	public List getConsumeOrders(Map parmMap) {
 		return merOrderDAO.getConsumeOrders(parmMap);
 	}
+
+	@Override
+	public List getOrderDetailByOrderId(Map parmMap) {
+		return merOrderDAO.getOrderDetailByOrderId(parmMap);
+	}
 }
