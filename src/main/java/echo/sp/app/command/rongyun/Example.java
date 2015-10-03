@@ -51,7 +51,7 @@ public class Example {
 //
 		result = ApiHttpClient.publishSystemMessage(key, secret, "fromUserId",
 				toIds, new TxtMessage("http://www.baidu.com/"), "pushContent",
-				"pushData", FormatType.json);
+				"pushData", FormatType.json); 
 		System.out.println("publishSystemMessage=" + result);
 
 //		result = ApiHttpClient.publishSystemMessage(key, secret, "fromUserId",
