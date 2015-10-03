@@ -76,7 +76,7 @@ public class UpdateMerchantController extends CoreController{
 					// 更新维护店铺信息是否需要审核：1-是，0-否（默认）
 					parmMap.put("CANT_CODE", session.getAttribute("CANT_CODE"));
 					parmMap.put("PARM_NAME", "MER_APPLY_CHECK");
-					String status = "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "10" : "30";
+					String status = "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "20" : "30";
 					parmMap.put("STATUS", status);
 					parmMap.put("REG_TIME", DateUtils.getDateTime());
 					
