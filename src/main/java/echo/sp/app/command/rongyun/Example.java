@@ -50,7 +50,7 @@ public class Example {
 //		System.out.println("publishMessageAddpush=" + result);
 //
 		result = ApiHttpClient.publishSystemMessage(key, secret, "fromUserId",
-				toIds, new TxtMessage("http://www.baidu.com/"), "[\"push{c}\",\"push{c}\"]",
+				toIds, new TxtMessage("http://www.baidu.com/"), "pushContent",
 				"pushData", FormatType.json);
 		System.out.println("publishSystemMessage=" + result);
 
