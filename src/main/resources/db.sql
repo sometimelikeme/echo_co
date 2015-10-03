@@ -1,4 +1,6 @@
-CREATE DATABASE ECHO_DB
+DROP DATABASE ECHO_DB;
+CREATE DATABASE ECHO_DB;
+USE ECHO_DB;
 -----------------------系统基础表-------------------
 --行政区划表
 CREATE TABLE T_CITIES(
