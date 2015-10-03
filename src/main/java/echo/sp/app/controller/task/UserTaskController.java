@@ -1,6 +1,7 @@
 package echo.sp.app.controller.task;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +65,8 @@ public class UserTaskController extends CoreController{
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				// TASK ID
-				paramMap.put("TASK_ID", IdGen.uuid());
+				String task_id = IdGen.uuid();
+				paramMap.put("TASK_ID", task_id);
 				// Check The Task 
 				Map parmMap = new HashMap();
 				parmMap.put("CANT_CODE", (String) session.getAttribute("CANT_CODE"));
@@ -74,11 +76,60 @@ public class UserTaskController extends CoreController{
 				paramMap.put("TASK_STATUS", "10");
 				paramMap.put("TASK_CREATE_TIME", DateUtils.getDateTime());
 				userTaskService.addTask(paramMap);
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				// Get Task Info
+				parmMap = new HashMap();
+				parmMap.put("TASK_ID", task_id);
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 			logger.error("UserTaskController---addTask---interface error: ", e);
+		}
+	}
+	
+	/**
+	 * 修改任务
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/updateTask")
+	public void updateTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---updateTask---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				userTaskService.updateTask(paramMap);
+				// Get Task Info
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---updateTask---interface error: ", e);
 		}
 	}
 }

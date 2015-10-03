@@ -47,4 +47,34 @@
 				#{TASK_CREATE_TIME} 
 			)
     </insert>
+    <update id="updateTask" parameterType="map">  
+        UPDATE T_TASKS 
+		SET
+			SECTOR_ID=#{SECTOR_ID},
+			SECTOR_TYPE=#{SECTOR_TYPE},
+			TASK_TITLE=#{TASK_TITLE},
+			TASK_DESC=#{TASK_DESC},
+			TASK_DEADLINE=#{TASK_DEADLINE},
+			TASK_PAID=#{TASK_PAID,
+			jdbcType=NUMERIC},
+			TASK_ADDR=#{TASK_ADDR},
+			TASK_LONGITUDE=#{TASK_LONGITUDE,
+			jdbcType=NUMERIC},
+			TASK_LATITUDE=#{TASK_LATITUDE,
+			jdbcType=NUMERIC},
+			TASK_ICON1=#{TASK_ICON1},
+			TASK_ICON2=#{TASK_ICON2},
+			TASK_ICON3=#{TASK_ICON3},
+			TASK_ICON4=#{TASK_ICON4} 
+		WHERE
+			TASK_ID = #{TASK_ID}
+    </update> 
+    <select id="getTaskHeadByTaskId" parameterType="map" resultType="Map">
+     	SELECT * FROM T_TASKS
+     	WHERE TASK_ID = #{TASK_ID}
+    </select>
+    <select id="getTaskLineByTaskId" parameterType="map" resultType="Map">
+     	SELECT * FROM T_TASKS_LINE
+     	WHERE TASK_ID = #{TASK_ID}
+    </select>
 </mapper>

@@ -27,4 +27,16 @@ public class UserTaskServiceImpl implements UserTaskService{
 	public int addTask(Map parmMap) {
 		return userTaskDAO.addTask(parmMap);
 	}
+
+	@Override
+	public int updateTask(Map parmMap) {
+		return userTaskDAO.updateTask(parmMap);
+	}
+
+	@Override
+	public Map getTaskInfoByTaskId(Map parmMap) {
+		Map resMap = userTaskDAO.getTaskHeadByTaskId(parmMap);
+		resMap.put("TASK_LINE", userTaskDAO.getTaskLineByTaskId(parmMap));
+		return resMap;
+	}
 }

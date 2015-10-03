@@ -10,4 +10,8 @@ import java.util.Map;
 public interface UserTaskService {
 	// 增加任务
 	public int addTask(Map parmMap);
+	// 根据任务号查询任务
+	public Map getTaskInfoByTaskId(Map parmMap);
+	// 修改任务
+	public int updateTask(Map parmMap);
 }
