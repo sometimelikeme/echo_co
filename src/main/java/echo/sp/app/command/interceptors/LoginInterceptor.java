@@ -36,7 +36,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"login/exit.do",// 退出
 		"mer/searchMerItem.do",// 查询商品
 		"mer/getMerList.do",// 查询店铺列表
-		"mer/getMerDetail.do"// 查询店铺详情
+		"mer/getMerDetail.do",// 查询店铺详情
+		"task/searchTask.do"// 查询任务：查询任务列表、查询单个任务
 	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
@@ -64,7 +65,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"order/getOrders.do",// 获取订单列表-支持用户和店铺、以及根据订单别号等查询;根据订单号获取订单详情
 		"comment/getSingleCommentByUserId.do",// 评论
 		"comment/addUpdateComment.do",// 评论
-		"comment/deleteComment.do"// 评论
+		"comment/deleteComment.do",// 评论
+		// 以下为任务相关
+		"task/addTask.do",// 增加任务 - 发布者
+		"task/deleteTask.do",// 删除任务 - 发布者
+		"task/updateTask.do",// 修改任务：修改任务信息、修改任务前期状态 - 发布者
+		"task/bideTask.do",// 竞标任务：竞标人发起
+		"task/chooseTasker.do",// 选择竞标人：发布者
+		"task/backTasker.do",// 回退任务: 选定中标人之后，与中标人协商解除任务 - 发布者
+		"task/doneTask.do",// 完成任务: 竞标人发起
+		"task/closeTask.do"// 结束任务: 发布者
 	};
 	 
     @SuppressWarnings("unused")
