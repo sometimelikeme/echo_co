@@ -72,9 +72,31 @@
     <select id="getTaskHeadByTaskId" parameterType="map" resultType="Map">
      	SELECT * FROM T_TASKS
      	WHERE TASK_ID = #{TASK_ID}
+     	TASK_AUDIT_STATUS = '20'
     </select>
     <select id="getTaskLineByTaskId" parameterType="map" resultType="Map">
      	SELECT * FROM T_TASKS_LINE
      	WHERE TASK_ID = #{TASK_ID}
+    </select>
+    
+    <select id="searchTaskList" parameterType="map" resultType="Map">
+          SELECT A.*,B.USER_NAME,B.USER_ICON,
+          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
+          FROM T_TASKS A, T_USERS B
+          WHERE A.TASK_AUDIT_STATUS = '20'
+          <if test="USER_ID != null and USER_ID != '' ">  
+          		AND A.USER_ID = #{USER_ID}  
+          		AND B.USER_ID = #{USER_ID}
+          		AND A.USER_ID = B.USER_ID
+    	  </if> 
+    	  <if test="SECTOR_ID != null and SECTOR_ID != '' ">  
+          		AND A.SECTOR_ID = #{SECTOR_ID} 
+    	  </if>
+    	  <if test="SECTOR_TYPE != null and SECTOR_TYPE != '' ">  
+          		AND A.SECTOR_TYPE = #{SECTOR_TYPE} 
+    	  </if>
+    	  <if test="TASK_TITLE != null and TASK_TITLE != '' ">  
+          		AND A.TASK_TITLE LIKE CONCAT(CONCAT('%', #{TASK_TITLE, jdbcType=VARCHAR}),'%') 
+    	  </if>
     </select>
 </mapper>

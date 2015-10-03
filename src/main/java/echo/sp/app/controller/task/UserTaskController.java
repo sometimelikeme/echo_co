@@ -7,12 +7,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
@@ -38,6 +43,9 @@ public class UserTaskController extends CoreController{
 	
 	@Autowired
 	private PubToolService pubToolService;
+	
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
 	
 	/**
 	 * 增加任务
@@ -170,6 +178,132 @@ public class UserTaskController extends CoreController{
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 			logger.error("UserTaskController---searchTaskById---interface error: ", e);
+		}
+	}
+	
+	/**
+	 * 查询任务列表
+	 * 1.查询用户发布的任务列表 -OPTIMAL                       
+	 * 2.查询所有的任务列表 -DEFAULT
+	 * 3.查询一级、二级分类下的任务列表 -OPTIMAL
+	 * 4.根据任务标题模糊查询 -OPTIMAL
+	 * 5.根据距离查询 LONGITUDE LATITUDE -REQUIRED
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/searchTaskList")
+	public void searchTaskList(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---searchTaskList---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				String sortString = "DIST.asc,TASK_CREATE_TIME.asc";
+				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
+				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
+				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				List resList = PubTool.getResultList("UserTaskDAO.searchTaskList", paramMap, pageBounds, sqlSessionFactory);
+				Map resMap = new HashMap();
+				int totalCount = 0;
+				if (PubTool.isListHasData(resList)) {
+		    		totalCount = ((PageList) resList).getPaginator().getTotalCount();
+		    		/*
+		    		 * 计算经纬度之间的距离
+		    		 * 1.java计算的较为精确, SQL计算能很好利用数据库的分页，但不够精确
+		    		 * 2.然而, SQL和java计算的出来按照距离排序，由近到远是一致的
+		    		 * 3.由此可以先用SQL分页查询出距离，这个距离为不精确距离，只是用来排序；取出数据集之后，再用java来计算精确距离
+		    		 */
+					double d1 = Double.parseDouble(paramMap.get("LONGITUDE").toString());// 参数经度
+					double d2 = Double.parseDouble(paramMap.get("LATITUDE").toString());// 参数维度
+					double d3;// 比较经度
+					double d4;// 比较维度
+					double dist;// 距离/米
+					Map temMap;
+		    		for (int i = 0; i < resList.size(); i++) {
+						temMap = (Map) resList.get(i);
+						d3 = Double.parseDouble(temMap.get("TASK_LONGITUDE").toString());
+						d4 = Double.parseDouble(temMap.get("TASK_LATITUDE").toString());
+						dist = PubTool.GetDistance(d1, d2, d3, d4);// recalculate
+						temMap.put("DIST", dist);
+					}
+				}
+				resMap.put("totalCount", totalCount);
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---searchTaskList---interface error: ", e);
+		}
+	}
+	
+	/**
+	 * 查询用户竞标的任务列表
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/searchBidTaskByUserId")
+	public void searchBidTaskByUserId(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---searchBidTaskByUserId---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+				
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				String sortString = "DIST.asc,TASK_CREATE_TIME.asc";
+				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
+				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
+				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				List resList = PubTool.getResultList("MerStoreDAO.getMerList", paramMap, pageBounds, sqlSessionFactory);
+				Map resMap = new HashMap();
+				int totalCount = 0;
+				if (PubTool.isListHasData(resList)) {
+		    		totalCount = ((PageList) resList).getPaginator().getTotalCount();
+		    		/*
+		    		 * 计算经纬度之间的距离
+		    		 * 1.java计算的较为精确, SQL计算能很好利用数据库的分页，但不够精确
+		    		 * 2.然而, SQL和java计算的出来按照距离排序，由近到远是一致的
+		    		 * 3.由此可以先用SQL分页查询出距离，这个距离为不精确距离，只是用来排序；取出数据集之后，再用java来计算精确距离
+		    		 */
+					double d1 = Double.parseDouble(paramMap.get("LONGITUDE").toString());// 参数经度
+					double d2 = Double.parseDouble(paramMap.get("LATITUDE").toString());// 参数维度
+					double d3;// 比较经度
+					double d4;// 比较维度
+					double dist;// 距离/米
+					Map temMap;
+		    		for (int i = 0; i < resList.size(); i++) {
+						temMap = (Map) resList.get(i);
+						d3 = Double.parseDouble(temMap.get("TASK_LONGITUDE").toString());
+						d4 = Double.parseDouble(temMap.get("TASK_LATITUDE").toString());
+						dist = PubTool.GetDistance(d1, d2, d3, d4);// recalculate
+						temMap.put("DIST", dist);
+					}
+				}
+				resMap.put("totalCount", totalCount);
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---searchBidTaskByUserId---interface error: ", e);
 		}
 	}
 }
