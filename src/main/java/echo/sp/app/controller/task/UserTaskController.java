@@ -132,4 +132,44 @@ public class UserTaskController extends CoreController{
 			logger.error("UserTaskController---updateTask---interface error: ", e);
 		}
 	}
+	
+	/**
+	 * 查询单个任务
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/searchTaskById")
+	public void searchTaskById(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---searchTaskById---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				paramMap = userTaskService.getTaskInfoByTaskId(paramMap);
+				List lineList = null;
+				Object obj = paramMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				paramMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, lineList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---searchTaskById---interface error: ", e);
+		}
+	}
 }
