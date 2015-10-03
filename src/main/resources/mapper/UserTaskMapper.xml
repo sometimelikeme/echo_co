@@ -3,5 +3,48 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.UserTaskDAO">
-	
+	<insert id="addTask" parameterType="map">
+	    INSERT INTO T_TASKS 
+			(
+				TASK_ID,
+				USER_ID,
+				SECTOR_ID,
+				SECTOR_TYPE,
+				TASK_TITLE,
+				TASK_DESC,
+				TASK_DEADLINE,
+				TASK_PAID,
+				TASK_ADDR,
+				TASK_LONGITUDE,
+				TASK_LATITUDE,
+				TASK_ICON1,
+				TASK_ICON2,
+				TASK_ICON3,
+				TASK_ICON4,
+				TASK_AUDIT_STATUS,
+				TASK_STATUS,
+				TASK_CREATE_TIME 
+			)
+		VALUES
+			(
+				#{TASK_ID},
+				#{USER_ID},
+				#{SECTOR_ID},
+				#{SECTOR_TYPE},
+				#{TASK_TITLE},
+				#{TASK_DESC},
+				#{TASK_DEADLINE},
+				#{TASK_PAID,jdbcType=NUMERIC},
+				#{TASK_ADDR},
+				#{TASK_LONGITUDE,jdbcType=NUMERIC},
+				#{TASK_LATITUDE,jdbcType=NUMERIC},
+				#{TASK_ICON1},
+				#{TASK_ICON2},
+				#{TASK_ICON3},
+				#{TASK_ICON4},
+				#{TASK_AUDIT_STATUS},
+				#{TASK_STATUS},
+				#{TASK_CREATE_TIME} 
+			)
+    </insert>
 </mapper>

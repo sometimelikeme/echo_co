@@ -1,5 +1,7 @@
 package echo.sp.app.service.impl;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +22,9 @@ public class UserTaskServiceImpl implements UserTaskService{
 	
 	@Autowired
     private UserTaskDAO userTaskDAO;
+
+	@Override
+	public int addTask(Map parmMap) {
+		return userTaskDAO.addTask(parmMap);
+	}
 }
