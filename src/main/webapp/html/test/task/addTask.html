@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "task/addTask.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                			USER_ID:'c21375a7aef447239c74fc9e7926cd35',
+               				SECTOR_ID:'100001',
+               				SECTOR_TYPE:'10',
+               				TASK_TITLE:'发传单',
+               				TASK_DESC:'找人发广告传单',
+               				TASK_DEADLINE:'2015-09-27 18:46:00',
+               				TASK_PAID:'1000',
+               				TASK_ADDR:'解放路',
+               				TASK_LONGITUDE:'117.333245',
+               				TASK_LATITUDE:'36.231245',
+               				TASK_ICON1:'',
+               				TASK_ICON2:'',
+               				TASK_ICON3:'',
+               				TASK_ICON4:''
+                		}
+                	})),
+                	sc_co: 'c706c93e066b452e850607fb97735fc4',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
