@@ -7,7 +7,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
+
 import java.lang.Object;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,32 @@ public class PubTool {
 	private static final Logger logger = LoggerFactory.getLogger(PubTool.class);
 	
 	private  static double EARTH_RADIUS = 6378137; //WGS84  6378137.0 米
+	
+	/**
+	 * 计算经纬度之间的距离
+	 * 1.java计算的较为精确, SQL计算能很好利用数据库的分页，但不够精确
+	 * 2.然而, SQL和java计算的出来按照距离排序，由近到远是一致的
+	 * 3.由此可以先用SQL分页查询出距离，这个距离为不精确距离，只是用来排序；取出数据集之后，再用java来计算精确距离
+	 * @param resList 处理LIST
+	 * @param paramMap 参数
+	 * @param longtitudeName 获取参数经度键
+	 * @param lantitudeName 获取参数纬度键
+	 */
+	public static void reCalculateDistance(List resList, Map paramMap, String longtitudeName, String lantitudeName) {
+		double d1 = Double.parseDouble(paramMap.get("LONGITUDE").toString());// 参数经度
+		double d2 = Double.parseDouble(paramMap.get("LATITUDE").toString());// 参数维度
+		double d3;// 比较经度
+		double d4;// 比较维度
+		double dist;// 距离/米
+		Map temMap;
+		for (int i = 0; i < resList.size(); i++) {
+			temMap = (Map) resList.get(i);
+			d3 = Double.parseDouble(temMap.get(longtitudeName).toString());
+			d4 = Double.parseDouble(temMap.get(lantitudeName).toString());
+			dist = PubTool.GetDistance(d1, d2, d3, d4);// recalculate
+			temMap.put("DIST", dist);
+		}
+	}
 	
     private static double rad(double d){
         return d * Math.PI / 180.0;
