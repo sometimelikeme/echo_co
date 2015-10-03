@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.model.SecCode;
+import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.Encodes;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.MD5Util;
@@ -117,6 +118,7 @@ public class LoginController extends CoreController{
 					parmMap.put("TEL_NUMBER", tel);
 					parmMap.put("IN_VALID", "1");// DEFAULT VALID
 					parmMap.put("CANT_CODE", ct_code);// DISTRICT CODE
+					parmMap.put("REG_TIME", DateUtils.getDateTime());
 					int res = userService.addRegistAlg(parmMap);
 					
 					parmMap = new HashMap();
