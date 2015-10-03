@@ -37,7 +37,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/searchMerItem.do",// 查询商品
 		"mer/getMerList.do",// 查询店铺列表
 		"mer/getMerDetail.do",// 查询店铺详情
-		"task/searchTask.do"// 查询任务：查询任务列表、查询单个任务
+		"task/searchTaskList.do",// 查询任务：查询任务列表
+		"task/searchTaskById.do"// 查询任务：查询单个任务
 	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
