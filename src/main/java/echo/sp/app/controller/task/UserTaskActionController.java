@@ -220,6 +220,60 @@ public class UserTaskActionController extends CoreController{
 	}
 	
 	/**
+	 * 中标人回退任务: 选定中标人之后，与中标人协商解除任务 - 中标人
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/bidBackTasker")
+	public void bidBackTasker(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskActionController---bidBackTasker---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				// 1.查询T_TASKS.TASK_STATUS
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if (!"40".equals(task_statu)) {
+					super.writeJson(response, "9996", "非中标状态，无法回退！", null, null);
+					return;
+				}
+				// 2.修改任务状态为49，增加回退时间
+				paramMap.put("TAKS_UNDONE_TIME", DateUtils.getDateTime());
+				userTaskActionService.updateBiderBackTask(paramMap);
+				// 3.返回任务信息
+				parmMap.put("TASK_IS_BIDE", "1");
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskActionController---bidBackTasker---interface error: ", e);
+		}
+	}
+	
+	/**
 	 * 回退任务: 选定中标人之后，与中标人协商解除任务 - 发布者
 	 * @param req
 	 * @param response
@@ -244,7 +298,28 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				// 1.查询T_TASKS.TASK_STATUS
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if (!"49".equals(task_statu)) {
+					super.writeJson(response, "9996", "请联系中标人取消任务！", null, null);
+					return;
+				}
+				// 2.修改任务状态为回退状态
+				paramMap.put("TASK_BACK_TIME", DateUtils.getDateTime());
+				userTaskActionService.updatePuberBackTask(paramMap);
+				// 3.返回任务信息
+				parmMap.put("TASK_IS_BIDE", "1");
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);

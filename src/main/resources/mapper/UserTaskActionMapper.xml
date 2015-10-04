@@ -50,4 +50,15 @@
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{BIDE_USER_ID}
     </update>
+    
+    <update id="updateBiderBackTask" parameterType="map">  
+   		UPDATE T_TASKS 
+        SET TASK_STATUS = '49', TAKS_UNDONE_TIME = #{TAKS_UNDONE_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    <update id="updatePuberBackTask" parameterType="map">  
+   		UPDATE T_TASKS 
+        SET TASK_STATUS = '50', TASK_BACK_TIME = #{TASK_BACK_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
 </mapper>

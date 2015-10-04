@@ -22,4 +22,9 @@ public interface UserTaskActionDAO {
 	public int updateTaskStatusForSec(Map parmMap);
 	// 修改投标人TASK_IS_BIDE为1
 	public int updateBiderStatus(Map parmMap);
+	
+	// 中标人回退任务
+	public int updateBiderBackTask(Map parmMap);
+	// 发布者回退任务
+	public int updatePuberBackTask(Map parmMap);
 }

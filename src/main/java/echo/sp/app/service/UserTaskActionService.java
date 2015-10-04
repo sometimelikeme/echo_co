@@ -14,4 +14,8 @@ public interface UserTaskActionService {
 	public int updateTaskBider(Map parmMap);
 	// 选择中标人
 	public int updateChooseTasker(Map parmMap);
+	// 中标人回退任务
+	public int updateBiderBackTask(Map parmMap);
+	// 发布者回退任务
+	public int updatePuberBackTask(Map parmMap);
 }

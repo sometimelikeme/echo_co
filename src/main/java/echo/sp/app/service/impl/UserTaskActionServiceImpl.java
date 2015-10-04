@@ -78,6 +78,9 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     		parmMap.put("DATE1", date);
     		parmMap.put("MONEY_NUM", task_paid_Big);
     		parmMap.put("STATUS", "0");
+    		parmMap.put("ORDER_ID", "");
+    		parmMap.put("ABLI_ORDER_ID", "");
+    		parmMap.put("PRE_PAID_ID", "");
     		userDAO.insertUserMoneyRecord(parmMap);
 			// 将此次费用增加到系统账户, 生成系统账户交易记录
     		Map tMap = new HashMap();
@@ -89,6 +92,9 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			tMap.put("DATE1", date);
 			tMap.put("MONEY_NUM", task_paid_Big);
 			tMap.put("TASK_ID", parmMap.get("TASK_ID"));
+			tMap.put("ORDER_ID", "");
+			tMap.put("ABLI_ORDER_ID", "");
+			tMap.put("PRE_PAID_ID", "");
 			tMap.put("STATUS", "1");
 			// 修改任务状态选定他人中标任务，加入中标时间戳
 			parmMap.put("TASK_GET_TIME", dateTime);
@@ -100,6 +106,16 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			throw new RuntimeException();
 		}
 		return returnInt;
+	}
+
+	@Override
+	public int updateBiderBackTask(Map parmMap) {
+		return userTaskActionDAO.updateBiderBackTask(parmMap);
+	}
+
+	@Override
+	public int updatePuberBackTask(Map parmMap) {
+		return userTaskActionDAO.updatePuberBackTask(parmMap);
 	}
 	
 }
