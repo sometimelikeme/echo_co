@@ -79,7 +79,7 @@ public class UserTaskController extends CoreController{
 				Map parmMap = new HashMap();
 				parmMap.put("CANT_CODE", (String) session.getAttribute("CANT_CODE"));
 				parmMap.put("PARM_NAME", "USER_UP_TASK_CHECK");
-				paramMap.put("TASK_AUDIT_STATUS", "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "20" : "10");
+				paramMap.put("TASK_AUDIT_STATUS", "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "10" : "20");
 				// Publish Status
 				paramMap.put("TASK_STATUS", "10");
 				paramMap.put("TASK_CREATE_TIME", DateUtils.getDateTime());
@@ -206,7 +206,7 @@ public class UserTaskController extends CoreController{
 			if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				String sortString = "DIST.asc,TASK_CREATE_TIME.asc";
+				String sortString = "DIST.asc,TASK_CREATE_TIME.desc";
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
 				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
