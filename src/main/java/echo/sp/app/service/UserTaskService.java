@@ -14,4 +14,6 @@ public interface UserTaskService {
 	public Map getTaskInfoByTaskId(Map parmMap);
 	// 修改任务
 	public int updateTask(Map parmMap);
+	// 删除任务
+	public int deleteTask(Map parmMap);
 }

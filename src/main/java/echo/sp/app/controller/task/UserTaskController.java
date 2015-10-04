@@ -272,4 +272,48 @@ public class UserTaskController extends CoreController{
 		}
 	}
 	
+	/**
+	 * 删除任务
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/deleteTask")
+	public void deleteTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---deleteTask---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+				
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				// 1.查询T_TASKS.TASK_STATUS, 若是40状态,提示不能取消竞标
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if ("30".equals(task_statu) || "40".equals(task_statu) || "60".equals(task_statu) || "70".equals(task_statu)) {
+					super.writeJson(response, "9996", "任务进行中，不能删除！", null, null);
+					return;
+				}
+				// 2.修改任务状态为删除状态
+				paramMap.put("TASK_DEL_TIME", DateUtils.getDateTime());
+				userTaskService.deleteTask(paramMap);
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---deleteTask---interface error: ", e);
+		}
+	}
 }

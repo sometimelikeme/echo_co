@@ -118,4 +118,10 @@
           AND C.USER_ID = #{USER_ID}
           AND C.BID_STATUS = '1'
     </select>
+    
+    <update id="deleteTask" parameterType="map"> 
+    	UPDATE T_TASKS 
+		SET TASK_STATUS = '80',TASK_DEL_TIME=#{TASK_DEL_TIME}
+		WHERE TASK_ID = #{TASK_ID}
+    </update>
 </mapper>

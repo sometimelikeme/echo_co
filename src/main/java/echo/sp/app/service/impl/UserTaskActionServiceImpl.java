@@ -42,7 +42,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     	try {
     		userTaskActionDAO.updateCancelTaskBider(parmMap);
     		int bid_num = Integer.parseInt(parmMap.get("BID_NUM").toString());
-    		if (Integer.parseInt(parmMap.get("BID_NUM").toString()) == 1) {
+    		if (Integer.parseInt(parmMap.get("BID_NUM").toString()) <= 1) {
     			bid_num = 0;
     			parmMap.put("TASK_STATUS", "10");
 			} else {

@@ -39,4 +39,9 @@ public class UserTaskServiceImpl implements UserTaskService{
 		resMap.put("TASK_LINE", userTaskDAO.getTaskLineByTaskId(parmMap));
 		return resMap;
 	}
+
+	@Override
+	public int deleteTask(Map parmMap) {
+		return userTaskDAO.deleteTask(parmMap);
+	}
 }

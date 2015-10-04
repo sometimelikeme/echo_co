@@ -17,4 +17,6 @@ public interface UserTaskDAO {
 	public List getTaskLineByTaskId(Map parmMap);
 	// 修改任务
 	public int updateTask(Map parmMap);
+	// 删除任务
+	public int deleteTask(Map parmMap);
 }
