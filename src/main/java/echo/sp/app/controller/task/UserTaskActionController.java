@@ -169,6 +169,8 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
+				// 1.查询T_TASKS.TASK_STATUS, 若非30状态，不能选定竞标人
+				
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
 			}
 		} catch (Exception e) {
