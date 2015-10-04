@@ -126,7 +126,7 @@ public class UserTaskController extends CoreController{
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
-				if (!"10".equals(parmMap.get("TASK_STATUS"))) {
+				if (!"10".equals(parmMap.get("TASK_STATUS").toString())) {
 					super.writeJson(response, "9996", "任务进行中，不能修改！", null, null);
 					return;
 				}
