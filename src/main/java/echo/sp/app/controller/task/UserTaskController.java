@@ -122,10 +122,17 @@ public class UserTaskController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				userTaskService.updateTask(paramMap);
-				// Get Task Info
+				// 获取当前任务状态,非10状态则不允许修改
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				if (!"10".equals(parmMap.get("TASK_STATUS"))) {
+					super.writeJson(response, "9996", "任务进行中，不能修改！", null, null);
+					return;
+				}
+				// 修改任务信息
+				userTaskService.updateTask(paramMap);
+				// Get Task Info
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
