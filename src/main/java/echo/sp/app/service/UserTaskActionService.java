@@ -10,4 +10,6 @@ import java.util.Map;
 public interface UserTaskActionService {
 	// 竞标任务
 	public int addTaskBider(Map parmMap);
+	// 取消竞标
+	public int updateTaskBider(Map parmMap);
 }

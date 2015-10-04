@@ -24,4 +24,18 @@
    		UPDATE T_TASKS SET TASK_STATUS = '30', BID_NUM = BID_NUM + 1
    		WHERE TASK_ID = #{TASK_ID}
     </update> 
+    <update id="updateCancelTaskBider" parameterType="map">  
+   		UPDATE T_TASKS_LINE 
+   		SET BID_STATUS = '0', CANCEL_TIME = #{CANCEL_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{USER_ID}
+    </update>
+    <update id="updateTaskStatus" parameterType="map">  
+   		UPDATE T_TASKS 
+   		SET BID_NUM = #{BID_NUM}
+   		<if test="TASK_STATUS != null and TASK_STATUS != '' ">  
+          	,TASK_STATUS = #{TASK_STATUS}
+   	    </if> 
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
 </mapper>

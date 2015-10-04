@@ -12,4 +12,9 @@ public interface UserTaskActionDAO {
 	public int addTaskBider(Map parmMap);
 	// 竞标任务-修改T_TASKS.TASK_STATUS = '30', BID_NUM数量自增1
 	public int updateTaskBider(Map parmMap);
+	
+	// 修改T_TASKS_LINE竞标人信息为取消竞标状态
+	public int updateCancelTaskBider(Map parmMap);
+	// BID_NUM数量自减少1，若发现此时BID_NUM为0，则修改TASK_STATUS为10状态
+	public int updateTaskStatus(Map parmMap);
 }

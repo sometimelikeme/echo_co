@@ -115,12 +115,28 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 竞标人参与竞标
-				// 1.查询T_TASKS.TASK_STATUS, 若不是40状态,提示不能取消竞标
-				// 2.删除T_TASKS_LINE竞标人信息
-				// 3.BID_NUM数量自减少1，若发现此时BID_NUM为0，则修改TASK_STATUS为10状态
-				// 4.返回任务信息
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				// 1.查询T_TASKS.TASK_STATUS, 若是40状态,提示不能取消竞标
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if ("40".equals(task_statu)) {
+					super.writeJson(response, "9996", "您已获得任务，请联系任务发布者取消！", null, null);
+					return;
+				}
+				// 2.修改T_TASKS_LINE竞标人信息为取消竞标状态；BID_NUM数量自减少1，若发现此时BID_NUM为0，则修改TASK_STATUS为10状态
+				paramMap.put("BID_NUM", parmMap.get("BID_NUM"));
+				paramMap.put("CANCEL_TIME", DateUtils.getDateTime());
+				userTaskActionService.updateTaskBider(paramMap);
+				// 3.返回任务信息
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
