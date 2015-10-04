@@ -53,7 +53,7 @@ public class PubTool {
 			d3 = Double.parseDouble("".equals(org_long) ? "0" : org_long);
 			d4 = Double.parseDouble("".equals(org_lan) ? "0" : org_lan);
 			dist = PubTool.GetDistance(d1, d2, d3, d4);// recalculate
-			temMap.put("DIST", dist);
+			temMap.put("DIST", String.valueOf(dist));
 		}
 	}
 	
