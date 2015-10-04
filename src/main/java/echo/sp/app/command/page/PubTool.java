@@ -43,11 +43,15 @@ public class PubTool {
 		double d3;// 比较经度
 		double d4;// 比较维度
 		double dist;// 距离/米
+		String org_long;
+		String org_lan;
 		Map temMap;
 		for (int i = 0; i < resList.size(); i++) {
 			temMap = (Map) resList.get(i);
-			d3 = Double.parseDouble(temMap.get(longtitudeName).toString());
-			d4 = Double.parseDouble(temMap.get(lantitudeName).toString());
+			org_long = processNull(temMap.get(longtitudeName));
+			org_lan = processNull(temMap.get(lantitudeName));
+			d3 = Double.parseDouble("".equals(org_long) ? "0" : org_long);
+			d4 = Double.parseDouble("".equals(org_lan) ? "0" : org_lan);
 			dist = PubTool.GetDistance(d1, d2, d3, d4);// recalculate
 			temMap.put("DIST", dist);
 		}
