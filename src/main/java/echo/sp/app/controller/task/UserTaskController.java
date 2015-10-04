@@ -127,7 +127,7 @@ public class UserTaskController extends CoreController{
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				if (!"10".equals(parmMap.get("TASK_STATUS").toString())) {
-					super.writeJson(response, "9996", "任务进行中，不能修改！", null, null);
+					super.writeJson(response, "9996", "任务执行中，不能修改！", null, null);
 					return;
 				}
 				// 修改任务信息
