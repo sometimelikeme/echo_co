@@ -83,6 +83,9 @@
      	WHERE TASK_ID = #{TASK_ID}
      	AND A.USER_ID = B.USER_ID
      	AND A.BID_STATUS = '1'
+     	<if test="TASK_IS_BIDE != null and TASK_IS_BIDE != '' ">  
+          	AND A.TASK_IS_BIDE = #{TASK_IS_BIDE}
+   	    </if>
     </select>
     
     <select id="searchTaskList" parameterType="map" resultType="Map">

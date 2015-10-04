@@ -38,4 +38,16 @@
    	    </if> 
    		WHERE TASK_ID = #{TASK_ID}
     </update>
+    
+    <update id="updateTaskStatusForSec" parameterType="map">  
+   		UPDATE T_TASKS 
+        SET TASK_STATUS = '40', TASK_GET_TIME = #{TASK_GET_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    <update id="updateBiderStatus" parameterType="map">  
+   		UPDATE T_TASKS_LINE 
+        SET TASK_IS_BIDE = '1'
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{BIDE_USER_ID}
+    </update>
 </mapper>

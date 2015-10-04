@@ -12,4 +12,6 @@ public interface UserTaskActionService {
 	public int addTaskBider(Map parmMap);
 	// 取消竞标
 	public int updateTaskBider(Map parmMap);
+	// 选择中标人
+	public int updateChooseTasker(Map parmMap);
 }

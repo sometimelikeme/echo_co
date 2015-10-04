@@ -17,4 +17,9 @@ public interface UserTaskActionDAO {
 	public int updateCancelTaskBider(Map parmMap);
 	// BID_NUM数量自减少1，若发现此时BID_NUM为0，则修改TASK_STATUS为10状态
 	public int updateTaskStatus(Map parmMap);
+	
+	// 修改任务状态选定他人中标任务，加入中标时间戳
+	public int updateTaskStatusForSec(Map parmMap);
+	// 修改投标人TASK_IS_BIDE为1
+	public int updateBiderStatus(Map parmMap);
 }

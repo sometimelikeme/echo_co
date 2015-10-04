@@ -53,4 +53,10 @@ public interface UserDAO {
  	
  	// 获取用余额、积分、能力
  	public Map getUserExpandInfo(Map parmMap);
+ 	
+ 	// 修改用户余额
+  	public int updateUserMoney(Map parmMap);
+  	
+  	// 生成用户金额交易记录
+   	public int insertUserMoneyRecord(Map parmMap); 
 }

@@ -1,5 +1,6 @@
 package echo.sp.app.controller.task;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.UserAgentUtils;
+import echo.sp.app.service.UserService;
 import echo.sp.app.service.UserTaskActionService;
 import echo.sp.app.service.UserTaskService;
 
@@ -36,6 +38,9 @@ public class UserTaskActionController extends CoreController{
 	
 	@Autowired
 	private UserTaskActionService userTaskActionService;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 竞标任务：竞标人发起
@@ -179,15 +184,26 @@ public class UserTaskActionController extends CoreController{
 					return;
 				}
 				// 2.判断用户账户可用余额是否够此次任务费用
-				
+				String task_paid = parmMap.get("TASK_PAID").toString();
+				String total_money = userService.getUserExpandInfo(paramMap).get("TOTAL_MONEY").toString();
+				BigDecimal task_paid_Big = new BigDecimal(task_paid);
+				BigDecimal total_money_Big = new BigDecimal(total_money);
+				if (task_paid_Big.compareTo(total_money_Big) > 0) {
+					super.writeJson(response, "9995", "账户余额不足！", null, null);
+					return;
+				}
 				
 				// 3.将用户账户余额减去此次任务费用；
 				//   将此次费用转移到系统账户
 				//   修改任务状态选定他人中标任务，加入中标时间戳
 				//   修改投标人TASK_IS_BIDE为1
-				
-				
+				paramMap.put("TASK_PAID", task_paid);
+				paramMap.put("TOTAL_MONEY", total_money_Big.subtract(task_paid_Big));
+				if (userTaskActionService.updateChooseTasker(paramMap) != 1) {
+					super.writeJson(response, "9992", "后台程序执行失败", null, null);
+				}
 				// 4.返回任务信息
+				parmMap.put("TASK_IS_BIDE", "1");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
