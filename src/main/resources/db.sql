@@ -406,7 +406,7 @@ CREATE TABLE T_TASKS(
 	TASK_DONE_ICON3 VARCHAR(256),--任务图片
 	TASK_DONE_ICON4 VARCHAR(256),--任务图片
 	TASK_AUDIT_STATUS CHAR(2),--枚举：10-审核中,20-审核通过,30-审核未通过
-	TASK_STATUS CHAR(2),--枚举：10-发布,20-取消,30-他人投标任务,40-选定他人中标任务,50-退回任务,60-他人完成任务,70-任务结束
+	TASK_STATUS CHAR(2),--枚举：10-发布,20-取消,30-他人投标任务,40-选定他人中标任务,50-退回任务,60-他人完成任务,70-任务结束,，80-删除任务
 	TASK_CREATE_TIME VARCHAR(32),--发布时间
 	TASK_CANCEL_TIME VARCHAR(32),--取消时间
 	TASK_GET_TIME VARCHAR(32),--中标时间
@@ -424,6 +424,7 @@ CREATE TABLE T_TASKS_LINE(
 	USER_ID VARCHAR(32) NOT NULL,--任务竞标者
 	TASK_BID_TIME VARCHAR(32),--投标时间
 	TASK_IS_BIDE CHAR(1),--是否被选中1-是,0-否
+	BID_STATUS CHAR(1) DEFAULT '1',--竞标：1-是，0-取消竞标
 	PRIMARY KEY (TASK_ID,USER_ID)
 );
 
