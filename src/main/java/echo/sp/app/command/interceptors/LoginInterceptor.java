@@ -72,6 +72,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"task/deleteTask.do",// 删除任务 - 发布者
 		"task/updateTask.do",// 修改任务：修改任务信息、修改任务前期状态 - 发布者
 		"task/bideTask.do",// 竞标任务：竞标人发起
+		"task/cancelBideTask.do",// 取消竞标：竞标人发起
 		"task/chooseTasker.do",// 选择竞标人：发布者
 		"task/backTasker.do",// 回退任务: 选定中标人之后，与中标人协商解除任务 - 发布者
 		"task/doneTask.do",// 完成任务: 竞标人发起
