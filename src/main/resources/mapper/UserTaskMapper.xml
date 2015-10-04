@@ -72,15 +72,17 @@
     <select id="getTaskHeadByTaskId" parameterType="map" resultType="Map">
      	SELECT A.*,B.USER_NAME,B.USER_ICON 
      	FROM T_TASKS A, T_USERS B
-     	WHERE TASK_ID = #{TASK_ID}
-     	AND TASK_AUDIT_STATUS = '20'
+     	WHERE A.TASK_ID = #{TASK_ID}
+     	AND A.TASK_AUDIT_STATUS = '20'
      	AND A.USER_ID = B.USER_ID
+     	AND A.TASK_STATUS != '80'
     </select>
     <select id="getTaskLineByTaskId" parameterType="map" resultType="Map">
      	SELECT A.*,B.USER_NAME,B.USER_ICON 
      	FROM T_TASKS_LINE A, T_USERS B
      	WHERE TASK_ID = #{TASK_ID}
      	AND A.USER_ID = B.USER_ID
+     	AND A.BID_STATUS = '1'
     </select>
     
     <select id="searchTaskList" parameterType="map" resultType="Map">
@@ -88,6 +90,7 @@
           SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
           FROM T_TASKS A, T_USERS B
           WHERE A.TASK_AUDIT_STATUS = '20'
+          AND A.TASK_STATUS != '80'
           <if test="USER_ID != null and USER_ID != '' ">  
           		AND A.USER_ID = #{USER_ID}  
           		AND B.USER_ID = #{USER_ID}
@@ -109,6 +112,7 @@
           SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
           FROM T_TASKS A, T_USERS B, T_TASKS_LINE C
           WHERE A.TASK_AUDIT_STATUS = '20'
+          AND A.TASK_STATUS != '80'
           AND A.USER_ID = B.USER_ID
           AND A.TASK_ID = C.TASK_ID
           AND C.USER_ID = #{USER_ID}
