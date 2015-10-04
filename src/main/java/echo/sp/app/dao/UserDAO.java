@@ -50,4 +50,7 @@ public interface UserDAO {
  	
  	// FULFILL USER BANK ACCOUNT
  	public int updateUserAcc(Map parmMap);
+ 	
+ 	// 获取用余额、积分、能力
+ 	public Map getUserExpandInfo(Map parmMap);
 }

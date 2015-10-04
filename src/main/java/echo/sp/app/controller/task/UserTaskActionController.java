@@ -182,7 +182,7 @@ public class UserTaskActionController extends CoreController{
 				
 				
 				// 3.将用户账户余额减去此次任务费用；
-				//   将此次费用转移到系统账户SUPERADMIN
+				//   将此次费用转移到系统账户
 				//   修改任务状态选定他人中标任务，加入中标时间戳
 				//   修改投标人TASK_IS_BIDE为1
 				

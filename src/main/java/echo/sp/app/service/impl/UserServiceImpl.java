@@ -151,4 +151,9 @@ public class UserServiceImpl implements UserService{
 		return returnInt;
 	}
 
+	@Override
+	public Map getUserExpandInfo(Map parmMap) {
+		return userDAO.getUserExpandInfo(parmMap);
+	}
+
 }
