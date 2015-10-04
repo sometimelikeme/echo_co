@@ -1,5 +1,7 @@
 package echo.sp.app.controller.task;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.UserAgentUtils;
+import echo.sp.app.service.UserTaskActionService;
 import echo.sp.app.service.UserTaskService;
 
 /**  
@@ -29,6 +33,9 @@ public class UserTaskActionController extends CoreController{
 	
 	@Autowired
 	private UserTaskService userTaskService;
+	
+	@Autowired
+	private UserTaskActionService userTaskActionService;
 	
 	/**
 	 * 竞标任务：竞标人发起
@@ -55,12 +62,27 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 竞标人参与竞标
-				// 1.查询T_TASKS.TASK_STATUS, 若不是10和30状态,提示不能竞标
-				// 2.插入T_TASKS_LINE竞标人信息
-				// 3.修改T_TASKS.TASK_STATUS = '30', BID_NUM数量自增1
-				// 4.返回任务信息
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				// 1.查询T_TASKS.TASK_STATUS, 若不是10或30状态,提示不能竞标
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if (!("10".equals(task_statu) || "30".equals(task_statu))) {
+					super.writeJson(response, "9996", "任务执行中，不能竞标！", null, null);
+					return;
+				}
+				// 2.插入T_TASKS_LINE竞标人信息;修改T_TASKS.TASK_STATUS = '30', BID_NUM数量自增1
+				paramMap.put("TASK_BID_TIME", DateUtils.getDateTime());
+				userTaskActionService.addTaskBider(paramMap);
+				// 3.返回任务信息
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);

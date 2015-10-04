@@ -3,5 +3,25 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.UserTaskActionDAO">
-	
+	<insert id="addTaskBider" parameterType="map">
+      	INSERT INTO
+			T_TASKS_LINE 
+			(
+				TASK_ID,
+				USER_ID,
+				TASK_BID_TIME,
+				TASK_IS_BIDE 
+			)
+		VALUES
+			(
+				#{TASK_ID},
+				#{BID_USER_ID},
+				#{TASK_BID_TIME},
+				'0' 
+			)
+	</insert>
+ 	<update id="updateTaskBider" parameterType="map">  
+   		UPDATE T_TASKS SET TASK_STATUS = '30', BID_NUM = BID_NUM + 1
+   		WHERE TASK_ID = #{TASK_ID}
+    </update> 
 </mapper>
