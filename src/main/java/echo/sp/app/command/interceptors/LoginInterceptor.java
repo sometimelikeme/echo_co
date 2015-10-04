@@ -53,6 +53,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"user/deleteItemColl.do",// 删除收藏商品
 		"user/getMerColl.do",// 获取收藏店铺列表
 		"user/getItemColl.do",// 获取收藏商品列表
+		"user/getUserExpandInfo",// 获取用户扩展信息
 		"mer/toMerchant.do",// 维护店铺信息
 		"mer/addMerItem.do",// 增加商品
 		"mer/updateMerItem.do",// 更新商品信息

@@ -62,3 +62,13 @@
 - 获取NO_CO时返回初始化数据时，同时返回初始化基本信息数据
 ### 2015-10-3
 - order/getOrders接口ITEM_INFO字段返回购买商品信息
+### 2015-10-4
+- "user/getUserExpandInfo",// 获取用户扩展信息
+- "task/searchTaskList.do",// 查询任务：查询任务列表
+- "task/searchTaskById.do"// 查询任务：查询单个任务
+- "task/addTask.do",// 增加任务 - 发布者
+- "task/deleteTask.do",// 删除任务 - 发布者
+- "task/updateTask.do",// 修改任务：修改任务信息、修改任务前期状态 - 发布者
+- "task/bideTask.do",// 竞标任务：竞标人发起
+- "task/cancelBideTask.do",// 取消竞标：竞标人发起
+- "task/searchBidTaskByUserId.do"// 查询用户竞标任务列表

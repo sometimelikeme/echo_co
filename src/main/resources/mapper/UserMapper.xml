@@ -118,4 +118,10 @@
       <select id="getTaskSectors" parameterType="map" resultType="Map">
           SELECT * FROM T_SECTORS
       </select>
+      
+      <select id="getUserExpandInfo" parameterType="map" resultType="Map">
+          SELECT TOTAL_POINT,TOTAL_MONEY,TOTAL_ABLITY 
+          FROM T_USERS_EXPAND 
+          WHERE USER_ID = #{USER_ID}
+      </select>
 </mapper>
