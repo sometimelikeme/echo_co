@@ -169,9 +169,33 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 1.查询T_TASKS.TASK_STATUS, 若非30状态，不能选定竞标人
+				// 1.查询T_TASKS.TASK_STATUS, 若非30状态，不能再选定竞标人执行任务
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if (!"30".equals(task_statu)) {
+					super.writeJson(response, "9996", "任务进行中，无法再选定执行！", null, null);
+					return;
+				}
+				// 2.判断用户账户可用余额是否够此次任务费用
 				
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				
+				// 3.将用户账户余额减去此次任务费用；
+				//   将此次费用转移到系统账户SUPERADMIN
+				//   修改任务状态选定他人中标任务，加入中标时间戳
+				//   修改投标人TASK_IS_BIDE为1
+				
+				
+				// 4.返回任务信息
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
