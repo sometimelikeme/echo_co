@@ -13,8 +13,11 @@
           WHERE A.USER_ID = #{USER_ID}
           AND A.MERCHANT_ID = C.MERCHANT_ID
           <choose>
-			<when test="STATUS == '70'">
+          	<when test="STATUS == '70' ">
 				AND 1 = 1
+			</when>
+			<when test="STATUS != null and STATUS != '' ">
+				AND A.STATUS = #{STATUS}
 			</when>
 			<otherwise>
 				AND A.STATUS != '70'
