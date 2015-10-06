@@ -49,6 +49,8 @@ CREATE TABLE T_POINT_AWARD(
 );
 
 --用户预支付金额记录表(充值)
+--用户充值，beecloud回调增加用户余额
+--用户提现
 CREATE TABLE T_PRE_PAID(
   PRE_PAID_ID VARCHAR(32) NOT NULL,
   USER_ID VARCHAR(32) NOT NULL,--用户ID
