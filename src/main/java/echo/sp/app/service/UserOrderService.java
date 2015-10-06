@@ -29,4 +29,10 @@ public interface UserOrderService {
 	// 修改用户金额
 	// 修改订单状态
 	public int updatePayAction(Map parmMap); 
+	
+	// 产生用户金额消费记录
+	// 将此次退款从系统账户划到用户账户
+	// 修改订单状态
+	// 处理库存
+	public int updateBackPayAction(Map parmMap); 
 }

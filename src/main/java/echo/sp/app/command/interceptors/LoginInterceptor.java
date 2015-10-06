@@ -62,7 +62,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"order/addOrder.do",// 下单
 		"order/cancelOrder.do",// 取消
 		"order/payAction.do",// 付款
-		"order/backpay.do",// 退款
+		"order/backPay.do",// 退款
 		"order/consuOrder.do",// 消费
 		"order/closeOrder.do",// 结束
 		"order/delOrder.do",// 删除

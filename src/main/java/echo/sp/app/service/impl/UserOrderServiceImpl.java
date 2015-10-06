@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import echo.sp.app.command.utils.DateUtils;
+import echo.sp.app.command.utils.Prop;
 import echo.sp.app.command.utils.RandomUtil;
 import echo.sp.app.dao.MerItemDAO;
 import echo.sp.app.dao.MerOrderDAO;
@@ -124,6 +125,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 		return userOrderDAO.getPrePayInfoById(parmMap);
 	}
 
+	/**
+	 * 此接口为第三方支付
+	 */
 	@Override
 	public int insertPrePayInfo(Map parmMap) {
 		int returnInt = 0;
@@ -179,14 +183,21 @@ public class UserOrderServiceImpl implements UserOrderService{
 			// 产生用户金额消费记录
 			userDAO.insertUserMoneyRecord(parmMap);
 			
-			// 修改用户金额
+			// 修改用户金额-减
 			BigDecimal payment = new BigDecimal(parmMap.get("MONEY_NUM").toString());
 			BigDecimal total_money_Big = new BigDecimal(parmMap.get("TOTAL_MONEY").toString());
 			parmMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
 			userDAO.updateUserMoney(parmMap);
 			
-			// 修改订单状态
-			// 组织更新订单状态参数集合
+			// 将付款暂存到系统账户-增
+			parmMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+			parmMap.put("STATUS", "10");// 增
+			userDAO.insertUserMoneyRecord(parmMap);
+			total_money_Big =  new BigDecimal(userDAO.getMerchantInfo(parmMap).get("TOTAL_MONEY").toString());
+			parmMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+			userDAO.updateUserMoney(parmMap);
+			
+			// 修改订单状态-付款
 			Map upMap = new HashMap();
 			upMap.put("ORDER_ID", parmMap.get("ORDER_ID"));
 			upMap.put("STATUS", "30");
@@ -204,6 +215,46 @@ public class UserOrderServiceImpl implements UserOrderService{
 		}
 		return returnInt;
 	}
+	
+	
+	@Override
+	public int updateBackPayAction(Map parmMap) {
+		int returnInt = 0;
+		try {
+			// 产生用户金额消费记录
+			userDAO.insertUserMoneyRecord(parmMap);
+			
+			// 修改用户金额-增
+			BigDecimal payment = new BigDecimal(parmMap.get("MONEY_NUM").toString());
+			BigDecimal total_money_Big = new BigDecimal(parmMap.get("TOTAL_MONEY").toString());
+			parmMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+			userDAO.updateUserMoney(parmMap);
+			
+			// 将付款暂存到系统账户-减
+			parmMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+			parmMap.put("STATUS", "20");// 减
+			userDAO.insertUserMoneyRecord(parmMap);
+			total_money_Big =  new BigDecimal(userDAO.getMerchantInfo(parmMap).get("TOTAL_MONEY").toString());
+			parmMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
+			userDAO.updateUserMoney(parmMap);
+			
+			// 修改订单状态-退款
+			Map upMap = new HashMap();
+			upMap.put("ORDER_ID", parmMap.get("ORDER_ID"));
+			upMap.put("STATUS", "40");
+			upMap.put("BACK_TIME", DateUtils.getDateTime());
+			userOrderDAO.updateOrderPayBack(upMap);
+			
+			// 处理库存
+			processItemInventory(upMap, "40");
+			
+			returnInt = 1;
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+	
 	
 	/**
 	 * 处理库存
