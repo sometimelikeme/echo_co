@@ -59,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"mer/updateMerItem.do",// 更新商品信息
 		"mer/delMerItem.do",// 删除商品
 		"mer/updateToPreItem.do",// 设置商品为团购商品
-		"order/addOrder.do",// 下单
+		"order/addOrder.do",// 下单 
 		"order/cancelOrder.do",// 取消
 		"order/payAction.do",// 付款
 		"order/backPay.do",// 退款
