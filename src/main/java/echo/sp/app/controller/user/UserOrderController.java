@@ -97,6 +97,7 @@ public class UserOrderController extends CoreController{
 				String order_id = IdGen.uuid();
 				paramMap.put("ORDER_ID", order_id);
 				paramMap.put("ORDER_TIME", DateUtils.getDateTime());
+				paramMap.put("ORDER_ALIAS_ID", RandomUtil.generateNumString(12));
 				
 				// Compare inventory and quantity
 				// Compute New Inventory
@@ -417,7 +418,6 @@ public class UserOrderController extends CoreController{
 			// 生成支付的订单别号、验证码和时间戳
 			String timeStamp = DateUtils.getDateTime();
 			if ("PAY".equals(transactionType)) {// 付款
-				upMap.put("ORDER_ALIAS_ID", RandomUtil.generateNumString(12));
 				upMap.put("CAPTCHA", RandomUtil.generateString(6));
 				upMap.put("PAY_TIME", timeStamp);
 			} else if ("REFUND".equals(transactionType)) {// 退款

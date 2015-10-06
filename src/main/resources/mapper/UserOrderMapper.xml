@@ -5,8 +5,8 @@
 <mapper namespace="echo.sp.app.dao.UserOrderDAO">
 
 	<insert id="addOrderHead" parameterType="map">
-	    INSERT INTO T_ORDERS(ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,ORDER_TIME,TOTAL_PAY)
-        VALUES(#{ORDER_ID},#{MERCHANT_ID},#{USER_ID},#{ORDER_TYPE},'10',#{ORDER_TIME},#{TOTAL_PAY,jdbcType=NUMERIC})
+	    INSERT INTO T_ORDERS(ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,ORDER_TIME,TOTAL_PAY,ORDER_ALIAS_ID)
+        VALUES(#{ORDER_ID},#{MERCHANT_ID},#{USER_ID},#{ORDER_TYPE},'10',#{ORDER_TIME},#{TOTAL_PAY,jdbcType=NUMERIC},#{ORDER_ALIAS_ID})
     </insert>
     <insert id="addOrderLine" parameterType="java.util.List">
 	   	INSERT INTO T_ORDERS_LINE(ORDER_ID,ITEM_ID,ITEM_NAME,QTY_SOLD,PAY_PRICE,SINGLE_PAY) VALUES
@@ -81,7 +81,6 @@
           UPDATE T_ORDERS SET 
           STATUS = #{STATUS},
           PAY_TYPE = #{PAY_TYPE},
-          ORDER_ALIAS_ID = #{ORDER_ALIAS_ID},
           CAPTCHA = #{CAPTCHA},
           PAY_TIME = #{PAY_TIME}
           WHERE ORDER_ID = #{ORDER_ID}
