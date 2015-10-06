@@ -19,8 +19,6 @@ public interface UserOrderDAO {
 	
 	// Get Order Head Information
 	public Map getOrderHead(Map parmMap);
-	// Get Order Line Information
-	public List getOrderLine(Map parmMap);
 	
 	// Cancel Order   
 	public int updateOrderForCancel(Map parmMap);
