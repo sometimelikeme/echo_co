@@ -352,7 +352,7 @@ public class UserOrderController extends CoreController{
 				// 将此次退款从系统账户划到用户账户
 				// 修改订单状态
 				// 处理库存
-				userOrderService.updatePayAction(tranMap);
+				userOrderService.updateBackPayAction(tranMap);
 				
 				reMap = userOrderService.getOrderDetail(paramMap);
 				

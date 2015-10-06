@@ -8,22 +8,16 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET', 
-                url: "http://localhost:8080/echo/" + "order/addOrder.do",
+                url: "http://localhost:8080/echo/" + "order/backPay.do",
                 params: {
                 	dataParm:encodeURI(JSON.stringify({
                 		dataset:{
-                			MERCHANT_ID: '28f32c801ea74baa9d2a61cd623f674c', 
+                			ORDER_ID: '8964da14411d4d949f3a64ecb463d97b', 
                 			USER_ID:'c21375a7aef447239c74fc9e7926cd35',
-                			ut:'10',
-                			ORDER_TYPE:'10',
-                			TOTAL_PAY:'1000'
-                		},
-                		dataset_line:[
-                		              {ITEM_ID:'10001',ITEM_NAME:'二锅头',QTY_SOLD:'3',SINGLE_PAY:'100',PAY_PRICE:'300'},
-                		              {ITEM_ID:'10002',ITEM_NAME:'日本清酒',QTY_SOLD:'2',SINGLE_PAY:'200',PAY_PRICE:'400'}
-             		    ]
+                			ut:'10'
+                		}
                 	})),
-                	sc_co: '9052cbbd368d404aaa1717976ec9e204S',
+                	sc_co: 'd2353fc25719438f990f33557a07d84f',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {

@@ -125,9 +125,6 @@ public class UserOrderServiceImpl implements UserOrderService{
 		return userOrderDAO.getPrePayInfoById(parmMap);
 	}
 
-	/**
-	 * 此接口为第三方支付
-	 */
 	@Override
 	public int insertPrePayInfo(Map parmMap) {
 		int returnInt = 0;
@@ -193,7 +190,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			parmMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
 			parmMap.put("STATUS", "10");// 增
 			userDAO.insertUserMoneyRecord(parmMap);
-			total_money_Big =  new BigDecimal(userDAO.getMerchantInfo(parmMap).get("TOTAL_MONEY").toString());
+			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
 			parmMap.put("TOTAL_MONEY", total_money_Big.add(payment));
 			userDAO.updateUserMoney(parmMap);
 			
@@ -211,6 +208,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			
 			returnInt = 1;
 		} catch (Exception e) {
+			logger.error("UserOrderServiceImpl---updatePayAction: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -234,7 +232,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			parmMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
 			parmMap.put("STATUS", "20");// 减
 			userDAO.insertUserMoneyRecord(parmMap);
-			total_money_Big =  new BigDecimal(userDAO.getMerchantInfo(parmMap).get("TOTAL_MONEY").toString());
+			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
 			parmMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
 			userDAO.updateUserMoney(parmMap);
 			
