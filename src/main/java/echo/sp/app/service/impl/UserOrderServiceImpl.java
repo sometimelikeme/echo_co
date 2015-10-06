@@ -257,7 +257,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 	
 	
 	/**
-	 * 处理库存
+	 * 处理库存 
 	 * 其中包含库存的扣减和增加
 	 * 获取订单行表商品信息
 	 * 汇总库存和销量
