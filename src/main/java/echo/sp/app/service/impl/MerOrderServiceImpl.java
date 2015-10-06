@@ -1,6 +1,7 @@
 package echo.sp.app.service.impl;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import echo.sp.app.command.page.PubTool;
+import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.dao.MerOrderDAO;
+import echo.sp.app.dao.UserDAO;
 import echo.sp.app.service.MerOrderService;
 
 /**   
@@ -25,6 +28,9 @@ public class MerOrderServiceImpl implements MerOrderService {
 	
 	@Autowired
 	private MerOrderDAO merOrderDAO;
+	
+	@Autowired
+	private UserDAO userDAO;
 
 	@Override
 	public int updateOrderComsume(Map parmMap) {
@@ -35,9 +41,10 @@ public class MerOrderServiceImpl implements MerOrderService {
 	public int updateOrderClose(Map parmMap) {
 		int returnInt = 0;
     	try {
+    		// 关闭订单
     		merOrderDAO.updateOrderClose(parmMap);
+    		// 返还积分
     		merOrderDAO.insertUserPoint(parmMap);
-    		
     		// 汇总积分
     		String totalPoint = merOrderDAO.getTotalPoint(parmMap);
     		BigDecimal pointNumBig = new BigDecimal(parmMap.get("POINT_NUM").toString());
@@ -49,24 +56,25 @@ public class MerOrderServiceImpl implements MerOrderService {
 			}
     		parmMap.put("TOTAL_POINT", totalPointBig);
     		merOrderDAO.updateUserTotalPoint(parmMap);
-    		
-    		// 将本次交易产生的费用返还到店铺账户中
-    		// 获取用户消费所在店铺的UER_ID
+    		// 返还金额
     		Map merMap = merOrderDAO.getMerUserIdAndPay(parmMap);
-    		String moneyNum = merMap.get("TOTAL_PAY").toString();
-    		parmMap.put("MER_USER_ID", merMap.get("USER_ID"));
-    		parmMap.put("MONEY_NUM", merMap.get("TOTAL_PAY"));
-    		// 汇总总金额
-    		String totalMoney = merOrderDAO.getTotalMoney(parmMap);
-    		BigDecimal moneyNumBig = new BigDecimal(moneyNum);
-    		BigDecimal totalmoneyBig;
-    		if (PubTool.processNullAndEmpty(totalMoney)) {
-    			totalmoneyBig = pointNumBig;
-			} else {
-				totalmoneyBig = new BigDecimal(totalMoney).add(moneyNumBig);
-			}
-    		parmMap.put("TOTAL_MONEY", totalmoneyBig);
-    		merOrderDAO.updateUserTotalMoney(parmMap);
+    		BigDecimal payment = new BigDecimal(merMap.get("TOTAL_PAY").toString());
+			BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(merMap).get("TOTAL_MONEY").toString());
+			merMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+			userDAO.updateUserMoney(merMap);
+			// 金额记录
+			Map tranMap = new HashMap();
+			tranMap.put("USER_ID", merMap.get("USER_ID"));
+			tranMap.put("TIME1", DateUtils.getDateTime());
+			tranMap.put("DATE1", DateUtils.getToday());
+			tranMap.put("MONEY_NUM", payment);
+			tranMap.put("TASK_ID", "");
+			tranMap.put("ORDER_ID", parmMap.get("ORDER_ID"));
+			tranMap.put("MN_TYPE", "20");
+			tranMap.put("ABLI_ORDER_ID", "");
+			tranMap.put("PRE_PAID_ID", "");
+			tranMap.put("STATUS", "10");
+			userDAO.insertUserMoneyRecord(tranMap);
     		
     		returnInt = 1;
 		} catch (Exception e) {
