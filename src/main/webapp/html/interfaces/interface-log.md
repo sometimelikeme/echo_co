@@ -62,7 +62,7 @@
 - 获取NO_CO时返回初始化数据时，同时返回初始化基本信息数据
 ### 2015-10-3
 - order/getOrders接口ITEM_INFO字段返回购买商品信息
-### 2015-10-4
+### 2015-10-4-作废
 - "user/getUserExpandInfo",// 获取用户扩展信息
 - "task/searchTaskList.do",// 查询任务：查询任务列表
 - "task/searchTaskById.do"// 查询任务：查询单个任务
@@ -72,3 +72,7 @@
 - "task/bideTask.do",// 竞标任务：竞标人发起
 - "task/cancelBideTask.do",// 取消竞标：竞标人发起
 - "task/searchBidTaskByUserId.do"// 查询用户竞标任务列表
+### 2015-10-6
+- "order/payAction"用户付款接口
+- "order/backPay"用户退款接口
+- 增加调用beecloud网平台账户充值接口

@@ -80,6 +80,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 		return userOrderDAO.updateOrderForCancel(parmMap);
 	}
 
+	/**
+	 * 调用第三方支付
+	 */
 	@Override
 	public int updateOrderPay(Map parmMap) {
 		int returnInt = 0;
@@ -125,6 +128,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 		return userOrderDAO.getPrePayInfoById(parmMap);
 	}
 
+	/**
+	 * 平台充值
+	 */
 	@Override
 	public int insertPrePayInfo(Map parmMap) {
 		int returnInt = 0;

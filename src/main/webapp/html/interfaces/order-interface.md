@@ -280,4 +280,94 @@
 	status: "9992",
 	msg: "后台程序执行失败",
 }`
+###接口7： 支付订单
+- url: order/payAction.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required店铺用户ID`
+		`ORDER_ID: '45c298a408df410eac0a1b2c8e6a86d9',// required订单号`
+		`ut: '10'// required必须为10`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可上传商品。
+	+ 产生用户金额记录明细
+	+ 用户账户减去此次消费金额
+	+ 产生系统账户金额明细
+	+ 将此次消费金额增加到系统账户
+	+ 执行修改订单状态为支付状态。
+	+ 修改商品库存
+	+ 返回dataset中包含订单基本信息，dataset_line包含订单商品的基本信息。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[],"dataset":{}}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效用户！"
+}`
+ + 失败：` {
+	status: "9998",
+	msg: "无效客户端！"
+}`
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备！"
+}`
+ + 失败：` {
+	status: "9996",
+	msg: "订单状态不正确, 无法支付！"
+}`
+ + 失败：` {
+	status: "9995",
+	msg: "余额不足，请充值！"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
+###接口7： 退款
+- url: order/backPay.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required店铺用户ID`
+		`ORDER_ID: '45c298a408df410eac0a1b2c8e6a86d9',// required订单号`
+		`ut: '10'// required必须为10`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可上传商品。
+	+ 产生用户金额记录明细
+	+ 用户账户增加此次消费金额
+	+ 产生系统账户金额明细
+	+ 系统账户减少此次消费金额
+	+ 执行修改订单状态为退款状态。
+	+ 修改商品库存
+	+ 返回dataset中包含订单基本信息，dataset_line包含订单商品的基本信息。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[],"dataset":{}}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效用户！"
+}`
+ + 失败：` {
+	status: "9998",
+	msg: "无效客户端！"
+}`
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备！"
+}`
+ + 失败：` {
+	status: "9996",
+	msg: "订单状态不正确, 无法退款"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
 
