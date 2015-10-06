@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import echo.sp.app.dao.MerItemDAO;
+import echo.sp.app.dao.MerOrderDAO;
 import echo.sp.app.dao.UserOrderDAO;
 import echo.sp.app.service.UserOrderService;
 
@@ -29,6 +30,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 	
 	@Autowired
 	private MerItemDAO merItemDAO;
+	
+	@Autowired
+	private MerOrderDAO merOrderDAO;
 
 	/**
 	 * 执行订单头表和行表
@@ -58,7 +62,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 		Map resMap = new HashMap();
 		
 		resMap.put("HEAD", userOrderDAO.getOrderHead(parmMap));
-		resMap.put("LINE", userOrderDAO.getOrderLine(parmMap));
+		resMap.put("LINE", merOrderDAO.getOrderDetailByOrderId(parmMap));
 		
 		return resMap;
 		
@@ -102,7 +106,7 @@ public class UserOrderServiceImpl implements UserOrderService{
     		// 其中包含库存的扣减和增加
     		// 获取订单行表商品信息
     		// 汇总库存和销量
-    		List itemList = userOrderDAO.getOrderLine(upMap);
+    		List itemList = merOrderDAO.getOrderDetailByOrderId(upMap);
 			Map temMap;
 			Map resMap;
 			BigDecimal inventory_de;// 库存量
