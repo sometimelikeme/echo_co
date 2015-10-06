@@ -280,7 +280,7 @@ public class UserOrderController extends CoreController{
 			String success = "success";
 			
 			
-			// 验证签名
+			/* ----------------------------------------验证签名-------------------------------------- */
 			if (!sign.equals(MD5Util.getMessageDigest(Prop.getString("beecloud.appID") + Prop.getString("beecloud.appSecret") + timestamp))) {
 				logger.error(DateUtils.getDateTime() + ": 签名认证失败!");
 				writer.write(fail);
@@ -288,7 +288,7 @@ public class UserOrderController extends CoreController{
 				return;
 			}
 			
-			
+			/* --------------------------------------验证自定义签名----------------------------------- */
 			// 增加额外的额外验证自定义签名验证
 			// 根据section动态产生签名
 			// 签名算法同验证签名
@@ -320,126 +320,137 @@ public class UserOrderController extends CoreController{
 				return;
 			}
 			
-			
-			// 根据transactionId订单号来查询订单的支付状态
-			// 这里的支付状态包括支付和退款两种状态的判断
-			// 如果当前订单为已支付,直接返回success;主要是为了处理beecloud的如下问题：
-			// 注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
-			// 提供根据订单号获取订单状态的接口
-			Map parmMap = new HashMap();
-			parmMap.put("ORDER_ID", transactionId);
-			Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
-			// 无效订单号
-			if (orderMap == null) {
-				writer.write(fail);
-				response.getWriter().flush();
-				return;
-			}
-			String order_status = orderMap.get("STATUS").toString();
-			Object pay_time = orderMap.get("PAY_TIME");// 用来判断更新订单时间
-			// 支付状态成功，遇到重复推送; 退款状态成功，遇到重复推送
-			if (("PAY".equals(transactionType) && "30".equals(order_status)) || ("REFUND".equals(transactionType) && "40".equals(order_status))) {
-				writer.write(success);
-				return;
-			}
-			// 只能当前状态为【下单】时才可以支付
-			if ("PAY".equals(transactionType) && !"10".equals(order_status)) {
-				logger.error(DateUtils.getDateTime() + ": 只能当前状态为【下单】时才可以支付!");
-				writer.write(fail);
-				response.getWriter().flush();
-				return;
-			}
-			// 只能当前状态为【支付订单】时才可以退单
-			if ("REFUND".equals(transactionType) && !"30".equals(order_status)) {
-				logger.error(DateUtils.getDateTime() + ": 只能当前状态为【支付订单】时才可以退单!");
-				writer.write(fail);
-				response.getWriter().flush();
-				return;
-			}
-			
-			// 支付日志总表参数集
-			Map payLogMap = new HashMap();
-			payLogMap.put("ORDER_ID", transactionId);
-			payLogMap.put("TIME_STAMP", timestamp);
-			payLogMap.put("TOTAL_PAYMENT", PubTool.parseCentToYu(transactionFee));
-				
-			gson = new Gson();
-			
-			// 支付日志分表参数集
-			Map payMap = new HashMap();
-			
-			String pay_type = "";
-			
-			if ("WX".equals(channelType)) {
-				
-				pay_type = "20";
-				
-				WX wx = gson.fromJson(messageDetail, WX.class);
-				
-				payLogMap.put("TRANS_ID", wx.getTransaction_id());
-				
-				payMap = getWxMap(wx);
-				
-			} else if ("ALI".equals(channelType)) {
-				
-				pay_type = "10";
-				
-				ALI ali = gson.fromJson(messageDetail, ALI.class);
-				
-				payLogMap.put("TRANS_ID", ali.getTrade_no());
-				
-				payMap = getAliMap(ali);
-				
-			} else if ("UN".equals(channelType)) {
-				
-				pay_type = "30";
-				
-				UN un = gson.fromJson(messageDetail, UN.class);
-				
-				payLogMap.put("TRANS_ID", un.getQueryId());
-				
-				payMap = getUnMap(un);
-				
-			}
-			
+			/* -------------------------------第三方支付（AWU）的信息------------------------------ */
+			Map payMap = serilizePayMap(channelType, messageDetail);
+			String tran_id = payMap.get("tran_id").toString();// 第三方支付流水号
+			String pay_type = payMap.get("pay_type").toString();// 支付方式：10-支付宝，20-微信，30-银联
+			payMap.remove("tran_id");
+			payMap.remove("pay_type");
 			payMap.put("ORDER_ID", transactionId);
 			
-			// 支付类型
-			payLogMap.put("PAY_TYPE", pay_type);
-			// 判断支付(支付/退款); 生成支付对象参数
-			payLogMap.put("TRANS_TYPE", "PAY".equals(transactionType) ? "10" : "20");
-			
-			
-			// 组织更新订单状态参数集合
-			Map upMap = new HashMap();
-			upMap.put("ORDER_ID", transactionId);
-			upMap.put("STATUS", "PAY".equals(transactionType) ? "30" : "40");
-			upMap.put("PAY_TYPE", pay_type);
-			// 生成支付的订单别号、验证码和时间戳
-			String timeStamp = DateUtils.getDateTime();
-			if ("PAY".equals(transactionType)) {// 付款
-				upMap.put("CAPTCHA", RandomUtil.generateString(6));
-				upMap.put("PAY_TIME", timeStamp);
-			} else if ("REFUND".equals(transactionType)) {// 退款
-				upMap.put("BACK_TIME", timeStamp);
+			/* ---------------------------------判断为充值还是支付-------------------------------- */
+			// 根据optional参数中IS_CHARGE来判断是充值还是支付订单
+			String is_charge = optionalObj.getIS_CHARGE();
+			transactionFee = PubTool.parseCentToYu(transactionFee);
+			if ("1".equals(is_charge) && "PAY".equals(transactionType)) {// 充值
+				// 1.根据transactionId来获取充值状态
+				// 这里的支付状态只有支付状态PAY
+				// 如果当前充值已经存在,直接返回success;主要是为了处理beecloud的如下问题：
+				// 注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
+				// 根据由客户端提供的唯一的transactionId，即T_PRE_PAID.PRE_PAID_ID来查看当前状态
+				// 若存在，返回成功
+				Map prePayMap = new HashMap();
+				prePayMap.put("PRE_PAID_ID", transactionId);
+				Map prePayResMap = userOrderService.getPrePayInfoById(prePayMap);
+				if (prePayResMap != null && prePayResMap.get("PRE_PAID_ID") != null) {
+					writer.write(success);
+					response.getWriter().flush();
+					return;
+				}
+				// 2.将通过第三方支付（AWU）的信息保存到对应的日志表中
+				// 3.将支付记录保存到用户预支付金额记录表
+				// 4.更新用户可消费金额T_USERS_EXPAND
+				prePayMap.put("PAY_TYPE", pay_type);
+				prePayMap.put("USER_ID", optionalObj.getUSER_ID());
+				prePayMap.put("TIME1", DateUtils.getDateTime());
+				prePayMap.put("DATE1", DateUtils.getToday());
+				prePayMap.put("PAYMENT", transactionFee);
+				prePayMap.put("ACCOUNT_ID", "");
+				prePayMap.put("TRANS_ID", tran_id);
+				prePayMap.put("TRANS_TYPE", "10");
+				prePayMap.put("NOTE", "");
+				
+				Map reMap = new HashMap();
+				reMap.put("prePayMap", prePayMap);
+				reMap.put("payMap", payMap);
+				userOrderService.insertPrePayInfo(reMap);
+				// 返回成功
+				writer.write(success);
+				response.getWriter().flush();
+			} else if ("2".equals(is_charge)) {// 商品订单支付
+				// 根据transactionId订单号来查询订单的支付状态
+				// 这里的支付状态包括支付和退款两种状态的判断
+				// 如果当前订单为已支付,直接返回success;主要是为了处理beecloud的如下问题：
+				// 注意：同一条订单可能会发送多条支付成功的webhook消息，这是由渠道触发的(比如渠道的重试)，同一个订单的重复的支付成功的消息应该被忽略。退款同理。
+				// 提供根据订单号获取订单状态的接口
+				Map parmMap = new HashMap();
+				parmMap.put("ORDER_ID", transactionId);
+				Map orderMap = (Map) (userOrderService.getOrderDetail(parmMap).get("HEAD"));
+				// 无效订单号
+				if (orderMap == null) {
+					writer.write(fail);
+					response.getWriter().flush();
+					return;
+				}
+				String order_status = orderMap.get("STATUS").toString();
+				Object pay_time = orderMap.get("PAY_TIME");// 用来判断更新订单时间
+				// 支付状态成功，遇到重复推送; 退款状态成功，遇到重复推送
+				if (("PAY".equals(transactionType) && "30".equals(order_status)) || ("REFUND".equals(transactionType) && "40".equals(order_status))) {
+					writer.write(success);
+					return;
+				}
+				// 只能当前状态为【下单】时才可以支付
+				if ("PAY".equals(transactionType) && !"10".equals(order_status)) {
+					logger.error(DateUtils.getDateTime() + ": 只能当前状态为【下单】时才可以支付!");
+					writer.write(fail);
+					response.getWriter().flush();
+					return;
+				}
+				// 只能当前状态为【支付订单】时才可以退单
+				if ("REFUND".equals(transactionType) && !"30".equals(order_status)) {
+					logger.error(DateUtils.getDateTime() + ": 只能当前状态为【支付订单】时才可以退单!");
+					writer.write(fail);
+					response.getWriter().flush();
+					return;
+				}
+				
+				// 支付日志总表参数集
+				Map payLogMap = new HashMap();
+				payLogMap.put("ORDER_ID", transactionId);
+				payLogMap.put("TIME_STAMP", timestamp);
+				payLogMap.put("TOTAL_PAYMENT", transactionFee);
+				
+				// 支付类型
+				payLogMap.put("PAY_TYPE", pay_type);
+				// 判断支付(支付/退款); 生成支付对象参数
+				payLogMap.put("TRANS_TYPE", "PAY".equals(transactionType) ? "10" : "20");
+				
+				// 组织更新订单状态参数集合
+				Map upMap = new HashMap();
+				upMap.put("ORDER_ID", transactionId);
+				upMap.put("STATUS", "PAY".equals(transactionType) ? "30" : "40");
+				upMap.put("PAY_TYPE", pay_type);
+				// 生成支付的订单别号、验证码和时间戳
+				String timeStamp = DateUtils.getDateTime();
+				if ("PAY".equals(transactionType)) {// 付款
+					upMap.put("CAPTCHA", RandomUtil.generateString(6));
+					upMap.put("PAY_TIME", timeStamp);
+				} else if ("REFUND".equals(transactionType)) {// 退款
+					upMap.put("BACK_TIME", timeStamp);
+				}
+				
+				// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
+				// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
+				// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG
+				// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
+				// 生成订单别号和唯一码-对于支付！
+				// 在客户端收到支付成功后的消息后，调用获取订单的接口，获取订单信息
+				parmMap = new HashMap();
+				parmMap.put("payLogMap", payLogMap);
+				parmMap.put("payMap", payMap);
+				parmMap.put("upMap", upMap);
+				
+				userOrderService.updateOrderPay(parmMap);
+				
+				writer.write(success);
+				response.getWriter().flush();
+				
+			} else {
+				logger.error("未知支付!");
+				writer.write(fail);
+				response.getWriter().flush();
+				return;
 			}
-			
-			// 保存微信支付信息到微信日志信息表 T_WX_PAY_LOG
-			// 保存支付宝支付信息到支付宝日志信息表 T_ALI_PAY_LOG
-			// 保存银联支付信息到银联日志信息表 T_UN_PAY_LOG
-			// 将支付信息保存到支付信息日志表-T_ORDERS_PAY_LOG
-			// 生成订单别号和唯一码-对于支付！
-			// 在客户端收到支付成功后的消息后，调用获取订单的接口，获取订单信息
-			parmMap = new HashMap();
-			parmMap.put("payLogMap", payLogMap);
-			parmMap.put("payMap", payMap);
-			parmMap.put("upMap", upMap);
-			
-			userOrderService.updateOrderPay(parmMap);
-			
-			writer.write(success);
-			response.getWriter().flush();
-			
 		} catch (Exception e) {
 			logger.error("UserOrderController---payOrder---interface error: ", e);
 			writer.write("fail");
@@ -453,6 +464,62 @@ public class UserOrderController extends CoreController{
 				writer.close();
 			}
 		}
+	}
+	
+	
+	/**
+	 * 产生支付日志分表参数集
+	 * 订单支付日志表中增加第三方的交易流水号
+	 * @param channelType
+	 * @param messageDetail
+	 * @param payLogMap
+	 * @return
+	 */
+	private Map serilizePayMap(String channelType, String messageDetail){
+		
+		Gson gson = new Gson();
+		
+		Map payMap = new HashMap();
+		
+		String pay_type = "";
+		String tran_id = "";
+		
+		if ("WX".equals(channelType)) {
+			
+			pay_type = "20";
+			
+			WX wx = gson.fromJson(messageDetail, WX.class);
+			
+			tran_id = wx.getTransaction_id();
+			
+			payMap = getWxMap(wx);
+			
+		} else if ("ALI".equals(channelType)) {
+			
+			pay_type = "10";
+			
+			ALI ali = gson.fromJson(messageDetail, ALI.class);
+			
+			tran_id = ali.getTrade_no();
+			
+			payMap = getAliMap(ali);
+			
+		} else if ("UN".equals(channelType)) {
+			
+			pay_type = "30";
+			
+			UN un = gson.fromJson(messageDetail, UN.class);
+			
+			tran_id = un.getQueryId();
+			
+			payMap = getUnMap(un);
+			
+		}
+		
+		payMap.put("pay_type", pay_type);
+		payMap.put("tran_id", tran_id);
+		
+		return payMap;
 	}
 	
 	/**

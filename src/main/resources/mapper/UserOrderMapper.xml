@@ -90,4 +90,40 @@
           BACK_TIME = #{BACK_TIME}
           WHERE ORDER_ID = #{ORDER_ID}
     </update> 
+    
+    <select id="getPrePayInfoById" parameterType="map" resultType="Map">
+    	SELECT PRE_PAID_ID,USER_ID,TIME1,DATE1,
+    	PAYMENT,PAY_TYPE,ACCOUNT_ID,TRANS_ID,TRANS_TYPE,NOTE
+    	FROM T_PRE_PAID
+    	WHERE PRE_PAID_ID = #{PRE_PAID_ID}
+    </select>
+    <insert id="insertPrePayInfo" parameterType="map">
+	    INSERT INTO
+			T_PRE_PAID
+			(
+				PRE_PAID_ID,
+				USER_ID,
+				TIME1,
+				DATE1,
+				PAYMENT,
+				PAY_TYPE,
+				ACCOUNT_ID,
+				TRANS_ID,
+				TRANS_TYPE,
+				NOTE
+			)
+		VALUES
+			(
+				#{PRE_PAID_ID},
+				#{USER_ID},
+				#{TIME1},
+				#{DATE1},
+				#{PAYMENT,jdbcType=NUMERIC},
+				#{PAY_TYPE},
+		        #{ACCOUNT_ID},
+		        #{TRANS_ID},
+		        #{TRANS_TYPE},
+		        #{NOTE}
+			)
+    </insert>
 </mapper>

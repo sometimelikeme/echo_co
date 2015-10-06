@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import echo.sp.app.dao.MerItemDAO;
 import echo.sp.app.dao.MerOrderDAO;
+import echo.sp.app.dao.UserDAO;
 import echo.sp.app.dao.UserOrderDAO;
 import echo.sp.app.service.UserOrderService;
 
@@ -33,6 +34,9 @@ public class UserOrderServiceImpl implements UserOrderService{
 	
 	@Autowired
 	private MerOrderDAO merOrderDAO;
+	
+	@Autowired
+	private UserDAO userDAO;
 
 	/**
 	 * 执行订单头表和行表
@@ -141,6 +145,44 @@ public class UserOrderServiceImpl implements UserOrderService{
 			returnInt = 1; 
 			
 		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public Map getPrePayInfoById(Map parmMap) {
+		return userOrderDAO.getPrePayInfoById(parmMap);
+	}
+
+	@Override
+	public int insertPrePayInfo(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		Map prePayMap = (Map)parmMap.get("prePayMap");// 用户预支付金额记录表
+    		Map payMap = (Map)parmMap.get("payMap");// 第三方支付返回的支付信息
+    		
+    		// Step1: 保存第三方支付返回的支付信息的数据库（包含支付和退款信息）
+    		String pay_type = prePayMap.get("PAY_TYPE").toString();
+    		if ("10".equals(pay_type)) {
+				userOrderDAO.insertToAliLog(payMap);
+			} else if ("20".equals(pay_type)) {
+				userOrderDAO.insertToWxLog(payMap);
+			} else if ("30".equals(pay_type)) {
+				userOrderDAO.insertToUnLog(payMap);  
+			}
+    		
+    		// Step2: 将支付记录保存到用户预支付金额记录表
+    		userOrderDAO.insertPrePayInfo(prePayMap);
+    		
+    		// Step3: 更新用户可消费金额T_USERS_EXPAND
+			BigDecimal payment = new BigDecimal(parmMap.get("PAYMENT").toString());
+			BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(prePayMap).get("TOTAL_MONEY").toString());
+			parmMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+			userDAO.updateUserMoney(parmMap);
+    		
+    		returnInt = 1;
+    	} catch (Exception e) {
 			throw new RuntimeException();
 		}
 		return returnInt;

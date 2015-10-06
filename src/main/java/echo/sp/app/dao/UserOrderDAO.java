@@ -33,4 +33,10 @@ public interface UserOrderDAO {
 	public int updateOrderPay(Map parmMap);
 	// 扣款处理
 	public int updateOrderPayBack(Map parmMap);
+	
+	// 根据PRE_PAID_ID获取用户充值和提现记录
+	public Map getPrePayInfoById(Map parmMap);
+	// 将支付记录保存到用户预支付金额记录表
+	public int insertPrePayInfo(Map parmMap);
+	
 }

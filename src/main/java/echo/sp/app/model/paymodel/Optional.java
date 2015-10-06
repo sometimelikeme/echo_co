@@ -9,6 +9,20 @@ public class Optional {
 	String RANDOM_ID = "";// 随机号
 	String SECTION = "";// 当前随机号所在序列:支持枚举1,2,3,4
 	String SIGN = "";// 签名
+	String IS_CHARGE = "";// 是否为充值 1-充值 2-支付
+	String USER_ID = "";// 充值用户ID
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
+	public String getIS_CHARGE() {
+		return IS_CHARGE;
+	}
+	public void setIS_CHARGE(String iS_CHARGE) {
+		IS_CHARGE = iS_CHARGE;
+	}
 	public String getSIGN() {
 		return SIGN;
 	}
