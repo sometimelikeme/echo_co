@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "order/payOrder.do",
+                params: {
+					sign:'be9033e8160264436406c9ca598d1517',
+                    timestamp:'1426817510111',
+                    channelType:'WX',
+                    transactionType:'PAY',
+                    transactionId:'45c298a408df410eac0a1b2c8e6a86d9',// 客户端生成全球唯一码
+                    transactionFee:'100000',
+                    messageDetail:{
+                        "transaction_id":"45c298a408df410eac0a1b2c8e6a86d9",
+                        "nonce_str":"441956259efc417291d904f90f76fd69",
+                        "bank_type":"CMB_CREDIT",
+                        "openid":"oPSDwtwFnD54dB_ggPFGBO_KMdpo",
+                        "fee_type":"CNY",
+                        "mch_id":"xxx",
+                        "cash_fee":"1",
+                        "out_trade_no":"45c298a408df410eac0a1b2c8e6a86d9",
+                        "appid":"xxx",
+                        "total_fee":"100000",
+                        "trade_type":"JSAPI",
+                        "result_code":"SUCCESS",
+                        "time_end":"20150525130218",
+                        "is_subscribe":"Y",
+                        "return_code":"SUCCESS"
+                    },
+                	optional:{
+                		"ORDER_ID":"45c298a408df410eac0a1b2c8e6a86d9",
+                        "RANDOM_ID": "123456789",
+                        "SECTION":"1",
+                        "SIGN":"c242207c87c37ded16cc6005a79f6787",
+                        "IS_CHARGE":"1",
+                        "USER_ID":"c21375a7aef447239c74fc9e7926cd35"
+                	}
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
