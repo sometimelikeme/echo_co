@@ -24,4 +24,9 @@ public interface UserOrderService {
 	// 生成充值记录
 	// 更新用户可消费金额T_USERS_EXPAND
 	public int insertPrePayInfo(Map parmMap);  
+	
+	// 产生用户金额消费记录
+	// 修改用户金额
+	// 修改订单状态
+	public int updatePayAction(Map parmMap); 
 }

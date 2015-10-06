@@ -31,6 +31,7 @@ import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.model.paymodel.WX;
 import echo.sp.app.service.MerItemService;
 import echo.sp.app.service.UserOrderService;
+import echo.sp.app.service.UserService;
 import echo.sp.app.model.paymodel.*;
 
 /**  
@@ -48,6 +49,9 @@ public class UserOrderController extends CoreController{
 	
 	@Autowired
 	private MerItemService merItemService;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 用户下单接口
@@ -209,6 +213,84 @@ public class UserOrderController extends CoreController{
 		}
 	}
 	
+	
+	/**
+	 * 付款订单
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("order/payAction")
+	public void payAction(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserOrderController---payAction---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			// Get and compare with user id in session
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {// Only user has access
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				
+				// 判断订单状态
+				Map reMap = userOrderService.getOrderDetail(paramMap);
+				
+				Map orderMap = (Map) reMap.get("HEAD");
+				
+				if (!"10".equals(orderMap.get("STATUS").toString())) {
+					super.writeJson(response, "9996", "订单状态不正确, 无法支付！", null, null);
+					return;
+				}
+				
+				// 判断用户余额
+				BigDecimal payment = new BigDecimal(paramMap.get("MONEY_NUM").toString());
+				BigDecimal total_money_Big = new BigDecimal(userService.getUserExpandInfo(paramMap).get("TOTAL_MONEY").toString());
+				if (total_money_Big.compareTo(payment) < 0) {
+					super.writeJson(response, "9995", "余额不足，请充值！", null, null);
+					return;
+				}
+				
+				// 用户金额消费明细表参数集
+				Map tranMap = new HashMap();
+				tranMap.put("USER_ID", user_id);
+				tranMap.put("TIME1", DateUtils.getDateTime());
+				tranMap.put("DATE1", DateUtils.getToday());
+				tranMap.put("MONEY_NUM", paramMap.get("MONEY_NUM"));
+				tranMap.put("TASK_ID", "");
+				tranMap.put("ORDER_ID", paramMap.get("ORDER_ID"));
+				tranMap.put("ABLI_ORDER_ID", "");
+				tranMap.put("PRE_PAID_ID", "");
+				tranMap.put("STATUS", "1");
+				tranMap.put("MN_TYPE", "20");
+				tranMap.put("TOTAL_MONEY", total_money_Big);
+				
+				// 产生用户金额消费记录
+				// 将此次用户金额划到系统账户
+				// 修改订单状态
+				// 处理库存
+				userOrderService.updatePayAction(tranMap);
+				
+				reMap = userOrderService.getOrderDetail(paramMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) reMap.get("HEAD"), (List) reMap.get("LINE"));
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserOrderController---payAction---interface error: ", e);
+		}
+	}
 
 	/**
 	 * 在BeeCloud获得渠道的确认信息（包括支付成功，退款成功）后，会通过主动推送的方式将确认消息推送给客户的server。如果客户需要接收此类消息来实现业务逻辑，需要:
@@ -349,7 +431,8 @@ public class UserOrderController extends CoreController{
 				}
 				// 2.将通过第三方支付（AWU）的信息保存到对应的日志表中
 				// 3.将支付记录保存到用户预支付金额记录表
-				// 4.更新用户可消费金额T_USERS_EXPAND
+				// 4:将支付记录信息保存到用户金钱交易日志表
+				// 5.更新用户可消费金额T_USERS_EXPAND
 				prePayMap.put("PAY_TYPE", pay_type);
 				prePayMap.put("USER_ID", optionalObj.getUSER_ID());
 				prePayMap.put("TIME1", DateUtils.getDateTime());
