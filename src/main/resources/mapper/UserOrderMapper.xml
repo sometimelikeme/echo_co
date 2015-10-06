@@ -38,23 +38,6 @@
     	WHERE A.ORDER_ID = #{ORDER_ID}
     	AND A.MERCHANT_ID = C.MERCHANT_ID
     </select>
-    <select id="getOrderLine" parameterType="map" resultType="Map">
-   		SELECT
-			A.ORDER_ID,
-			A.ITEM_ID,
-			A.ITEM_NAME,
-			A.QTY_SOLD,
-			A.PAY_PRICE,
-			A.SINGLE_PAY,
-			B.HEAD_ICON,
-			B.ITEM_DESC 
-		FROM
-			T_ORDERS_LINE A,
-			T_ITEMS B 
-		WHERE
-			A.ORDER_ID = #{ORDER_ID} AND
-			A.ITEM_ID = B.ITEM_ID
-    </select>
     
     <update id="updateOrderForCancel" parameterType="map">  
           UPDATE T_ORDERS SET 
