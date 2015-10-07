@@ -37,7 +37,6 @@
     	FROM T_ORDERS A,T_MERCHANTS C
     	WHERE A.ORDER_ID = #{ORDER_ID}
     	AND A.MERCHANT_ID = C.MERCHANT_ID
-    	AND A.USER_ID = #{USER_ID}
     </select>
     
     <update id="updateOrderForCancel" parameterType="map">  
