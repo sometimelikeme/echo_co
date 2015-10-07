@@ -76,3 +76,5 @@
 - "order/payAction"用户付款接口
 - "order/backPay"用户退款接口
 - 增加调用beecloud网平台账户充值接口
+### 2015-10-7
+- "user/getUserExpandInfo.do"获取余额、积分、能力

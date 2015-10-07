@@ -202,3 +202,34 @@
 	status: "9992",
 	msg: "后台程序执行失败",
 }`
+###接口7： 获取用户积分余额
+- url: user/getUserExpandInfo.do
+- 参数一： 取消收藏商品参数对象
+	`dataParm: {`
+	`dataset: {`
+		`ut: '10',// required登陆客户端`
+		`USER_ID: '100012',// required用户ID`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可上传商品。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset":"T_USERS_EXPAND表中信息"}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效用户！"
+}`
+ + 失败：` {
+	status: "9998",
+	msg: "无效客户端"
+}`
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
