@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService{
     		if (userDAO.addRegistAlg(parmMap) > 0) {
     			parmMap.put("TOTAL_POINT", "0");
     			parmMap.put("TOTAL_MONEY", "0");
+    			parmMap.put("TOTAL_ABLITY", "0");
     			if (userDAO.addUserExpand(parmMap) > 0) {
     				returnInt = 1;
     			};

@@ -10,8 +10,8 @@
       </insert>
       
       <insert id="addUserExpand" parameterType="map">
-          INSERT INTO T_USERS_EXPAND(USER_ID,TOTAL_POINT,TOTAL_MONEY)
-          VALUES(#{USER_ID},#{TOTAL_POINT,jdbcType=NUMERIC},#{TOTAL_MONEY,jdbcType=NUMERIC})
+          INSERT INTO T_USERS_EXPAND(USER_ID,TOTAL_POINT,TOTAL_MONEY,TOTAL_ABLITY)
+          VALUES(#{USER_ID},#{TOTAL_POINT,jdbcType=NUMERIC},#{TOTAL_MONEY,jdbcType=NUMERIC},#{TOTAL_ABLITY,jdbcType=NUMERIC})
       </insert>
       
       <select id="getCheckReg" parameterType="map" resultType="int">
