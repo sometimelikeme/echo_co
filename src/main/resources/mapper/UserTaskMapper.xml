@@ -122,7 +122,10 @@
           AND A.USER_ID = B.USER_ID
           AND A.TASK_ID = C.TASK_ID
           AND C.USER_ID = #{USER_ID}
-          AND C.BID_STATUS = '1'
+          AND C.STATUS = '10'
+          <if test="IS_BIDE != null and IS_BIDE != '' ">  
+          		AND C.IS_BIDE = #{IS_BIDE} 
+    	  </if>
     </select>
     
     <update id="deleteTask" parameterType="map"> 
