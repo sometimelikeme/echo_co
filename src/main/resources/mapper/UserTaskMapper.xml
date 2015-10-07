@@ -13,7 +13,8 @@
 				TASK_TITLE,
 				TASK_DESC,
 				TASK_DEADLINE,
-				TASK_PAID,
+				TASK_TYPE,
+				TASK_TOTAL_PAID,
 				TASK_ADDR,
 				TASK_LONGITUDE,
 				TASK_LATITUDE,
@@ -22,8 +23,9 @@
 				TASK_ICON3,
 				TASK_ICON4,
 				TASK_AUDIT_STATUS,
-				TASK_STATUS,
-				TASK_CREATE_TIME 
+				TASK_BID_STATUS,
+				TASK_CREATE_TIME,
+				TASK_AREA
 			)
 		VALUES
 			(
@@ -34,6 +36,7 @@
 				#{TASK_TITLE},
 				#{TASK_DESC},
 				#{TASK_DEADLINE},
+				#{TASK_TYPE},
 				#{TASK_PAID,jdbcType=NUMERIC},
 				#{TASK_ADDR},
 				#{TASK_LONGITUDE,jdbcType=NUMERIC},
@@ -43,8 +46,9 @@
 				#{TASK_ICON3},
 				#{TASK_ICON4},
 				#{TASK_AUDIT_STATUS},
-				#{TASK_STATUS},
-				#{TASK_CREATE_TIME} 
+				#{TASK_BID_STATUS},
+				#{TASK_CREATE_TIME},
+				#{TASK_AREA}  
 			)
     </insert>
     <update id="updateTask" parameterType="map">  

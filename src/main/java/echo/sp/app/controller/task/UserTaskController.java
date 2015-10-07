@@ -1,5 +1,6 @@
 package echo.sp.app.controller.task;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.PubToolService;
+import echo.sp.app.service.UserService;
 import echo.sp.app.service.UserTaskService;
 
 /**  
@@ -46,6 +48,9 @@ public class UserTaskController extends CoreController{
 	
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 增加任务
@@ -72,6 +77,13 @@ public class UserTaskController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
+				// 判断用户余额
+				BigDecimal payment = new BigDecimal(paramMap.get("TASK_TOTAL_PAID").toString());
+				BigDecimal total_money_Big = new BigDecimal(userService.getUserExpandInfo(paramMap).get("TOTAL_MONEY").toString());
+				if (total_money_Big.compareTo(payment) < 0) {
+					super.writeJson(response, "9996", "余额不足，请充值！", null, null);
+					return;
+				}
 				// TASK ID
 				String task_id = IdGen.uuid();
 				paramMap.put("TASK_ID", task_id);
@@ -81,7 +93,7 @@ public class UserTaskController extends CoreController{
 				parmMap.put("PARM_NAME", "USER_UP_TASK_CHECK");
 				paramMap.put("TASK_AUDIT_STATUS", "1".equals(PubTool.getOrgParm(parmMap, pubToolService)) ? "10" : "20");
 				// Publish Status
-				paramMap.put("TASK_STATUS", "10");
+				paramMap.put("TASK_BID_STATUS", "10");
 				paramMap.put("TASK_CREATE_TIME", DateUtils.getDateTime());
 				userTaskService.addTask(paramMap);
 				// Get Task Info
