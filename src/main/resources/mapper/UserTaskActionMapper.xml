@@ -64,4 +64,16 @@
         SET TASK_STATUS = '50', TASK_BACK_TIME = #{TASK_BACK_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
+    
+    <update id="updateTaskDone" parameterType="map">  
+   		UPDATE T_TASKS 
+        SET TASK_STATUS = '60', TASK_DONE_TIME = #{TASK_DONE_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    
+    <update id="updateTaskFinish" parameterType="map">  
+   		UPDATE T_TASKS 
+        SET TASK_STATUS = '70', TASK_FINISH_TIME = #{TASK_FINISH_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
 </mapper>

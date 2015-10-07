@@ -49,20 +49,20 @@ public class UserTaskServiceImpl implements UserTaskService{
 			tranMap.put("PRE_PAID_ID", "");
 			tranMap.put("STATUS", "20");// 减
 			tranMap.put("MN_TYPE", "10");// 任务
-			userDAO.insertUserMoneyRecord(parmMap);
+			userDAO.insertUserMoneyRecord(tranMap);
 			// 修改用户金额-减
 			BigDecimal payment = new BigDecimal(parmMap.get("TASK_TOTAL_PAID").toString());
 			BigDecimal total_money_Big = new BigDecimal(parmMap.get("TOTAL_MONEY").toString());
-			parmMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
-			userDAO.updateUserMoney(parmMap);
+			tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
+			userDAO.updateUserMoney(tranMap);
 			// 系统账户金额消费明细表参数集
-			parmMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
-			parmMap.put("STATUS", "10");// 增
-			userDAO.insertUserMoneyRecord(parmMap);
+			tranMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+			tranMap.put("STATUS", "10");// 增
+			userDAO.insertUserMoneyRecord(tranMap);
 			// 将付款暂存到系统账户-增
 			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
-			parmMap.put("TOTAL_MONEY", total_money_Big.add(payment));
-			userDAO.updateUserMoney(parmMap);
+			tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+			userDAO.updateUserMoney(tranMap);
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

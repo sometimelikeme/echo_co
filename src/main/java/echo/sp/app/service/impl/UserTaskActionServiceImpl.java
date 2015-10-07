@@ -90,5 +90,52 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 	public int updatePuberBackTask(Map parmMap) {
 		return userTaskActionDAO.updatePuberBackTask(parmMap);
 	}
+
+	@Override
+	public int updateTaskDone(Map parmMap) {
+		return userTaskActionDAO.updateTaskDone(parmMap);
+	}
+
+	@Override
+	public int updateTaskFinish(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		// 结束任务
+    		userTaskActionDAO.updateTaskFinish(parmMap);
+    		// 用户金额消费明细表参数集-增
+    		String perOfSystemPaid = Prop.getString("system.perOfSystemPaid");
+    		BigDecimal payment = new BigDecimal(parmMap.get("TASK_TOTAL_PAID").toString());
+			payment = payment.subtract(payment.multiply(
+					new BigDecimal(perOfSystemPaid)).divide(
+					new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
+			Map tranMap = new HashMap();
+			tranMap.put("USER_ID", parmMap.get("BIDE_USER_ID"));
+			tranMap.put("TIME1", parmMap.get("TASK_FINISH_TIME"));
+			tranMap.put("DATE1", DateUtils.getToday());
+			tranMap.put("MONEY_NUM", payment);
+			tranMap.put("TASK_ID", parmMap.get("TASK_ID"));
+			tranMap.put("ORDER_ID", "");
+			tranMap.put("ABLI_ORDER_ID", "");
+			tranMap.put("PRE_PAID_ID", "");
+			tranMap.put("STATUS", "10");// 增
+			tranMap.put("MN_TYPE", "10");// 任务
+			userDAO.insertUserMoneyRecord(parmMap);
+			// 修改用户金额-增
+			BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
+			tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+			userDAO.updateUserMoney(tranMap);
+			// 系统账户金额消费明细表参数集
+			tranMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+			tranMap.put("STATUS", "20");// 减
+			userDAO.insertUserMoneyRecord(tranMap);
+			// 将付款暂存到系统账户-减
+			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
+			tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
+			userDAO.updateUserMoney(tranMap);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 	
 }

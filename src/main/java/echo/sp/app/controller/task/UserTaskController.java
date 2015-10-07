@@ -84,6 +84,7 @@ public class UserTaskController extends CoreController{
 					super.writeJson(response, "9996", "余额不足，请充值！", null, null);
 					return;
 				}
+				paramMap.put("TOTAL_MONEY", total_money_Big);
 				// TASK ID
 				String task_id = IdGen.uuid();
 				paramMap.put("TASK_ID", task_id);

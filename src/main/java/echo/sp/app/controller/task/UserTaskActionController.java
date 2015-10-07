@@ -247,7 +247,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("TAKS_UNDONE_TIME", DateUtils.getDateTime());
 				userTaskActionService.updateBiderBackTask(paramMap);
 				// 3.返回任务信息
-				parmMap.put("TASK_IS_BIDE", "1");
+				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -301,7 +301,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("TASK_BACK_TIME", DateUtils.getDateTime());
 				userTaskActionService.updatePuberBackTask(paramMap);
 				// 3.返回任务信息
-				parmMap.put("TASK_IS_BIDE", "1");
+				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -342,7 +342,28 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				// 1.查询T_TASKS.TASK_STATUS
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				String task_statu = parmMap.get("TASK_STATUS").toString();
+				if (!"40".equals(task_statu)) {
+					super.writeJson(response, "9996", "任务状态错误，无法完成！", null, null);
+					return;
+				}
+				// 2.修改任务状态为回退状态
+				paramMap.put("TASK_DONE_TIME", DateUtils.getDateTime());
+				userTaskActionService.updateTaskDone(paramMap);
+				// 3.返回任务信息
+				parmMap.put("IS_BIDE", "10");
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
@@ -375,7 +396,30 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				// 1.查询T_TASKS.TASK_STATUS
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				if (!"60".equals(parmMap.get("TASK_STATUS").toString())) {
+					super.writeJson(response, "9996", "当前任务未完成，无法关闭", null, null);
+					return;
+				}
+				// 2.修改任务状态为关闭状态
+				// 将本次任务的金额转给任务完成者
+				// 产生消费记录
+				paramMap.put("TASK_FINISH_TIME", DateUtils.getDateTime());
+				paramMap.put("TASK_TOTAL_PAID", parmMap.get("TASK_TOTAL_PAID"));
+				userTaskActionService.updateTaskFinish(paramMap);
+				// 3.返回任务信息
+				parmMap.put("IS_BIDE", "10");
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);

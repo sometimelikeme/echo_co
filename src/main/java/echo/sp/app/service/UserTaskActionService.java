@@ -18,4 +18,8 @@ public interface UserTaskActionService {
 	public int updateBiderBackTask(Map parmMap);
 	// 发布者回退任务
 	public int updatePuberBackTask(Map parmMap);
+	// 中标者完成任务
+	public int updateTaskDone(Map parmMap);
+	// 结束任务
+	public int updateTaskFinish(Map parmMap);
 }
