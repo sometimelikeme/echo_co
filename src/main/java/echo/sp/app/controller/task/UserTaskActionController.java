@@ -1,6 +1,5 @@
 package echo.sp.app.controller.task;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -370,6 +369,61 @@ public class UserTaskActionController extends CoreController{
 			logger.error("UserTaskActionController---doneTask---interface error: ", e);
 		}
 	}
+	
+	
+	/**
+	 * 未完成任务：发布者
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/undoneTask")
+	public void undoneTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskActionController---undoneTask---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				// 1.查询T_TASKS.TASK_STATUS
+				Map parmMap = new HashMap();
+				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				if (!"60".equals(parmMap.get("TASK_STATUS").toString())) {
+					super.writeJson(response, "9996", "当前任务未完成，无法点击", null, null);
+					return;
+				}
+				// 2.修改任务状态为任务发布者确认未状态
+				paramMap.put("TASK_CON_UNDONE_TIME", DateUtils.getDateTime());
+				userTaskActionService.updateTaskUnFinish(paramMap);
+				// 3.返回任务信息
+				parmMap.put("IS_BIDE", "10");
+				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskActionController---undoneTask---interface error: ", e);
+		}
+	}
+	
 	
 	/**
 	 * 结束任务: 发布者

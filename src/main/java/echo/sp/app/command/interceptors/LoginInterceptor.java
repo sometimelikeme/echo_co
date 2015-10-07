@@ -81,6 +81,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"task/bidBackTasker.do",// 中标人回退任务: 选定中标人之后，与中标人协商解除任务 - 中标人
 		"task/backTasker.do",// 发布者回退任务: 选定中标人之后，与中标人协商解除任务 - 发布者
 		"task/doneTask.do",// 完成任务: 竞标人发起
+		"task/undoneTask.do",// 未完成任务：发布者
 		"task/closeTask.do",// 结束任务: 发布者
 		"task/searchBidTaskByUserId.do"// 查询用户竞标任务列表
 	};

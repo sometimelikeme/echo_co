@@ -1,5 +1,6 @@
 package echo.sp.app.dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**  
@@ -30,7 +31,18 @@ public interface UserTaskActionDAO {
 	
 	// 中标者完成任务
 	public int updateTaskDone(Map parmMap);
+	// 更新行表
+	public int updateTaskLineDone(Map parmMap);
+	
+	// 未完成任务
+	public int updateTaskUnFinish(Map parmMap);
 	
 	// 结束任务
 	public int updateTaskFinish(Map parmMap);
+	
+	// 奖励本次任务金额
+	public int updateTaskLineFinish(Map parmMap);
+	
+	// 获取未处理任务列表
+	public List getUnProcessTasks(Map parmMap);
 }

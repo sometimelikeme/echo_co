@@ -2,6 +2,7 @@ package echo.sp.app.service.impl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -93,7 +94,15 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 
 	@Override
 	public int updateTaskDone(Map parmMap) {
-		return userTaskActionDAO.updateTaskDone(parmMap);
+		int returnInt = 0;
+    	try {
+    		userTaskActionDAO.updateTaskDone(parmMap);
+    		userTaskActionDAO.updateTaskLineDone(parmMap);
+    		returnInt = 1;
+    	} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 
 	@Override
@@ -102,12 +111,17 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     	try {
     		// 结束任务
     		userTaskActionDAO.updateTaskFinish(parmMap);
-    		// 用户金额消费明细表参数集-增
+    		// 奖励将本次任务金额
     		String perOfSystemPaid = Prop.getString("system.perOfSystemPaid");
     		BigDecimal payment = new BigDecimal(parmMap.get("TASK_TOTAL_PAID").toString());
-			payment = payment.subtract(payment.multiply(
-					new BigDecimal(perOfSystemPaid)).divide(
-					new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
+    		if (parmMap.get("RETURN_MONEY") == null) {// 退款到任务发布者不收取费用
+    			payment = payment.subtract(payment.multiply(
+    					new BigDecimal(perOfSystemPaid)).divide(
+    					new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
+			}
+			parmMap.put("GET_PAID", payment);
+			userTaskActionDAO.updateTaskLineFinish(parmMap);
+			// 用户金额消费明细表参数集-增
 			Map tranMap = new HashMap();
 			tranMap.put("USER_ID", parmMap.get("BIDE_USER_ID"));
 			tranMap.put("TIME1", parmMap.get("TASK_FINISH_TIME"));
@@ -136,6 +150,16 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			throw new RuntimeException();
 		}
 		return returnInt;
+	}
+
+	@Override
+	public int updateTaskUnFinish(Map parmMap) {
+		return userTaskActionDAO.updateTaskUnFinish(parmMap);
+	}
+
+	@Override
+	public List getUnProcessTasks(Map parmMap) {
+		return userTaskActionDAO.getUnProcessTasks(parmMap);
 	}
 	
 }

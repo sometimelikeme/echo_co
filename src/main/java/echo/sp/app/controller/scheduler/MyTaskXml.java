@@ -15,6 +15,8 @@ import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.Prop;
 import echo.sp.app.service.MerOrderService;
+import echo.sp.app.service.UserTaskActionService;
+import echo.sp.app.service.UserTaskService;
 
 /**   
  * Scheduled
@@ -28,6 +30,12 @@ public class MyTaskXml {
 	
 	@Autowired
 	private MerOrderService merOrderService;
+	
+	@Autowired
+	private UserTaskActionService userTaskActionService;
+	
+	@Autowired
+	private UserTaskService userTaskService;
 	
 	/**
 	 * 定时关闭已消费未关闭的订单
@@ -69,6 +77,68 @@ public class MyTaskXml {
 					merOrderService.updateOrderClose(paramMap);
 					if (logger.isDebugEnabled()) {
 						logger.debug("MyTaskXml---closeOrder---done!");
+					}
+				}
+			}
+		}
+    } 
+	
+	
+	/**
+	 * 定时关闭逾期的任务
+	 */
+	public void closeTask(){  
+        if (logger.isDebugEnabled()) {
+			logger.debug("MyTaskXml---closeTask---begin");
+		}
+        
+        // 获取未关闭的任务列表
+        List taskList = userTaskActionService.getUnProcessTasks(new HashMap());
+        
+        if (PubTool.isListHasData(taskList)) {
+        	
+			String currDate = DateUtils.getDateTime();
+			Iterator iterList = taskList.iterator();
+			Map paramMap;
+			Map taksMap;
+			String consule_time;
+			String task_bid_status;
+			String bid_user_id;
+			
+			while (iterList.hasNext()) {
+				paramMap = (Map)iterList.next();
+				consule_time = paramMap.get("TASK_DEADLINE").toString();// 截止日期
+				if (DateUtils.getDistanceOfTwoDate(DateUtils.parseStringDate(consule_time), DateUtils.parseStringDate(currDate)) > 0) {
+					if (logger.isDebugEnabled()) {
+						logger.debug("MyTaskXml---closeTask---paramMap：" + paramMap);
+					}
+					task_bid_status = paramMap.get("TASK_BID_STATUS").toString();
+					paramMap.put("TASK_FINISH_TIME", currDate);
+					if ("60".equals(task_bid_status)) {
+						// 关闭任务
+						// 将此次任务发生的金额打到任务中标者账户
+						// 获取中标人ID
+						paramMap.put("IS_BIDE", "10");
+						taksMap = userTaskService.getTaskInfoByTaskId(paramMap);
+						paramMap.put("BIDE_USER_ID", ((Map) ((List) taksMap
+								.get("TASK_LINE")).get(0)).get("USER_ID")
+								.toString());
+					    userTaskActionService.updateTaskFinish(paramMap);
+					} else if ("10".equals(task_bid_status)// 10-发布
+							|| "20".equals(task_bid_status)// 20-取消
+							|| "30".endsWith(task_bid_status)// 30-他人投标任务
+							|| "40".equals(task_bid_status)// 40-选定他人中标任务
+							|| "49".equals(task_bid_status)// 49-中标人确认不做任务
+							|| "50".equals(task_bid_status)// 50-退回任务
+							|| "61".equals(task_bid_status)) {// 61-任务发布者点击未完成
+						// 关闭任务
+						// 将此次任务发生的金额打到任务发布者账户
+						paramMap.put("BIDE_USER_ID", paramMap.get("USER_ID"));
+						paramMap.put("RETURN_MONEY", "1");// 退款平台不收取费用
+						userTaskActionService.updateTaskFinish(paramMap);
+					}
+					if (logger.isDebugEnabled()) {
+						logger.debug("MyTaskXml---closeTask---done!");
 					}
 				}
 			}

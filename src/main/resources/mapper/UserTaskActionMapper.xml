@@ -70,10 +70,38 @@
         SET TASK_STATUS = '60', TASK_DONE_TIME = #{TASK_DONE_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
+    <update id="updateTaskLineDone" parameterType="map">  
+   		UPDATE T_TASKS_LINE 
+        SET DONE_ICON1 = #{DONE_ICON1},
+        DONE_ICON2 = #{DONE_ICON2},
+        DONE_ICON3 = #{DONE_ICON3},
+        DONE_ICON4 = #{DONE_ICON4}
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{BIDE_USER_ID}
+    </update>
+    
+    <update id="updateTaskUnFinish" parameterType="map">  
+   		UPDATE T_TASKS 
+        SET TASK_STATUS = '61', TASK_CON_UNDONE_TIME = #{TASK_CON_UNDONE_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
     
     <update id="updateTaskFinish" parameterType="map">  
    		UPDATE T_TASKS 
         SET TASK_STATUS = '70', TASK_FINISH_TIME = #{TASK_FINISH_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
+    <update id="updateTaskLineFinish" parameterType="map">  
+   		UPDATE T_TASKS_LINE 
+        SET GET_PAID = #{TASK_FINISH_TIME,jdbcType=NUMERIC}
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{BIDE_USER_ID}
+    </update>
+    
+    <select id="getUnProcessTasks" parameterType="map" resultType="Map">
+        SELECT TAKS_ID,TASK_BID_STATUS,TASK_DEADLINE,USER_ID,TASK_TOTAL_PAID
+        FROM T_TASKS
+        WHERE TASK_AUDIT_STATUS = '20'
+        AND TASK_BID_STATUS != '80'
+    </select>
 </mapper>
