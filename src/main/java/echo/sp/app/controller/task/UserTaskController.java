@@ -314,7 +314,7 @@ public class UserTaskController extends CoreController{
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				String task_statu = parmMap.get("TASK_STATUS").toString();
-				if ("30".equals(task_statu) || "40".equals(task_statu) || "60".equals(task_statu) || "70".equals(task_statu)) {
+				if (!"20".equals(task_statu) || !"70".equals(task_statu)) {
 					super.writeJson(response, "9996", "任务进行中，不能删除！", null, null);
 					return;
 				}
