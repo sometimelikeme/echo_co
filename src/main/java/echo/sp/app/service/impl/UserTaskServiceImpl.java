@@ -85,4 +85,9 @@ public class UserTaskServiceImpl implements UserTaskService{
 	public int deleteTask(Map parmMap) {
 		return userTaskDAO.deleteTask(parmMap);
 	}
+
+	@Override
+	public int updateTaskForCancel(Map parmMap) {
+		return userTaskDAO.updateTaskForCancel(parmMap);
+	}
 }

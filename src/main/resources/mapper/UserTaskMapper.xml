@@ -78,16 +78,16 @@
      	WHERE A.TASK_ID = #{TASK_ID}
      	AND A.TASK_AUDIT_STATUS = '20'
      	AND A.USER_ID = B.USER_ID
-     	AND A.TASK_STATUS != '80'
+     	AND A.TASK_BID_STATUS != '80'
     </select>
     <select id="getTaskLineByTaskId" parameterType="map" resultType="Map">
      	SELECT A.*,B.USER_NAME,B.USER_ICON 
      	FROM T_TASKS_LINE A, T_USERS B
      	WHERE TASK_ID = #{TASK_ID}
      	AND A.USER_ID = B.USER_ID
-     	AND A.BID_STATUS = '1'
-     	<if test="TASK_IS_BIDE != null and TASK_IS_BIDE != '' ">  
-          	AND A.TASK_IS_BIDE = #{TASK_IS_BIDE}
+     	AND A.STATUS = '10'
+     	<if test="IS_BIDE != null and IS_BIDE != '' ">  
+          	AND A.IS_BIDE = #{IS_BIDE}
    	    </if>
     </select>
     
@@ -128,6 +128,12 @@
     <update id="deleteTask" parameterType="map"> 
     	UPDATE T_TASKS 
 		SET TASK_BID_STATUS = '80',TASK_DEL_TIME=#{TASK_DEL_TIME}
+		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    
+    <update id="updateTaskForCancel" parameterType="map"> 
+    	UPDATE T_TASKS 
+		SET TASK_BID_STATUS = '20',TASK_CANCEL_TIME=#{TASK_CANCEL_TIME}
 		WHERE TASK_ID = #{TASK_ID}
     </update>
 </mapper>

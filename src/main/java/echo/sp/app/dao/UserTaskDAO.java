@@ -19,4 +19,6 @@ public interface UserTaskDAO {
 	public int updateTask(Map parmMap);
 	// 删除任务
 	public int deleteTask(Map parmMap);
+	// 取消任务
+	public int updateTaskForCancel(Map parmMap);
 }

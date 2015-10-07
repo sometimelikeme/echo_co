@@ -72,12 +72,12 @@ public class UserTaskActionController extends CoreController{
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				String task_statu = parmMap.get("TASK_STATUS").toString();
-				if (!("10".equals(task_statu) || "30".equals(task_statu))) {
+				if (!"10".equals(task_statu) && !"30".equals(task_statu)) {
 					super.writeJson(response, "9996", "任务执行中，不能竞标！", null, null);
 					return;
 				}
-				// 2.插入T_TASKS_LINE竞标人信息;修改T_TASKS.TASK_STATUS = '30', BID_NUM数量自增1
-				paramMap.put("TASK_BID_TIME", DateUtils.getDateTime());
+				// 2.插入T_TASKS_LINE竞标人信息;修改T_TASKS.TASK_BID_STATUS = '30', BID_NUM数量自增1
+				paramMap.put("BID_TIME", DateUtils.getDateTime());
 				userTaskActionService.addTaskBider(paramMap);
 				// 3.返回任务信息
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);

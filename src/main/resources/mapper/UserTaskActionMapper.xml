@@ -9,21 +9,24 @@
 			(
 				TASK_ID,
 				USER_ID,
-				TASK_BID_TIME,
-				TASK_IS_BIDE 
+				BID_TIME,
+				IS_BIDE, 
+				STATUS
 			)
 		VALUES
 			(
 				#{TASK_ID},
 				#{USER_ID},
-				#{TASK_BID_TIME},
-				'0' 
+				#{BID_TIME},
+				'20',
+				'10'
 			)
 	</insert>
  	<update id="updateTaskBider" parameterType="map">  
-   		UPDATE T_TASKS SET TASK_STATUS = '30', BID_NUM = BID_NUM + 1
+   		UPDATE T_TASKS SET TASK_BID_STATUS = '30', BID_NUM = BID_NUM + 1
    		WHERE TASK_ID = #{TASK_ID}
     </update> 
+    
     <update id="updateCancelTaskBider" parameterType="map">  
    		UPDATE T_TASKS_LINE 
    		SET BID_STATUS = '0', CANCEL_TIME = #{CANCEL_TIME}
