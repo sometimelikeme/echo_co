@@ -123,11 +123,17 @@ public class UserTaskActionController extends CoreController{
 				// 1.查询T_TASKS.TASK_STATUS, 若是40状态,提示不能取消竞标
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
+				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
-				String task_statu = parmMap.get("TASK_STATUS").toString();
-				if ("40".equals(task_statu)) {
-					super.writeJson(response, "9996", "您已获得任务，请联系任务发布者取消！", null, null);
-					return;
+				if ("40".equals(parmMap.get("TASK_STATUS").toString())) {
+					Object lineObject = parmMap.get("TASK_LINE");
+					if (lineObject != null) {
+						List lineList = (List)lineObject;
+						if (lineList.size() > 0 && user_id.equals(((Map)lineList.get(0)).get("USER_ID"))) {
+							super.writeJson(response, "9996", "您已获得任务，请联系任务发布者取消！", null, null);
+							return;
+						}
+					}
 				}
 				// 2.修改T_TASKS_LINE竞标人信息为取消竞标状态；BID_NUM数量自减少1，若发现此时BID_NUM为0，则修改TASK_STATUS为10状态
 				paramMap.put("BID_NUM", parmMap.get("BID_NUM"));
@@ -174,36 +180,20 @@ public class UserTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 1.查询T_TASKS.TASK_STATUS, 若非30状态，不能再选定竞标人执行任务
+				// 1.查询T_TASKS.TASK_STATUS
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				String task_statu = parmMap.get("TASK_STATUS").toString();
 				if (!"30".equals(task_statu)) {
-					super.writeJson(response, "9996", "任务进行中，无法再选定执行！", null, null);
+					super.writeJson(response, "9996", "任务进行中，无法选定竞标者！", null, null);
 					return;
 				}
-				// 2.判断用户账户可用余额是否够此次任务费用
-				String task_paid = parmMap.get("TASK_PAID").toString();
-				String total_money = userService.getUserExpandInfo(paramMap).get("TOTAL_MONEY").toString();
-				BigDecimal task_paid_Big = new BigDecimal(task_paid);
-				BigDecimal total_money_Big = new BigDecimal(total_money);
-				if (task_paid_Big.compareTo(total_money_Big) > 0) {
-					super.writeJson(response, "9995", "账户余额不足！", null, null);
-					return;
-				}
-				
-				// 3.将用户账户余额减去此次任务费用；
-				//   将此次费用转移到系统账户
-				//   修改任务状态选定他人中标任务，加入中标时间戳
-				//   修改投标人TASK_IS_BIDE为1
-				paramMap.put("TASK_PAID", task_paid);
-				paramMap.put("TOTAL_MONEY", total_money_Big.subtract(task_paid_Big));
-				if (userTaskActionService.updateChooseTasker(paramMap) != 1) {
-					super.writeJson(response, "9992", "后台程序执行失败", null, null);
-				}
-				// 4.返回任务信息
-				parmMap.put("TASK_IS_BIDE", "1");
+				// 2.修改任务状态选定他人中标任务，加入中标时间戳
+				// 修改投标人IS_BIDE为10
+				userTaskActionService.updateChooseTasker(paramMap);
+				// 3.返回任务信息
+				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");

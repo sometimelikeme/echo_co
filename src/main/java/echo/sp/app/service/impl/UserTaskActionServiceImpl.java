@@ -52,7 +52,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     		int bid_num = Integer.parseInt(parmMap.get("BID_NUM").toString());
     		if (Integer.parseInt(parmMap.get("BID_NUM").toString()) <= 1) {
     			bid_num = 0;
-    			parmMap.put("TASK_STATUS", "10");
+    			parmMap.put("TASK_BID_STATUS", "10");
 			} else {
 				bid_num -= 1;
 			}
@@ -69,35 +69,8 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 	public int updateChooseTasker(Map parmMap) {
 		int returnInt = 0;
     	try {
-    		// 将用户账户余额减去此次任务费用, 生成用户账户交易记录
-    		userDAO.updateUserMoney(parmMap);
-    		String dateTime = DateUtils.getDateTime();
-    		String date = DateUtils.getToday();
-    		BigDecimal task_paid_Big = new BigDecimal(parmMap.get("TASK_PAID").toString());
-    		parmMap.put("TIME1", dateTime);
-    		parmMap.put("DATE1", date);
-    		parmMap.put("MONEY_NUM", task_paid_Big);
-    		parmMap.put("STATUS", "0");
-    		parmMap.put("ORDER_ID", "");
-    		parmMap.put("ABLI_ORDER_ID", "");
-    		parmMap.put("PRE_PAID_ID", "");
-    		userDAO.insertUserMoneyRecord(parmMap);
-			// 将此次费用增加到系统账户, 生成系统账户交易记录
-    		Map tMap = new HashMap();
-    		tMap.put("USER_ID", Prop.getString("system.systemAccountId"));
-    		BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(tMap).get("TOTAL_MONEY").toString());
-			tMap.put("TOTAL_MONEY", total_money_Big.add(task_paid_Big));
-			userDAO.updateUserMoney(tMap);
-			tMap.put("TIME1", dateTime);
-			tMap.put("DATE1", date);
-			tMap.put("MONEY_NUM", task_paid_Big);
-			tMap.put("TASK_ID", parmMap.get("TASK_ID"));
-			tMap.put("ORDER_ID", "");
-			tMap.put("ABLI_ORDER_ID", "");
-			tMap.put("PRE_PAID_ID", "");
-			tMap.put("STATUS", "1");
 			// 修改任务状态选定他人中标任务，加入中标时间戳
-			parmMap.put("TASK_GET_TIME", dateTime);
+			parmMap.put("TASK_GET_TIME", DateUtils.getDateTime());
 			userTaskActionDAO.updateTaskStatusForSec(parmMap);
 			// 修改投标人TASK_IS_BIDE为1
     		userTaskActionDAO.updateBiderStatus(parmMap);

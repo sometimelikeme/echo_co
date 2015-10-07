@@ -29,7 +29,7 @@
     
     <update id="updateCancelTaskBider" parameterType="map">  
    		UPDATE T_TASKS_LINE 
-   		SET BID_STATUS = '0', CANCEL_TIME = #{CANCEL_TIME}
+   		SET STATUS = '20', CANCEL_TIME = #{CANCEL_TIME}
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{USER_ID}
     </update>
@@ -49,7 +49,7 @@
     </update>
     <update id="updateBiderStatus" parameterType="map">  
    		UPDATE T_TASKS_LINE 
-        SET TASK_IS_BIDE = '1'
+        SET IS_BIDE = '10'
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{BIDE_USER_ID}
     </update>
