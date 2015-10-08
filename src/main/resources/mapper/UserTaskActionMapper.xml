@@ -36,15 +36,15 @@
     <update id="updateTaskStatus" parameterType="map">  
    		UPDATE T_TASKS 
    		SET BID_NUM = #{BID_NUM}
-   		<if test="TASK_STATUS != null and TASK_STATUS != '' ">  
-          	,TASK_STATUS = #{TASK_STATUS}
+   		<if test="TASK_BID_STATUS != null and TASK_BID_STATUS != '' ">  
+          	,TASK_BID_STATUS = #{TASK_BID_STATUS}
    	    </if> 
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     
     <update id="updateTaskStatusForSec" parameterType="map">  
    		UPDATE T_TASKS 
-        SET TASK_STATUS = '40', TASK_GET_TIME = #{TASK_GET_TIME}
+        SET TASK_BID_STATUS = '40', TASK_GET_TIME = #{TASK_GET_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     <update id="updateBiderStatus" parameterType="map">  
@@ -56,18 +56,18 @@
     
     <update id="updateBiderBackTask" parameterType="map">  
    		UPDATE T_TASKS 
-        SET TASK_STATUS = '49', TAKS_UNDONE_TIME = #{TAKS_UNDONE_TIME}
+        SET TASK_BID_STATUS = '49', TAKS_UNDONE_TIME = #{TAKS_UNDONE_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     <update id="updatePuberBackTask" parameterType="map">  
    		UPDATE T_TASKS 
-        SET TASK_STATUS = '50', TASK_BACK_TIME = #{TASK_BACK_TIME}
+        SET TASK_BID_STATUS = '50', TASK_BACK_TIME = #{TASK_BACK_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     
     <update id="updateTaskDone" parameterType="map">  
    		UPDATE T_TASKS 
-        SET TASK_STATUS = '60', TASK_DONE_TIME = #{TASK_DONE_TIME}
+        SET TASK_BID_STATUS = '60', TASK_DONE_TIME = #{TASK_DONE_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     <update id="updateTaskLineDone" parameterType="map">  
@@ -82,18 +82,18 @@
     
     <update id="updateTaskUnFinish" parameterType="map">  
    		UPDATE T_TASKS 
-        SET TASK_STATUS = '61', TASK_CON_UNDONE_TIME = #{TASK_CON_UNDONE_TIME}
+        SET TASK_BID_STATUS = '61', TASK_CON_UNDONE_TIME = #{TASK_CON_UNDONE_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     
     <update id="updateTaskFinish" parameterType="map">  
    		UPDATE T_TASKS 
-        SET TASK_STATUS = '70', TASK_FINISH_TIME = #{TASK_FINISH_TIME}
+        SET TASK_BID_STATUS = '70', TASK_FINISH_TIME = #{TASK_FINISH_TIME}
    		WHERE TASK_ID = #{TASK_ID}
     </update>
     <update id="updateTaskLineFinish" parameterType="map">  
    		UPDATE T_TASKS_LINE 
-        SET GET_PAID = #{TASK_FINISH_TIME,jdbcType=NUMERIC}
+        SET GET_PAID = #{GET_PAID,jdbcType=NUMERIC}
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{BIDE_USER_ID}
     </update>

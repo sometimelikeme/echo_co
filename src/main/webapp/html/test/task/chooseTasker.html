@@ -8,15 +8,16 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET', 
-                url: "http://localhost:8080/echo/" + "task/cancelBideTask.do",
+                url: "http://localhost:8080/echo/" + "task/chooseTasker.do",
                 params: {
                 	dataParm:encodeURI(JSON.stringify({
                 		dataset:{
                 			USER_ID:'c21375a7aef447239c74fc9e7926cd35',
-							TASK_ID:'accf734342494d0fa638233079a4cc82'
+							TASK_ID:'accf734342494d0fa638233079a4cc82',
+							BIDE_USER_ID:'c21375a7aef447239c74fc9e7926cd35'
                 		}
                 	})),
-                	sc_co: '4e916e4517ab497ea5580e2ac1b4c042',
+                	sc_co: 'f4e572d55fde4548853cb338a8a4c744',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {

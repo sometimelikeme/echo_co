@@ -133,7 +133,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			tranMap.put("PRE_PAID_ID", "");
 			tranMap.put("STATUS", "10");// 增
 			tranMap.put("MN_TYPE", "10");// 任务
-			userDAO.insertUserMoneyRecord(parmMap);
+			userDAO.insertUserMoneyRecord(tranMap);
 			// 修改用户金额-增
 			BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
 			tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
@@ -147,6 +147,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
 			userDAO.updateUserMoney(tranMap);
 		} catch (Exception e) {
+			logger.error("UserTaskActionServiceImpl---updateTaskFinish--error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

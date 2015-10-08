@@ -183,8 +183,7 @@ public class UserTaskActionController extends CoreController{
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
-				String task_statu = parmMap.get("TASK_BID_STATUS").toString();
-				if (!"30".equals(task_statu)) {
+				if (!"30".equals(parmMap.get("TASK_BID_STATUS").toString())) {
 					super.writeJson(response, "9996", "任务进行中，无法选定竞标者！", null, null);
 					return;
 				}
