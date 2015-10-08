@@ -139,7 +139,7 @@ public class UserTaskController extends CoreController{
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
-				if (!"10".equals(parmMap.get("TASK_STATUS").toString())) {
+				if (!"10".equals(parmMap.get("TASK_BID_STATUS").toString())) {
 					super.writeJson(response, "9996", "任务执行中，不能修改！", null, null);
 					return;
 				}
@@ -187,11 +187,11 @@ public class UserTaskController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 1.查询T_TASKS.TASK_STATUS
+				// 1.查询T_TASKS.TASK_BID_STATUS
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
-				String task_statu = parmMap.get("TASK_STATUS").toString();
+				String task_statu = parmMap.get("TASK_BID_STATUS").toString();
 				if (!"20".equals(task_statu) || !"70".equals(task_statu)) {
 					super.writeJson(response, "9996", "任务进行中，不能删除！", null, null);
 					return;
@@ -232,11 +232,11 @@ public class UserTaskController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 1.查询T_TASKS.TASK_STATUS
+				// 1.查询T_TASKS.TASK_BID_STATUS
 				Map parmMap = new HashMap();
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
-				if (!"10".equals(parmMap.get("TASK_STATUS").toString())) {
+				if (!"10".equals(parmMap.get("TASK_BID_STATUS").toString())) {
 					super.writeJson(response, "9996", "任务进行中，不能取消！", null, null);
 					return;
 				}
