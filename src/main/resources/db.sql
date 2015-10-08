@@ -292,6 +292,7 @@ CREATE TABLE T_ORDERS(
 	STATUS CHAR(2) NOT NULL,--订单状态：10-下单，20-取消，30-付款，40-退单，50-消费，60-结束，70-删除
 	PAY_TYPE CHAR(2),--支付方式：10-支付宝,20-微信,30-银联,40-积分,50-平台支付
 	TOTAL_PAY DECIMAL(18,8),--付款总金额/总积分
+	FROM_TYPE CHAR(2),--10-金钱订单，20-金币订单
 	ORDER_ALIAS_ID VARCHAR(32),--订单别号 生成12为订单数字码
     CAPTCHA VARCHAR(32),--验证码 6为数字和字母验证码/大小写都支持
 	ORDER_TIME VARCHAR(32),--下单时间
