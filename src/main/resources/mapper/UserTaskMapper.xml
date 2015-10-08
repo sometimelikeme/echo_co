@@ -111,10 +111,13 @@
     	  <if test="TASK_TITLE != null and TASK_TITLE != '' ">  
           		AND A.TASK_TITLE LIKE CONCAT(CONCAT('%', #{TASK_TITLE, jdbcType=VARCHAR}),'%') 
     	  </if>
+    	  <if test="TASK_AREA != null and TASK_AREA != '' ">  
+          		AND A.TASK_AREA = #{TASK_AREA} 
+    	  </if>
     </select>
     
     <select id="searchBidTaskByUserId" parameterType="map" resultType="Map">
-          SELECT A.*,B.USER_NAME,B.USER_ICON,C.TASK_BID_TIME,C.TASK_IS_BIDE,
+          SELECT A.*,B.USER_NAME,B.USER_ICON,C.BID_TIME,C.IS_BIDE,
           SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
           FROM T_TASKS A, T_USERS B, T_TASKS_LINE C
           WHERE A.TASK_AUDIT_STATUS = '20'
