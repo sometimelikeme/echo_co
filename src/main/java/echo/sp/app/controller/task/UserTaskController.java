@@ -192,7 +192,7 @@ public class UserTaskController extends CoreController{
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				String task_statu = parmMap.get("TASK_BID_STATUS").toString();
-				if (!"20".equals(task_statu) || !"70".equals(task_statu)) {
+				if (!("20".equals(task_statu) || "70".equals(task_statu))) {
 					super.writeJson(response, "9996", "任务进行中，不能删除！", null, null);
 					return;
 				}
@@ -242,8 +242,16 @@ public class UserTaskController extends CoreController{
 				}
 				// 2.修改任务状态为取消状态
 				paramMap.put("TASK_CANCEL_TIME", DateUtils.getDateTime());
-				userTaskService.updateTaskForCancel(parmMap);
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, null, null);
+				userTaskService.updateTaskForCancel(paramMap);
+				// 3.Get Task Info
+				parmMap = userTaskService.getTaskInfoByTaskId(paramMap);
+				List lineList = null;
+				Object obj = parmMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				parmMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);

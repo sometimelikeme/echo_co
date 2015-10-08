@@ -8,7 +8,7 @@
     	angular.module('TTT',[]).run(function($log,$http){
     		$http({
                 method: 'GET', 
-                url: "http://localhost:8080/echo/" + "task/deleteTask.do",
+                url: "http://localhost:8080/echo/" + "task/cancelTask.do",
                 params: {
                 	dataParm:encodeURI(JSON.stringify({
                 		dataset:{
@@ -16,7 +16,7 @@
 							TASK_ID:'accf734342494d0fa638233079a4cc82'
                 		}
                 	})),
-                	sc_co: '1bf5eb71486b4df29451b0879df7e089',
+                	sc_co: 'f241768474f248d69bdc925c8812c5ba',
                 	no_co: 'QUJDREVGRw=='
                 }
             }).success(function (data, status, headers, config) {
