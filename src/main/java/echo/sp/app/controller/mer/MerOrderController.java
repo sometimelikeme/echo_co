@@ -184,7 +184,7 @@ public class MerOrderController extends CoreController{
 				super.writeJson(response, "9998", "无效客户端", null, null);
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
-			} else if (mer_id == null || (mer_id != null && mer_id.equals(s_mer_id))) {// 防止店铺消费自己
+			} else if (mer_id == null || (mer_id != null && !mer_id.equals(s_mer_id))) {
 				super.writeJson(response, "9996", "无效店铺", null, null);
 			} else {
 				Map parmMap = new HashMap();
