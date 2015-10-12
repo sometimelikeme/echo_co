@@ -103,5 +103,6 @@
         FROM T_TASKS
         WHERE TASK_AUDIT_STATUS = '20'
         AND TASK_BID_STATUS != '80'
+        AND TASK_TYPE = '10'
     </select>
 </mapper>

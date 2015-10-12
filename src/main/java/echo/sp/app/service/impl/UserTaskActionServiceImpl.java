@@ -181,7 +181,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			tranMap.put("TOTAL_POINT", total_money_Big.add(new BigDecimal(payment)));
 			userDAO.updateUserPoint(tranMap);
 		} catch (Exception e) {
-			logger.error("UserTaskActionServiceImpl---updateTaskFinish--error: ",e);
+			logger.error("UserTaskActionServiceImpl---updateTaskFinishPoint--error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
