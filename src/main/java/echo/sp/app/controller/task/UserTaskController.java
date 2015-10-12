@@ -77,14 +77,16 @@ public class UserTaskController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				// 判断用户余额
-				BigDecimal payment = new BigDecimal(paramMap.get("TASK_TOTAL_PAID").toString());
-				BigDecimal total_money_Big = new BigDecimal(userService.getUserExpandInfo(paramMap).get("TOTAL_MONEY").toString());
-				if (total_money_Big.compareTo(payment) < 0) {
-					super.writeJson(response, "9996", "余额不足，请充值！", null, null);
-					return;
+				// 判断用户余额-仅在金额任务中
+				if ("10".equals(paramMap.get("TASK_TYPE").toString())) {
+					BigDecimal payment = new BigDecimal(paramMap.get("TASK_TOTAL_PAID").toString());
+					BigDecimal total_money_Big = new BigDecimal(userService.getUserExpandInfo(paramMap).get("TOTAL_MONEY").toString());
+					if (total_money_Big.compareTo(payment) < 0) {
+						super.writeJson(response, "9996", "余额不足，请充值！", null, null);
+						return;
+					}
+					paramMap.put("TOTAL_MONEY", total_money_Big);
 				}
-				paramMap.put("TOTAL_MONEY", total_money_Big);
 				// TASK ID
 				String task_id = IdGen.uuid();
 				paramMap.put("TASK_ID", task_id);
