@@ -320,8 +320,8 @@ public class UserOrderServiceImpl implements UserOrderService{
     				// 产生用户积分消费记录
     				userDAO.insertUserPointRecord(tranMap);
     				// 修改用户积分-减
-    				BigDecimal payment = new BigDecimal(parmMap.get("TOTAL_PAY").toString());
-    				BigDecimal total_money_Big = new BigDecimal(parmMap.get("TOTAL_POINT").toString());
+    				BigDecimal payment = new BigDecimal(headMap.get("TOTAL_PAY").toString());
+    				BigDecimal total_money_Big = new BigDecimal(headMap.get("TOTAL_POINT").toString());
     				tranMap.put("TOTAL_POINT", total_money_Big.subtract(payment));
     				userDAO.updateUserPoint(tranMap);
     				// 这里不再处理系统积分，因为系统积分购买的商品，不存在退的情况！！！
@@ -331,6 +331,7 @@ public class UserOrderServiceImpl implements UserOrderService{
     			};
     		}
 		} catch (Exception e) {
+			logger.error("UserOrderServiceImpl---addMallOrder: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

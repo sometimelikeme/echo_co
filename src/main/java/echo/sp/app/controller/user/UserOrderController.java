@@ -841,7 +841,7 @@ public class UserOrderController extends CoreController{
 				parmMap.put("head", paramMap);
 				parmMap.put("line", itemList);
 				
-				userOrderService.addOrder(parmMap);
+				userOrderService.addMallOrder(parmMap);
 				
 				parmMap = new HashMap();
 				parmMap.put("ORDER_ID", order_id);
