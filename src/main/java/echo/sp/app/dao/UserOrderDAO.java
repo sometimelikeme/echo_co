@@ -39,4 +39,6 @@ public interface UserOrderDAO {
 	// 将支付记录保存到用户预支付金额记录表
 	public int insertPrePayInfo(Map parmMap);
 	
+	// Make Order
+	public int addMallOrderHead(Map parmMap);
 }

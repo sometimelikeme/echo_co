@@ -126,4 +126,26 @@
 		        #{NOTE}
 			)
     </insert>
+    
+    
+    <insert id="addMallOrderHead" parameterType="map">
+	    INSERT INTO T_ORDERS
+	    (ORDER_ID,MERCHANT_ID,USER_ID,ORDER_TYPE,STATUS,
+	    PAY_TYPE,TOTAL_PAY,FROM_TYPE,ORDER_ALIAS_ID,CAPTCHA
+	    ORDER_TIME,PAY_TIME)
+        VALUES
+        (#{ORDER_ID},
+        #{MERCHANT_ID},
+        #{USER_ID},
+        #{ORDER_TYPE},
+        '30',
+        '40',
+        #{TOTAL_PAY,jdbcType=NUMERIC},
+        '20',
+        #{ORDER_ALIAS_ID},
+        #{CAPTCHA},
+        #{ORDER_TIME},
+        #{ORDER_TIME}
+        )
+    </insert>
 </mapper>

@@ -739,4 +739,120 @@ public class UserOrderController extends CoreController{
 		payMap.put("TXNAMT", un.getTxnAmt());
 		return payMap;
 	}
+	
+	/**
+	 * 用积分购买商城商品
+	 * 参数说明请参考接口说明
+	 * 1. 插入头表数据，批量插入行表数据
+	 * 2. 执行结束后查询订单信息返回
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("order/addMallOrder")
+	public void addMallOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserOrderController---addMallOrder---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   mer_id = (String) paramMap.get("MERCHANT_ID"),
+				   ut = (String) paramMap.get("ut"), 
+				   s_user_id = (String) session.getAttribute("user_id"),
+				   s_mer_id = (String) session.getAttribute("MERCHANT_ID");
+			
+			// Get and compare with user id in session
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!"10".equals(ut)) {// Only user has access
+				super.writeJson(response, "9998", "无效客户端", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else if (mer_id != null && mer_id.equals(s_mer_id)) {
+				super.writeJson(response, "9996", "不能购买本店商品", null, null);
+			} else {
+				
+				// Dataset_line存放购买商品信息
+				List itemList = data.getDataset_line();
+				
+				if (!PubTool.isListHasData(itemList)) {
+					super.writeJson(response, "9995", "订单参数缺乏商品信息", null, null);
+				}
+				
+				// 判断用户积分
+				BigDecimal payment = new BigDecimal(paramMap.get("TOTAL_PAY").toString());
+				BigDecimal total_money_Big = new BigDecimal(userService.getUserExpandInfo(paramMap).get("TOTAL_POINT").toString());
+				if (total_money_Big.compareTo(payment) < 0) {
+					super.writeJson(response, "9994", "积分不足！", null, null);
+					return;
+				}
+				
+				
+				// Generate order id and order time
+				String order_id = IdGen.uuid();
+				paramMap.put("ORDER_ID", order_id);
+				paramMap.put("TOTAL_POINT", total_money_Big);
+				
+				
+				// Compare inventory and quantity
+				// Compute New Inventory
+				Map temMap;
+				Map resMap;
+				Boolean isBreak = false;
+				BigDecimal inventory_de;// 库存量
+				BigDecimal qty_sold_de;// 销量
+				BigDecimal qty_sold;// 需求量
+				for (int i = 0; i < itemList.size(); i++) {
+					
+					temMap = (Map) itemList.get(i);
+					
+					resMap = merItemService.getItemInvtentory(temMap);
+					
+					if (resMap == null) {
+						super.writeJson(response, "9993", "商品：" + temMap.get("ITEM_NAME") + " 库存不足", null, null);
+						isBreak = true;
+					}
+					
+					inventory_de = new BigDecimal(resMap.get("INVENTORY").toString());// 当前库存
+					
+					qty_sold_de = new BigDecimal(resMap.get("QTY_SOLD").toString());// 当前销量
+					
+					qty_sold = new BigDecimal(temMap.get("QTY_SOLD").toString());// 本次订单销量
+					
+					if (inventory_de.compareTo(qty_sold) < 0) {
+						super.writeJson(response, "9993", "商品：" + temMap.get("ITEM_NAME") + " 库存不足", null, null);
+						isBreak = true;
+						break;
+					}
+					
+					temMap.put("ORDER_ID", order_id);
+				}
+				
+				if (isBreak) {
+					return;
+				}
+				
+				Map parmMap = new HashMap();
+				parmMap.put("head", paramMap);
+				parmMap.put("line", itemList);
+				
+				userOrderService.addOrder(parmMap);
+				
+				parmMap = new HashMap();
+				parmMap.put("ORDER_ID", order_id);
+				
+				Map reMap = userOrderService.getOrderDetail(parmMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, (Map) reMap.get("HEAD"), (List) reMap.get("LINE"));
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserOrderController---addMallOrder---interface error: ", e);
+		}
+	}
 }

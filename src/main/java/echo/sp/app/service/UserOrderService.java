@@ -35,4 +35,9 @@ public interface UserOrderService {
 	// 修改订单状态
 	// 处理库存
 	public int updateBackPayAction(Map parmMap); 
+	
+	// 积分购买商城商品
+	// 直接扣除积分
+	public int addMallOrder(Map parmMap);
+	
 }

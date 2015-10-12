@@ -89,14 +89,6 @@
 	    INSERT INTO T_USERS_POINT(USER_ID,TIME1,DATE1,POINT_NUM,ORDER_ID)
         VALUES(#{USER_ID},#{TIME1},#{DATE1},#{POINT_NUM,jdbcType=NUMERIC},#{ORDER_ID})
     </insert>
-    <select id="getTotalPoint" parameterType="map" resultType="String">
-        SELECT TOTAL_POINT FROM T_USERS_EXPAND WHERE USER_ID = #{USER_ID}
-    </select>
-    <update id="updateUserTotalPoint" parameterType="map">  
-        UPDATE T_USERS_EXPAND SET 
-        TOTAL_POINT = #{TOTAL_POINT}
-        WHERE USER_ID = #{USER_ID}
-    </update> 
     <select id="getMerUserIdAndPay" parameterType="map" resultType="Map">
         SELECT A.USER_ID,B.TOTAL_PAY
         FROM T_MERCHANTS A,T_ORDERS B

@@ -13,12 +13,6 @@ public interface MerOrderDAO {
 	public int updateOrderComsume(Map parmMap); 
 	// 结束订单
 	public int updateOrderClose(Map parmMap);
-	// 产生用户积分
-	public int insertUserPoint(Map parmMap);
-	// 获取当前总积分
-	public String getTotalPoint(Map parmMap);
-	// 汇总用户积分
-	public int updateUserTotalPoint(Map parmMap);
 	
 	// 获取用户消费所在店铺的UER_ID, 以及本订单的总金额
 	public Map getMerUserIdAndPay(Map parmMap);

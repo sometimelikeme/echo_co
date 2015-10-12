@@ -292,4 +292,47 @@ public class UserOrderServiceImpl implements UserOrderService{
 		}
 		userOrderDAO.modifyItemQty(itemList);
 	}
+
+	@Override
+	public int addMallOrder(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		Map headMap = (Map)parmMap.get("head");
+    		String dateTime = DateUtils.getDateTime();
+    		headMap.put("ORDER_ALIAS_ID", RandomUtil.generateNumString(12));
+    		headMap.put("CAPTCHA", RandomUtil.generateString(6));
+    		headMap.put("ORDER_TIME", dateTime);
+    		if (userOrderDAO.addMallOrderHead(headMap) > 0) {
+    			List lineList = (List)parmMap.get("line");
+    			if (userOrderDAO.addOrderLine(lineList) > 0) {
+    				// 用户积分消费明细表参数集
+    				Map tranMap = new HashMap();
+    				tranMap.put("USER_ID", headMap.get("USER_ID"));
+    				tranMap.put("TIME1", dateTime);
+    				tranMap.put("DATE1", DateUtils.getToday());
+    				tranMap.put("POINT_NUM", headMap.get("TOTAL_PAY").toString());
+    				tranMap.put("MN_TYPE", "20");
+    				tranMap.put("TASK_ID", "");
+    				tranMap.put("ORDER_ID", headMap.get("ORDER_ID"));
+    				tranMap.put("ABLI_ORDER_ID", "");
+    				tranMap.put("AWARD_ID", "");
+    				tranMap.put("STATUS", "20");// 减
+    				// 产生用户积分消费记录
+    				userDAO.insertUserPointRecord(tranMap);
+    				// 修改用户积分-减
+    				BigDecimal payment = new BigDecimal(parmMap.get("TOTAL_PAY").toString());
+    				BigDecimal total_money_Big = new BigDecimal(parmMap.get("TOTAL_POINT").toString());
+    				tranMap.put("TOTAL_POINT", total_money_Big.subtract(payment));
+    				userDAO.updateUserPoint(tranMap);
+    				// 这里不再处理系统积分，因为系统积分购买的商品，不存在退的情况！！！
+    				// 处理库存
+    				processItemInventory(headMap, "30");
+					returnInt = 1;
+    			};
+    		}
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 }

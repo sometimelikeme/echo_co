@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
+import echo.sp.app.command.utils.Prop;
 import echo.sp.app.dao.MerOrderDAO;
 import echo.sp.app.dao.UserDAO;
 import echo.sp.app.service.MerOrderService;
@@ -44,18 +44,18 @@ public class MerOrderServiceImpl implements MerOrderService {
     		// 关闭订单
     		merOrderDAO.updateOrderClose(parmMap);
     		// 返还积分
-    		merOrderDAO.insertUserPoint(parmMap);
+    		parmMap.put("MN_TYPE", "20");
+    		parmMap.put("TASK_ID", "");
+    		parmMap.put("ABLI_ORDER_ID", "");
+    		parmMap.put("AWARD_ID", "");
+    		parmMap.put("STATUS", "10");
+    		userDAO.insertUserPointRecord(parmMap);
     		// 汇总积分
-    		String totalPoint = merOrderDAO.getTotalPoint(parmMap);
+    		String totalPoint = userDAO.getUserExpandInfo(parmMap).get("TOTAL_POINT").toString();
     		BigDecimal pointNumBig = new BigDecimal(parmMap.get("POINT_NUM").toString());
-    		BigDecimal totalPointBig;
-    		if (PubTool.processNullAndEmpty(totalPoint)) {
-    			totalPointBig = pointNumBig;
-			} else {
-				totalPointBig = new BigDecimal(totalPoint).add(pointNumBig);
-			}
+    		BigDecimal totalPointBig = new BigDecimal(totalPoint).add(pointNumBig);
     		parmMap.put("TOTAL_POINT", totalPointBig);
-    		merOrderDAO.updateUserTotalPoint(parmMap);
+    		userDAO.updateUserPoint(parmMap);
     		// 返还金额
     		Map merMap = merOrderDAO.getMerUserIdAndPay(parmMap);
     		BigDecimal payment = new BigDecimal(merMap.get("TOTAL_PAY").toString());
@@ -75,7 +75,15 @@ public class MerOrderServiceImpl implements MerOrderService {
 			tranMap.put("PRE_PAID_ID", "");
 			tranMap.put("STATUS", "10");
 			userDAO.insertUserMoneyRecord(tranMap);
-    		
+			// 系统扣除
+			// 系统账户金额消费明细表参数集
+			tranMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+			tranMap.put("STATUS", "20");// 减
+			userDAO.insertUserMoneyRecord(tranMap);
+			// 将付款暂存到系统账户-减
+			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
+			tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
+			userDAO.updateUserMoney(tranMap);
     		returnInt = 1;
 		} catch (Exception e) {
 			throw new RuntimeException();
