@@ -207,7 +207,11 @@ public class MerOrderController extends CoreController{
 				}
 				// 修改订单为消费状态
 				paramMap.put("CONSUME_TIME", DateUtils.getDateTime());
-				merOrderService.updateOrderComsume(paramMap);
+				if ("10".equals(orderMap.get("FROM_TYPE").toString())) {// 金额消费订单
+					merOrderService.updateOrderComsume(paramMap);
+				} else {
+					merOrderService.updatePointOrderComsume(paramMap);// 积分消费，直接关闭订单
+				}
 				
 				orderMap = userOrderService.getOrderDetail(parmMap);
 				

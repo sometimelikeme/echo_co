@@ -34,4 +34,7 @@ public interface MerOrderDAO {
 	
 	// 根据订单ID获取订单商品详情
 	public List getOrderDetailByOrderId(Map parmMap);
+	
+	// 积分消费订单，直接关闭
+	public int updatePointOrderComsume(Map parmMap);
 }

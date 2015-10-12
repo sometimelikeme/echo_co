@@ -131,4 +131,12 @@
         AND CONSUME_TIME != ''
         AND FROM_TYPE = '10'
     </select>
+    
+    <update id="updatePointOrderComsume" parameterType="map">  
+          UPDATE T_ORDERS SET 
+          STATUS = '60',
+          CONSUME_TIME = #{CONSUME_TIME},
+          SHUT_TIME = #{SHUT_TIME}
+          WHERE ORDER_ID = #{ORDER_ID}
+    </update> 
 </mapper>

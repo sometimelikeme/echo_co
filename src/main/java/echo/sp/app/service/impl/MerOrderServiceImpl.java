@@ -142,4 +142,16 @@ public class MerOrderServiceImpl implements MerOrderService {
 	public List getOrderDetailByOrderId(Map parmMap) {
 		return merOrderDAO.getOrderDetailByOrderId(parmMap);
 	}
+
+	@Override
+	public int updatePointOrderComsume(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		merOrderDAO.updatePointOrderComsume(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 }
