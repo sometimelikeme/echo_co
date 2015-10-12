@@ -37,6 +37,11 @@ public class UserTaskServiceImpl implements UserTaskService{
     	try {
     		// 发布任务
     		userTaskDAO.addTask(parmMap);
+    		// 积分任务由平台发布
+    		// 无需产生积分消费记录
+    		if ("20".equals(parmMap.get("TASK_TYPE").toString())) {
+				return 1;
+			}
     		// 用户金额消费明细表参数集
 			Map tranMap = new HashMap();
 			tranMap.put("USER_ID", parmMap.get("USER_ID"));
