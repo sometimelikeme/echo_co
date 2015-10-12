@@ -78,3 +78,8 @@
 - 增加调用beecloud网平台账户充值接口
 ### 2015-10-7
 - "user/getUserExpandInfo.do"获取余额、积分、能力
+### 2015-10-12
+- "order/addMallOrder.do"增加积分购买商品，直接下单并处于支付状态接口
+- 订单表T_ORDERS增加FROM_TYPE：10-金钱订单，20-金币订单
+- 积分订单，用户去平台消费时，直接关闭订单，无需用户关闭
+- 返回的订单信息中增加了FROM_TYPE 
