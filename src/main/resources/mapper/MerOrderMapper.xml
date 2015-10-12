@@ -129,5 +129,6 @@
         WHERE STATUS = '50'
         AND CONSUME_TIME IS NOT NULL 
         AND CONSUME_TIME != ''
+        AND FROM_TYPE = '10'
     </select>
 </mapper>
