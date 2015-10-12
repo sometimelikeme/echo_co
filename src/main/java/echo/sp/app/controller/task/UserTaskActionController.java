@@ -462,7 +462,11 @@ public class UserTaskActionController extends CoreController{
 				// 产生消费记录
 				paramMap.put("TASK_FINISH_TIME", DateUtils.getDateTime());
 				paramMap.put("TASK_TOTAL_PAID", parmMap.get("TASK_TOTAL_PAID"));
-				userTaskActionService.updateTaskFinish(paramMap);
+				if ("10".equals(parmMap.get("TASK_TYPE").toString())) {// 金钱任务
+					userTaskActionService.updateTaskFinish(paramMap);
+				} else {
+					userTaskActionService.updateTaskFinishPoint(parmMap);
+				}
 				// 3.返回任务信息
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);

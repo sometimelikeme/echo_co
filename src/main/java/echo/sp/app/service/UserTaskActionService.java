@@ -25,6 +25,8 @@ public interface UserTaskActionService {
 	public int updateTaskUnFinish(Map parmMap);
 	// 结束任务
 	public int updateTaskFinish(Map parmMap);
+	// 结束任务
+	public int updateTaskFinishPoint(Map parmMap);
 	// 获取未处理任务列表
 	public List getUnProcessTasks(Map parmMap);
 }

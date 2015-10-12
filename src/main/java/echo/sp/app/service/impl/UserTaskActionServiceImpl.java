@@ -152,6 +152,40 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 		}
 		return returnInt;
 	}
+	
+	@Override
+	public int updateTaskFinishPoint(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		// 结束任务
+    		userTaskActionDAO.updateTaskFinish(parmMap);
+    		// 奖励将本次任务积分
+    		String payment = parmMap.get("TASK_TOTAL_PAID").toString();
+			parmMap.put("GET_PAID", payment);
+			userTaskActionDAO.updateTaskLineFinish(parmMap);
+			// 用户积分消费明细表参数集-增
+			Map tranMap = new HashMap();
+			tranMap.put("USER_ID", parmMap.get("BIDE_USER_ID"));
+			tranMap.put("TIME1", parmMap.get("TASK_FINISH_TIME"));
+			tranMap.put("DATE1", DateUtils.getToday());
+			tranMap.put("POINT_NUM", payment);
+			tranMap.put("TASK_ID", parmMap.get("TASK_ID"));
+			tranMap.put("ORDER_ID", "");
+			tranMap.put("ABLI_ORDER_ID", "");
+			tranMap.put("AWARD_ID", "");
+			tranMap.put("STATUS", "10");// 增
+			tranMap.put("MN_TYPE", "10");// 任务
+			userDAO.insertUserPointRecord(tranMap);
+			// 修改用户总积分-增
+			BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_POINT").toString());
+			tranMap.put("TOTAL_POINT", total_money_Big.add(new BigDecimal(payment)));
+			userDAO.updateUserPoint(tranMap);
+		} catch (Exception e) {
+			logger.error("UserTaskActionServiceImpl---updateTaskFinish--error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 
 	@Override
 	public int updateTaskUnFinish(Map parmMap) {
