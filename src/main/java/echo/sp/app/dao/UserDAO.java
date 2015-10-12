@@ -59,4 +59,10 @@ public interface UserDAO {
   	
   	// 生成用户金额交易记录
    	public int insertUserMoneyRecord(Map parmMap); 
+   	
+   	// 修改用户积分
+   	public int updateUserPoint(Map parmMap);
+   	
+   	// 生成用户积分交易记录
+	public int insertUserPointRecord(Map parmMap);
 }

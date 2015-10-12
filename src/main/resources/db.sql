@@ -113,6 +113,7 @@ CREATE TABLE T_USERS_POINT(
   TIME1 VARCHAR(32) NOT NULL,--获取时间戳
   DATE1 CHAR(8),--获取日期
   POINT_NUM DECIMAL(18,8),--获取积分(消费积分采用负数表示)
+  MN_TYPE CHAR(2),--来源：10-任务,20-订单,30-技能购买,40-系统奖励
   TASK_ID VARCHAR(32),--对应的任务ID
   ORDER_ID VARCHAR(32),--对应的订单ID
   ABLI_ORDER_ID VARCHAR(32),--对应的技能订单ID
