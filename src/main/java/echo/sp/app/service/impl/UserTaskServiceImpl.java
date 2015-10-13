@@ -54,7 +54,7 @@ public class UserTaskServiceImpl implements UserTaskService{
 			tranMap.put("PRE_PAID_ID", "");
 			tranMap.put("STATUS", "20");// 减
 			tranMap.put("MN_TYPE", "10");// 任务
-			userDAO.insertUserMoneyRecord(tranMap);
+			userDAO.insertUserMoneyRecord(tranMap); 
 			// 修改用户金额-减
 			BigDecimal payment = new BigDecimal(parmMap.get("TASK_TOTAL_PAID").toString());
 			BigDecimal total_money_Big = new BigDecimal(parmMap.get("TOTAL_MONEY").toString());
