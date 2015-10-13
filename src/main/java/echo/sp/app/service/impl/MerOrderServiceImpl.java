@@ -81,7 +81,7 @@ public class MerOrderServiceImpl implements MerOrderService {
 			tranMap.put("STATUS", "20");// 减
 			userDAO.insertUserMoneyRecord(tranMap);
 			// 将付款暂存到系统账户-减
-			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
+			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
 			tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
 			userDAO.updateUserMoney(tranMap);
     		returnInt = 1;
