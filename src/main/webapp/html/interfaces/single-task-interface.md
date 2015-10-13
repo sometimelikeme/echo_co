@@ -448,3 +448,93 @@
 	status: "9992",
 	msg: "后台程序执行失败",
 }`
+###接口13： 查询用户竞标任务列表
+- url: task/searchBidTaskByUserId.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required用户ID`
+		`page: '1'// required`
+		`pageSize: 'accf734342494d0fa638233079a4cc82'// required`
+		`LONGITUDE: '1'// required`
+		`LATITUDE: 'accf734342494d0fa638233079a4cc82'// required`
+		`IS_BIDE: 'accf734342494d0fa638233079a4cc82'// optimal`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可下单。
+	+ 默认按照竞标距离-正序，竞标时间-倒序，任务创建时间-正序排序
+	+ 返回字段包含任务表中所有数据、发任务人的头像和照片、本人竞标任务的时间和中标状态
+	+ `IS_BIDE`若此字段传递，则筛选中标状态的任务
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[任务列表],"dataset":{totalCount}}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效用户！"
+}`
+
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
+###接口14： 查询任务：查询单个任务
+- url: task/searchTaskById.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required用户ID`
+		`TASK_ID: 'accf734342494d0fa638233079a4cc82'// required任务ID`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可下单。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[任务行表],"dataset":{任务头表}}`
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
+###接口15：查询任务：查询任务列表
+- url: task/searchTaskList.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// optimal用户ID`
+		`page: '1'// required`
+		`pageSize: 'accf734342494d0fa638233079a4cc82'// required`
+		`LONGITUDE: '1'// required`
+		`LATITUDE: 'accf734342494d0fa638233079a4cc82'// required`
+		`SECTOR_ID: 'accf734342494d0fa638233079a4cc82'// optimal二级分类ID`
+		`SECTOR_TYPE: 'accf734342494d0fa638233079a4cc82'// optimal一级分类ID`
+		`TASK_TITLE: 'accf734342494d0fa638233079a4cc82'// optimal任务标题`
+		`TASK_AREA: 'accf734342494d0fa638233079a4cc82'// optimal任务范围`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可下单。
+	+ 默认按照距离-正序，创建时间-倒序排序
+	+ 返回任务表中所有数据，发任务人的头像和名称
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[任务行表],"dataset":{任务头表}}`
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
