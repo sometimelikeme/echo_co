@@ -65,7 +65,7 @@ public class UserTaskServiceImpl implements UserTaskService{
 			tranMap.put("STATUS", "10");// 增
 			userDAO.insertUserMoneyRecord(tranMap);
 			// 将付款暂存到系统账户-增
-			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(parmMap).get("TOTAL_MONEY").toString());
+			total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
 			tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
 			userDAO.updateUserMoney(tranMap);
 		} catch (Exception e) {
