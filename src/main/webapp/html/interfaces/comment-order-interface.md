@@ -37,11 +37,11 @@
 	`dataset: {`
 		`ITEM_ID: '10038',// required商品ID`
 		`USER_ID: '100012',//required用户ID`
-		`ORDER_ID: '45c298a408df410eac0a1b2c8e6a86d9',//required订单ID``
-		`ITEM_POINT: '10038',// required评分`
+		`ORDER_ID: '45c298a408df410eac0a1b2c8e6a86d9',//required订单ID`
+		`ITEM_POINT`: `'10038',// required评分`
 		`COMENT_TITLE: '',// required评论标题`
 		`COMMENT_DESC: '',//required评论内容`
-		`NOTE: '45c298a408df410eac0a1b2c8e6a86d9'//required商家回复``
+		`NOTE: '45c298a408df410eac0a1b2c8e6a86d9'//required商家回复`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
