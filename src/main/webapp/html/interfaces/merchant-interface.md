@@ -222,6 +222,7 @@
 		`DISTANCE: ''// required 10-10公里以内，20-全城，30-全国`
 		`BUSI_TYPE: ''// optimal 商品店铺类型，维护到枚举表--保存商品大类枚举T_ITEMS_CATEGORY.CATEGORY_TYPE`
 	    `CANT_CODE: ''// optimal 若查询全城和10公里需要传递地区号`
+		`ORDER_BY: 'DIST.asc,TOTAL_POINT.desc,MER_LEVEL.asc,LAST_UPDATE.desc'// required DIST.asc,TOTAL_POINT.desc,MER_LEVEL.asc,LAST_UPDATE.desc`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
