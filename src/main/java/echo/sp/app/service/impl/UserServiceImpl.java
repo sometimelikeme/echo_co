@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService{
     	try {
     		returnInt = userDAO.updateToMerchant(parmMap);
 		} catch (Exception e) {
+			logger.error("UserServiceImpl---updateToMerchant: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
