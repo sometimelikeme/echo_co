@@ -205,7 +205,7 @@ CREATE TABLE T_MERCHANTS(
   BUSI_DESC VARCHAR(256),--经营内容描述
   OPEN_HOURS VARCHAR(64),--经营时间段
   STATUS CHAR(2),--店铺状态:10-已提交，20-审核中，30-审核通过
-  BUSI_TYPE VARCHAR(32),--商品店铺类型，维护到枚举表
+  BUSI_TYPE VARCHAR(32),--商品店铺类型，维护到枚举表--保存商品大类枚举T_ITEMS_CATEGORY.CATEGORY_TYPE
   REG_TIME VARCHAR(32),--开店时间
   LAST_UPDATE VARCHAR(32),--最近更新时间 
   MER_LEVEL CHAR(2) DEFAULT '99',--店铺级别 级别越高被搜到的几率越大 查询到的排名越高
