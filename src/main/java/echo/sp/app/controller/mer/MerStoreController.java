@@ -59,7 +59,7 @@ public class MerStoreController extends CoreController{
 			Map paramMap = data.getDataset();
 			
 			// 默认按照距离和店铺等级排序
-			String sortString = "DIST.asc,MER_LEVEL.asc";
+			String sortString = "DIST.asc,MER_LEVEL.asc,LAST_UPDATE.desc";
 			
 			int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 			int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN

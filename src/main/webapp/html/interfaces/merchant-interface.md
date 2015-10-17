@@ -219,6 +219,9 @@
 		`BUSI_DESC: '',// optimal 根据店铺描述模糊查询`
 		`LONGITUDE: '',// required 当前消费者的经度`
 		`LATITUDE: ''// required 当前消费者的维度`
+		`DISTANCE: ''// required 10-10公里以内，20-全城，30-全国`
+		`BUSI_TYPE: ''// optimal 商品店铺类型，维护到枚举表--保存商品大类枚举T_ITEMS_CATEGORY.CATEGORY_TYPE`
+	    `CANT_CODE: ''// optimal 若查询全城和10公里需要传递地区号`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥

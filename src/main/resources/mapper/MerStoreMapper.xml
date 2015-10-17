@@ -34,22 +34,37 @@
           ON A.MERCHANT_ID = B.MERCHANT_ID
           WHERE STATUS = '30'
           <if test="MERCHANT_NAME != null and MERCHANT_NAME != '' ">  
-          		AND MERCHANT_NAME LIKE CONCAT(CONCAT('%', #{MERCHANT_NAME, jdbcType=VARCHAR}),'%') 
+          		AND A.MERCHANT_NAME LIKE CONCAT(CONCAT('%', #{MERCHANT_NAME, jdbcType=VARCHAR}),'%') 
     	  </if>
     	  <if test="SHORT_NAME != null and SHORT_NAME != '' ">  
-          		AND SHORT_NAME LIKE CONCAT(CONCAT('%', #{SHORT_NAME, jdbcType=VARCHAR}),'%') 
+          		AND A.SHORT_NAME LIKE CONCAT(CONCAT('%', #{SHORT_NAME, jdbcType=VARCHAR}),'%') 
     	  </if>
     	  <if test="MERCHANT_TYPE != null and MERCHANT_TYPE != '' ">  
-          		AND MERCHANT_TYPE = #{MERCHANT_TYPE} 
+          		AND A.MERCHANT_TYPE = #{MERCHANT_TYPE} 
     	  </if>
     	  <if test="MERCHANT_ADDR != null and MERCHANT_ADDR != '' ">  
-          		AND MERCHANT_ADDR LIKE CONCAT(CONCAT('%', #{MERCHANT_ADDR, jdbcType=VARCHAR}),'%') 
+          		AND A.MERCHANT_ADDR LIKE CONCAT(CONCAT('%', #{MERCHANT_ADDR, jdbcType=VARCHAR}),'%') 
     	  </if>
     	  <if test="ABILITY != null and ABILITY != '' ">  
-          		AND ABILITY LIKE CONCAT(CONCAT('%', #{ABILITY, jdbcType=VARCHAR}),'%') 
+          		AND A.ABILITY LIKE CONCAT(CONCAT('%', #{ABILITY, jdbcType=VARCHAR}),'%') 
     	  </if>
     	  <if test="BUSI_DESC != null and BUSI_DESC != '' ">  
-          		AND BUSI_DESC LIKE CONCAT(CONCAT('%', #{BUSI_DESC, jdbcType=VARCHAR}),'%') 
+          		AND A.BUSI_DESC LIKE CONCAT(CONCAT('%', #{BUSI_DESC, jdbcType=VARCHAR}),'%') 
     	  </if>
+    	  <if test="BUSI_TYPE != null and BUSI_TYPE != '' ">  
+          		AND A.BUSI_TYPE = #{BUSI_TYPE}
+    	  </if>
+   	      <choose>
+   	      	<when test="DISTANCE == '10'">
+				AND DIST <![CDATA[<=20000]]> 
+				AND A.CANT_CODE = #{CANT_CODE}
+			</when>
+			<when test="DISTANCE == '20'">
+				AND A.CANT_CODE = #{CANT_CODE}
+			</when>
+			<otherwise>
+				AND 1 = 1
+			</otherwise>
+		  </choose>
     </select>
 </mapper> 
