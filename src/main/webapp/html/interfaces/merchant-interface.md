@@ -121,8 +121,12 @@
 		`pageSize: '10'// optimal每页的最大数据量-获取商品列表:该分页参数只针对获取商品；若传递ITEM_ID,该参数不用`
 		`pageComm: '1'// optimal评论分页查询-请求页数-获取商品列表:需要传递ITEM_ID配合使用`
 		`pageSizeComm: '10'// optimal评论每页的最大数据量-获取商品列表:需要传递ITEM_ID配合使用`
-		`sort: 'CREATE_TIME.desc'// 按照什么排序，字段名后加.asc升序排序，.desc倒序排序`
 		`IS_MER_INFO_NEED: '1'// optimal 增加该参数 则查询某个商品时，返回的MAP中增加其所在店铺的信息`
+		`DISTANCE: ''// required 10-10公里以内，20-全城，30-全国`
+	    `CANT_CODE: ''// optimal 若查询全城和10公里需要传递地区号`
+		`sort: 'DIST.asc,ITEM_POINT.desc,POINT_NUM.desc,LAST_UPDATE.desc'// required required DIST.asc,ITEM_POINT.desc,POINT_NUM.desc,LAST_UPDATE.desc`
+		`LONGITUDE: '',// required 当前消费者的经度`
+		`LATITUDE: ''// required 当前消费者的维度`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
@@ -130,6 +134,7 @@
 	+ 传递MERCHANT_ID可获取当前店铺下的所有商品。
 	+ 本接口未做客户端限制，因为用户也需要调用该接口。
 	+ 参数key值与数据库字段值相同，参数是可选，非必须。
+	+ 返回字段中DIST表示该商品所述店铺距离
 	+ 本接口返回3种类型数据：
 	  + 若传入的参数中含有ITEM_ID，切当前有数据集，则将当前商品放入dataset中,商品评论放入dataset_line，默认按照评论日期倒序排序；同时dataset中的BELONG_ITEM用来表示该商品是否为用户自己店铺的商品；增加成功返回数据格式如下(查询商品接口mer/searchMerItem,增加查询具体商品时,返回该商品是否被当前用户所收藏的标志字段`IS_COLL`为1), 同时dataset中增加totalCount来计算总评论数,第一请求获取到商品信息和第一批分页评论信息，后面的分页请求不再返回商品信息：
 	    `{"status":"0000","msg":"成功",`
