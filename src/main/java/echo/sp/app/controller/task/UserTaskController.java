@@ -281,14 +281,42 @@ public class UserTaskController extends CoreController{
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				Map paramMap = data.getDataset();
-				paramMap = userTaskService.getTaskInfoByTaskId(paramMap);
+				
+				Object page = paramMap.get("page"),// PAGE NUMBER
+					   pageSize  = paramMap.get("pageSize"),// MAX ROWS RETURN
+					   sort = paramMap.get("sort");// SORT INFO
+				
+				String sortString = sort == null ? "TIME1.desc" : sort.toString();// 评论排序
+				int pageInt = Integer.parseInt(page.toString());
+				int pageSizeInt = Integer.parseInt(pageSize.toString());
+				
+				Map resMap = new HashMap();
 				List lineList = null;
-				Object obj = paramMap.get("TASK_LINE");
-				if (obj != null) {
-					lineList = (List)obj;
+				List resList = null;
+				
+				// 仅仅在第一页中加入任务数据 以及第一页的留言
+				if (pageInt == 1) {
+					resMap = userTaskService.getTaskInfoByTaskId(paramMap);
+					Object obj = resMap.get("TASK_LINE");
+					if (obj != null) {
+						lineList = (List)obj;
+					}
+					resMap.remove("TASK_LINE");
 				}
-				paramMap.remove("TASK_LINE");
-				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, lineList);
+				
+				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				
+				resList = PubTool.getResultList("UserTaskDAO.getTaskMessages", paramMap, pageBounds, sqlSessionFactory);
+				
+				// 仅在第一页加入留言量
+				if (PubTool.isListHasData(resList) && pageInt == 1) {
+					PageList pageList = (PageList) resList;
+					resMap.put("totalCount", ((PageList) resList).getPaginator().getTotalCount());
+				}
+				
+				resMap.put("MSG_LIST", resList);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, lineList);
 			}
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
