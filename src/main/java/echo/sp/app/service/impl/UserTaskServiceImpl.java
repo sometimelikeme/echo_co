@@ -96,4 +96,28 @@ public class UserTaskServiceImpl implements UserTaskService{
 	public int updateTaskForCancel(Map parmMap) {
 		return userTaskDAO.updateTaskForCancel(parmMap);
 	}
+
+	@Override
+	public int addMsg(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		returnInt = userTaskDAO.addMsg(parmMap);
+		} catch (Exception e) {
+			logger.error("UserTaskServiceImpl---addMsg---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int deleteMsg(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		returnInt = userTaskDAO.deleteMsg(parmMap);
+		} catch (Exception e) {
+			logger.error("UserTaskServiceImpl---deleteMsg---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 }

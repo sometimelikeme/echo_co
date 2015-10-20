@@ -18,4 +18,8 @@ public interface UserTaskService {
 	public int deleteTask(Map parmMap);
 	// 取消任务
 	public int updateTaskForCancel(Map parmMap);
+	// 留言
+	public int addMsg(Map parmMap);
+	// 删除留言
+	public int deleteMsg(Map parmMap);
 }

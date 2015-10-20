@@ -142,4 +142,28 @@
 		SET TASK_BID_STATUS = '20',TASK_CANCEL_TIME=#{TASK_CANCEL_TIME}
 		WHERE TASK_ID = #{TASK_ID}
     </update>
+    
+    <insert id="addMsg" parameterType="map">
+	    INSERT INTO T_TASKS_MESSAGE 
+			(	
+				MSG_ID,
+				TASK_ID,
+				USER_ID,
+				TIME1,
+				MESSAGE,
+				REPLY
+			)
+		VALUES
+			(	
+				#{MSG_ID},
+				#{TASK_ID},
+				#{USER_ID},
+				#{TIME1},
+				#{MESSAGE},
+				#{REPLY}
+			)
+    </insert>
+    <delete id="deleteMsg" parameterType="map">
+    	DELETE FROM T_TASKS_MESSAGE WHERE MSG_ID = #{MSG_ID}
+    </delete>
 </mapper>
