@@ -538,3 +538,61 @@
 	status: "9992",
 	msg: "后台程序执行失败",
 }`
+###接口16： 任务留言和回复
+- url: task/leaveMsg.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required用户ID`
+		`TASK_ID: 'accf734342494d0fa638233079a4cc82'// required任务ID`
+		`MESSAGE: '1cc2d9e2a9cc4e4983b76d03e432d345',// required留言`
+		`REPLY: 'accf734342494d0fa638233079a4cc82'// required回复`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可下单。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功"}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效用户！"
+}`
+
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
+###接口17： 删除任务留言
+- url: task/delMsg.do
+- 参数一： 参数对象
+	`dataParm: {`
+	`dataset: {`
+		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required用户ID`
+		`delMsg: 'accf734342494d0fa638233079a4cc82'// required留言ID`
+	`}`
+	`}`
+- 参数二： no_co （QUJDREVGRw==）公钥
+- 参数三： sc_co 用户私钥
+- 注意：
+	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可下单。
+- 返回值：
+ + 成功： `{"status":"0000","msg":"成功"}`
+ + 失败：` {
+	status: "9999",
+	msg: "无效用户！"
+}`
+
+ + 失败：` {
+	status: "9997",
+	msg: "无效设备"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`

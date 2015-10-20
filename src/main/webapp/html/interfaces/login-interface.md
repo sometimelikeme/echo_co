@@ -441,3 +441,16 @@
 	"status": "0000",
 	"msg": "成功",
 }`
+###接口12： 获取开通城市列表
+- url: login/openCities.do
+- 参数一：no_co
+- 返回值： 
+ + 成功： `  {
+	"status": "0000",
+	"msg": "成功",
+	"dataset_line":"[{T_CITIES表中字段}...]"
+}`
+ + 失败：` {
+	status: "9992",
+	msg: "后台程序执行失败",
+}`
