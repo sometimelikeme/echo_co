@@ -65,7 +65,7 @@ public class UserOrderController extends CoreController{
 	@RequestMapping("order/addOrder")
 	public void addOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserOrderController---addOrder---dataParm: " + dataParm);
+			logger.debug("UserOrderController---addOrder---begin");
 		}
 		
 		try {
@@ -169,7 +169,7 @@ public class UserOrderController extends CoreController{
 	@RequestMapping("order/cancelOrder")
 	public void cancelOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserOrderController---cancelOrder---dataParm: " + dataParm);
+			logger.debug("UserOrderController---cancelOrder---begin");
 		}
 		
 		try {
@@ -224,7 +224,7 @@ public class UserOrderController extends CoreController{
 	@RequestMapping("order/payAction")
 	public void payAction(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserOrderController---payAction---dataParm: " + dataParm);
+			logger.debug("UserOrderController---payAction---begin");
 		}
 		
 		try {
@@ -303,7 +303,7 @@ public class UserOrderController extends CoreController{
 	@RequestMapping("order/backPay")
 	public void backPay(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserOrderController---backPay---dataParm: " + dataParm);
+			logger.debug("UserOrderController---backPay---begin");
 		}
 		
 		try {
@@ -752,7 +752,7 @@ public class UserOrderController extends CoreController{
 	@RequestMapping("order/addMallOrder")
 	public void addMallOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserOrderController---addMallOrder---dataParm: " + dataParm);
+			logger.debug("UserOrderController---addMallOrder---begin");
 		}
 		
 		try {

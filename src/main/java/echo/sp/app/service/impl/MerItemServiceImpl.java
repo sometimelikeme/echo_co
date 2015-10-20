@@ -32,6 +32,7 @@ public class MerItemServiceImpl implements MerItemService {
     	try {
     		returnInt = merItemDAO.addMerItem(item);
 		} catch (Exception e) {
+			logger.error("MerItemServiceImpl---addMerItem---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -44,6 +45,7 @@ public class MerItemServiceImpl implements MerItemService {
     	try {
     		returnInt = merItemDAO.updateMerItem(parmMap);
 		} catch (Exception e) {
+			logger.error("MerItemServiceImpl---updateMerItem---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -62,6 +64,7 @@ public class MerItemServiceImpl implements MerItemService {
     	try {
     		returnInt = merItemDAO.updateToPreItem(parmMap);
 		} catch (Exception e) {
+			logger.error("MerItemServiceImpl---updateToPreItem---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

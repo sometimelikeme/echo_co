@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,6 +26,7 @@ import echo.sp.app.command.utils.Encodes;
  * @date 2015年8月10日
  */ 
 public abstract class CoreController {
+	private static final Logger logger = LoggerFactory.getLogger(CoreController.class);
 	protected JsonBean data; 
 	protected HttpSession session; 
 	
@@ -33,6 +37,9 @@ public abstract class CoreController {
 	protected void getParm(HttpServletRequest req, HttpServletResponse response) {
 		session = req.getSession();
 		String jsonData = PubTool.processParm(req.getParameter("dataParm"));
+		if (logger.isDebugEnabled()) {
+			logger.debug("CoreController---Interface---parm: " + jsonData);
+		}
 		jsonData = Encodes.urlDecode(jsonData);
 		if (!"".equals(jsonData)) {
 			Gson gson = new Gson();

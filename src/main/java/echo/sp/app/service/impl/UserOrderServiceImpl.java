@@ -51,13 +51,12 @@ public class UserOrderServiceImpl implements UserOrderService{
     		if (userOrderDAO.addOrderHead((Map)parmMap.get("head")) > 0) {
     			List lineList = (List)parmMap.get("line");
     			if (userOrderDAO.addOrderLine(lineList) > 0) {
-    				// if (userOrderDAO.modifyItemQty(lineList) > 0) {
-    					returnInt = 1;
-					// }
+					returnInt = 1;
     			};
     		}
 		} catch (Exception e) {
 			//  默认spring事务只在发生未被捕获的 runtimeexcetpion时才回滚
+			logger.error("UserOrderServiceImpl---addOrder---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -118,6 +117,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			returnInt = 1; 
 			
 		} catch (Exception e) {
+			logger.error("UserOrderServiceImpl---updateOrderPay---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -174,6 +174,7 @@ public class UserOrderServiceImpl implements UserOrderService{
     		
     		returnInt = 1;
     	} catch (Exception e) {
+    		logger.error("UserOrderServiceImpl---insertPrePayInfo---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -214,7 +215,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			
 			returnInt = 1;
 		} catch (Exception e) {
-			logger.error("UserOrderServiceImpl---updatePayAction: ",e);
+			logger.error("UserOrderServiceImpl---updatePayAction---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -254,6 +255,7 @@ public class UserOrderServiceImpl implements UserOrderService{
 			
 			returnInt = 1;
 		} catch (Exception e) {
+			logger.error("UserOrderServiceImpl---updateBackPayAction---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -331,7 +333,7 @@ public class UserOrderServiceImpl implements UserOrderService{
     			};
     		}
 		} catch (Exception e) {
-			logger.error("UserOrderServiceImpl---addMallOrder: ",e);
+			logger.error("UserOrderServiceImpl---addMallOrder---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

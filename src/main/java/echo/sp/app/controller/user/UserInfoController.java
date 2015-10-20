@@ -44,7 +44,7 @@ public class UserInfoController extends CoreController {
 	@RequestMapping("user/updateUserInfo")
 	public void updateUserInfo(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserInfoController---updateUserInfo---dataParm: " + dataParm);
+			logger.debug("UserInfoController---updateUserInfo---begin");
 		}
 		
 		try {
@@ -93,7 +93,7 @@ public class UserInfoController extends CoreController {
 	@RequestMapping("user/updateUserIC")
 	public void updateUserIC(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserInfoController---updateUserIC---dataParm: " + dataParm);
+			logger.debug("UserInfoController---updateUserIC---begin");
 		}
 		
 		try {
@@ -142,7 +142,7 @@ public class UserInfoController extends CoreController {
 	@RequestMapping("user/updateUserAcc")
 	public void updateUserAcc(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserInfoController---updateUserAcc---dataParm: " + dataParm);
+			logger.debug("UserInfoController---updateUserAcc---begin");
 		}
 		
 		try {
@@ -190,7 +190,7 @@ public class UserInfoController extends CoreController {
 	@RequestMapping("user/getUserExpandInfo")
 	public void getUserExpandInfo(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserInfoController---getUserExpandInfo---dataParm: " + dataParm);
+			logger.debug("UserInfoController---getUserExpandInfo---begin");
 		}
 		
 		try {

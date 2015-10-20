@@ -51,7 +51,7 @@ public class UserItemController extends CoreController{
 	@RequestMapping("user/addMerColl")
 	public void addMerColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserItemController---addMerColl---dataParm: " + dataParm);
+			logger.debug("UserItemController---addMerColl---begin");
 		}
 		
 		try {
@@ -91,7 +91,7 @@ public class UserItemController extends CoreController{
 	@RequestMapping("user/addItemColl")
 	public void addItemColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserItemController---addItemColl---dataParm: " + dataParm);
+			logger.debug("UserItemController---addItemColl---begin");
 		}
 		
 		try {
@@ -131,7 +131,7 @@ public class UserItemController extends CoreController{
 	@RequestMapping("user/deleteMerColl")
 	public void deleteMerColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserItemController---deleteMerColl---dataParm: " + dataParm);
+			logger.debug("UserItemController---deleteMerColl---begin");
 		}
 		
 		try {
@@ -169,7 +169,7 @@ public class UserItemController extends CoreController{
 	@RequestMapping("user/deleteItemColl")
 	public void deleteItemColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserItemController---deleteItemColl---dataParm: " + dataParm);
+			logger.debug("UserItemController---deleteItemColl---begin");
 		}
 		
 		try {
@@ -207,7 +207,7 @@ public class UserItemController extends CoreController{
 	@RequestMapping("user/getMerColl")
 	public void getMerColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserItemController---getMerColl---dataParm: " + dataParm);
+			logger.debug("UserItemController---getMerColl---begin");
 		}
 		
 		try {
@@ -256,7 +256,7 @@ public class UserItemController extends CoreController{
 	@RequestMapping("user/getItemColl")
 	public void getItemColl(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserItemController---getItemColl---dataParm: " + dataParm);
+			logger.debug("UserItemController---getItemColl---begin");
 		}
 		
 		try {

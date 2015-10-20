@@ -84,7 +84,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"task/doneTask.do",// 完成任务: 竞标人发起
 		"task/undoneTask.do",// 未完成任务：发布者
 		"task/closeTask.do",// 结束任务: 发布者
-		"task/searchBidTaskByUserId.do"// 查询用户竞标任务列表
+		"task/searchBidTaskByUserId.do",// 查询用户竞标任务列表
+		"task/leaveMsg.do",// 任务留言
+		"task/delMsg.do"// 删除任务留言
 	};
 	 
     @SuppressWarnings("unused")

@@ -66,7 +66,7 @@ public class MerOrderController extends CoreController{
 	@RequestMapping("order/getOrders")
 	public void getOrders(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerOrderController---getOrders---dataParm: " + dataParm);
+			logger.debug("MerOrderController---getOrders---begin");
 		}
 		
 		try {
@@ -163,7 +163,7 @@ public class MerOrderController extends CoreController{
 	@RequestMapping("order/consuOrder")
 	public void consuOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerOrderController---consuOrder---dataParm: " + dataParm);
+			logger.debug("MerOrderController---consuOrder---begin");
 		}
 		
 		try {
@@ -233,7 +233,7 @@ public class MerOrderController extends CoreController{
 	@RequestMapping("order/closeOrder")
 	public void closeOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerOrderController---closeOrder---dataParm: " + dataParm);
+			logger.debug("MerOrderController---closeOrder---begin");
 		}
 		
 		try {
@@ -310,7 +310,7 @@ public class MerOrderController extends CoreController{
 	@RequestMapping("order/delOrder")
 	public void delOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerOrderController---delOrder---dataParm: " + dataParm);
+			logger.debug("MerOrderController---delOrder---begin");
 		}
 		
 		try {

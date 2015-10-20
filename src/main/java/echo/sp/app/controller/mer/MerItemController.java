@@ -58,7 +58,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/addMerItem")
 	public void addMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---addMerItem---dataParm: " + dataParm);
+			logger.debug("MerItemController---addMerItem---begin");
 		}
 		
 		try {
@@ -179,7 +179,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/updateMerItem")
 	public void updateMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---updateMerItem---dataParm: " + dataParm);
+			logger.debug("MerItemController---updateMerItem---begin");
 		}
 		
 		try {
@@ -230,7 +230,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/searchMerItem")
 	public void searchMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---searchMerItem---begin: " + dataParm);
+			logger.debug("MerItemController---searchMerItem---begin");
 		}
 		
 		try {
@@ -267,7 +267,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/updateToPreItem")
 	public void updateToPreItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---updateToPreItem---dataParm: " + dataParm);
+			logger.debug("MerItemController---updateToPreItem---begin");
 		}
 		
 		try {
@@ -308,7 +308,7 @@ public class MerItemController extends CoreController{
 	@RequestMapping("mer/delMerItem")
 	public void delMerItem(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerItemController---delMerItem---dataParm: " + dataParm);
+			logger.debug("MerItemController---delMerItem---begin");
 		}
 		try {
 			super.getParm(req, response);

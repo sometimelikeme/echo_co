@@ -40,7 +40,7 @@ public class ItemCommentCtrl extends CoreController{
 	@RequestMapping("comment/getSingleCommentByUserId")
 	public void getSingleCommentByUserId(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("ItemCommentCtrl---getSingleCommentByUserId---dataParm: " + dataParm);
+			logger.debug("ItemCommentCtrl---getSingleCommentByUserId---begin");
 		}
 		
 		try {
@@ -76,7 +76,7 @@ public class ItemCommentCtrl extends CoreController{
 	@RequestMapping("comment/addUpdateComment")
 	public void addUpdateComment(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("ItemCommentCtrl---addUpdateComment---dataParm: " + dataParm);
+			logger.debug("ItemCommentCtrl---addUpdateComment---begin");
 		}
 		
 		try {
@@ -112,7 +112,7 @@ public class ItemCommentCtrl extends CoreController{
 	@RequestMapping("comment/deleteComment")
 	public void deleteComment(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("ItemCommentCtrl---deleteComment---dataParm: " + dataParm);
+			logger.debug("ItemCommentCtrl---deleteComment---begin");
 		}
 		
 		try {

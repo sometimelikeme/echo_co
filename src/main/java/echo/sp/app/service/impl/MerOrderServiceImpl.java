@@ -86,6 +86,7 @@ public class MerOrderServiceImpl implements MerOrderService {
 			userDAO.updateUserMoney(tranMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("MerOrderServiceImpl---updateOrderClose---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -111,6 +112,7 @@ public class MerOrderServiceImpl implements MerOrderService {
     		merOrderDAO.updateOrderComment(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("MerOrderServiceImpl---addComment---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -123,6 +125,7 @@ public class MerOrderServiceImpl implements MerOrderService {
     		merOrderDAO.deleteComment(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("MerOrderServiceImpl---deleteComment---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -150,6 +153,7 @@ public class MerOrderServiceImpl implements MerOrderService {
     		merOrderDAO.updatePointOrderComsume(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("MerOrderServiceImpl---updatePointOrderComsume---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

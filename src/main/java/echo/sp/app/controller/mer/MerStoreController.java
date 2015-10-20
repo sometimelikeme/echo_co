@@ -49,7 +49,7 @@ public class MerStoreController extends CoreController{
 	@RequestMapping("mer/getMerList")
 	public void getMerList(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerStoreController---getMerList---dataParm: " + dataParm);
+			logger.debug("MerStoreController---getMerList---begin");
 		}
 		
 		try {
@@ -92,7 +92,7 @@ public class MerStoreController extends CoreController{
 	@RequestMapping("mer/getMerDetail")
 	public void getMerDetail(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("MerStoreController---getMerDetail---dataParm: " + dataParm);
+			logger.debug("MerStoreController---getMerDetail---begin");
 		}
 		
 		try {

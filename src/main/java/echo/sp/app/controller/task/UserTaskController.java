@@ -61,7 +61,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/addTask")
 	public void addTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---addTask---dataParm: " + dataParm);
+			logger.debug("UserTaskController---addTask---begin");
 		}
 		
 		try {
@@ -121,7 +121,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/updateTask")
 	public void updateTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---updateTask---dataParm: " + dataParm);
+			logger.debug("UserTaskController---updateTask---begin");
 		}
 		
 		try {
@@ -173,7 +173,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/deleteTask")
 	public void deleteTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---deleteTask---dataParm: " + dataParm);
+			logger.debug("UserTaskController---deleteTask---begin");
 		}
 		
 		try {
@@ -218,7 +218,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/cancelTask")
 	public void cancelTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---cancelTask---dataParm: " + dataParm);
+			logger.debug("UserTaskController---cancelTask---begin");
 		}
 		
 		try {
@@ -271,7 +271,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/searchTaskById")
 	public void searchTaskById(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---searchTaskById---dataParm: " + dataParm);
+			logger.debug("UserTaskController---searchTaskById---begin");
 		}
 		
 		try {
@@ -310,7 +310,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/searchTaskList")
 	public void searchTaskList(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---searchTaskList---dataParm: " + dataParm);
+			logger.debug("UserTaskController---searchTaskList---begin");
 		}
 		
 		try {
@@ -350,7 +350,7 @@ public class UserTaskController extends CoreController{
 	@RequestMapping("task/searchBidTaskByUserId")
 	public void searchBidTaskByUserId(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskController---searchBidTaskByUserId---dataParm: " + dataParm);
+			logger.debug("UserTaskController---searchBidTaskByUserId---begin");
 		}
 		
 		try {
@@ -386,4 +386,69 @@ public class UserTaskController extends CoreController{
 		}
 	}
 	
+	/**
+	 * 任务留言
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/leaveMsg")
+	public void leaveMsg(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---leaveMsg---begin");
+		}
+		try {
+			super.getParm(req, response);
+			if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				Map paramMap = data.getDataset();
+				paramMap = userTaskService.getTaskInfoByTaskId(paramMap);
+				List lineList = null;
+				Object obj = paramMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				paramMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, lineList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---leaveMsg---interface error: ", e);
+		}
+	}
+	
+	/**
+	 * 删除任务留言
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("task/delMsg")
+	public void delMsg(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserTaskController---delMsg---dataParm: " + dataParm);
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				Map paramMap = data.getDataset();
+				paramMap = userTaskService.getTaskInfoByTaskId(paramMap);
+				List lineList = null;
+				Object obj = paramMap.get("TASK_LINE");
+				if (obj != null) {
+					lineList = (List)obj;
+				}
+				paramMap.remove("TASK_LINE");
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, lineList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserTaskController---delMsg---interface error: ", e);
+		}
+	}
 }

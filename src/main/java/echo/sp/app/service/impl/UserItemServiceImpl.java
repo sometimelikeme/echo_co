@@ -29,6 +29,7 @@ public class UserItemServiceImpl implements UserItemService{
     	try {
     		returnInt = userItemDAO.addMerColl(parmMap);
 		} catch (Exception e) {
+			logger.error("UserItemServiceImpl---addMerColl---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -40,6 +41,7 @@ public class UserItemServiceImpl implements UserItemService{
     	try {
     		returnInt = userItemDAO.addItemColl(parmMap);
 		} catch (Exception e) {
+			logger.error("UserItemServiceImpl---addItemColl---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -51,6 +53,7 @@ public class UserItemServiceImpl implements UserItemService{
     	try {
     		returnInt = userItemDAO.deleteMerColl(parmMap);
 		} catch (Exception e) {
+			logger.error("UserItemServiceImpl---deleteMerColl---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -62,6 +65,7 @@ public class UserItemServiceImpl implements UserItemService{
     	try {
     		returnInt = userItemDAO.deleteItemColl(parmMap);
 		} catch (Exception e) {
+			logger.error("UserItemServiceImpl---deleteItemColl---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

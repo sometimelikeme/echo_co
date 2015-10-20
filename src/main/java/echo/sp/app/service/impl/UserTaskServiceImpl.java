@@ -69,6 +69,7 @@ public class UserTaskServiceImpl implements UserTaskService{
 			tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
 			userDAO.updateUserMoney(tranMap);
 		} catch (Exception e) {
+			logger.error("UserTaskServiceImpl---addTask---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

@@ -50,7 +50,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/bideTask")
 	public void bideTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---bideTask---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---bideTask---begin");
 		}
 		
 		try {
@@ -103,7 +103,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/cancelBideTask")
 	public void cancelBideTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---cancelBideTask---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---cancelBideTask---begin");
 		}
 		
 		try {
@@ -163,7 +163,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/chooseTasker")
 	public void chooseTasker(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---chooseTasker---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---chooseTasker---begin");
 		}
 		
 		try {
@@ -216,7 +216,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/bidBackTasker")
 	public void bidBackTasker(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---bidBackTasker---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---bidBackTasker---begin");
 		}
 		
 		try {
@@ -270,7 +270,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/backTasker")
 	public void backTasker(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---backTasker---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---backTasker---begin");
 		}
 		
 		try {
@@ -324,7 +324,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/doneTask")
 	public void doneTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---doneTask---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---doneTask---begin");
 		}
 		
 		try {
@@ -379,7 +379,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/undoneTask")
 	public void undoneTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---undoneTask---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---undoneTask---begin");
 		}
 		
 		try {
@@ -433,7 +433,7 @@ public class UserTaskActionController extends CoreController{
 	@RequestMapping("task/closeTask")
 	public void closeTask(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("UserTaskActionController---closeTask---dataParm: " + dataParm);
+			logger.debug("UserTaskActionController---closeTask---begin");
 		}
 		
 		try {

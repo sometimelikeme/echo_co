@@ -40,6 +40,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     		userTaskActionDAO.updateTaskBider(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("UserTaskActionServiceImpl---addTaskBider---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -61,6 +62,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     		userTaskActionDAO.updateTaskStatus(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("UserTaskActionServiceImpl---updateTaskBider---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -77,6 +79,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     		userTaskActionDAO.updateBiderStatus(parmMap);
     		returnInt = 1;
 		} catch (Exception e) {
+			logger.error("UserTaskActionServiceImpl---updateChooseTasker---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -100,6 +103,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
     		userTaskActionDAO.updateTaskLineDone(parmMap);
     		returnInt = 1;
     	} catch (Exception e) {
+    		logger.error("UserTaskActionServiceImpl---updateTaskDone---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -147,7 +151,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
 			userDAO.updateUserMoney(tranMap);
 		} catch (Exception e) {
-			logger.error("UserTaskActionServiceImpl---updateTaskFinish--error: ",e);
+			logger.error("UserTaskActionServiceImpl---updateTaskFinish---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -181,7 +185,7 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 			tranMap.put("TOTAL_POINT", total_money_Big.add(new BigDecimal(payment)));
 			userDAO.updateUserPoint(tranMap);
 		} catch (Exception e) {
-			logger.error("UserTaskActionServiceImpl---updateTaskFinishPoint--error: ",e);
+			logger.error("UserTaskActionServiceImpl---updateTaskFinishPoint---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;

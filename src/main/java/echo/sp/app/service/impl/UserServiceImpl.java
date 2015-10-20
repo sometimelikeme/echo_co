@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService{
     		}
 		} catch (Exception e) {
 			//  默认spring事务只在发生未被捕获的 runtimeexcetpion时才回滚
+			logger.error("UserServiceImpl---addRegistAlg---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -69,6 +70,7 @@ public class UserServiceImpl implements UserService{
     	try {
     		returnInt = userDAO.updatePwd(parmMap);
 		} catch (Exception e) {
+			logger.error("UserServiceImpl---updatePwd---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -93,6 +95,7 @@ public class UserServiceImpl implements UserService{
     			};
     		}
 		} catch (Exception e) {
+			logger.error("UserServiceImpl---insertToMerchant---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -105,7 +108,7 @@ public class UserServiceImpl implements UserService{
     	try {
     		returnInt = userDAO.updateToMerchant(parmMap);
 		} catch (Exception e) {
-			logger.error("UserServiceImpl---updateToMerchant: ",e);
+			logger.error("UserServiceImpl---updateToMerchant---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -124,6 +127,7 @@ public class UserServiceImpl implements UserService{
     	try {
     		returnInt = userDAO.updateUserInfo(parmMap);
 		} catch (Exception e) {
+			logger.error("UserServiceImpl---updateUserInfo---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -136,6 +140,7 @@ public class UserServiceImpl implements UserService{
     	try {
     		returnInt = userDAO.updateUserIC(parmMap);
 		} catch (Exception e) {
+			logger.error("UserServiceImpl---updateUserIC---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -148,6 +153,7 @@ public class UserServiceImpl implements UserService{
     	try {
     		returnInt = userDAO.updateUserAcc(parmMap);
 		} catch (Exception e) {
+			logger.error("UserServiceImpl---updateUserAcc---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
