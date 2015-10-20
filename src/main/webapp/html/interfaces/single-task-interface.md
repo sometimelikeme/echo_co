@@ -490,6 +490,8 @@
 	`dataset: {`
 		`USER_ID: '1cc2d9e2a9cc4e4983b76d03e432d345',// required用户ID`
 		`TASK_ID: 'accf734342494d0fa638233079a4cc82'// required任务ID`
+		`page: '1',// required`
+		`pageSize: '5'// required`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
@@ -497,7 +499,7 @@
 - 注意：
 	+ 传递USER_ID为了与SESSION中的USER_ID比较，一致的情况下，方可下单。
 - 返回值：
- + 成功： `{"status":"0000","msg":"成功","dataset_line":[任务行表],"dataset":{任务头表}}`
+ + 成功： `{"status":"0000","msg":"成功","dataset_line":[任务行表]"dataset":{任务头表,totalCount:总留言数量，MSG_LIST：[当前分页留言]}}`
  + 失败：` {
 	status: "9997",
 	msg: "无效设备"
