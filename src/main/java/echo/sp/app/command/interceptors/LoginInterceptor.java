@@ -29,6 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
 	private static final String[] IGNORE_URI = {
+		"login/openCities.do",// 获取开通城市列表
 		"login/checkReg.do",// 检查用户手机号是否已经注册
 		"login/registAlg.do",// 注册账号并登陆系统
 		"login/login.do",// 登陆系统

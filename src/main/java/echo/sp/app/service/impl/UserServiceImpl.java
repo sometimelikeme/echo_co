@@ -1,5 +1,6 @@
 package echo.sp.app.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -162,6 +163,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Map getUserExpandInfo(Map parmMap) {
 		return userDAO.getUserExpandInfo(parmMap);
+	}
+
+	@Override
+	public List getOpenCities(Map parmMap) {
+		return userDAO.getOpenCities(parmMap);
 	}
 
 }

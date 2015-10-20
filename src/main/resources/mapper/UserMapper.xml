@@ -144,4 +144,10 @@
           INSERT INTO T_USERS_POINT(USER_ID,TIME1,DATE1,POINT_NUM,TASK_ID,ORDER_ID,ABLI_ORDER_ID,AWARD_ID,STATUS,MN_TYPE)
           VALUES(#{USER_ID},#{TIME1},#{DATE1},#{POINT_NUM,jdbcType=NUMERIC},#{TASK_ID},#{ORDER_ID},#{ABLI_ORDER_ID},#{AWARD_ID},#{STATUS},#{MN_TYPE})
       </insert>
+      
+      <select id="getOpenCities" parameterType="map" resultType="Map">
+      	  SELECT CANT_CODE,CANT_NAME,SHORT_NAME,CANT_TYPE,SUPER_CODE,COUNTRY_CODE,CANT_NOTE,IN_USE
+      	  FROM T_CITIES
+      	  WHERE IN_USE = '1'
+      </select>
 </mapper>

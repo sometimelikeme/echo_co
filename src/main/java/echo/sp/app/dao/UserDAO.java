@@ -1,5 +1,6 @@
 package echo.sp.app.dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,4 +66,7 @@ public interface UserDAO {
    	
    	// 生成用户积分交易记录
 	public int insertUserPointRecord(Map parmMap);
+	
+	// 获取开通城市列表
+	public List getOpenCities(Map parmMap);
 }

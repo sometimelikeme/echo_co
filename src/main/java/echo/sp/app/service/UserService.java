@@ -1,5 +1,6 @@
 package echo.sp.app.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,4 +48,7 @@ public interface UserService {
 	
 	// 获取用余额、积分、能力
 	public Map getUserExpandInfo(Map parmMap);
+	
+	// 获取开通城市列表
+	public List getOpenCities(Map parmMap);
 }
