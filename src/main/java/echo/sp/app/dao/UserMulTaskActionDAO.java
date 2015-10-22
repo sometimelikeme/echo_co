@@ -31,4 +31,12 @@ public interface UserMulTaskActionDAO {
 	public int updateTaskLineDone(Map parmMap);
 	// 根据任务号和竞标者ID查询信息
 	public Map getTaskInfoByTaskUserId(Map parmMap);
+	// 获取到期未关闭的任务
+	public List getUnProcessTasks(Map parmMap);
+	// 关闭任务
+	public int updateTaskClose(Map parmMap);
+	// 获取完成任务用户列表
+	public List getDoneTaskers(Map parmMap);
+	// 修改任务行表
+	public int updateTaskLineClose(Map parmMap);
 }

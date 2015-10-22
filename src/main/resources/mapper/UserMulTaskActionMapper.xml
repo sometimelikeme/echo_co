@@ -181,4 +181,29 @@
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{BIDE_USER_ID}
     </update>
+    <select id="getUnProcessTasks" parameterType="map" resultType="Map">
+     	SELECT TASK_ID,USER_ID,TASK_DONE_NUM,TASK_NEED_NUM,TASK_TYPE,TASK_TOTAL_PAID,TASK_SING_PAID
+     	FROM T_MUL_TASKS
+     	WHERE TASK_AUDIT_STATUS = '20'
+     	AND TASK_BID_STATUS = '20'
+     	AND TASK_DEADLINE > #{TASK_DEADLINE}
+    </select>
+    <update id="updateTaskClose" parameterType="map">  
+   		UPDATE T_MUL_TASKS 
+        SET STATUS = '30', 
+        TASK_FINISH_TIME = #{TASK_FINISH_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    <select id="getDoneTaskers" parameterType="map" resultType="Map">
+     	SELECT USER_ID BIDE_USER_ID
+     	FROM T_MUL_TASKS_LINE
+     	WHERE STATUS = '20'
+     	AND TASK_ID = #{TASK_ID}
+    </select>
+    <update id="updateTaskLineClose" parameterType="map">  
+   		UPDATE T_MUL_TASKS_LINE 
+        SET DONE_PAID = #{DONE_PAID,jdbcType=NUMERIC}
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{BIDE_USER_ID}
+    </update>
 </mapper>

@@ -15,6 +15,7 @@ import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.Prop;
 import echo.sp.app.service.MerOrderService;
+import echo.sp.app.service.UserMulTaskActionService;
 import echo.sp.app.service.UserTaskActionService;
 import echo.sp.app.service.UserTaskService;
 
@@ -36,6 +37,9 @@ public class MyTaskXml {
 	
 	@Autowired
 	private UserTaskService userTaskService;
+	
+	@Autowired
+	private UserMulTaskActionService userMulTaskActionService;
 	
 	/**
 	 * 定时关闭已消费未关闭的订单
@@ -103,7 +107,7 @@ public class MyTaskXml {
 			Map taksMap;
 			String consule_time;
 			String task_bid_status;
-			String bid_user_id;
+			String task_type;
 			
 			while (iterList.hasNext()) {
 				paramMap = (Map)iterList.next();
@@ -113,6 +117,7 @@ public class MyTaskXml {
 						logger.debug("MyTaskXml---closeTask---paramMap：" + paramMap);
 					}
 					task_bid_status = paramMap.get("TASK_BID_STATUS").toString();
+					task_type = paramMap.get("TASK_TYPE").toString();
 					paramMap.put("TASK_FINISH_TIME", currDate);
 					if ("60".equals(task_bid_status)) {
 						// 关闭任务
@@ -123,7 +128,11 @@ public class MyTaskXml {
 						paramMap.put("BIDE_USER_ID", ((Map) ((List) taksMap
 								.get("TASK_LINE")).get(0)).get("USER_ID")
 								.toString());
-					    userTaskActionService.updateTaskFinish(paramMap);
+						if ("10".equals(task_type)) {
+							userTaskActionService.updateTaskFinish(paramMap);
+						} else if ("20".equals(task_type)) {
+							userTaskActionService.updateTaskFinishPoint(paramMap);
+						}
 					} else if ("10".equals(task_bid_status)// 10-发布
 							|| "20".equals(task_bid_status)// 20-取消
 							|| "30".endsWith(task_bid_status)// 30-他人投标任务
@@ -135,7 +144,9 @@ public class MyTaskXml {
 						// 将此次任务发生的金额打到任务发布者账户
 						paramMap.put("BIDE_USER_ID", paramMap.get("USER_ID"));
 						paramMap.put("RETURN_MONEY", "1");// 退款平台不收取费用
-						userTaskActionService.updateTaskFinish(paramMap);
+						if ("10".equals(task_type)) {
+							userTaskActionService.updateTaskFinish(paramMap);
+						}
 					}
 					if (logger.isDebugEnabled()) {
 						logger.debug("MyTaskXml---closeTask---done!");
@@ -153,6 +164,16 @@ public class MyTaskXml {
         if (logger.isDebugEnabled()) {
 			logger.debug("MyTaskXml---closeMulTask---begin");
 		}
-       
+        
+        Map parmMap = new HashMap();
+        String datetime = DateUtils.getDateTime();
+        parmMap.put("TASK_DEADLINE", DateUtils.getDateTime());
+        
+        // 获取未关闭的任务列表
+        List taskList = userMulTaskActionService.getUnProcessTasks(parmMap);
+        
+        if (PubTool.isListHasData(taskList)) {
+        	userMulTaskActionService.updateTaskProcess(taskList);
+        }
     }  
 }

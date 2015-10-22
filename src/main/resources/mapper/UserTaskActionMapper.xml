@@ -99,7 +99,7 @@
     </update>
     
     <select id="getUnProcessTasks" parameterType="map" resultType="Map">
-        SELECT TAKS_ID,TASK_BID_STATUS,TASK_DEADLINE,USER_ID,TASK_TOTAL_PAID
+        SELECT TAKS_ID,TASK_BID_STATUS,TASK_DEADLINE,USER_ID,TASK_TOTAL_PAID,TASK_TYPE
         FROM T_TASKS
         WHERE TASK_AUDIT_STATUS = '20'
         AND TASK_BID_STATUS != '80'
