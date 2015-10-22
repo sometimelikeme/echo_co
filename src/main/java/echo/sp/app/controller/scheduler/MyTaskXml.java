@@ -143,5 +143,16 @@ public class MyTaskXml {
 				}
 			}
 		}
+    } 
+	
+	
+	/**
+	 * 定时关闭逾期的多人任务
+	 */
+	public void closeMulTask(){  
+        if (logger.isDebugEnabled()) {
+			logger.debug("MyTaskXml---closeMulTask---begin");
+		}
+       
     }  
 }
