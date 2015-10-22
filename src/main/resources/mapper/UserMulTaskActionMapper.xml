@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="echo.sp.app.dao.UserMulTaskActionDAO">
+	<insert id="addTask" parameterType="map">
+	    INSERT INTO T_MUL_TASKS 
+			(
+				TASK_ID,
+				USER_ID,
+				SECTOR_ID,
+				SECTOR_TYPE,
+				TASK_TITLE,
+				TASK_DESC,
+				TASK_DEADLINE,
+				TASK_TYPE,
+				TASK_TOTAL_PAID,
+				TASK_SING_PAID,
+				TASK_NEED_NUM,
+				TASK_ADDR,
+				TASK_LONGITUDE,
+				TASK_LATITUDE,
+				TASK_ICON1,
+				TASK_ICON2,
+				TASK_ICON3,
+				TASK_ICON4,
+				TASK_AUDIT_STATUS,
+				TASK_BID_STATUS,
+				TASK_CREATE_TIME,
+				TASK_AREA
+			)
+		VALUES
+			(
+				#{TASK_ID},
+				#{USER_ID},
+				#{SECTOR_ID},
+				#{SECTOR_TYPE},
+				#{TASK_TITLE},
+				#{TASK_DESC},
+				#{TASK_DEADLINE},
+				#{TASK_TYPE},
+				#{TASK_PAID,jdbcType=NUMERIC},
+				#{TASK_SING_PAID,jdbcType=NUMERIC},
+				#{TASK_NEED_NUM,jdbcType=NUMERIC},
+				#{TASK_ADDR},
+				#{TASK_LONGITUDE,jdbcType=NUMERIC},
+				#{TASK_LATITUDE,jdbcType=NUMERIC},
+				#{TASK_ICON1},
+				#{TASK_ICON2},
+				#{TASK_ICON3},
+				#{TASK_ICON4},
+				#{TASK_AUDIT_STATUS},
+				#{TASK_BID_STATUS},
+				#{TASK_CREATE_TIME},
+				#{TASK_AREA}  
+			)
+    </insert>
+    <select id="getTaskHeadByTaskId" parameterType="map" resultType="Map">
+     	SELECT A.*,B.USER_NAME,B.USER_ICON 
+     	FROM T_MUL_TASKS A, T_USERS B
+     	WHERE A.TASK_ID = #{TASK_ID}
+     	AND A.TASK_AUDIT_STATUS = '20'
+     	AND A.USER_ID = B.USER_ID
+     	AND A.TASK_BID_STATUS != '80'
+    </select>
+    <select id="getTaskLineByTaskId" parameterType="map" resultType="Map">
+     	SELECT A.*,B.USER_NAME,B.USER_ICON 
+     	FROM T_MUL_TASKS_LINE A, T_USERS B
+     	WHERE TASK_ID = #{TASK_ID}
+     	AND A.USER_ID = B.USER_ID
+    </select>
+     <update id="updateTask" parameterType="map">  
+        UPDATE T_MUL_TASKS 
+		SET
+			SECTOR_ID=#{SECTOR_ID},
+			SECTOR_TYPE=#{SECTOR_TYPE},
+			TASK_TITLE=#{TASK_TITLE},
+			TASK_DESC=#{TASK_DESC},
+			TASK_DEADLINE=#{TASK_DEADLINE},
+			TASK_TYPE=#{TASK_TYPE},
+			TASK_TOTAL_PAID=#{TASK_TOTAL_PAID,jdbcType=NUMERIC},
+			TASK_SING_PAID=#{TASK_SING_PAID,jdbcType=NUMERIC},
+			TASK_NEED_NUM=#{TASK_NEED_NUM,jdbcType=NUMERIC},
+			TASK_ADDR=#{TASK_ADDR},
+			TASK_LONGITUDE=#{TASK_LONGITUDE,jdbcType=NUMERIC},
+			TASK_LATITUDE=#{TASK_LATITUDE,jdbcType=NUMERIC},
+			TASK_ICON1=#{TASK_ICON1},
+			TASK_ICON2=#{TASK_ICON2},
+			TASK_ICON3=#{TASK_ICON3},
+			TASK_ICON4=#{TASK_ICON4},
+			TASK_AREA=#{TASK_AREA}
+		WHERE
+			TASK_ID = #{TASK_ID}
+    </update> 
+    <update id="deleteTask" parameterType="map"> 
+    	UPDATE T_MUL_TASKS 
+		SET TASK_BID_STATUS = '40',TASK_DEL_TIME=#{TASK_DEL_TIME}
+		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    <select id="searchTaskList" parameterType="map" resultType="Map">
+          SELECT A.*,B.USER_NAME,B.USER_ICON,
+          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
+          FROM T_MUL_TASKS A, T_USERS B
+          WHERE A.TASK_AUDIT_STATUS = '20'
+          AND A.TASK_BID_STATUS != '40'
+          <if test="USER_ID != null and USER_ID != '' ">  
+          		AND A.USER_ID = #{USER_ID}  
+          		AND B.USER_ID = #{USER_ID}
+          		AND A.USER_ID = B.USER_ID
+    	  </if> 
+    	  <if test="SECTOR_ID != null and SECTOR_ID != '' ">  
+          		AND A.SECTOR_ID = #{SECTOR_ID} 
+    	  </if>
+    	  <if test="SECTOR_TYPE != null and SECTOR_TYPE != '' ">  
+          		AND A.SECTOR_TYPE = #{SECTOR_TYPE} 
+    	  </if>
+    	  <if test="TASK_TITLE != null and TASK_TITLE != '' ">  
+          		AND A.TASK_TITLE LIKE CONCAT(CONCAT('%', #{TASK_TITLE, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    	  <if test="TASK_AREA != null and TASK_AREA != '' ">  
+          		AND A.TASK_AREA = #{TASK_AREA} 
+    	  </if>
+    </select>
+    <select id="searchBidTaskByUserId" parameterType="map" resultType="Map">
+          SELECT A.*,B.USER_NAME,B.USER_ICON,C.BID_TIME,C.IS_BIDE,
+          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
+          FROM T_MUL_TASKS A, T_USERS B, T_MUL_TASKS_LINE C
+          WHERE A.TASK_AUDIT_STATUS = '20'
+          AND A.TASK_BID_STATUS != '40'
+          AND A.USER_ID = B.USER_ID
+          AND A.TASK_ID = C.TASK_ID 
+          AND C.USER_ID = #{USER_ID}
+    </select>
+    <insert id="addTaskBider" parameterType="map">
+      	INSERT INTO
+			T_MUL_TASKS_LINE 
+			(
+				TASK_ID,
+				USER_ID,
+				PATI_TIME,
+				STATUS
+			)
+		VALUES
+			(
+				#{TASK_ID},
+				#{USER_ID},
+				#{PATI_TIME},
+				'10'
+			)
+	</insert>
+ 	<update id="updateTaskBider" parameterType="map">  
+   		UPDATE T_MUL_TASKS SET TASK_BID_STATUS = '20', 
+   		TASK_BID_NUM = TASK_BID_NUM + 1,
+   		TASK_BEGIN_TIME = #{PATI_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+    </update> 
+      <update id="updateTaskDone" parameterType="map">  
+   		UPDATE T_MUL_TASKS 
+        SET TASK_DONE_NUM = TASK_DONE_NUM + 1
+   		WHERE TASK_ID = #{TASK_ID}
+    </update>
+    <update id="updateTaskLineDone" parameterType="map">  
+   		UPDATE T_MUL_TASKS_LINE 
+        SET DONE_TIME = #{DONE_TIME},
+        STATUS = '20',
+        DONE_ICON1 = #{DONE_ICON1},
+        DONE_ICON2 = #{DONE_ICON2},
+        DONE_ICON3 = #{DONE_ICON3},
+        DONE_ICON4 = #{DONE_ICON4}
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{BIDE_USER_ID}
+    </update>
+    <select id="getTaskInfoByTaskUserId" parameterType="map" resultType="Map">
+     	SELECT * FROM T_MUL_TASKS_LINE
+     	WHERE TASK_ID = #{TASK_ID}
+     	AND USER_ID = #{USER_ID}
+    </select>
+    <update id="updateTaskUnFinish" parameterType="map">  
+   		UPDATE T_MUL_TASKS_LINE 
+        SET STATUS = '40', UNDONE_TIME = #{UNDONE_TIME}
+   		WHERE TASK_ID = #{TASK_ID}
+   		AND USER_ID = #{BIDE_USER_ID}
+    </update>
+</mapper>
