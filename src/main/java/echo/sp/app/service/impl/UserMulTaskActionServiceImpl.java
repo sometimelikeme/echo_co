@@ -152,7 +152,6 @@ public class UserMulTaskActionServiceImpl implements UserMulTaskActionService {
     	try {
     		Iterator iterList = taskList.iterator();
     		Map paramMap;
-    		Map taksMap;
     		String task_type;// 任务类型
     		int done_num = 0;// 完成人数
     		int need_num = 0;// 需求人数
@@ -213,7 +212,7 @@ public class UserMulTaskActionServiceImpl implements UserMulTaskActionService {
     					// 回退奖励
         				paramMap.put("IS_BACK", 1);
     					// 将返回的金额补充到发布任务者
-    					paramMap.put("DONE_PAID", paramMap.get("TASK_SING_PAID"));
+    					paramMap.put("DONE_PAID", paramMap.get("TASK_TOTAL_PAID"));
     					// 产生交易记录
     					takserMoneyRecord(paramMap);
 					}

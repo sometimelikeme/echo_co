@@ -484,7 +484,7 @@ CREATE TABLE T_MUL_TASKS_LINE(
 	DONE_TIME VARCHAR(32),--完成时间
 	CONFIRM_TIME VARCHAR(32),--任务发布者确认完成时间
 	UNDONE_TIME VARCHAR(32),--任务发布者确认未完成时间
-	STATUS CHAR(2),--枚举：10-参与,20-完成,30-确认完成,40-确认未完成
+	STATUS CHAR(2),--枚举：10-参与,20-完成,30-确认完成(暂时未用),40-确认未完成 ，50-系统确认完成
 	DONE_PAID DECIMAL(18,8),--完成任务酬劳
 	DONE_ICON1 VARCHAR(256),--任务完成图片
 	DONE_ICON2 VARCHAR(256),--任务完成图片

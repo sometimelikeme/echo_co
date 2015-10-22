@@ -61,13 +61,16 @@
      	WHERE A.TASK_ID = #{TASK_ID}
      	AND A.TASK_AUDIT_STATUS = '20'
      	AND A.USER_ID = B.USER_ID
-     	AND A.TASK_BID_STATUS != '80'
+     	AND A.TASK_BID_STATUS != '40'
     </select>
     <select id="getTaskLineByTaskId" parameterType="map" resultType="Map">
      	SELECT A.*,B.USER_NAME,B.USER_ICON 
      	FROM T_MUL_TASKS_LINE A, T_USERS B
      	WHERE TASK_ID = #{TASK_ID}
      	AND A.USER_ID = B.USER_ID
+     	<if test="STATUS != null and STATUS != '' ">  
+       		AND A.STATUS = #{STATUS}  
+   	   </if> 
     </select>
      <update id="updateTask" parameterType="map">  
         UPDATE T_MUL_TASKS 
@@ -149,7 +152,8 @@
 			)
 	</insert>
  	<update id="updateTaskBider" parameterType="map">  
-   		UPDATE T_MUL_TASKS SET TASK_BID_STATUS = '20', 
+   		UPDATE T_MUL_TASKS 
+   		SET TASK_BID_STATUS = '20', 
    		TASK_BID_NUM = TASK_BID_NUM + 1,
    		TASK_BEGIN_TIME = #{PATI_TIME}
    		WHERE TASK_ID = #{TASK_ID}
@@ -177,7 +181,8 @@
     </select>
     <update id="updateTaskUnFinish" parameterType="map">  
    		UPDATE T_MUL_TASKS_LINE 
-        SET STATUS = '40', UNDONE_TIME = #{UNDONE_TIME}
+        SET STATUS = '40', 
+        UNDONE_TIME = #{UNDONE_TIME}
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{BIDE_USER_ID}
     </update>
@@ -202,7 +207,8 @@
     </select>
     <update id="updateTaskLineClose" parameterType="map">  
    		UPDATE T_MUL_TASKS_LINE 
-        SET DONE_PAID = #{DONE_PAID,jdbcType=NUMERIC}
+        SET DONE_PAID = #{DONE_PAID,jdbcType=NUMERIC},
+        STATUS = '50'
    		WHERE TASK_ID = #{TASK_ID}
    		AND USER_ID = #{BIDE_USER_ID}
     </update>

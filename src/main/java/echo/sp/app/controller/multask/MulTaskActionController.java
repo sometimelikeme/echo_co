@@ -87,6 +87,10 @@ public class MulTaskActionController extends CoreController{
 					}
 					paramMap.put("TOTAL_MONEY", total_money_Big);
 				}
+				if (calculatePaid(paramMap)) {
+					super.writeJson(response, "9995", "金额计算错误！", null, null);
+					return;
+				}
 				// TASK ID
 				String task_id = IdGen.uuid();
 				paramMap.put("TASK_ID", task_id);
@@ -112,6 +116,21 @@ public class MulTaskActionController extends CoreController{
 		}
 	}
 	
+	/**
+	 * 计算总金额是否一致
+	 * @param parmMap
+	 * @return
+	 */
+	private boolean calculatePaid(Map parmMap){
+		boolean res = false;
+		BigDecimal sigPaid = new BigDecimal(parmMap.get("TASK_SING_PAID").toString());
+		BigDecimal totalPaid = new BigDecimal(parmMap.get("TASK_TOTAL_PAID").toString());
+		BigDecimal needNum = new BigDecimal(parmMap.get("TASK_NEED_NUM").toString());
+		if (totalPaid.compareTo(totalPaid.multiply(needNum)) == 0) {
+			res = true;
+		}
+		return res;
+	}
 	
 	/**
 	 * 修改任务
@@ -144,6 +163,10 @@ public class MulTaskActionController extends CoreController{
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				if (!"10".equals(parmMap.get("TASK_BID_STATUS").toString())) {
 					super.writeJson(response, "9996", "任务执行中，不能修改！", null, null);
+					return;
+				}
+				if (calculatePaid(paramMap)) {
+					super.writeJson(response, "9995", "金额计算错误！", null, null);
 					return;
 				}
 				// 修改任务信息
