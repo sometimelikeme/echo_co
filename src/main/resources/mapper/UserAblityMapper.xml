@@ -3,5 +3,13 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.UserAblityDAO">
+    <insert id="addAblity" parameterType="map">
+    	
+    </insert>
+    <update id="updateAblity" parameterType="map">  
+    	
+    </update> 
+    <update id="deleteAblity" parameterType="map"> 
     
+    </update>
 </mapper>	
