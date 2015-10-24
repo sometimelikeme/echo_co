@@ -97,7 +97,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"multask/bideTask.do",// 竞标任务：竞标人发起
 		"multask/doneTask.do",// 完成任务: 竞标人发起
 		"multask/undoneTask.do",// 未完成任务：发布者
-		"multask/searchBidTaskByUserId.do"// 查询用户竞标任务列表
+		"multask/searchBidTaskByUserId.do",// 查询用户竞标任务列表
+		// 用户技能
+		"abli/addAbli.do",// 增加技能
+		"abli/updateAbli.do",// 修改技能
+		"abli/deleteAbli.do"// 删除技能
 	};
 	 
     @SuppressWarnings("unused")
