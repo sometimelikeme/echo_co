@@ -37,7 +37,7 @@
 				#{TASK_DESC},
 				#{TASK_DEADLINE},
 				#{TASK_TYPE},
-				#{TASK_PAID,jdbcType=NUMERIC},
+				#{TASK_TOTAL_PAID,jdbcType=NUMERIC},
 				#{TASK_ADDR},
 				#{TASK_LONGITUDE,jdbcType=NUMERIC},
 				#{TASK_LATITUDE,jdbcType=NUMERIC},
