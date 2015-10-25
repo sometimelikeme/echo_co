@@ -321,7 +321,7 @@ public class MulTaskActionController extends CoreController{
 			if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				String sortString = "DIST.asc,TASK_CREATE_TIME.desc";
+				String sortString = paramMap.get("sort").toString();
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
 				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));

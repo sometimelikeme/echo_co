@@ -328,6 +328,7 @@
 		`SECTOR_TYPE: 'accf734342494d0fa638233079a4cc82'// optimal一级分类ID`
 		`TASK_TITLE: 'accf734342494d0fa638233079a4cc82'// optimal任务标题`
 		`TASK_AREA: 'accf734342494d0fa638233079a4cc82'// optimal任务范围`
+		`sort: DIST.asc,TASK_CREATE_TIME.desc,TASK_SING_PAID.desc'// required`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
