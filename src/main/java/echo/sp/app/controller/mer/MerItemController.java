@@ -1,6 +1,7 @@
 package echo.sp.app.controller.mer;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,14 +245,19 @@ public class MerItemController extends CoreController{
 					merItemService, PubTool.processNull(session.getAttribute("user_id")),
 					PubTool.processNull(session.getAttribute("MERCHANT_ID"))); 
 			
-			String CODE = Code.FAIL,
+			Map dataMap = new HashMap();
+			List dataList = new ArrayList();
+			
+			String CODE = "9999",
 				   MSG = "无匹配商品";
 			if ((Boolean) resMap.get("hasData")) {
 				CODE = Code.SUCCESS;
 				MSG = Code.SUCCESS_MSG;
+				dataMap = (Map)resMap.get("paramMap");
+				dataList = (List)resMap.get("resList");
 			}
 			
-			super.writeJson(response, CODE, MSG, (Map)resMap.get("paramMap"), (List)resMap.get("resList"));
+			super.writeJson(response, CODE, MSG, dataMap, dataList);
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 			logger.error("MerItemController---searchMerItem---interface error: ", e);
