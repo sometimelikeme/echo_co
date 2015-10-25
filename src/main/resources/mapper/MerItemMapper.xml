@@ -43,11 +43,11 @@
  	</update>
  	
  	<select id="searchMerItem" parameterType="map" resultType="Map">
-          SELECT A.*
+          SELECT A.*,
+          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-B.LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-B.LATITUDE,2)) * 140000 DIST
           FROM T_ITEMS A,T_MERCHANTS B
           WHERE A.STATUS = '30'
           AND A.MERCHANT_ID = B.MERCHANT_ID
-          AND SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-B.LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-B.LATITUDE,2)) * 140000 <![CDATA[<=20000]]> 
           <if test="ITEM_ID != null and ITEM_ID != '' ">  
           		AND A.ITEM_ID = #{ITEM_ID, jdbcType=NUMERIC}  
     	  </if> 
@@ -80,6 +80,7 @@
     	  </if>
     	  <choose>
    	      	<when test="DISTANCE == '10'">
+   	      		AND SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-B.LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-B.LATITUDE,2)) * 140000 <![CDATA[<=20000]]> 
 				AND B.CANT_CODE = #{CANT_CODE}
 			</when>
 			<when test="DISTANCE == '20'">
