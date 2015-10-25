@@ -117,6 +117,9 @@
     	  <if test="SECTOR_TYPE != null and SECTOR_TYPE != '' ">  
           		AND A.SECTOR_TYPE = #{SECTOR_TYPE} 
     	  </if>
+    	  <if test="TASK_TYPE != null and TASK_TYPE != '' ">  
+          		AND A.TASK_TYPE = #{TASK_TYPE} 
+    	  </if>
     	  <if test="TASK_TITLE != null and TASK_TITLE != '' ">  
           		AND A.TASK_TITLE LIKE CONCAT(CONCAT('%', #{TASK_TITLE, jdbcType=VARCHAR}),'%') 
     	  </if>
