@@ -27,7 +27,8 @@
 				TASK_AUDIT_STATUS,
 				TASK_BID_STATUS,
 				TASK_CREATE_TIME,
-				TASK_AREA
+				TASK_AREA,
+				CANT_CODE
 			)
 		VALUES
 			(
@@ -52,7 +53,8 @@
 				#{TASK_AUDIT_STATUS},
 				#{TASK_BID_STATUS},
 				#{TASK_CREATE_TIME},
-				#{TASK_AREA}  
+				#{TASK_AREA},
+				#{CANT_CODE}  
 			)
     </insert>
     <select id="getTaskHeadByTaskId" parameterType="map" resultType="Map">
