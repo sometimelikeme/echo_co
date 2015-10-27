@@ -106,10 +106,10 @@
           FROM T_MUL_TASKS A, T_USERS B
           WHERE A.TASK_AUDIT_STATUS = '20'
           AND A.TASK_BID_STATUS != '40'
+          AND A.USER_ID = B.USER_ID
           <if test="USER_ID != null and USER_ID != '' ">  
           		AND A.USER_ID = #{USER_ID}  
           		AND B.USER_ID = #{USER_ID}
-          		AND A.USER_ID = B.USER_ID
     	  </if> 
     	  <if test="SECTOR_ID != null and SECTOR_ID != '' ">  
           		AND A.SECTOR_ID = #{SECTOR_ID} 
