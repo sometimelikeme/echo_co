@@ -24,6 +24,7 @@
 		`TASK_ICON3: '10',// required任务图片`
 		`TASK_ICON4: '10',// required任务图片`
 		`TASK_AREA: '10'// required任务距离范围:10-10公里范围内；20-全城；30-全国`
+		`CANT_CODE: '10000'// required发布任务时所在城市地区码`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
