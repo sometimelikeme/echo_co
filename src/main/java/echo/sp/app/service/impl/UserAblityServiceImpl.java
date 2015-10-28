@@ -66,5 +66,37 @@ public class UserAblityServiceImpl implements UserAblityService {
 	public Map searchAblityById(Map parmMap) {
 		return userAblityDAO.searchAblityById(parmMap);
 	}
+
+	@Override
+	public Map getCommentById(Map parmMap) {
+		return userAblityDAO.getCommentById(parmMap);
+	}
+
+	@Override
+	public int addComment(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.delComment(parmMap);
+    		userAblityDAO.addComment(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---addComment---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int delComment(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.delComment(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---delComment---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 	
 }

@@ -103,7 +103,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		// 用户技能
 		"abli/addAbli.do",// 增加技能
 		"abli/updateAbli.do",// 修改技能
-		"abli/deleteAbli.do"// 删除技能
+		"abli/deleteAbli.do",// 删除技能
+		"abli/buyAbility.do",// 购买技能
+		"abli/confirmContract.do",// 技能拥有者确认
+		"abli/declineContract.do",// 技能拥有者拒绝
+		"abli/doneAbility.do",// 技能拥有者完成技能
+		"abli/confirmDone.do",// 购买者确认完成
+		"abli/getCommentById.do",// 根据用户ID来获取对某一个订单中某一个技能的评论
+		"abli/addComment.do",// 增加技能评论
+		"abli/delComment.do"// 删除技能评论
 	};
 	 
     @SuppressWarnings("unused")

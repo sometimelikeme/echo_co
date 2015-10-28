@@ -16,4 +16,10 @@ public interface UserAblityService {
 	public int deleteAblity(Map parmMap);
 	// 查询技能
 	public Map searchAblityById(Map parmMap);
+	// 查询评论
+	public Map getCommentById(Map parmMap);
+	// 增加评论
+	public int addComment(Map parmMap);
+	// 删除评论
+	public int delComment(Map parmMap);
 }

@@ -4,12 +4,126 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="echo.sp.app.dao.UserAblityDAO">
     <insert id="addAblity" parameterType="map">
-    	
+    	INSERT INTO T_USER_ABLITY 
+		(
+			ABLI_ID,
+			USER_ID,
+			SECTOR_ID,
+			SECTOR_TYPE,
+			ABLI_TITLE,
+			ABLI_DESC,
+			ABLI_ASK_PAID,
+			ABLI_ADDR,
+			ABLI_LONGITUDE,
+			ABLI_LATITUDE,
+			ABLI_ICON1,
+			ABLI_ICON2,
+			ABLI_ICON3,
+			ABLI_ICON4,
+			ABLI_BUY_COUNT,
+			ABLI_STATUS,
+			ABLI_CREATE_TIME,
+			ABLI_LAST_UPDATE 
+		)
+		VALUES
+		(
+			#{ABLI_ID},
+			#{USER_ID},
+			#{SECTOR_ID},
+			#{SECTOR_TYPE},
+			#{ABLI_TITLE},
+			#{ABLI_DESC},
+			#{ABLI_ASK_PAID,jdbcType=NUMERIC},
+			#{ABLI_ADDR},
+			#{ABLI_LONGITUDE,jdbcType=NUMERIC},
+			#{ABLI_LATITUDE,jdbcType=NUMERIC},
+			#{ABLI_ICON1},
+			#{ABLI_ICON2},
+			#{ABLI_ICON3},
+			#{ABLI_ICON4},
+			#{ABLI_BUY_COUNT,jdbcType=NUMERIC},
+			#{ABLI_STATUS},
+			#{ABLI_CREATE_TIME},
+			#{ABLI_LAST_UPDATE} 
+		)
     </insert>
     <update id="updateAblity" parameterType="map">  
-    	
+    	UPDATE
+			T_USER_ABLITY 
+		SET
+			ABLI_TITLE = #{ABLI_TITLE},
+			ABLI_DESC=#{ABLI_DESC},
+			ABLI_ASK_PAID=#{ABLI_ASK_PAID,jdbcType=NUMERIC},
+			ABLI_ADDR=#{ABLI_ADDR},
+			ABLI_LONGITUDE=#{ABLI_LONGITUDE,jdbcType=NUMERIC},
+			ABLI_LATITUDE=#{ABLI_LATITUDE,jdbcType=NUMERIC},
+			ABLI_ICON1=#{ABLI_ICON1},
+			ABLI_ICON2=#{ABLI_ICON2},
+			ABLI_ICON3=#{ABLI_ICON3},
+			ABLI_ICON4=#{ABLI_ICON4},
+			ABLI_LAST_UPDATE=#{ABLI_LAST_UPDATE}
+		WHERE ABLI_ID = #{ABLI_ID}
     </update> 
     <update id="deleteAblity" parameterType="map"> 
-    
+    	UPDATE
+			T_USER_ABLITY 
+		SET
+			ABLI_LAST_UPDATE=#{ABLI_LAST_UPDATE},
+			ABLI_STATUS = '40'
+		WHERE ABLI_ID = #{ABLI_ID}
     </update>
+    <select id="searchAblityById" parameterType="map" resultType="Map">
+     	SELECT A.*,B.USER_NAME,B.USER_ICON 
+     	FROM T_USER_ABLITY A, T_USERS B
+     	WHERE A.ABLI_ID = #{ABLI_ID}
+     	AND A.ABLI_STATUS = '20'
+     	AND A.USER_ID = B.USER_ID
+    </select>
+    <select id="getAbliComments" parameterType="map" resultType="Map">
+     	SELECT A.*,B.USER_NAME,B.USER_ICON 
+     	FROM T_USER_ABLITY_COMMENTS A, T_USERS B
+     	WHERE A.ABLI_ID = #{ABLI_ID}
+     	AND A.USER_ID = B.USER_ID
+    </select>
+    <select id="searchAblityList" parameterType="map" resultType="Map">
+          SELECT A.*,B.USER_NAME,B.USER_ICON,B.CANT_CODE,
+          SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.ABLI_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.ABLI_LATITUDE,2)) * 140000 DIST
+          FROM T_USER_ABLITY A, T_USERS B
+          WHERE A.ABLI_STATUS = '20'
+          AND A.USER_ID = B.USER_ID
+          <if test="USER_ID != null and USER_ID != '' ">  
+          		AND A.USER_ID = #{USER_ID}  
+          		AND B.USER_ID = #{USER_ID}
+    	  </if> 
+    	  <if test="SECTOR_ID != null and SECTOR_ID != '' ">  
+          		AND A.SECTOR_ID = #{SECTOR_ID} 
+    	  </if>
+    	  <if test="SECTOR_TYPE != null and SECTOR_TYPE != '' ">  
+          		AND A.SECTOR_TYPE = #{SECTOR_TYPE} 
+    	  </if>
+    	  <if test="ABLI_TITLE != null and ABLI_TITLE != '' ">  
+          		AND A.ABLI_TITLE LIKE CONCAT(CONCAT('%', #{ABLI_TITLE, jdbcType=VARCHAR}),'%') 
+    	  </if>
+    </select>
+    <select id="getCommentById" parameterType="map" resultType="Map">
+     	SELECT A.*,B.USER_NAME,B.USER_ICON 
+     	FROM T_USER_ABLITY_COMMENTS A, T_USERS B
+     	WHERE A.ABLI_ID = #{ABLI_ID}
+     	AND A.USER_ID = B.USER_ID
+     	AND A.USER_ID = #{USER_ID}
+     	AND B.USER_ID = #{USER_ID}
+     	AND A.ORDER_ID = #{ORDER_ID}
+    </select>
+    <delete id="delComment" parameterType="map">  
+        DELETE FROM T_USER_ABLITY_COMMENTS 
+        WHERE USER_ID = #{USER_ID}
+        AND ABLI_ID = #{ABLI_ID}
+        AND ORDER_ID = #{ORDER_ID}
+    </delete> 
+    <insert id="addComment" parameterType="map">
+    	INSERT INTO T_USER_ABLITY_COMMENTS
+    	(ABLI_ID,ORDER_ID,USER_ID,TOTAL_POINT,COMENT_TITLE,COMMENT_DESC,COMMENT_TIME,REPLY)
+        VALUES
+        (#{ABLI_ID},#{ORDER_ID},#{USER_ID},#{ITEM_POINT,jdbcType=NUMERIC},#{COMENT_TITLE},#{COMMENT_DESC},#{COMMENT_TIME},#{REPLY})
+    </insert>
 </mapper>	
