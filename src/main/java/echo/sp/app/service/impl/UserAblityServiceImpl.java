@@ -59,6 +59,12 @@ public class UserAblityServiceImpl implements UserAblityService {
 			logger.error("UserAblityServiceImpl---deleteAblity---interface error: ",e);
 			throw new RuntimeException();
 		}
-		return returnInt;	}
+		return returnInt;	
+	}
+
+	@Override
+	public Map searchAblityById(Map parmMap) {
+		return userAblityDAO.searchAblityById(parmMap);
+	}
 	
 }

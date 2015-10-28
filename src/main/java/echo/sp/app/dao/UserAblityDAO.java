@@ -14,4 +14,6 @@ public interface UserAblityDAO {
 	public int updateAblity(Map parmMap);
 	// 删除技能
 	public int deleteAblity(Map parmMap);
+	// 查询技能
+	public Map searchAblityById(Map parmMap);
 }

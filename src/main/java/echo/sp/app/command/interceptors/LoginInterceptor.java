@@ -41,7 +41,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"task/searchTaskList.do",// 查询任务：查询任务列表
 		"task/searchTaskById.do",// 查询任务：查询单个任务
 		"multask/searchTaskList.do",// 查询任务：查询任务列表
-		"multask/searchTaskById.do"// 查询任务：查询单个任务
+		"multask/searchTaskById.do",// 查询任务：查询单个任务
+		"abli/searchAblityList.do",// 查询技能列表
+		"abli/searchAblityById.do"// 查询单个技能
 	};
 	
 	// SECRET ACCESS NEED AN USER LOGIN STATUS.
