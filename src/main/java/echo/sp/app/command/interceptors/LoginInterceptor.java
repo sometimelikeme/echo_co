@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
 	private static final String[] PUB_URL = {
 		"login/getCode.do",// GET NORML CODE URI.
-		"order/payOrder.do"// Support BeeCloud Call Back Interface  
+		"order/payOrder.do"// Support BeeCloud Call Back Interface   
 	};
 	
 	// NORMAL ACCESS WITHOUT AN USER LOGIN STATUS.
