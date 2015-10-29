@@ -98,7 +98,6 @@
           SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
           FROM T_TASKS A, T_USERS B
           WHERE A.TASK_AUDIT_STATUS = '20'
-          AND A.TASK_BID_STATUS != '80'
           AND A.USER_ID = B.USER_ID
           <if test="USER_ID != null and USER_ID != '' ">  
           		AND A.USER_ID = #{USER_ID}  
@@ -118,6 +117,12 @@
     	  </if>
     	  <if test="TASK_AREA != null and TASK_AREA != '' ">  
           		AND A.TASK_AREA = #{TASK_AREA} 
+    	  </if>
+    	  <if test="BID_STATUS == '1' ">  
+          		AND A.TASK_BID_STATUS IN ('10','30')
+    	  </if>
+    	  <if test="TASK_BID_STATUS != null and TASK_BID_STATUS != '' ">  
+          		AND A.TASK_BID_STATUS = #{TASK_BID_STATUS}
     	  </if>
     </select>
     

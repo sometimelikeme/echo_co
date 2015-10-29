@@ -128,6 +128,12 @@
     	  <if test="TASK_AREA != null and TASK_AREA != '' ">  
           		AND A.TASK_AREA = #{TASK_AREA} 
     	  </if>
+    	  <if test="BID_STATUS == '1' ">  
+          		AND A.TASK_BID_STATUS IN ('10','20')
+    	  </if>
+    	  <if test="TASK_BID_STATUS != null and TASK_BID_STATUS != '' ">  
+          		AND A.TASK_BID_STATUS = #{TASK_BID_STATUS}
+    	  </if>
     </select>
     <select id="searchBidTaskByUserId" parameterType="map" resultType="Map">
           SELECT A.*,B.USER_NAME,B.USER_ICON,C.BID_TIME,C.IS_BIDE,
