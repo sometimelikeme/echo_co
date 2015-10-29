@@ -1,6 +1,8 @@
 package echo.sp.app.controller.ability;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+
 import echo.sp.app.command.core.CoreController;
 import echo.sp.app.command.model.Code;
+import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.UserAgentUtils;
@@ -291,6 +298,92 @@ public class UserAbliBuyController extends CoreController{
 		} catch (Exception e) {
 			super.writeJson(response, "9992", "后台程序执行失败", null, null);
 			logger.error("UserAbliBuyController---confirmDone---interface error: ", e);
+		}
+	}
+	
+	
+	/**
+	 * 查询订单详情
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("abli/getAbliOrderById")
+	public void getAbliOrderById(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserAbliBuyController---getAbliOrderById---begin");
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				
+				// ABLI_ORDER 技能订单详情
+				// ABLI_INFO 技能详情
+				paramMap = userAblityService.getAbliOrderById(paramMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserAbliBuyController---getAbliOrderById---interface error: ", e);
+		}
+	}
+	
+	
+	/**
+	 * 查询订单列表
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("abli/getAbliOrders")
+	public void getAbliOrders(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserAbliBuyController---getAbliOrders---begin");
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				String sortString = paramMap.get("sort").toString();
+				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
+				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
+				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
+				// 前者获取购买我的订单的信息列表，后者获取我购买的订单信息列表
+				String exeString = "UserAblityDAO." + ("1".equals(paramMap.get("sort").toString()) ? "getAbliBuyOrders" : "getAbliOrders");
+				List resList = PubTool.getResultList(exeString, paramMap, pageBounds, sqlSessionFactory);
+				Map resMap = new HashMap();
+				int totalCount = 0;
+				if (PubTool.isListHasData(resList)) {
+		    		totalCount = ((PageList) resList).getPaginator().getTotalCount();
+				}
+				resMap.put("totalCount", totalCount);
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserAbliBuyController---getAbliOrders---interface error: ", e);
 		}
 	}
 }
