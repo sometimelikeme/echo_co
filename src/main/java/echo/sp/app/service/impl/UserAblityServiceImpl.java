@@ -150,7 +150,7 @@ public class UserAblityServiceImpl implements UserAblityService {
 				returnInt = 1;
     		}
 		} catch (Exception e) {
-			logger.error("UserOrderServiceImpl---addMallOrder---interface error: ",e);
+			logger.error("UserOrderServiceImpl---addBuyAbility---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
@@ -162,6 +162,89 @@ public class UserAblityServiceImpl implements UserAblityService {
 		resMap.put("ABLI_ORDER", userAblityDAO.getAbliOrderById(parmMap));
 		resMap.put("ABLI_INFO", userAblityDAO.searchAblityById(parmMap));
 		return resMap;
+	}
+
+	@Override
+	public int updateDeclineContract(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.updateDeclineContract(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---updateDeclineContract---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int updateConfirmContract(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.updateConfirmContract(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---updateConfirmContract---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int updateDoneAbility(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.updateDoneAbility(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---updateDoneAbility---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int updateConfirmDone(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		String dateTime = DateUtils.getDateTime();
+    		parmMap.put("CONFIRM_TIME", dateTime);
+    		if (userAblityDAO.updateConfirmDone(parmMap) > 0) {
+    			// 获取本次订单金额
+    			Map orderMap = userAblityDAO.getAbliOrderById(parmMap);
+    			BigDecimal payment = new BigDecimal(orderMap.get("TOTAL_PAY").toString());
+				// 用户金额明细表参数集
+				Map tranMap = new HashMap();
+				tranMap.put("USER_ID", parmMap.get("ABLI_USER_ID"));
+				tranMap.put("TIME1", dateTime);
+				tranMap.put("DATE1", DateUtils.getToday());
+				tranMap.put("MONEY_NUM", payment);
+				tranMap.put("MN_TYPE", "30");
+				tranMap.put("TASK_ID", "");
+				tranMap.put("ORDER_ID", "");
+				tranMap.put("ABLI_ORDER_ID", parmMap.get("ABLI_ORDER_ID").toString());
+				tranMap.put("PRE_PAID_ID", "");
+				tranMap.put("STATUS", "10");// 增
+				// 产生用户金额消费记录
+				userDAO.insertUserMoneyRecord(tranMap);
+				// 修改用户金额-增
+				BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
+				tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+				userDAO.updateUserMoney(tranMap);
+				// 从系统账户减除
+				tranMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+				tranMap.put("STATUS", "20");// 减
+				userDAO.insertUserMoneyRecord(tranMap);
+				total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
+				tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
+				userDAO.updateUserMoney(tranMap);
+				returnInt = 1;
+    		}
+		} catch (Exception e) {
+			logger.error("UserOrderServiceImpl---addBuyAbility---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
 	}
 	
 }

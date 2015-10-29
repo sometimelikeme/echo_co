@@ -122,8 +122,71 @@
     </delete> 
     <insert id="addComment" parameterType="map">
     	INSERT INTO T_USER_ABLITY_COMMENTS
-    	(ABLI_ID,ORDER_ID,USER_ID,TOTAL_POINT,COMENT_TITLE,COMMENT_DESC,COMMENT_TIME,REPLY)
+    	(ABLI_ID,ABLI_ORDER_ID,USER_ID,TOTAL_POINT,COMENT_TITLE,COMMENT_DESC,COMMENT_TIME,REPLY)
         VALUES
-        (#{ABLI_ID},#{ORDER_ID},#{USER_ID},#{ITEM_POINT,jdbcType=NUMERIC},#{COMENT_TITLE},#{COMMENT_DESC},#{COMMENT_TIME},#{REPLY})
+        (#{ABLI_ID},#{ABLI_ORDER_ID},#{USER_ID},#{ITEM_POINT,jdbcType=NUMERIC},#{COMENT_TITLE},#{COMMENT_DESC},#{COMMENT_TIME},#{REPLY})
     </insert>
+    <insert id="addBuyAbility" parameterType="map">
+    	INSERT INTO T_ABLITY_ORDERS 
+			(
+				ABLI_ORDER_ID,
+				ABLI_ID,
+				USER_ID,
+				ORDER_TYPE,
+				STATUS,
+				PAY_TYPE,
+				TOTAL_PAY,
+				PAY_TIME 
+			)
+		VALUES
+			(
+				#{ABLI_ORDER_ID},
+				#{ABLI_ID},
+				#{USER_ID},
+				#{ORDER_TYPE},
+				#{STATUS},
+				#{PAY_TYPE},
+				#{TOTAL_PAY,jdbcType=NUMERIC},
+				#{PAY_TIME} 
+			)
+    </insert>
+    <select id="getAbliOrderById" parameterType="map" resultType="Map">
+     	SELECT A.*,B.USER_NAME,B.USER_ICON 
+     	FROM T_ABLITY_ORDERS A, T_USERS B
+     	WHERE A.ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+     	AND A.USER_ID = B.USER_ID
+    </select>
+    <update id="updateDeclineContract" parameterType="map"> 
+    	UPDATE
+			T_ABLITY_ORDERS 
+		SET
+			STATUS = '20',
+			BACK_TIME = #{BACK_TIME},
+			BACK_REASON = #{BACK_REASON}
+		WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+    </update>
+    <update id="updateConfirmContract" parameterType="map"> 
+    	UPDATE
+			T_ABLITY_ORDERS 
+		SET
+			STATUS = '30',
+			START_TIME = #{START_TIME}
+		WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+    </update>
+    <update id="updateDoneAbility" parameterType="map"> 
+    	UPDATE
+			T_ABLITY_ORDERS 
+		SET
+			STATUS = '40',
+			DELI_TIME = #{DELI_TIME}
+		WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+    </update>
+    <update id="updateConfirmDone" parameterType="map"> 
+    	UPDATE
+			T_ABLITY_ORDERS 
+		SET
+			STATUS = '50',
+			CONFIRM_TIME = #{CONFIRM_TIME}
+		WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+    </update>
 </mapper>	

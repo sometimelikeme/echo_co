@@ -26,4 +26,12 @@ public interface UserAblityService {
 	public int addBuyAbility(Map parmMap);
 	// 查询订单
 	public Map getAbliOrderById(Map parmMap);
+	// 拒绝购买
+	public int updateDeclineContract(Map parmMap);
+	// 确认购买
+	public int updateConfirmContract(Map parmMap);
+	// 交付订单
+	public int updateDoneAbility(Map parmMap);
+	// 确认交付
+	public int updateConfirmDone(Map parmMap);
 }
