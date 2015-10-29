@@ -27,7 +27,6 @@ import echo.sp.app.command.utils.IdGen;
 import echo.sp.app.command.utils.UserAgentUtils;
 import echo.sp.app.service.PubToolService;
 import echo.sp.app.service.UserAblityService;
-import echo.sp.app.service.UserService;
 
 /** 
  * 用户技能  
@@ -38,9 +37,6 @@ import echo.sp.app.service.UserService;
 public class UserAblityController extends CoreController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserAblityController.class);
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private PubToolService pubToolService;
