@@ -189,4 +189,11 @@
     	WHERE A.USER_ID = B.USER_ID
     	AND A.TASK_ID = #{TASK_ID}
     </select>
+    
+    <select id="getBidInfo" parameterType="map" resultType="Map">
+    	SELECT IS_BIDE,STATUS
+    	FROM T_TASKS_LINE
+    	WHERE TASK_ID = #{TASK_ID}
+    	AND USER_ID = #{USER_ID}
+    </select>
 </mapper>

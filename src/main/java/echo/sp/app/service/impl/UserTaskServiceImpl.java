@@ -83,6 +83,15 @@ public class UserTaskServiceImpl implements UserTaskService{
 	@Override
 	public Map getTaskInfoByTaskId(Map parmMap) {
 		Map resMap = userTaskDAO.getTaskHeadByTaskId(parmMap);
+		Map sMap = userTaskDAO.getBidInfo(parmMap);
+		String is_bid = "0";
+		String is_bid_status = "0";
+		if (sMap != null) {
+			is_bid = "10".equals(sMap.get("IS_BIDE").toString()) ? "1" : "0";
+			is_bid_status = "1";
+		}
+		resMap.put("is_bid", is_bid);
+		resMap.put("is_bid_status", is_bid_status);
 		resMap.put("TASK_LINE", userTaskDAO.getTaskLineByTaskId(parmMap));
 		return resMap;
 	}

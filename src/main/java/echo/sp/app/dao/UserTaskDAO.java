@@ -25,4 +25,6 @@ public interface UserTaskDAO {
 	public int addMsg(Map parmMap);
 	// 删除留言
 	public int deleteMsg(Map parmMap);
+	// 用户是否竞标该任务
+	public Map getBidInfo(Map parmMap);
 }

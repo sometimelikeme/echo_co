@@ -102,6 +102,7 @@ public class UserTaskController extends CoreController{
 				// Get Task Info
 				parmMap = new HashMap();
 				parmMap.put("TASK_ID", task_id);
+				parmMap.put("USER_ID", user_id);
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				parmMap.remove("TASK_LINE");
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
@@ -148,6 +149,7 @@ public class UserTaskController extends CoreController{
 				// 修改任务信息
 				userTaskService.updateTask(paramMap);
 				// Get Task Info
+				parmMap.put("USER_ID", user_id);
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -246,6 +248,7 @@ public class UserTaskController extends CoreController{
 				paramMap.put("TASK_CANCEL_TIME", DateUtils.getDateTime());
 				userTaskService.updateTaskForCancel(paramMap);
 				// 3.Get Task Info
+				parmMap.put("USER_ID", user_id);
 				parmMap = userTaskService.getTaskInfoByTaskId(paramMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");

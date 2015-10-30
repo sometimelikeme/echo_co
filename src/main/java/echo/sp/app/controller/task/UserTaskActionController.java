@@ -79,6 +79,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("BID_TIME", DateUtils.getDateTime());
 				userTaskActionService.addTaskBider(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -139,6 +140,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("CANCEL_TIME", DateUtils.getDateTime());
 				userTaskActionService.updateTaskBider(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -191,6 +193,7 @@ public class UserTaskActionController extends CoreController{
 				// 修改投标人IS_BIDE为10
 				userTaskActionService.updateChooseTasker(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
@@ -245,6 +248,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("TAKS_UNDONE_TIME", DateUtils.getDateTime());
 				userTaskActionService.updateBiderBackTask(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
@@ -299,6 +303,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("TASK_BACK_TIME", DateUtils.getDateTime());
 				userTaskActionService.updatePuberBackTask(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
@@ -353,6 +358,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("TASK_DONE_TIME", DateUtils.getDateTime());
 				userTaskActionService.updateTaskDone(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
@@ -407,6 +413,7 @@ public class UserTaskActionController extends CoreController{
 				paramMap.put("TASK_CON_UNDONE_TIME", DateUtils.getDateTime());
 				userTaskActionService.updateTaskUnFinish(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
@@ -468,6 +475,7 @@ public class UserTaskActionController extends CoreController{
 					userTaskActionService.updateTaskFinishPoint(parmMap);
 				}
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap.put("IS_BIDE", "10");
 				parmMap = userTaskService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
