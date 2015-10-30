@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "abli/searchAblityList.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                            SECTOR_ID: '',
+                            SECTOR_TYPE: '',
+                            ABLI_TITLE: '发',
+                            LONGITUDE:'117.333245',
+                            LATITUDE:'36.231245',
+                			USER_ID:'c21375a7aef447239c74fc9e7926cd35',
+                            page: '1',
+                            pageSize: '5',
+                            sort: 'DIST.desc,ABLI_BUY_COUNT.desc,ABLI_COMMMENT.desc,ABLI_POINT.desc,ABLI_LAST_UPDATE.desc'
+                		}
+                	})),
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>

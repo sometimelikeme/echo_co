@@ -262,10 +262,11 @@ public class UserAblityController extends CoreController{
 				resList = PubTool.getResultList("UserAblityDAO.getAbliComments", paramMap, pageBounds, sqlSessionFactory);
 				
 				// 仅在第一页加入评论
+				int totalCount = 0;
 				if (PubTool.isListHasData(resList) && pageInt == 1) {
-					PageList pageList = (PageList) resList;
-					resMap.put("totalCount", ((PageList) resList).getPaginator().getTotalCount());
+					totalCount = ((PageList) resList).getPaginator().getTotalCount();
 				}
+				resMap.put("totalCount", totalCount);
 				
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, resMap, resList);
 			}

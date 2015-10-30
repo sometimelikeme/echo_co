@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "abli/addAbli.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                			USER_ID:'c21375a7aef447239c74fc9e7926cd35',
+               				SECTOR_ID:'100001',
+               				SECTOR_TYPE:'10',
+               				ABLI_TITLE:'发传单',
+               				ABLI_DESC:'找人发广告传单',
+               				ABLI_ASK_PAID:'500',
+               				ABLI_ADDR:'解放路',
+							ABLI_LONGITUDE:'117.333245',
+               				ABLI_LATITUDE:'36.231245',
+               				ABLI_ICON1:'',
+               				ABLI_ICON2:'',
+               				ABLI_ICON3:'',
+               				ABLI_ICON4:''
+                		}
+                	})),
+                	sc_co: '06aea352c23045ec95768ba0b6bc7633',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>
