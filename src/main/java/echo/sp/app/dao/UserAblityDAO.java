@@ -38,4 +38,10 @@ public interface UserAblityDAO {
 	public int updateConfirmUnDone(Map parmMap);
 	// 删除订单
 	public int deleteOrder(Map parmMap);
+	// 增加技能购买量
+	public int updateAbliBuyCount(Map parmMap);
+	// 获取技能评论量和综合评分
+	public Map getAbliCommentInfo(Map parmMap);
+	// 更新技能评论量和综合评分
+	public int updateAbliCommentInfo(Map parmMap);
 }

@@ -225,4 +225,24 @@
     	  AND A.ABLI_ID = B.ABLI_ID
     	  AND B.USER_ID = C.USER_ID
     </select>
+    <update id="updateAbliBuyCount" parameterType="map"> 
+    	UPDATE
+			T_USER_ABLITY 
+		SET
+			ABLI_BUY_COUNT = ABLI_BUY_COUNT + 1
+		WHERE ABLI_ID = #{ABLI_ID}
+    </update>
+    <select id="getAbliCommentInfo" parameterType="map" resultType="Map">
+          SELECT ABLI_COMMMENT,ABLI_POINT
+          FROM T_USER_ABLITY
+          WHERE ABLI_ID = #{ABLI_ID}
+    </select>
+    <update id="updateAbliCommentInfo" parameterType="map"> 
+    	UPDATE
+			T_USER_ABLITY 
+		SET
+			ABLI_COMMMENT = #{ABLI_COMMMENT,jdbcType=NUMERIC},
+			ABLI_POINT = #{ABLI_POINT,jdbcType=NUMERIC}
+		WHERE ABLI_ID = #{ABLI_ID}
+    </update>
 </mapper>	

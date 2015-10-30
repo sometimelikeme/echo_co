@@ -86,6 +86,18 @@ public class UserAblityServiceImpl implements UserAblityService {
     	try {
     		userAblityDAO.delComment(parmMap);
     		userAblityDAO.addComment(parmMap);
+    		// 汇总评论量和综合评分
+    		Map resMap = userAblityDAO.getAbliCommentInfo(parmMap);
+    		BigDecimal commmentCountBig = new BigDecimal(resMap.get("ABLI_COMMMENT").toString());
+    		BigDecimal newCountBig = commmentCountBig.add(new BigDecimal("1"));
+    		BigDecimal thisPoint = new BigDecimal(parmMap.get("TOTAL_POINT").toString());
+    		BigDecimal abliPoint = new BigDecimal(resMap.get("ABLI_POINT").toString());
+			abliPoint = (abliPoint.multiply(commmentCountBig).add(thisPoint))
+					.divide(newCountBig, 2, BigDecimal.ROUND_HALF_UP);
+			resMap.put("ABLI_COMMMENT", newCountBig);
+			resMap.put("ABLI_POINT", abliPoint);
+			resMap.put("ABLI_ID", parmMap.get("ABLI_ID"));
+			userAblityDAO.updateAbliCommentInfo(resMap);
     		returnInt = 1;
 		} catch (Exception e) {
 			logger.error("UserAblityServiceImpl---addComment---interface error: ",e);
@@ -121,6 +133,7 @@ public class UserAblityServiceImpl implements UserAblityService {
     		parmMap.put("STATUS", "10");
     		parmMap.put("PAY_TYPE", "50");
     		if (userAblityDAO.addBuyAbility(parmMap) > 0) {
+    			userAblityDAO.updateAbliBuyCount(parmMap);
     			BigDecimal payment = new BigDecimal(parmMap.get("TOTAL_PAY").toString());
 				// 用户金额消费明细表参数集
 				Map tranMap = new HashMap();
