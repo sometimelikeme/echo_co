@@ -179,7 +179,11 @@
 			T_ABLITY_ORDERS 
 		SET
 			STATUS = '40',
-			DELI_TIME = #{DELI_TIME}
+			DELI_TIME = #{DELI_TIME},
+			DONE_ICON1 = #{DONE_ICON1},
+			DONE_ICON2 = #{DONE_ICON2},
+			DONE_ICON3 = #{DONE_ICON3},
+			DONE_ICON4 = #{DONE_ICON4}
 		WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
     </update>
     <update id="updateConfirmDone" parameterType="map"> 
