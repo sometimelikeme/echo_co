@@ -112,7 +112,7 @@ public class MyTaskXml {
 			while (iterList.hasNext()) {
 				paramMap = (Map)iterList.next();
 				consule_time = paramMap.get("TASK_DEADLINE").toString();// 截止日期
-				if (DateUtils.getDistanceOfTwoDate(DateUtils.parseStringDate(consule_time), DateUtils.parseStringDate(currDate)) > 0) {
+				if (DateUtils.getGapfTwoDate(DateUtils.parseStringDate(consule_time), DateUtils.parseStringDate(currDate)) > 0) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("MyTaskXml---closeTask---paramMap：" + paramMap);
 					}
@@ -175,5 +175,20 @@ public class MyTaskXml {
         if (PubTool.isListHasData(taskList)) {
         	userMulTaskActionService.updateTaskProcess(taskList);
         }
+    }  
+	
+	
+	/**
+	 * 定时关闭逾期的技能订单
+	 */
+	public void closeAbliOrder(){  
+        if (logger.isDebugEnabled()) {
+			logger.debug("MyTaskXml---closeAbliOrder---begin");
+		}
+        
+        Map parmMap = new HashMap();
+        String datetime = DateUtils.getDateTime();
+        
+        
     }  
 }
