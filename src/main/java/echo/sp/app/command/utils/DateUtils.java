@@ -369,4 +369,16 @@ public class DateUtils extends DateFormatUtils {
 		long afterTime = after.getTime();
 		return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
 	}
+	
+	/**
+	 * 获取两个日期之间的差
+	 * @param before
+	 * @param after
+	 * @return
+	 */
+	public static long getGapfTwoDate(Date before, Date after) {
+		long beforeTime = before.getTime();
+		long afterTime = after.getTime();
+		return afterTime - beforeTime;
+	}
 }

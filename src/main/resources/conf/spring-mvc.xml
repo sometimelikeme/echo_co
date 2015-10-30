@@ -26,6 +26,8 @@
         <task:scheduled ref="myTaskXml" method="closeTask" cron="0 0 1 * * ?" /> 
         <!--  这里表示的是每日凌晨1时执行一次 , 用来关闭逾期的多人任务  -->  
         <task:scheduled ref="myTaskXml" method="closeMulTask" cron="0 0 1 * * ?" />
+        <!--  这里表示的是每日凌晨1时执行一次 , 用来关闭逾期的任务订单  -->  
+        <task:scheduled ref="myTaskXml" method="closeAbliOrder" cron="0 0 1 * * ?" />
     </task:scheduled-tasks>  
     
     <!-- 扫描controller（controller层注入） -->
