@@ -182,6 +182,9 @@ public class UserAblityServiceImpl implements UserAblityService {
 		int returnInt = 0;
     	try {
     		userAblityDAO.updateDeclineContract(parmMap);
+    		// 返还金额到用户账户
+    		Map resMap = userAblityDAO.getAbliOrderById(parmMap);
+    		returnMoney(resMap);
     		returnInt = 1;
 		} catch (Exception e) {
 			logger.error("UserAblityServiceImpl---updateDeclineContract---interface error: ",e);
@@ -288,5 +291,52 @@ public class UserAblityServiceImpl implements UserAblityService {
 			throw new RuntimeException();
 		}
 		return returnInt;
+	}
+
+	@Override
+	public int updateProcessDeadOrders(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		// 获取订单列表
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---updateProcessDeadOrders---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+	
+	/**
+	 * 返还金额到用户
+	 * @param parmMap
+	 */
+	private void returnMoney(Map parmMap){
+		BigDecimal payment = new BigDecimal(parmMap.get("TOTAL_PAY").toString());
+		String dateTime = DateUtils.getDateTime();
+		// 用户金额消费明细表参数集-增
+		Map tranMap = new HashMap();
+		tranMap.put("USER_ID", parmMap.get("USER_ID"));
+		tranMap.put("TIME1", dateTime);
+		tranMap.put("DATE1", DateUtils.getToday());
+		tranMap.put("MONEY_NUM", payment);
+		tranMap.put("TASK_ID", "");
+		tranMap.put("ORDER_ID", "");
+		tranMap.put("ABLI_ORDER_ID", parmMap.get("ABLI_ORDER_ID"));
+		tranMap.put("PRE_PAID_ID", "");
+		tranMap.put("STATUS", "10");// 增
+		tranMap.put("MN_TYPE", "30");// 技能
+		userDAO.insertUserMoneyRecord(tranMap);
+		// 修改用户金额-增
+		BigDecimal total_money_Big = new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
+		tranMap.put("TOTAL_MONEY", total_money_Big.add(payment));
+		userDAO.updateUserMoney(tranMap);
+		// 系统账户金额消费明细表参数集
+		tranMap.put("USER_ID", Prop.getString("system.systemAdminId"));// 系统账号
+		tranMap.put("STATUS", "20");// 减
+		userDAO.insertUserMoneyRecord(tranMap);
+		// 将付款暂存到系统账户-减
+		total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
+		tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
+		userDAO.updateUserMoney(tranMap);
 	}
 }

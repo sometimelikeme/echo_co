@@ -38,4 +38,6 @@ public interface UserAblityService {
 	public int updateConfirmUnDone(Map parmMap);
 	// 删除订单
 	public int deleteOrder(Map parmMap);
+	// 处理过期的订单
+	public int updateProcessDeadOrders(Map parmMap);
 }
