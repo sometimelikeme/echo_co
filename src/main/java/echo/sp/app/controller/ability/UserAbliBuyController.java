@@ -383,7 +383,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				String status = resMap.get("STATUS").toString();
 				
-				if (!"20".equals(status) && !"50".equals(status) && !"60".equals(status)) {
+				if (!"80".equals(status)) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
 				}
 				
