@@ -305,6 +305,106 @@ public class UserAbliBuyController extends CoreController{
 	
 	
 	/**
+	 * 购买者确认未完成 
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("abli/confirmUnDone")
+	public void confirmUnDone(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserAbliBuyController---confirmUnDone---begin");
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				
+				Map resMap = (Map)userAblityService.getAbliOrderById(paramMap).get("ABLI_ORDER");
+				
+				if (!"40".equals(resMap.get("STATUS").toString())) {
+					super.writeJson(response, "9996", "状态错误！", null, null);
+				}
+				
+				paramMap.put("DECLINE_TIME", DateUtils.getDateTime());
+				
+				userAblityService.updateConfirmUnDone(paramMap);
+				
+				// ABLI_ORDER 技能订单详情
+				// ABLI_INFO 技能详情
+				paramMap = userAblityService.getAbliOrderById(paramMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserAbliBuyController---confirmUnDone---interface error: ", e);
+		}
+	}
+	
+	
+	/**
+	 * 购买者删除订单
+	 * @param req
+	 * @param response
+	 * @param dataParm
+	 */
+	@RequestMapping("abli/deleteOrder")
+	public void deleteOrder(HttpServletRequest req, HttpServletResponse response, @RequestParam String dataParm) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("UserAbliBuyController---deleteOrder---begin");
+		}
+		
+		try {
+			super.getParm(req, response);
+			
+			Map paramMap = data.getDataset();
+			
+			String user_id = (String) paramMap.get("USER_ID"), 
+				   s_user_id = (String) session.getAttribute("user_id");
+			
+			if (user_id == null || "".equals(user_id) || (user_id != null && !user_id.equals(s_user_id))) {
+				super.writeJson(response, Code.FAIL, "无效用户！", null, null);
+			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
+				super.writeJson(response, "9997", "无效设备", null, null);
+			} else {
+				
+				Map resMap = (Map)userAblityService.getAbliOrderById(paramMap).get("ABLI_ORDER");
+				
+				String status = resMap.get("STATUS").toString();
+				
+				if (!"20".equals(status) && !"50".equals(status) && !"60".equals(status)) {
+					super.writeJson(response, "9996", "状态错误！", null, null);
+				}
+				
+				paramMap.put("DEL_TIME", DateUtils.getDateTime());
+				
+				userAblityService.deleteOrder(paramMap);
+				
+				// ABLI_ORDER 技能订单详情
+				// ABLI_INFO 技能详情
+				paramMap = userAblityService.getAbliOrderById(paramMap);
+				
+				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, paramMap, null);
+			}
+		} catch (Exception e) {
+			super.writeJson(response, "9992", "后台程序执行失败", null, null);
+			logger.error("UserAbliBuyController---deleteOrder---interface error: ", e);
+		}
+	}
+	
+	
+	/**
 	 * 查询订单详情
 	 * @param req
 	 * @param response

@@ -250,5 +250,30 @@ public class UserAblityServiceImpl implements UserAblityService {
 		}
 		return returnInt;
 	}
-	
+
+	@Override
+	public int updateConfirmUnDone(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.updateConfirmUnDone(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---updateConfirmUnDone---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
+
+	@Override
+	public int deleteOrder(Map parmMap) {
+		int returnInt = 0;
+    	try {
+    		userAblityDAO.deleteOrder(parmMap);
+    		returnInt = 1;
+		} catch (Exception e) {
+			logger.error("UserAblityServiceImpl---deleteOrder---interface error: ",e);
+			throw new RuntimeException();
+		}
+		return returnInt;
+	}
 }

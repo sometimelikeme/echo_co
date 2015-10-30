@@ -109,6 +109,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		"abli/declineContract.do",// 技能拥有者拒绝
 		"abli/doneAbility.do",// 技能拥有者完成技能
 		"abli/confirmDone.do",// 购买者确认完成 
+		"abli/confirmUnDone.do",// 购买者确认未完成 
+		"abli/deleteOrder.do",// 购买者删除订单 
 		"abli/getAbliOrderById.do",// 查询订单详情
 		"abli/getAbliOrders.do",// 查询订单列表-
 		"abli/getCommentById.do",// 根据用户ID来获取对某一个订单中某一个技能的评论

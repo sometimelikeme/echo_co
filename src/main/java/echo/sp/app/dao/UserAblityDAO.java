@@ -34,4 +34,8 @@ public interface UserAblityDAO {
 	public int updateDoneAbility(Map parmMap);
 	// 确认交付
 	public int updateConfirmDone(Map parmMap);
+	// 确认未交付
+	public int updateConfirmUnDone(Map parmMap);
+	// 删除订单
+	public int deleteOrder(Map parmMap);
 }
