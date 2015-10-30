@@ -290,7 +290,7 @@ public class UserAblityServiceImpl implements UserAblityService {
     		returnInt = 1;
 		} catch (Exception e) {
 			logger.error("UserAblityServiceImpl---deleteOrder---interface error: ",e);
-			throw new RuntimeException();
+			throw new RuntimeException(); 
 		}
 		return returnInt;
 	}
