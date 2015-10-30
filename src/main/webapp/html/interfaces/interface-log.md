@@ -6,6 +6,7 @@
 ##### 商品评价相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/comment-order-interface.html](http://123.56.45.223:8080/echo//html/interfaces/comment-order-interface.html "商品评价相关接口文档")
 ##### 单人任务相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/single-task-interface.html](http://123.56.45.223:8080/echo//html/interfaces/single-task-interface.html "单人任务相关接口文档")
 ##### 多人任务相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/mul-task-interface.html](http://123.56.45.223:8080/echo//html/interfaces/mul-task-interface.html "多人任务相关接口文档")
+##### 用户技能相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/user-ability-interface.html](http://123.56.45.223:8080/echo//html/interfaces/user-ability-interface.html "用户技能相关接口文档")
 #### 2015-9-7
 - 增加用户退出的接口，请查看[http://123.56.45.223:8080/echo//html/interfaces/login-interface.html](http://123.56.45.223:8080/echo//html/interfaces/login-interface.html "用户相关接口文档")-接口11。
 - 调用需要sc_no的接口,如果发现sc_no不一致，执行回话清除动作。
@@ -93,3 +94,6 @@
 - 任务留言和删除接口：单人任务相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/single-task-interface.html](http://123.56.45.223:8080/echo//html/interfaces/single-task-interface.html "单人任务相关接口文档") 接口16，17
 ### 2015-10-22
 - 多人任务相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/mul-task-interface.html](http://123.56.45.223:8080/echo//html/interfaces/mul-task-interface.html "多人任务相关接口文档")
+### 2015-10-30
+- 用户技能相关接口文档：[http://123.56.45.223:8080/echo//html/interfaces/user-ability-interface.html](http://123.56.45.223:8080/echo//html/interfaces/user-ability-interface.html "用户技能相关接口文档")
+- 系统每日进行定时任务，判断`T_ABLITY_ORDERS.STATUS`表中DEADLINE超期的订单，根据订单状态为10，60的将付款从系统账户返还到用户，40的讲付款从系统账户付款到任务完成者
