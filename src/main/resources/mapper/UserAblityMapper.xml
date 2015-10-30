@@ -76,7 +76,6 @@
      	SELECT A.*,B.USER_NAME,B.USER_ICON 
      	FROM T_USER_ABLITY A, T_USERS B
      	WHERE A.ABLI_ID = #{ABLI_ID}
-     	AND A.ABLI_STATUS = '20'
      	AND A.USER_ID = B.USER_ID
     </select>
     <select id="getAbliComments" parameterType="map" resultType="Map">

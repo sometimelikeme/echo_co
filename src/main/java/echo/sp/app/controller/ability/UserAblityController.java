@@ -252,7 +252,7 @@ public class UserAblityController extends CoreController{
 				Map resMap = new HashMap();
 				List resList = null;
 				
-				// 仅仅在第一页中加入任务数据 以及第一页的留言
+				// 分页查询，仅仅在第一页中加入技能数据，满足的记录数totalCount， 以及第一页的技能留言
 				if (pageInt == 1) {
 					resMap = userAblityService.searchAblityById(paramMap);
 				}

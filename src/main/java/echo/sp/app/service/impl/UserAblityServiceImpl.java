@@ -263,7 +263,7 @@ public class UserAblityServiceImpl implements UserAblityService {
 				returnInt = 1;
     		}
 		} catch (Exception e) {
-			logger.error("UserOrderServiceImpl---addBuyAbility---interface error: ",e);
+			logger.error("UserOrderServiceImpl---updateConfirmDone---interface error: ",e);
 			throw new RuntimeException();
 		}
 		return returnInt;
