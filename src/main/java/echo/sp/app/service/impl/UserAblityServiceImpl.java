@@ -2,6 +2,7 @@ package echo.sp.app.service.impl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.Prop;
 import echo.sp.app.dao.UserAblityDAO;
@@ -298,6 +300,23 @@ public class UserAblityServiceImpl implements UserAblityService {
 		int returnInt = 0;
     	try {
     		// 获取订单列表
+    		parmMap.put("CURR_DATE", DateUtils.getDateTime());
+    		List resList = userAblityDAO.getUnProcessOrders(parmMap);
+    		if (PubTool.isListHasData(resList)) {
+				String status;
+				int resListLength = resList.size();
+				Map orderMap;
+				for (int i = 0; i < resListLength; i++) {
+					orderMap = (Map)resList.get(i);
+					status = orderMap.get("STATUS").toString();
+					if ("10".equals(status) || "60".equals(status)) {
+						returnMoney(orderMap);
+					} else if ("40".equals(status)) {
+						orderMap.put("USER_ID", userAblityDAO.getAbilityUserId(orderMap));
+						giveMoney(parmMap);
+					}
+				}
+			}
     		returnInt = 1;
 		} catch (Exception e) {
 			logger.error("UserAblityServiceImpl---updateProcessDeadOrders---interface error: ",e);
@@ -338,5 +357,20 @@ public class UserAblityServiceImpl implements UserAblityService {
 		total_money_Big =  new BigDecimal(userDAO.getUserExpandInfo(tranMap).get("TOTAL_MONEY").toString());
 		tranMap.put("TOTAL_MONEY", total_money_Big.subtract(payment));
 		userDAO.updateUserMoney(tranMap);
+	}
+	
+	
+	/**
+	 * 奖励金额
+	 * @param parmMap
+	 */
+	private void giveMoney(Map parmMap){
+		BigDecimal payment = new BigDecimal(parmMap.get("TOTAL_PAY").toString());
+		String perOfSystemPaid = Prop.getString("system.perOfSystemPaidAbli");// 平台抽取比
+		payment = payment.subtract(payment.multiply(
+				new BigDecimal(perOfSystemPaid)).divide(
+				new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
+		parmMap.put("TOTAL_PAY", payment);
+		returnMoney(parmMap);
 	}
 }

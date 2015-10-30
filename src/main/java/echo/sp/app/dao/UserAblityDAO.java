@@ -1,5 +1,6 @@
 package echo.sp.app.dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**   
@@ -44,4 +45,8 @@ public interface UserAblityDAO {
 	public Map getAbliCommentInfo(Map parmMap);
 	// 更新技能评论量和综合评分
 	public int updateAbliCommentInfo(Map parmMap);
+	// 获取待处理订单列表
+	public List getUnProcessOrders(Map parmMap);
+	// 获取任务对应的用户ID
+	public String getAbilityUserId(Map parmMap);
 }

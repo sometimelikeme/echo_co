@@ -247,4 +247,15 @@
 			ABLI_POINT = #{ABLI_POINT,jdbcType=NUMERIC}
 		WHERE ABLI_ID = #{ABLI_ID}
     </update>
+    <select id="getUnProcessOrders" parameterType="map" resultType="Map">
+          SELECT * FROM T_ABLITY_ORDERS
+          WHERE STATUS NOT IN ('20','70','80')
+          AND DEADLINE > #{CURR_DATE} 
+    </select>
+    <select id="getAbilityUserId" parameterType="map" resultType="String">
+          SELECT A.USER_ID 
+          FROM T_USER_ABLITY A,T_ABLITY_ORDERS B
+          WHERE B.ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+          AND A.ABLI_ID = B.ABLI_ID
+    </select>
 </mapper>	

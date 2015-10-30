@@ -15,6 +15,7 @@ import echo.sp.app.command.page.PubTool;
 import echo.sp.app.command.utils.DateUtils;
 import echo.sp.app.command.utils.Prop;
 import echo.sp.app.service.MerOrderService;
+import echo.sp.app.service.UserAblityService;
 import echo.sp.app.service.UserMulTaskActionService;
 import echo.sp.app.service.UserTaskActionService;
 import echo.sp.app.service.UserTaskService;
@@ -40,6 +41,9 @@ public class MyTaskXml {
 	
 	@Autowired
 	private UserMulTaskActionService userMulTaskActionService;
+	
+	@Autowired
+	private UserAblityService userAblityService;
 	
 	/**
 	 * 定时关闭已消费未关闭的订单
@@ -185,10 +189,6 @@ public class MyTaskXml {
         if (logger.isDebugEnabled()) {
 			logger.debug("MyTaskXml---closeAbliOrder---begin");
 		}
-        
-        Map parmMap = new HashMap();
-        String datetime = DateUtils.getDateTime();
-        
-        
+        userAblityService.updateProcessDeadOrders(new HashMap());
     }  
 }
