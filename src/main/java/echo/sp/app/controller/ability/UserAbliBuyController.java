@@ -134,9 +134,9 @@ public class UserAbliBuyController extends CoreController{
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				
-				Map resMap = (Map)userAblityService.getAbliOrderById(paramMap).get("ABLI_ORDER");
+				Map resMap = (Map)((Map)userAblityService.getAbliOrderById(paramMap)).get("ABLI_ORDER");
 				
-				if ("10".equals(resMap.get("STATUS").toString())) {
+				if (!"10".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
 				}
 				
@@ -183,9 +183,11 @@ public class UserAbliBuyController extends CoreController{
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
 				
-				Map resMap = (Map)userAblityService.getAbliOrderById(paramMap).get("ABLI_ORDER");
+				Map resMap = (Map)((Map)userAblityService.getAbliOrderById(paramMap)).get("ABLI_ORDER");
 				
-				if ("10".equals(resMap.get("STATUS").toString())) {
+				
+				
+				if (!"10".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
 				}
 				
@@ -234,7 +236,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				Map resMap = (Map)userAblityService.getAbliOrderById(paramMap).get("ABLI_ORDER");
 				
-				if ("30".equals(resMap.get("STATUS").toString())) {
+				if (!"30".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
 				}
 				
@@ -283,7 +285,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				Map resMap = (Map)userAblityService.getAbliOrderById(paramMap).get("ABLI_ORDER");
 				
-				if ("40".equals(resMap.get("STATUS").toString())) {
+				if (!"40".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
 				}
 				

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="TTT">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/echo/skins/lib/ionic/js/angular/angular.min.js"></script>
+    <title></title>
+    <script>
+    	angular.module('TTT',[]).run(function($log,$http){
+    		$http({
+                method: 'GET', 
+                url: "http://localhost:8080/echo/" + "abli/confirmContract.do",
+                params: {
+                	dataParm:encodeURI(JSON.stringify({
+                		dataset:{
+                            ABLI_ORDER_ID: '3e4d0db57bef4158b79be3bb27c4aa7b',
+                			USER_ID:'c21375a7aef447239c74fc9e7926cd35'
+                		}
+                	})),
+                	sc_co: 'b0a83dd8815b44559a9b08068c0cc9d7',
+                	no_co: 'QUJDREVGRw=='
+                }
+            }).success(function (data, status, headers, config) {
+            	$log.debug(data);
+            }).error(function (data, status, headers, config) {
+            });
+    	});
+    </script>
+</head>
+<body>
+
+</body>
+</html>

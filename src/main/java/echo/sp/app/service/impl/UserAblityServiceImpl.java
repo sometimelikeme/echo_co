@@ -213,6 +213,10 @@ public class UserAblityServiceImpl implements UserAblityService {
     			// 获取本次订单金额
     			Map orderMap = userAblityDAO.getAbliOrderById(parmMap);
     			BigDecimal payment = new BigDecimal(orderMap.get("TOTAL_PAY").toString());
+    			String perOfSystemPaid = Prop.getString("system.perOfSystemPaidAbli");// 平台抽取比
+    			payment = payment.subtract(payment.multiply(
+    					new BigDecimal(perOfSystemPaid)).divide(
+    					new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
 				// 用户金额明细表参数集
 				Map tranMap = new HashMap();
 				tranMap.put("USER_ID", parmMap.get("ABLI_USER_ID"));
