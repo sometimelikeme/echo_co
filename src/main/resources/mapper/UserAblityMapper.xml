@@ -136,6 +136,7 @@
 				STATUS,
 				PAY_TYPE,
 				TOTAL_PAY,
+				DEADLINE,
 				PAY_TIME 
 			)
 		VALUES
@@ -147,6 +148,7 @@
 				#{STATUS},
 				#{PAY_TYPE},
 				#{TOTAL_PAY,jdbcType=NUMERIC},
+				#{DEADLINE},
 				#{PAY_TIME} 
 			)
     </insert>

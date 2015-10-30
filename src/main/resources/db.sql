@@ -570,6 +570,7 @@ CREATE TABLE T_ABLITY_ORDERS(
 	STATUS CHAR(2) NOT NULL,--订单状态：10-付款，20-退单，30-开工，40-交付，50-确认交付，60-确认未交付，70-删除
 	PAY_TYPE CHAR(2),--支付方式：10-支付宝,20-微信,30-银联,40-积分,50-平台支付
 	TOTAL_PAY DECIMAL(18,8),--付款总金额
+	DEADLINE VARCHAR(32),--截止时间
 	PAY_TIME VARCHAR(32),--付款时间
 	BACK_TIME VARCHAR(32),--退单时间
 	START_TIME VARCHAR(32),--开工时间
