@@ -414,7 +414,9 @@ CREATE TABLE T_TASKS(
 	TASK_ICON3 VARCHAR(256),--任务发布图片
 	TASK_ICON4 VARCHAR(256),--任务发布图片
 	TASK_AUDIT_STATUS CHAR(2),--枚举：10-审核中,20-审核通过,30-审核未通过
-	TASK_BID_STATUS CHAR(2),--竞标任务状态枚举：10-发布,20-取消,30-他人投标任务,40-选定他人中标任务,49-中标人确认不做任务，50-退回任务,60-他人完成任务,61-任务发布者点击未完成，70-任务结束,80-删除任务
+	TASK_BID_STATUS CHAR(2),--竞标任务状态枚举：10-发布,20-取消,30-他人投标任务,
+	--40-选定他人中标任务,49-中标人确认不做任务，50-退回任务,60-他人完成任务,
+	--61-任务发布者点击未完成，70-任务结束,80-删除任务
 	TASK_CREATE_TIME VARCHAR(32),--发布时间
 	TASK_CANCEL_TIME VARCHAR(32),--取消时间
 	TASK_GET_TIME VARCHAR(32),--选中中标时间
