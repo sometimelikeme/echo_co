@@ -473,7 +473,7 @@ public class UserAbliBuyController extends CoreController{
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
 				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
 				// 前者获取购买我的订单的信息列表，后者获取我购买的订单信息列表
-				String exeString = "UserAblityDAO." + ("1".equals(paramMap.get("sort").toString()) ? "getAbliBuyOrders" : "getAbliOrders");
+				String exeString = "UserAblityDAO." + ("1".equals(paramMap.get("GET_TYPE").toString()) ? "getAbliBuyOrders" : "getAbliOrders");
 				List resList = PubTool.getResultList(exeString, paramMap, pageBounds, sqlSessionFactory);
 				Map resMap = new HashMap();
 				int totalCount = 0;

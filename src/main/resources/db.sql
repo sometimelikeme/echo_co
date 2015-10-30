@@ -567,7 +567,7 @@ CREATE TABLE T_ABLITY_ORDERS(
 	ABLI_ID VARCHAR(32) NOT NULL,--购买技能ID
 	USER_ID VARCHAR(32) NOT NULL,--购买者ID
 	ORDER_TYPE CHAR(2) NOT NULL,--订单来源类型：10-手机客户端，20-网页
-	STATUS CHAR(2) NOT NULL,--订单状态：10-付款，20-退单，30-开工，40-交付，50-确认交付，60-确认未交付，70-删除
+	STATUS CHAR(2) NOT NULL,--订单状态：10-付款，20-退单，30-开工，40-交付，50-确认交付，60-确认未交付，70-删除, 80-过期
 	PAY_TYPE CHAR(2),--支付方式：10-支付宝,20-微信,30-银联,40-积分,50-平台支付
 	TOTAL_PAY DECIMAL(18,8),--付款总金额
 	DEADLINE VARCHAR(32),--截止时间
