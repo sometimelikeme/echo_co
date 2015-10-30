@@ -309,10 +309,11 @@ public class UserTaskController extends CoreController{
 				resList = PubTool.getResultList("UserTaskDAO.getTaskMessages", paramMap, pageBounds, sqlSessionFactory);
 				
 				// 仅在第一页加入留言量
+				int totalCount = 0;
 				if (PubTool.isListHasData(resList) && pageInt == 1) {
-					PageList pageList = (PageList) resList;
-					resMap.put("totalCount", ((PageList) resList).getPaginator().getTotalCount());
+					totalCount = ((PageList) resList).getPaginator().getTotalCount();
 				}
+				resMap.put("totalCount", totalCount);
 				
 				resMap.put("MSG_LIST", resList);
 				
@@ -349,6 +350,10 @@ public class UserTaskController extends CoreController{
 			if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
+				Object deadTask = paramMap.get("DEAD_TASK");
+				if (deadTask != null && "1".equals(deadTask.toString())) {
+					paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				}
 				String sortString = paramMap.get("sort").toString();
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
