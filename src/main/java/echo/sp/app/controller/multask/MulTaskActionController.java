@@ -373,7 +373,7 @@ public class MulTaskActionController extends CoreController{
 			} else if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				String sortString = "DIST.asc,TASK_BID_TIME.desc,TASK_CREATE_TIME.asc";
+				String sortString = "DIST.asc,PATI_TIME.desc,TASK_CREATE_TIME.asc";
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
 				PageBounds pageBounds = new PageBounds(pageInt, pageSizeInt , Order.formString(sortString));
