@@ -39,4 +39,6 @@ public interface UserMulTaskActionDAO {
 	public List getDoneTaskers(Map parmMap);
 	// 修改任务行表
 	public int updateTaskLineClose(Map parmMap);
+	// 用户是否竞标该任务
+	public String getBidInfo(Map parmMap);
 }

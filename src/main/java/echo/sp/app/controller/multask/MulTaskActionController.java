@@ -106,6 +106,7 @@ public class MulTaskActionController extends CoreController{
 				// Get Task Info
 				parmMap = new HashMap();
 				parmMap.put("TASK_ID", task_id);
+				parmMap.put("USER_ID", user_id);
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				parmMap.remove("TASK_LINE");
 				super.writeJson(response, Code.SUCCESS, Code.SUCCESS_MSG, parmMap, null);
@@ -172,6 +173,7 @@ public class MulTaskActionController extends CoreController{
 				// 修改任务信息
 				userMulTaskActionService.updateTask(paramMap);
 				// Get Task Info
+				parmMap.put("USER_ID", user_id);
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -321,6 +323,10 @@ public class MulTaskActionController extends CoreController{
 			if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
+				Object deadTask = paramMap.get("DEAD_TASK");
+				if (deadTask != null && "1".equals(deadTask.toString())) {
+					paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				}
 				String sortString = paramMap.get("sort").toString();
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
@@ -426,6 +432,7 @@ public class MulTaskActionController extends CoreController{
 				paramMap.put("PATI_TIME", DateUtils.getDateTime());
 				userMulTaskActionService.addTaskBider(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -488,6 +495,7 @@ public class MulTaskActionController extends CoreController{
 				paramMap.put("DONE_TIME", DateUtils.getDateTime());
 				userMulTaskActionService.updateTaskDone(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");
@@ -542,6 +550,7 @@ public class MulTaskActionController extends CoreController{
 				paramMap.put("UNDONE_TIME", DateUtils.getDateTime());
 				userMulTaskActionService.updateTaskUnFinish(paramMap);
 				// 3.返回任务信息
+				parmMap.put("USER_ID", user_id);
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				List lineList = null;
 				Object obj = parmMap.get("TASK_LINE");

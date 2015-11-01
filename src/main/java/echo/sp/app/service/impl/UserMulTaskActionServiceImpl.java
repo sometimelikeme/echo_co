@@ -79,6 +79,7 @@ public class UserMulTaskActionServiceImpl implements UserMulTaskActionService {
 	@Override
 	public Map getTaskInfoByTaskId(Map parmMap) {
 		Map resMap = userMulTaskActionDAO.getTaskHeadByTaskId(parmMap);
+		resMap.put("is_bid_status", userMulTaskActionDAO.getBidInfo(parmMap));
 		resMap.put("TASK_LINE", userMulTaskActionDAO.getTaskLineByTaskId(parmMap));
 		return resMap;
 	}
