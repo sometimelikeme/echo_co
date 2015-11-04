@@ -118,7 +118,7 @@
     	  <if test="TASK_AREA != null and TASK_AREA != '' ">  
           		AND A.TASK_AREA = #{TASK_AREA} 
     	  </if>
-    	  <if test="BID_STATUS == '1' ">  
+    	  <if test="BID_STATUS != null and BID_STATUS != '' ">  
           		AND A.TASK_BID_STATUS IN ('10','30')
     	  </if>
     	  <if test="TASK_BID_STATUS != null and TASK_BID_STATUS != '' ">  
