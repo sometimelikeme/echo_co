@@ -195,7 +195,7 @@
     	SELECT A.MSG_ID,A.USER_ID,B.USER_NAME,B.USER_ICON,A.TIME1,A.MESSAGE,A.REPLY
     	FROM T_TASKS_MESSAGE A,T_USERS B
     	WHERE A.USER_ID = B.USER_ID
-    	AND A.TASK_ID = #{TASK_ID}
+    	AND A.TASK_ID = #{TASK_ID} 
     </select>
     
     <select id="getBidInfo" parameterType="map" resultType="Map">
