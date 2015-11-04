@@ -128,7 +128,7 @@
     	  <if test="TASK_AREA != null and TASK_AREA != '' ">  
           		AND A.TASK_AREA = #{TASK_AREA} 
     	  </if>
-    	  <if test="BID_STATUS == '1' ">  
+    	  <if test="BID_STATUS != null and BID_STATUS != '' ">  
           		AND A.TASK_BID_STATUS IN ('10','20')
     	  </if>
     	  <if test="TASK_BID_STATUS != null and TASK_BID_STATUS != '' ">  
@@ -137,7 +137,7 @@
    	      <if test="TASK_BID_STATUS != null and TASK_BID_STATUS != '40' ">  
           		AND A.TASK_BID_STATUS != '40'
     	  </if>
-    	  <if test="DEAD_TASK == '1' ">  
+    	  <if test="DEAD_TASK != null and DEAD_TASK != '' ">  
           		AND A.TASK_DEADLINE <![CDATA[>#{CURR_DATE}]]>
     	  </if>
     	  <if test="CANT_CODE != null and CANT_CODE != ''  ">  
