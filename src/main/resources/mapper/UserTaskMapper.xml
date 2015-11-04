@@ -128,7 +128,7 @@
           		AND A.TASK_BID_STATUS != '80'
     	  </if>
     	  <if test="DEAD_TASK == '1' ">  
-          		AND A.TASK_DEADLINE > #{CURR_DATE}
+          		AND A.TASK_DEADLINE <![CDATA[>#{CURR_DATE}]]>
     	  </if>
     	  <if test="CANT_CODE != null and CANT_CODE != ''  ">  
           		AND A.CANT_CODE = #{CANT_CODE}
