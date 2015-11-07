@@ -141,7 +141,7 @@
           		AND A.TASK_DEADLINE <![CDATA[<#{CURR_DATE}]]>
     	  </if>
     	  <choose>
-   	      	<when test="DEAD_TASK == '10'">
+   	      	<when test="DEAD_TASK == '10'"> 
    	      		AND A.TASK_DEADLINE <![CDATA[<#{CURR_DATE}]]>
 			</when>
 			<otherwise>
