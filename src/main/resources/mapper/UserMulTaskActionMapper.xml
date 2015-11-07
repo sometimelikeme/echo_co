@@ -153,7 +153,7 @@
     	  </if>
     </select>
     <select id="searchBidTaskByUserId" parameterType="map" resultType="Map">
-          SELECT A.*,B.USER_NAME,B.USER_ICON,C.BID_TIME,C.IS_BIDE,
+          SELECT A.*,B.USER_NAME,B.USER_ICON,C.PATI_TIME,C.STATUS,C.DONE_TIME,
           SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.TASK_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.TASK_LATITUDE,2)) * 140000 DIST
           FROM T_MUL_TASKS A, T_USERS B, T_MUL_TASKS_LINE C
           WHERE A.TASK_AUDIT_STATUS = '20'
