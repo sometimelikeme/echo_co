@@ -268,6 +268,7 @@
 		`pageSize: 'accf734342494d0fa638233079a4cc82'// required`
 		`LONGITUDE: '1'// required`
 		`LATITUDE: 'accf734342494d0fa638233079a4cc82'// required`
+		`STATUS: ''// optimal`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
