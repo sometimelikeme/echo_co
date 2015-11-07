@@ -323,10 +323,7 @@ public class MulTaskActionController extends CoreController{
 			if (!UserAgentUtils.isMobileOrTablet(req)) {
 				super.writeJson(response, "9997", "无效设备", null, null);
 			} else {
-				Object deadTask = paramMap.get("DEAD_TASK");
-				if (deadTask != null && "1".equals(deadTask.toString())) {
-					paramMap.put("CURR_DATE", DateUtils.getDateTime());
-				}
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
 				String sortString = paramMap.get("sort").toString();
 				int pageInt = Integer.parseInt(paramMap.get("page").toString());// PAGE NUMBER
 				int pageSizeInt = Integer.parseInt(paramMap.get("pageSize").toString());// MAX ROWS RETURN
