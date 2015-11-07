@@ -300,6 +300,7 @@
 		`TASK_ID: 'accf734342494d0fa638233079a4cc82'// required任务ID`
 		`page: '1',// required`
 		`pageSize: '5'// required`
+		`STATUS: '5'// optimal`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥

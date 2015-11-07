@@ -161,6 +161,9 @@
           AND A.USER_ID = B.USER_ID
           AND A.TASK_ID = C.TASK_ID 
           AND C.USER_ID = #{USER_ID}
+          <if test="STATUS != null and STATUS != ''  ">  
+          		AND C.STATUS = #{STATUS}
+    	  </if>
     </select>
     <insert id="addTaskBider" parameterType="map">
       	INSERT INTO
