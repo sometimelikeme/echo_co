@@ -128,7 +128,7 @@
           		AND A.TASK_BID_STATUS != '80'
     	  </if>
     	  <choose>
-   	      	<when test="DEAD_TASK == '1'">
+   	      	<when test="DEAD_TASK != null and DEAD_TASK != ''">
    	      		AND A.TASK_DEADLINE <![CDATA[<#{CURR_DATE}]]>
 			</when>
 			<otherwise>
