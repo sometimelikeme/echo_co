@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
+encoding//src/main/java/echo/sp/app/command/model/Code.java=UTF-8
+encoding//src/main/java/echo/sp/app/command/model/JsonBean.java=UTF-8
 encoding//src/main/resources/db.sql=UTF-8
