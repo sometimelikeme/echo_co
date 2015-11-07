@@ -150,7 +150,7 @@ public class MyTaskXml {
 						paramMap.put("RETURN_MONEY", "1");// 退款平台不收取费用
 						if ("10".equals(task_type)) {
 							userTaskActionService.updateTaskFinish(paramMap);
-						}
+						} 
 					}
 					if (logger.isDebugEnabled()) {
 						logger.debug("MyTaskXml---closeTask---done!");
