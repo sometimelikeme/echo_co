@@ -220,7 +220,7 @@ public class MulTaskActionController extends CoreController{
 				parmMap.put("TASK_ID", paramMap.get("TASK_ID"));
 				parmMap = userMulTaskActionService.getTaskInfoByTaskId(parmMap);
 				String task_statu = parmMap.get("TASK_BID_STATUS").toString();
-				if (!"30".equals(task_statu)) {
+				if (!"10".equals(task_statu)) {
 					super.writeJson(response, "9996", "任务进行中，不能删除！", null, null);
 					return;
 				}
