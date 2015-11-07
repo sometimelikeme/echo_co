@@ -183,31 +183,32 @@ public class UserMulTaskActionServiceImpl implements UserMulTaskActionService {
             					new BigDecimal(perOfSystemPaid)).divide(
             					new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
 					}
-        			paramMap.put("DONE_PAID", payment);
-        			paramMap.put("BACK_PAID", backment);
+        			paramMap.put("DONE_PAID", payment);// 应该奖励给完成任务者的金额
+        			paramMap.put("BACK_PAID", backment);// 应该返还为发布任务者的金额
     				// 获取完成任务用户列表
     				bideList = userMulTaskActionDAO.getDoneTaskers(paramMap);
-    				bideListLength = bideList.size();
-    				for (int i = 0; i < bideListLength; i++) {
-    					// 修改T_MUL_TASKS_LINE
-    					paramMap.put("BIDE_USER_ID", ((Map)bideList.get(i)).get("BIDE_USER_ID"));
-    					userMulTaskActionDAO.updateTaskLineClose(paramMap);
-    					// 产生交易记录
-    					if ("10".equals(task_type)) {// 金额任务
-    						takserMoneyRecord(paramMap);
-						} else if ("20".equals(task_type)) {// 积分任务
-							takserPointRecord(paramMap);
-						}
-    					
-    				}
-    				// 将未完成的任务金额返还发布任务者
-    				if (done_num < need_num && "10".equals(task_type)) {// 只回退金额任务
-    					paramMap.put("IS_BACK", 1);
-    					// 将返回的金额补充到发布任务者
-    					paramMap.put("DONE_PAID", backment);
-    					// 产生交易记录
-    					takserMoneyRecord(paramMap);
-    				}
+    				if (bideList != null) {
+    					bideListLength = bideList.size();
+        				for (int i = 0; i < bideListLength; i++) {
+        					// 修改T_MUL_TASKS_LINE
+        					paramMap.put("BIDE_USER_ID", ((Map)bideList.get(i)).get("BIDE_USER_ID"));
+        					userMulTaskActionDAO.updateTaskLineClose(paramMap);
+        					// 产生交易记录
+        					if ("10".equals(task_type)) {// 金额任务
+        						takserMoneyRecord(paramMap);
+    						} else if ("20".equals(task_type)) {// 积分任务
+    							takserPointRecord(paramMap);
+    						}
+        				}
+        				// 将未完成的任务金额返还发布任务者
+        				if (done_num < need_num && "10".equals(task_type)) {// 只回退金额任务
+        					paramMap.put("IS_BACK", 1);
+        					// 将返回的金额补充到发布任务者
+        					paramMap.put("DONE_PAID", backment);
+        					// 产生交易记录
+        					takserMoneyRecord(paramMap);
+        				}
+					}
     			} else {
     				if ("10".equals(task_type)) {
     					// 回退奖励

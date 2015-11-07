@@ -218,7 +218,7 @@
      	SELECT TASK_ID,USER_ID,TASK_DONE_NUM,TASK_NEED_NUM,TASK_TYPE,TASK_TOTAL_PAID,TASK_SING_PAID
      	FROM T_MUL_TASKS
      	WHERE TASK_AUDIT_STATUS = '20'
-     	AND TASK_BID_STATUS = '20'
+     	AND TASK_BID_STATUS IN ('10','20')
      	AND TASK_DEADLINE > #{TASK_DEADLINE}
     </select>
     <update id="updateTaskClose" parameterType="map">  
