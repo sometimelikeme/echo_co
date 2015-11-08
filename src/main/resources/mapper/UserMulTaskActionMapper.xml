@@ -203,12 +203,19 @@
         DONE_ICON3 = #{DONE_ICON3},
         DONE_ICON4 = #{DONE_ICON4}
    		WHERE TASK_ID = #{TASK_ID}
-   		AND USER_ID = #{BIDE_USER_ID}
+   		AND USER_ID = #{USER_ID}
     </update>
     <select id="getTaskInfoByTaskUserId" parameterType="map" resultType="Map">
      	SELECT * FROM T_MUL_TASKS_LINE
      	WHERE TASK_ID = #{TASK_ID}
-     	AND USER_ID = #{USER_ID}
+     	<choose>
+   	      	<when test="BIDE_USER_ID != null and BIDE_USER_ID != '' ">
+   	      		AND USER_ID = #{BIDE_USER_ID}
+			</when>
+			<otherwise>
+				AND USER_ID = #{USER_ID}
+			</otherwise>
+	   </choose>
     </select>
     <update id="updateTaskUnFinish" parameterType="map">  
    		UPDATE T_MUL_TASKS_LINE 
