@@ -31,6 +31,10 @@ public class DateUtils extends DateFormatUtils {
 //		System.out.println(before);
 //		System.out.println(after);
 //		System.out.println(getDistanceOfTwoDate(before, after));
+		System.out.println("2015-9-7 18:46:9");
+		Date before = parseStringDate("2015-9-7 18:46:09");
+		System.out.println(before);
+		System.out.println(formatDateTime(before));
 	}
 	
 	/**
