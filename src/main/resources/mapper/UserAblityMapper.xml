@@ -103,6 +103,18 @@
     	  <if test="ABLI_TITLE != null and ABLI_TITLE != '' ">  
           		AND A.ABLI_TITLE LIKE CONCAT(CONCAT('%', #{ABLI_TITLE, jdbcType=VARCHAR}),'%') 
     	  </if>
+    	  <choose>
+   	      	<when test="DISTANCE == '10'">
+   	      		AND SQRT(POWER(#{LONGITUDE, jdbcType=NUMERIC}-A.ABLI_LONGITUDE,2)+POWER(#{LATITUDE, jdbcType=NUMERIC}-A.ABLI_LATITUDE,2)) * 140000 <![CDATA[<=20000]]> 
+				AND B.CANT_CODE = #{CANT_CODE}
+			</when>
+			<when test="DISTANCE == '20'">
+				AND B.CANT_CODE = #{CANT_CODE}
+			</when>
+			<otherwise>
+				AND 1 = 1
+			</otherwise>
+		  </choose>
     </select>
     <select id="getCommentById" parameterType="map" resultType="Map">
      	SELECT A.*,B.USER_NAME,B.USER_ICON 

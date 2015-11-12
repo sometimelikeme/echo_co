@@ -122,6 +122,7 @@
         `page: '1',// required`
         `pageSize: '5',// required`
         `sort: 'DIST.desc,ABLI_BUY_COUNT.desc,ABLI_COMMMENT.desc,ABLI_POINT.desc,ABLI_LAST_UPDATE.desc'// required`
+        `DISTANCE: '10',// optimal:10-10公里，20-全城，默认-全国`
 	`}`
 	`}`
 - 参数二： no_co （QUJDREVGRw==）公钥
