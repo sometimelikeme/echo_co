@@ -223,7 +223,8 @@
 		WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
     </update>
     <select id="getAbliOrders" parameterType="map" resultType="Map">
-          SELECT A.*,C.USER_NAME,C.USER_ICON
+          SELECT A.*,C.USER_NAME,C.USER_ICON,
+          B.ABLI_TITLE,B.ABLI_POINT,B.ABLI_BUY_COUNT,B.ABLI_ASK_PAID
           FROM T_ABLITY_ORDERS A, T_USER_ABLITY B, T_USERS C
           WHERE A.USER_ID = #{USER_ID}   
           AND A.ABLI_ID = B.ABLI_ID
@@ -233,7 +234,8 @@
     	  </if>
     </select>
     <select id="getAbliBuyOrders" parameterType="map" resultType="Map">
-          SELECT B.*,C.USER_NAME,C.USER_ICON
+          SELECT B.*,C.USER_NAME,C.USER_ICON,
+          B.ABLI_TITLE,B.ABLI_POINT,B.ABLI_BUY_COUNT,B.ABLI_ASK_PAID
           FROM T_USER_ABLITY A, T_ABLITY_ORDERS B, T_USERS C
           WHERE A.USER_ID = #{USER_ID} 
           <if test="ABLI_ID != null and ABLI_ID != '' ">  
