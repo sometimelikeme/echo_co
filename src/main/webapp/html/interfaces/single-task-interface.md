@@ -534,7 +534,7 @@
 		`sort: DIST.asc,TASK_CREATE_TIME.desc,TASK_TOTAL_PAID.desc,BID_NUM.desc'// required`，
 		`BID_STATUS: '10'// optimal 查询TASK_BID_STATUS为10，30的任务`
 		`TASK_BID_STATUS: ''// optimal查询TASK_BID_STATUS为任务`
-		`DEAD_TASK: '10'// optimal查询过期任务`
+		`DEAD_TASK: '10'// optimal 10-查询过期任务,20-查询所有任务，默认查询非过期任务`
 		`CANT_CODE: ''// optimal查询城市区号任务`
 	`}`
 	`}`
