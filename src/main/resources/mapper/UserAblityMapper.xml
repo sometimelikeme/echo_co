@@ -242,7 +242,7 @@
           		AND A.ABLI_ID = #{ABLI_ID} 
     	  </if>
     	  AND A.ABLI_ID = B.ABLI_ID
-    	  AND B.USER_ID = C.USER_ID
+    	  AND B.USER_ID = C.USER_ID 
     </select>
     <update id="updateAbliBuyCount" parameterType="map"> 
     	UPDATE
