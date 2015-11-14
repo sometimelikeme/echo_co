@@ -373,4 +373,9 @@ public class UserAblityServiceImpl implements UserAblityService {
 		parmMap.put("TOTAL_PAY", payment);
 		returnMoney(parmMap);
 	}
+
+	@Override
+	public int judgeOrderDead(Map parmMap) {
+		return userAblityDAO.judgeOrderDead(parmMap);
+	}
 }

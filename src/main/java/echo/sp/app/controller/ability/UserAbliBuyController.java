@@ -138,6 +138,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				if (!"10".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
+					return;
 				}
 				
 				paramMap.put("BACK_TIME", DateUtils.getDateTime());
@@ -185,11 +186,20 @@ public class UserAbliBuyController extends CoreController{
 				
 				Map resMap = (Map)((Map)userAblityService.getAbliOrderById(paramMap)).get("ABLI_ORDER");
 				
-				
-				
 				if (!"10".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
+					return;
 				}
+				
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				
+				if (userAblityService.judgeOrderDead(paramMap) == 1) {// 该技能订单已经过期
+					super.writeJson(response, "9995", "技能订单已经过期！", null, null);
+					return;
+				}
+				
+				paramMap.remove("CURR_DATE");
+				
 				
 				paramMap.put("START_TIME", DateUtils.getDateTime());
 				
@@ -238,7 +248,17 @@ public class UserAbliBuyController extends CoreController{
 				
 				if (!"30".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
+					return;
 				}
+				
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				
+				if (userAblityService.judgeOrderDead(paramMap) == 1) {// 该技能订单已经过期
+					super.writeJson(response, "9995", "技能订单已经过期！", null, null);
+					return;
+				}
+				
+				paramMap.remove("CURR_DATE");
 				
 				paramMap.put("DELI_TIME", DateUtils.getDateTime());
 				
@@ -287,6 +307,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				if (!"40".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
+					return;
 				}
 				
 				userAblityService.updateConfirmDone(paramMap);
@@ -334,6 +355,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				if (!"40".equals(resMap.get("STATUS").toString())) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
+					return;
 				}
 				
 				paramMap.put("DECLINE_TIME", DateUtils.getDateTime());
@@ -385,6 +407,7 @@ public class UserAbliBuyController extends CoreController{
 				
 				if (!"80".equals(status)) {
 					super.writeJson(response, "9996", "状态错误！", null, null);
+					return;
 				}
 				
 				paramMap.put("DEL_TIME", DateUtils.getDateTime());

@@ -40,4 +40,6 @@ public interface UserAblityService {
 	public int deleteOrder(Map parmMap);
 	// 处理过期的订单
 	public int updateProcessDeadOrders(Map parmMap);
+	// 判断技能订单是否过期
+	public int judgeOrderDead(Map parmMap);
 }

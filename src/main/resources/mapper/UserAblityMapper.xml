@@ -275,4 +275,9 @@
           WHERE B.ABLI_ORDER_ID = #{ABLI_ORDER_ID}
           AND A.ABLI_ID = B.ABLI_ID
     </select>
+    <select id="judgeOrderDead" parameterType="map" resultType="int">
+          SELECT COUNT(*) FROM T_ABLITY_ORDERS 
+          WHERE ABLI_ORDER_ID = #{ABLI_ORDER_ID}
+          AND DEADLINE <![CDATA[<#{CURR_DATE}]]>
+    </select>
 </mapper>	

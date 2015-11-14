@@ -75,6 +75,13 @@ public class UserTaskActionController extends CoreController{
 					super.writeJson(response, "9996", "任务执行中，不能竞标！", null, null);
 					return;
 				}
+				// 判断任务是否过期
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				if (userTaskActionService.judgeTaskDead(paramMap) == 1) {
+					super.writeJson(response, "9995", "任务已过期，不能竞标！", null, null);
+					return;
+				}
+				paramMap.remove("CURR_DATE");
 				// 2.插入T_TASKS_LINE竞标人信息;修改T_TASKS.TASK_BID_STATUS = '30', BID_NUM数量自增1
 				paramMap.put("BID_TIME", DateUtils.getDateTime());
 				userTaskActionService.addTaskBider(paramMap);
@@ -354,6 +361,13 @@ public class UserTaskActionController extends CoreController{
 					super.writeJson(response, "9996", "任务状态错误，无法完成！", null, null);
 					return;
 				}
+				// 判断任务是否过期
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				if (userTaskActionService.judgeTaskDead(paramMap) == 1) {
+					super.writeJson(response, "9995", "任务已过期，不能完成！", null, null);
+					return;
+				}
+				paramMap.remove("CURR_DATE");
 				// 2.修改任务状态为回退状态
 				paramMap.put("TASK_DONE_TIME", DateUtils.getDateTime());
 				userTaskActionService.updateTaskDone(paramMap);

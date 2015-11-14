@@ -200,5 +200,10 @@ public class UserTaskActionServiceImpl implements UserTaskActionService {
 	public List getUnProcessTasks(Map parmMap) {
 		return userTaskActionDAO.getUnProcessTasks(parmMap);
 	}
+
+	@Override
+	public int judgeTaskDead(Map parmMap) {
+		return userTaskActionDAO.judgeTaskDead(parmMap);
+	}
 	
 }

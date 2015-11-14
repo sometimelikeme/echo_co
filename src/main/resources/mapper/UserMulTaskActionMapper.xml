@@ -229,7 +229,7 @@
      	FROM T_MUL_TASKS
      	WHERE TASK_AUDIT_STATUS = '20'
      	AND TASK_BID_STATUS IN ('10','20')
-     	AND TASK_DEADLINE > #{TASK_DEADLINE}
+     	AND TASK_DEADLINE <![CDATA[>#{TASK_DEADLINE}]]>
     </select>
     <update id="updateTaskClose" parameterType="map">  
    		UPDATE T_MUL_TASKS 

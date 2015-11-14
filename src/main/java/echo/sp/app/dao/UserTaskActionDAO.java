@@ -45,4 +45,7 @@ public interface UserTaskActionDAO {
 	
 	// 获取未处理任务列表
 	public List getUnProcessTasks(Map parmMap);
+	
+	// 判断任务是否已经过期
+	public int judgeTaskDead(Map parmMap); 
 }

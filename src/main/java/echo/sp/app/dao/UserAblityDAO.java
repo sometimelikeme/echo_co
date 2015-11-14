@@ -49,4 +49,6 @@ public interface UserAblityDAO {
 	public List getUnProcessOrders(Map parmMap);
 	// 获取任务对应的用户ID
 	public String getAbilityUserId(Map parmMap);
+	// 判断技能订单是否过期
+	public int judgeOrderDead(Map parmMap);
 }

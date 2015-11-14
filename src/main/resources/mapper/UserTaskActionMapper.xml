@@ -104,4 +104,9 @@
         WHERE TASK_AUDIT_STATUS = '20'
         AND TASK_BID_STATUS NOT IN ('70','80')
     </select>
+    <select id="judgeTaskDead" parameterType="map" resultType="int">
+          SELECT COUNT(*) FROM T_TASKS 
+          WHERE TASK_ID = #{TASK_ID}
+          AND TASK_DEADLINE <![CDATA[<#{CURR_DATE}]]>
+    </select>
 </mapper>
