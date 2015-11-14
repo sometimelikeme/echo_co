@@ -33,4 +33,6 @@ public interface UserMulTaskActionService {
 	public List getDoneTaskers(Map parmMap);
 	// 定时关闭任务服务
 	public int updateTaskProcess(List taskList);
+	// 判断任务是否过期
+	public int judgeMulTaskDead(Map parmMap);
 }

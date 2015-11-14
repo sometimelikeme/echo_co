@@ -41,4 +41,6 @@ public interface UserMulTaskActionDAO {
 	public int updateTaskLineClose(Map parmMap);
 	// 用户是否竞标该任务
 	public String getBidInfo(Map parmMap);
+	// 判断任务是否过期
+	public int judgeMulTaskDead(Map parmMap);
 }

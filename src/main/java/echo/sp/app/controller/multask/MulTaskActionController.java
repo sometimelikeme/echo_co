@@ -425,6 +425,12 @@ public class MulTaskActionController extends CoreController{
 					super.writeJson(response, "9996", "任务已经结束！", null, null);
 					return;
 				}
+				// 判断任务是否过期
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				if (userMulTaskActionService.judgeMulTaskDead(paramMap) == 1) {
+					super.writeJson(response, "9995", "任务已过期，不能竞标！", null, null);
+					return;
+				}
 				// 2.插入T_MUL_TASKS_LINE竞标人信息;修改T_TASKS.TASK_BID_STATUS = '20', TASK_BID_NUM数量自增1
 				paramMap.put("PATI_TIME", DateUtils.getDateTime());
 				userMulTaskActionService.addTaskBider(paramMap);
@@ -478,6 +484,12 @@ public class MulTaskActionController extends CoreController{
 				String task_statu = parmMap.get("TASK_BID_STATUS").toString();
 				if (!"20".equals(task_statu)) {
 					super.writeJson(response, "9996", "任务状态错误，无法完成！", null, null);
+					return;
+				}
+				// 判断任务是否过期
+				paramMap.put("CURR_DATE", DateUtils.getDateTime());
+				if (userMulTaskActionService.judgeMulTaskDead(paramMap) == 1) {
+					super.writeJson(response, "9994", "任务已过期，不能完成！", null, null);
 					return;
 				}
 				parmMap = new HashMap();

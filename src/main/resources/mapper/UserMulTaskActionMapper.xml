@@ -256,4 +256,9 @@
     	WHERE TASK_ID = #{TASK_ID}
     	AND USER_ID = #{USER_ID}
     </select>
+    <select id="judgeMulTaskDead" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM T_MUL_TASKS 
+        WHERE TASK_ID = #{TASK_ID}
+        AND TASK_DEADLINE <![CDATA[<#{CURR_DATE}]]>
+    </select>
 </mapper>

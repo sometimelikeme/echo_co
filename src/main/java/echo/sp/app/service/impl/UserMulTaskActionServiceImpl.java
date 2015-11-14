@@ -286,4 +286,9 @@ public class UserMulTaskActionServiceImpl implements UserMulTaskActionService {
 		tranMap.put("TOTAL_POINT", total_money_Big.add(payment));
 		userDAO.updateUserPoint(tranMap);
 	}
+
+	@Override
+	public int judgeMulTaskDead(Map parmMap) {
+		return userMulTaskActionDAO.judgeMulTaskDead(parmMap);
+	}
 }
